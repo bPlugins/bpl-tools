@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "immer": "^10.1.1",
+    "react-sortable-hoc": "^2.0.0",
+    "select-pure": "^0.6.2"
+  },
+  "devDependencies": {
+    "eslint-webpack-plugin": "^4.2.0"
+  }
+}

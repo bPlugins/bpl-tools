@@ -1,0 +1,25 @@
+$primaryColor: #4527a4;
+
+.bPlPanelBody {
+	.bplSortableList {
+		ul {
+			list-style-type: none;
+			display: flex;
+			flex-direction: column;
+			gap: 10px;
+			margin: 0;
+			cursor: grab;
+		}
+	}
+}
+
+.bplSortableListItem {
+	list-style-type: none;
+	color: #fff;
+	background-color: $primaryColor;
+	padding: 8px 12px;
+	border-radius: 4px;
+	margin: 0;
+	box-sizing: border-box;
+	cursor: grab;
+}
