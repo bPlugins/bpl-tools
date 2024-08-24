@@ -1,4 +1,6 @@
 {
+  "name": "bpl-tools",
+  "version": "1.0.0",
   "dependencies": {
     "immer": "^10.1.1",
     "react-sortable-hoc": "^2.0.0",

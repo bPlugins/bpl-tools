@@ -11,11 +11,12 @@
 import { useState } from 'react';
 import { __ } from '@wordpress/i18n';
 import { PanelRow, RangeControl, Tooltip, __experimentalGradientPicker, GradientPicker } from '@wordpress/components';
-const Gradient = __experimentalGradientPicker || GradientPicker;
+const Gradient = GradientPicker || __experimentalGradientPicker;
 
 import './IconControl.scss';
-
-import { Label, BtnGroup, BColor } from '../index';
+import { Label } from '../Label/Label';
+import { BtnGroup } from '../BtnGroup/BtnGroup';
+import { ColorControl } from '../ColorControl/ColorControl';
 import { gradients, bgTypes } from '../../utils/options';
 import icons from './icons';
 
@@ -73,7 +74,7 @@ export const IconControl = props => {
 				<BtnGroup value={getValue('colorType')} onChange={val => setValue('colorType', val)} options={bgTypes} size='small' />
 			</PanelRow>
 
-			{'gradient' === getValue('colorType') ? <Gradient value={getValue('gradient')} onChange={val => setValue('gradient', val)} gradients={gradients} /> : <BColor label={__('Icon Color:', 'bplugins')} value={getValue('color')} onChange={val => setValue('color', val)} defaultColor={getDefault('color')} />}
+			{'gradient' === getValue('colorType') ? <Gradient value={getValue('gradient')} onChange={val => setValue('gradient', val)} gradients={gradients} /> : <ColorControl label={__('Icon Color:', 'bplugins')} value={getValue('color')} onChange={val => setValue('color', val)} defaultColor={getDefault('color')} />}
 		</>}
 	</>
 };
