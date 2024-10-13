@@ -8,7 +8,7 @@
 import { useState } from 'react';
 
 import './BDevice.scss';
-import { desktopIcon, tabletIcon, mobileIcon } from '../utils/icons';
+import { desktopIcon, tabletIcon, mobileIcon } from '../../../utils/icons';
 
 export const BDevice = ({ device = 'desktop', onChange, className = 'iconButton', style }) => {
 	const [show, setShow] = useState(false);

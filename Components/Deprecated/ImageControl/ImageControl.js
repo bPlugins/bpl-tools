@@ -5,8 +5,8 @@ import { Button, withNotices, TextControl, SelectControl, PanelRow, ToolbarGroup
 import { isBlobURL } from '@wordpress/blob';
 
 import './ImageControl.scss';
-import { Label } from '../index';
-import { getImageSizes } from '../utils/functions';
+import { Label } from '../../index';
+import { getImageSizes } from '../../../utils/functions';
 
 
 export const ImageHolderControl = props => {

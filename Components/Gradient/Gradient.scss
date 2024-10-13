@@ -1,0 +1,14 @@
+.bplAdvRangeColor
+  .components-base-control.components-range-control
+  .components-base-control__field
+  .components-range-control__root
+  .components-range-control__wrapper
+  .components-range-control__track,
+.bplAdvRangeColor
+  .components-base-control.components-range-control
+  .components-base-control__field
+  .components-range-control__root
+  .components-range-control__wrapper .components-range-control__thumb-wrapper
+  span {
+  background: #4527a4 !important;
+}

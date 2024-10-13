@@ -10,7 +10,7 @@ import { __ } from '@wordpress/i18n';
 import { Button, PanelRow, Dropdown, __experimentalGradientPicker, GradientPicker, __experimentalAlignmentMatrixControl as AlignmentMatrixControl, SelectControl } from '@wordpress/components';
 const Gradient = __experimentalGradientPicker || GradientPicker;
 
-import { Label, BColor, BtnGroup, InlineDetailMediaUpload } from '../index';
+import { Label, ColorControl, BtnGroup, InlineDetailMediaUpload } from '../index';
 import { gradients } from '../../utils/options';
 import { bgTypes, attachments, repeats, sizes } from './options';
 
@@ -50,7 +50,7 @@ export const Background = props => {
 					})} />
 				</PanelRow>
 
-				{'solid' === getValue('type') && isSolid && <BColor className='mt20' label={__('Color:', 'bplugins')} value={getValue('color')} onChange={val => setValue('color', val)} defaultColor={getDefault('color')} />}
+				{'solid' === getValue('type') && isSolid && <ColorControl className='mt20' label={__('Color:', 'bplugins')} value={getValue('color')} onChange={val => setValue('color', val)} defaultColor={getDefault('color')} />}
 
 				{'gradient' === getValue('type') && isGradient && <Gradient className='mt20' value={getValue('gradient')} onChange={val => setValue('gradient', val)} gradients={gradients} />}
 
@@ -82,7 +82,7 @@ export const Background = props => {
 						{resetValue('size')}
 					</PanelRow>
 
-					<BColor className='mt20' label={__('Overlay Color:', 'bplugins')} value={getValue('overlayColor')} onChange={val => setValue('overlayColor', val)} defaultColor={getDefault('overlayColor')} />
+					<ColorControl className='mt20' label={__('Overlay Color:', 'bplugins')} value={getValue('overlayColor')} onChange={val => setValue('overlayColor', val)} defaultColor={getDefault('overlayColor')} />
 				</>}
 			</>}
 		/>

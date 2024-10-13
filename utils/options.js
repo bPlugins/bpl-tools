@@ -1,3 +1,10 @@
+import { __ } from '@wordpress/i18n';
+
+export const normalHoverTabs = [
+	{ title: __('Normal'), name: 'normal' },
+	{ title: __('Hover'), name: 'hover' }
+];
+
 export const borderStyles = [
 	{ label: 'Solid', value: 'solid' },
 	{ label: 'Dashed', value: 'dashed' },
@@ -47,3 +54,9 @@ export const bgTypes = [
 	{ label: 'Solid', value: 'solid' },
 	{ label: 'Gradient', value: 'gradient' }
 ];
+
+export const advBgOptions = {
+	normal: { type: "color", color: "#0000", gradient: {}, img: {} },
+	hover: { type: "color", color: "#0000", gradient: {}, img: {} },
+	hoverType: "normal",
+};

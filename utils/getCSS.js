@@ -151,3 +151,140 @@ export const getTypoCSS = (selector, typo, isFamily = true) => {
 }
 
 export const getBoxCSS = (val = {}) => Object.values(val).join(' ');
+
+// Murad Wahid
+export const getGradientCSS = (gradient) => {
+	const { type, radialType, colors, centerPositions, angel } = gradient;
+
+	if (gradient) {
+		const gradientColors = colors?.map(({ color, position }) => `${color} ${position}%`);
+		const liner = `linear-gradient(${angel}deg, ${gradientColors})`;
+		const radial = `radial-gradient(${radialType} at ${centerPositions?.x}% ${centerPositions?.y}%,${gradientColors})`;
+
+		return type === 'linear' ? `background:${liner};` : `background:${radial};`;
+	}
+	return '';
+};
+const getSolidBGCSS = (bg) => `${bg ? `background: ${bg};` : ''}`;
+const getImagePosition = (img) => {
+	const { position = 'center center', xPosition = 0, yPosition = 0, attachment = '', repeat = 'no-repeat', size = 'cover', customSize = '0px' } = img || {};
+
+	return `
+		${position ? `background-position: ${'custom' === position ? `${xPosition} ${yPosition};` : `${position};`}` : ''}
+		${attachment ? `background-attachment: ${attachment};` : ''}
+		${repeat ? `background-repeat: ${repeat};` : ''}
+		${size ? `background-size: ${'custom' === size ? `${customSize} auto` : size};` : ''}
+	`;
+};
+const getImageCSS = (img) => {
+	let desktop, tablet, mobile;
+	if (Object.keys(img).length > 1) {
+		if (img?.desktop) {
+			desktop = getImagePosition(img?.desktop);
+		}
+		if (img?.tablet) {
+			tablet = getImagePosition(img?.tablet);
+		}
+		if (img?.mobile) {
+			mobile = getImagePosition(img?.mobile);
+		}
+	}
+	if (img) {
+		return {
+			desktop: img.url ? `background-image: url(${img.url}); ${desktop}` : '',
+			tablet: img.url ? tablet : '',
+			mobile: img.url ? mobile : '',
+		};
+	}
+	return '';
+};
+
+const getVideoCSS = (video, selector) => {
+	const { url, loop } = video;
+	const parentEl = document.querySelector(selector);
+
+	const el = parentEl?.querySelector('.bPlVideo');
+	const videoEl = document.createElement('video');
+	videoEl.muted = true;
+	videoEl.autoplay = true;
+	videoEl.classList.add('bPlVideo');
+
+	if (!el) {
+		if (parentEl && url) {
+			videoEl.innerHTML = `<source src=${url}></source>`;
+			parentEl.appendChild(videoEl);
+		}
+	}
+	videoEl.loop = loop;
+	videoEl.play();
+
+	return `${selector} .bPlVideo{
+		left: 0;
+		min-height: 100%;
+		min-width: 100%;
+		position: absolute;
+		width: -webkit-fill-available;
+		top: 0;
+		z-index: 0;
+  	}`;
+}
+export const getAdvBGCSS = (background, selector, isHover = false) => {
+	const { type, color, gradient, img, video } = background || {};
+
+	const bgCSS =
+		type === 'color'
+			? getSolidBGCSS(color)
+			: type === 'gradient'
+				? getGradientCSS(gradient)
+				: type === 'image'
+					? getImageCSS(img).desktop
+					: '';
+
+	const tablet = type === 'image' ? getImageCSS(img).tablet : '';
+	const mobile = type === 'image' ? getImageCSS(img).mobile : '';
+
+	const sl = isHover ? `${selector}:hover` : selector;
+
+	return `
+		${type === 'video' ? getVideoCSS(video, selector) : ''}
+		
+		${sl}{
+			${bgCSS}
+		}
+  
+		@media only screen and (min-width:641px) and (max-width: 1024px) {
+			${sl}{
+				${tablet}
+			}
+		}
+		@media only screen and (max-width: 640px) {
+			${sl}{
+				${mobile}
+			}
+		}
+	`.replace(/\s+/g, ' ').trim()
+};
+
+export const getOverlayCSS = (overlay, selector, isHover = false) => {
+	const { isEnabled, colors, opacity, blend, isCssFilter, blur, brightness, contrast, saturation, hue } = overlay || {};
+
+	const filter = isCssFilter ? `filter: brightness(${brightness}%) contrast(${contrast}%) saturate(${saturation}%) blur(${blur}px) hue-rotate(${hue}deg); -webkit-filter:brightness(${brightness}%) contrast(${contrast}%) saturate(${saturation}%) blur(${blur}px) hue-rotate(${hue}deg);` : '';
+
+	const blendCSS = blend ? `mix-blend-mode: ${blend};` : ''
+
+	const sl = isHover ? `${selector}:hover::after` : `${selector}::after`;
+
+	return isEnabled ? `
+		${selector}::after{
+			content: '';
+			position: absolute;
+			inset: 0;
+		}
+		${getAdvBGCSS(colors, sl, false)}
+		${sl}{
+			opacity: ${opacity};
+			${blendCSS}
+			${filter}
+		}
+	`.replace(/\s+/g, ' ').trim() : ''
+};

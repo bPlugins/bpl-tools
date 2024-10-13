@@ -1,8 +1,13 @@
+import { AdvBackground } from './AdvBackground/AdvBackground';
 import { Background } from './Background/Background';
+import { BoxControl } from './BoxControl/BoxControl';
 import { BtnGroup } from './BtnGroup/BtnGroup';
 import { ColorControl, HexColorControl } from './ColorControl/ColorControl';
+import { ColorsControl } from './ColorsControl/ColorsControl';
+import { Device } from './Device/Device';
 import { HelpPanel } from './HelpPanel/HelpPanel';
 import { IconControl } from './IconControl/IconControl';
+import { IconLibrary } from './IconLibrary/IconLibrary';
 import { ItemsPanel } from './ItemsPanel/ItemsPanel';
 import { Label } from './Label/Label';
 import { InlineMediaUpload, InlineDetailMediaUpload, MediaArea, MediaPlaceholder, MediaEditControl } from './MediaControl/MediaControl';
@@ -14,4 +19,4 @@ import { ShadowControl } from './ShadowControl/ShadowControl';
 import { SortableControl } from './SortableControl/SortableControl';
 import { Typography } from './Typography/Typography';
 
-export { Background, BtnGroup, ColorControl, HexColorControl, HelpPanel, IconControl, ItemsPanel, Label, InlineMediaUpload, InlineDetailMediaUpload, MediaArea, MediaPlaceholder, MediaEditControl, MultiSelectControl, PanelSelectControl, SelectPureControl, SeparatorControl, ShadowControl, SortableControl, Typography }
+export { AdvBackground, Background, BoxControl, BtnGroup, ColorControl, HexColorControl, ColorsControl, Device, HelpPanel, IconControl, IconLibrary, ItemsPanel, Label, InlineMediaUpload, InlineDetailMediaUpload, MediaArea, MediaPlaceholder, MediaEditControl, MultiSelectControl, PanelSelectControl, SelectPureControl, SeparatorControl, ShadowControl, SortableControl, Typography }

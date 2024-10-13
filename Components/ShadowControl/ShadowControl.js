@@ -12,7 +12,7 @@ import { __ } from '@wordpress/i18n';
 import { Dropdown, PanelRow, ToggleControl, __experimentalUnitControl as UnitControl, Button, Dashicon } from '@wordpress/components';
 import { produce } from 'immer';
 
-import { Label, BColor, BtnGroup } from '../index';
+import { Label, ColorControl, BtnGroup } from '../index';
 import { pxUnit, emUnit, remUnit } from '../../utils/options';
 import { gearIcon } from '../../utils/icons';
 
@@ -88,7 +88,7 @@ export const ShadowControl = props => {
 						{spreed && spreed !== getDefault('spreed') && resetValue('spreed')}
 					</PanelRow>}
 
-					<BColor label={__('Color:', 'bplugins')} value={color} onChange={val => updateShadow('color', val)} defaultColor={getDefault('color')} />
+					<ColorControl label={__('Color:', 'bplugins')} value={color} onChange={val => updateShadow('color', val)} defaultColor={getDefault('color')} />
 
 					{'box' === type && <ToggleControl label={__('Shadow Inset?', 'bplugins')} checked={isInset} onChange={val => updateShadow('isInset', val)} />}
 

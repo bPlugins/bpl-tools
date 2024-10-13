@@ -10,9 +10,9 @@ import { __ } from '@wordpress/i18n';
 import { PanelRow, __experimentalUnitControl as UnitControl, ButtonGroup, Button, Tooltip, Dashicon } from '@wordpress/components';
 
 import './SpaceControl.scss';
-import { Label } from '../index';
-import { pxUnit, perUnit, emUnit, remUnit } from '../utils/options';
-import { scrollIcon } from '../utils/icons';
+import { Label } from '../../index';
+import { pxUnit, perUnit, emUnit, remUnit } from '../../../utils/options';
+import { scrollIcon } from '../../../utils/icons';
 
 export const SpaceControl = props => {
 	const { className = '', label = __('Space:', 'bplugins'), value, onChange, defaults = {} } = props;

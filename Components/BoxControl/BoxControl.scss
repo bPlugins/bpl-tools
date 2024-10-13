@@ -1,0 +1,62 @@
+.bPlBoxControl {
+	.sides {
+		display: flex;
+		align-items: center;
+
+		&.gap {
+			gap: 5px;
+		}
+	}
+
+	.bplUnitControlWrapper {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+
+		.components-base-control.components-input-control.components-number-control {
+			margin-bottom: 0px !important;
+
+			.components-base-control__field .components-input-base .components-input-control__container {
+				.components-input-control__input {
+					font-size: 13px !important;
+					padding-right: 0px !important;
+				}
+
+				.components-input-control__suffix .components-unit-control__select {
+					font-size: 8px !important;
+					padding: 0px 0px;
+				}
+
+				.components-input-control__suffix {
+					width: 17px !important;
+				}
+			}
+		}
+
+		.sideLabel {
+			font-size: 11px;
+			text-transform: capitalize;
+		}
+	}
+
+	.boxLinkButton {
+		background: transparent;
+		border: none;
+		padding: 0;
+		margin-top: -13px;
+		cursor: pointer;
+
+		.dashicons {
+			font-size: 16px;
+		}
+
+		.dashicons.dashicons-image-rotate {
+			color: #666;
+		}
+
+		.dashicons.dashicons-image-rotate:hover {
+			color: black;
+		}
+	}
+}
