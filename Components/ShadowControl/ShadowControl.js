@@ -12,12 +12,12 @@ import { __ } from '@wordpress/i18n';
 import { Dropdown, PanelRow, ToggleControl, __experimentalUnitControl as UnitControl, Button, Dashicon } from '@wordpress/components';
 import { produce } from 'immer';
 
-import { Label, ColorControl, BtnGroup } from '../index';
+import { Label, ColorControl, BButtonGroup } from '../index';
 import { pxUnit, emUnit, remUnit } from '../../utils/options';
 import { gearIcon } from '../../utils/icons';
 
 export const ShadowControl = props => {
-	const { className = '', label = __('Shadow', 'bplugins'), value, onChange, type = 'box', defaults = [] } = props;
+	const { className = '', label = __('Shadow'), value, onChange, type = 'box', defaults = [] } = props;
 
 	const [activeIndex, setActiveIndex] = useState(0);
 
@@ -30,6 +30,9 @@ export const ShadowControl = props => {
 
 	const updateShadow = (property, val) => {
 		const newShadow = produce(shadow, draft => {
+			if (draft === null || draft === undefined) {
+				draft = [];
+			}
 			draft[activeIndex][property] = val;
 		})
 		onChange(newShadow);
@@ -60,48 +63,46 @@ export const ShadowControl = props => {
 			renderToggle={({ isOpen, onToggle }) => <Button icon='edit' onClick={() => { onToggle(), setActiveIndex(0) }} aria-expanded={isOpen} />}
 			renderContent={() => <>
 				{1 < shadow.length && <PanelRow>
-					<Label className='mt5'>{__('Shadow:', 'bplugins')}</Label>
-					<BtnGroup value={activeIndex} onChange={val => setActiveIndex(val)} options={
-						shadow.map((_, index) => ({ label: index + 1 + '', value: index })) || [{ label: 1, value: 0 }]
-					} />
+					<Label className=''>{__('Shadow:')}</Label>
+					<BButtonGroup label='' value={activeIndex} onChange={val => setActiveIndex(val)} options={(shadow && shadow?.map((_, index) => ({ label: index + 1 + '', value: index }))) || [{ label: 1, value: 0 }]} borderRadius='5px' />
 				</PanelRow>}
 
 				{null !== activeIndex && <>
 					<PanelRow>
-						<UnitControl label={__('Horizontal Offset:', 'bplugins')} labelPosition='left' value={hOffset} onChange={val => updateShadow('hOffset', val)} units={[pxUnit(), emUnit(), remUnit()]} />
+						<UnitControl label={__('Horizontal Offset:')} labelPosition='left' value={hOffset} onChange={val => updateShadow('hOffset', val)} units={[pxUnit(), emUnit(), remUnit()]} />
 						{hOffset && hOffset !== getDefault('hOffset') && resetValue('hOffset')}
 					</PanelRow>
 
 					<PanelRow>
-						<UnitControl label={__('Vertical Offset:', 'bplugins')} labelPosition='left' value={vOffset} onChange={val => updateShadow('vOffset', val)} units={[pxUnit(), emUnit(), remUnit()]} />
+						<UnitControl label={__('Vertical Offset:')} labelPosition='left' value={vOffset} onChange={val => updateShadow('vOffset', val)} units={[pxUnit(), emUnit(), remUnit()]} />
 						{vOffset && vOffset !== getDefault('vOffset') && resetValue('vOffset')}
 					</PanelRow>
 
 					<PanelRow>
-						<UnitControl label={__('Blur:', 'bplugins')} labelPosition='left' value={blur} onChange={val => updateShadow('blur', val)} units={[pxUnit(), emUnit(), remUnit()]} />
+						<UnitControl label={__('Blur:')} labelPosition='left' value={blur} onChange={val => updateShadow('blur', val)} units={[pxUnit(), emUnit(), remUnit()]} />
 						{blur && blur !== getDefault('blur') && resetValue('blur')}
 					</PanelRow>
-					<small>{__('Blur cannot be negative value!', 'bplugins')}</small>
+					<small>{__('Blur cannot be negative value!')}</small>
 
 					{'box' === type && <PanelRow>
-						<UnitControl label={__('Spreed:', 'bplugins')} labelPosition='left' value={spreed} onChange={val => updateShadow('spreed', val)} units={[pxUnit(), emUnit(), remUnit()]} />
+						<UnitControl label={__('Spreed:')} labelPosition='left' value={spreed} onChange={val => updateShadow('spreed', val)} units={[pxUnit(), emUnit(), remUnit()]} />
 						{spreed && spreed !== getDefault('spreed') && resetValue('spreed')}
 					</PanelRow>}
 
-					<ColorControl label={__('Color:', 'bplugins')} value={color} onChange={val => updateShadow('color', val)} defaultColor={getDefault('color')} />
+					<ColorControl label={__('Color:')} value={color} onChange={val => updateShadow('color', val)} defaultColor={getDefault('color')} />
 
-					{'box' === type && <ToggleControl label={__('Shadow Inset?', 'bplugins')} checked={isInset} onChange={val => updateShadow('isInset', val)} />}
+					{'box' === type && <ToggleControl label={__('Shadow Inset?')} checked={isInset} onChange={val => updateShadow('isInset', val)} />}
 
 					<PanelRow className='itemAction mt20'>
-						{1 < shadow?.length && <Button className='removeItem' label={__('Remove', 'bplugins')} onClick={removeShadow}><Dashicon icon='no' />{__('Remove', 'bplugins')}</Button>}
+						{1 < shadow?.length && <Button className='removeItem' label={__('Remove')} onClick={removeShadow}><Dashicon icon='no' />{__('Remove')}</Button>}
 
-						<Button className='duplicateItem' label={__('Duplicate', 'bplugins')} onClick={duplicateShadow}>{gearIcon}{__('Duplicate', 'bplugins')}</Button>
+						<Button className='duplicateItem' label={__('Duplicate')} onClick={duplicateShadow}>{gearIcon}{__('Duplicate')}</Button>
 					</PanelRow>
 				</>}
 
 				<br />
 				<div className='addItem'>
-					<Button label={__('Add New Shadow', 'bplugins')} onClick={() => onChange([...shadow, defaultVal[0]])}><Dashicon icon='plus' />{__('Add New Shadow', 'bplugins')}</Button>
+					<Button label={__('Add New Shadow')} onClick={() => onChange([...shadow, defaultVal[0]])}><Dashicon icon='plus' />{__('Add New Shadow')}</Button>
 				</div>
 			</>}
 		/>

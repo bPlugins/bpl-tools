@@ -15,7 +15,7 @@ import { pxUnit, perUnit, emUnit, remUnit } from '../../../utils/options';
 import { scrollIcon } from '../../../utils/icons';
 
 export const SpaceControl = props => {
-	const { className = '', label = __('Space:', 'bplugins'), value, onChange, defaults = {} } = props;
+	const { className = '', label = __('Space:'), value, onChange, defaults = {} } = props;
 
 	const defaultVal = { side: 2, vertical: '0px', horizontal: '0px', top: '0px', right: '0px', bottom: '0px', left: '0px' }
 
@@ -75,13 +75,13 @@ export const SpaceControl = props => {
 			<Label className=''>{label}</Label>
 
 			<ButtonGroup className={`bPlBtnGroup`}>
-				<Tooltip text={__('Vertical, Horizontal', 'bplugins')} placement='top' position='top'>
+				<Tooltip text={__('Vertical, Horizontal')} placement='top' position='top'>
 					<Button className='side2' isSmall={true} isMedium={false} isPrimary={2 === getValue('side')} aria-pressed={2 === getValue('side')} onClick={() => onChange({ ...value, ['side']: 2, ['vertical']: `${(getIntVal('top') + getIntVal('bottom')) / 2}px`, ['horizontal']: `${(getIntVal('left') + getIntVal('right')) / 2}px` })}>
 						<span className='scrollIcon'>{scrollIcon}</span>
 						<span className='sideScrollIcon'>{scrollIcon}</span>
 					</Button>
 				</Tooltip>
-				<Tooltip text={__('Top, Right, Bottom, Left', 'bplugins')} placement='top' position='top'>
+				<Tooltip text={__('Top, Right, Bottom, Left')} placement='top' position='top'>
 					<Button isSmall={true} isMedium={false} isPrimary={4 === getValue('side')} aria-pressed={4 === getValue('side')} onClick={() => onChange({ ...value, ['side']: 4, ['top']: getValue('vertical'), ['right']: getValue('horizontal'), ['bottom']: getValue('vertical'), ['left']: getValue('horizontal') })}>
 						<Dashicon icon='arrow-up-alt' />
 						<Dashicon icon='arrow-right-alt' />
@@ -98,19 +98,19 @@ export const SpaceControl = props => {
 		</PanelRow>
 
 		{2 === getValue('side') && <PanelRow className='twoColumn'>
-			<UnitControl label={__('Top Bottom:', 'bplugins')} labelPosition='top' value={getValue('vertical')} onChange={val => setValue('vertical', val)} units={[pxUnit(), perUnit(), emUnit(), remUnit()]} />
+			<UnitControl label={__('Top Bottom:')} labelPosition='top' value={getValue('vertical')} onChange={val => setValue('vertical', val)} units={[pxUnit(), perUnit(), emUnit(), remUnit()]} />
 
-			<UnitControl label={__('Left Right:', 'bplugins')} labelPosition='top' value={getValue('horizontal')} onChange={val => setValue('horizontal', val)} units={[pxUnit(), perUnit(), emUnit(), remUnit()]} />
+			<UnitControl label={__('Left Right:')} labelPosition='top' value={getValue('horizontal')} onChange={val => setValue('horizontal', val)} units={[pxUnit(), perUnit(), emUnit(), remUnit()]} />
 		</PanelRow>}
 
 		{4 === getValue('side') && <PanelRow className='fourColumn'>
-			<UnitControl label={__('Top:', 'bplugins')} labelPosition='top' value={getValue('top')} onChange={val => setValue('top', val)} units={[pxUnit(), perUnit(), emUnit(), remUnit()]} />
+			<UnitControl label={__('Top:')} labelPosition='top' value={getValue('top')} onChange={val => setValue('top', val)} units={[pxUnit(), perUnit(), emUnit(), remUnit()]} />
 
-			<UnitControl label={__('Right:', 'bplugins')} labelPosition='top' value={getValue('right')} onChange={val => setValue('right', val)} units={[pxUnit(), perUnit(), emUnit(), remUnit()]} />
+			<UnitControl label={__('Right:')} labelPosition='top' value={getValue('right')} onChange={val => setValue('right', val)} units={[pxUnit(), perUnit(), emUnit(), remUnit()]} />
 
-			<UnitControl label={__('Bottom:', 'bplugins')} labelPosition='top' value={getValue('bottom')} onChange={val => setValue('bottom', val)} units={[pxUnit(), perUnit(), emUnit(), remUnit()]} />
+			<UnitControl label={__('Bottom:')} labelPosition='top' value={getValue('bottom')} onChange={val => setValue('bottom', val)} units={[pxUnit(), perUnit(), emUnit(), remUnit()]} />
 
-			<UnitControl label={__('Left:', 'bplugins')} labelPosition='top' value={getValue('left')} onChange={val => setValue('left', val)} units={[pxUnit(), perUnit(), emUnit(), remUnit()]} />
+			<UnitControl label={__('Left:')} labelPosition='top' value={getValue('left')} onChange={val => setValue('left', val)} units={[pxUnit(), perUnit(), emUnit(), remUnit()]} />
 		</PanelRow>}
 	</div>
 };

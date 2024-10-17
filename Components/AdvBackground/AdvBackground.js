@@ -1,4 +1,5 @@
-import { Fragment, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { withSelect } from '@wordpress/data';
 import { TabPanel, PanelRow, __experimentalInputControl as InputControl, RangeControl, SelectControl, ToggleControl, __experimentalUnitControl as UnitControl } from '@wordpress/components';
 
 import { Label } from '../Label/Label';
@@ -18,7 +19,7 @@ const defImgProp = {
 	customSize: '0px',
 }
 
-export const AdvBackground = ({ name = 'Background', value, onChange, device, isVideo = false }) => {
+export const AdvBackground = ({ name = 'Background', value, onChange, isVideo = false, isHover = false, device }) => {
 	const [bgValue, setBgValue] = useState(value || {
 		type: 'color',
 		color: '#0000',
@@ -29,19 +30,21 @@ export const AdvBackground = ({ name = 'Background', value, onChange, device, is
 			tablet: defImgProp,
 			mobile: defImgProp,
 		},
-		video: { url: '', loop: false }
+		video: { url: '', loop: false },
+		transition: 0.3
 	});
 
-	const { type, color, gradient, img = {}, video = {} } = value || bgValue || {};
+	const { type, color, gradient, img = {}, video = {}, transition = 0.3 } = value || bgValue || {};
 	const { position = 'center center', xPosition, yPosition, attachment, repeat = 'no-repeat', size = 'cover', customSize, } = img?.[device] || {};
 
-	useEffect(() => onChange(bgValue), [bgValue])
+	useEffect(() => onChange(bgValue), [bgValue]);
 
 	return <>
-		<Label className='mt10 mb10'>{name} Type</Label>
+		{isHover && <RangeControl className='mt10 mb10' label={`${name} Transition`} value={transition} onChange={(val) => onChange({ ...value, transition: val })} min={0} max={5} step={0.05} />}
 
+		<Label className='mt10 mb10'>{name} Type</Label>
 		<TabPanel className='bPlTabPanel mini' activeClass='activeTab' tabs={isVideo ? bgTabs : bgTabs.filter(t => t.name !== 'video')} initialTabName={type} onSelect={tab => onChange({ ...value, type: tab })}>{tab => <>
-			{'color' === tab.name && <SolidBackground label={`${name} Color`} value={color} onChange={(val) => onChange({ ...value, color: val })} />}
+			{'color' === tab.name && <SolidBackground className='mt20' label={`${name} Color`} value={color} onChange={(val) => onChange({ ...value, color: val })} />}
 
 			{'gradient' === tab.name && <Gradient value={gradient} onChange={(val) => onChange({ ...value, gradient: val })} />}
 
@@ -147,4 +150,10 @@ export const AdvBackground = ({ name = 'Background', value, onChange, device, is
 		</TabPanel>
 	</>
 };
-export default AdvBackground;
+export default withSelect((select) => {
+	const { __experimentalGetPreviewDeviceType } = select('core/edit-post');
+
+	return {
+		device: __experimentalGetPreviewDeviceType()?.toLowerCase()
+	}
+})(AdvBackground);

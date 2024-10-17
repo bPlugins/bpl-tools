@@ -10,7 +10,7 @@ import { getImageSizes } from '../../../utils/functions';
 
 
 export const ImageHolderControl = props => {
-	const { className, label = __('Image:', 'bplugins'), value = {}, onChange } = props;
+	const { className, label = __('Image:'), value = {}, onChange } = props;
 
 	const onImageSelect = ({ id, url, alt, title }) => onChange({ ...value, id, url, alt, title });
 
@@ -21,10 +21,10 @@ export const ImageHolderControl = props => {
 			<div className='mediaControl'>
 				<MediaUpload allowedTypes={['image']} value={value?.id} onSelect={onImageSelect} render={({ open }) =>
 					!value.url ? <div className='btnControl'>
-						<Button icon='upload' onClick={open}>{__('Upload', 'bplugins')}</Button>
+						<Button icon='upload' onClick={open}>{__('Upload')}</Button>
 					</div> : <div className='btnControl'>
-						<Button icon='controls-repeat' onClick={open}>{__('Replace', 'bplugins')}</Button>
-						<Button icon='exit' onClick={() => onChange({})} className='btnRed'>{__('Remove', 'bplugins')}</Button>
+						<Button icon='controls-repeat' onClick={open}>{__('Replace')}</Button>
+						<Button icon='exit' onClick={() => onChange({})} className='btnRed'>{__('Remove')}</Button>
 					</div>} />
 			</div>
 
@@ -48,12 +48,12 @@ export const ChangeImageData = withSelect((select, props) => {
 
 	return <div className={className}>
 		{value?.url && !isBlobURL(value?.url) && <>
-			<Label className='mb5'>{__('Alt Text (Alternative Text):', 'bplugins')}</Label>
+			<Label className='mb5'>{__('Alt Text (Alternative Text):')}</Label>
 			<TextControl value={value?.alt} onChange={val => setValue('alt', val)} />
 		</>}
 
 		{value?.id && 0 !== getImageSizes(image, imageSizes)?.length && <PanelRow>
-			<Label className=''>{__('Select Size:', 'bplugins')}</Label>
+			<Label className=''>{__('Select Size:')}</Label>
 			<SelectControl value={value?.url} onChange={val => setValue('url', val)} options={getImageSizes(image, imageSizes)} />
 		</PanelRow>}
 	</div>
@@ -61,7 +61,7 @@ export const ChangeImageData = withSelect((select, props) => {
 
 
 export const ImageEditControl = props => {
-	const { label = __('Edit Image:', 'bplugins'), value = {}, onChange } = props;
+	const { label = __('Edit Image:'), value = {}, onChange } = props;
 
 	const onImageSelect = ({ id, url, alt, title }) => onChange({ ...value, id, url, alt, title });
 
@@ -74,7 +74,7 @@ export const ImageEditControl = props => {
 
 
 export const ImagePlaceholder = withNotices(props => {
-	const { label = __(' Image:', 'bplugins'), icon = 'format-image', value = {}, onChange, noticeOperations, noticeUI } = props;
+	const { label = __(' Image:'), icon = 'format-image', value = {}, onChange, noticeOperations, noticeUI } = props;
 
 	const onImageSelect = ({ id, url, alt, title }) => onChange({ ...value, id, url, alt, title });
 

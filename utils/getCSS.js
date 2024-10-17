@@ -1,3 +1,5 @@
+import { mobileBreakpoint, tabBreakpoint } from './data';
+
 export const getBackgroundCSS = (bg, isSolid = true, isGradient = true, isImage = true) => {
 	const { type = 'solid', color = '#000000b3', gradient = 'linear-gradient(135deg, #4527a4, #8344c5)', image = {}, position = 'center center', attachment = 'initial', repeat = 'no-repeat', size = 'cover', overlayColor = '#000000b3' } = bg || {};
 
@@ -32,6 +34,28 @@ export const getBorderCSS = (border) => {
 	`;
 
 	return styles;
+}
+
+export const getBorderBoxCSS = (border) => {
+	if (!border) return '';
+
+	const generateBorderCSS = (borderObj) => {
+		const { color = '#000000', style = 'solid', width = '0px' } = borderObj;
+		return `${width} ${style} ${color}`;
+	};
+
+	if ('object' === typeof border && !Array.isArray(border)) {
+		if (border.hasOwnProperty('top') || border.hasOwnProperty('right') || border.hasOwnProperty('bottom') || border.hasOwnProperty('left')) {
+			const sides = ['top', 'right', 'bottom', 'left'];
+			return sides.map(side =>
+				border[side] ? `border-${side}: ${generateBorderCSS(border[side])};` : ''
+			).join(' ').trim();
+		} else {
+			return `border: ${generateBorderCSS(border)};`;
+		}
+	}
+
+	return '';
 }
 
 export const getColorsCSS = (colors) => {
@@ -137,12 +161,12 @@ export const getTypoCSS = (selector, typo, isFamily = true) => {
 		styles: `${selector}{
 			${styles}
 		}
-		@media (max-width: 768px) {
+		${tabBreakpoint} {
 			${selector}{
 				${`font-size: ${tabletFontSize}px;`}
 			}
 		}
-		@media (max-width: 576px) {
+		${mobileBreakpoint} {
 			${selector}{
 				${`font-size: ${mobileFontSize}px;`}
 			}
@@ -150,22 +174,36 @@ export const getTypoCSS = (selector, typo, isFamily = true) => {
 	}
 }
 
-export const getBoxCSS = (val = {}) => Object.values(val).join(' ');
+export const getBoxCSS = (val) => {
+	if (!val) return '0';
+
+	if (typeof val === 'string') return val;
+
+	if (typeof val === 'object' && !Array.isArray(val)) {
+		const order = ['top', 'right', 'bottom', 'left'];
+		return order.map(side => val[side] || '0').join(' ');
+	}
+
+	return '0';
+};
+export const getPropertyBoxCSS = (property, value) => value ? `${property}: ${getBoxCSS(value)};` : '';
 
 // Murad Wahid
 export const getGradientCSS = (gradient) => {
-	const { type, radialType, colors, centerPositions, angel } = gradient;
+	const { type, radialType, colors, centerPositions, angel } = gradient || {};
 
 	if (gradient) {
 		const gradientColors = colors?.map(({ color, position }) => `${color} ${position}%`);
 		const liner = `linear-gradient(${angel}deg, ${gradientColors})`;
 		const radial = `radial-gradient(${radialType} at ${centerPositions?.x}% ${centerPositions?.y}%,${gradientColors})`;
 
-		return type === 'linear' ? `background:${liner};` : `background:${radial};`;
+		return type === 'linear' ? `background: ${liner};` : `background: ${radial};`;
 	}
 	return '';
 };
+
 const getSolidBGCSS = (bg) => `${bg ? `background: ${bg};` : ''}`;
+
 const getImagePosition = (img) => {
 	const { position = 'center center', xPosition = 0, yPosition = 0, attachment = '', repeat = 'no-repeat', size = 'cover', customSize = '0px' } = img || {};
 
@@ -176,7 +214,7 @@ const getImagePosition = (img) => {
 		${size ? `background-size: ${'custom' === size ? `${customSize} auto` : size};` : ''}
 	`;
 };
-const getImageCSS = (img) => {
+const getImageCSS = (img = {}) => {
 	let desktop, tablet, mobile;
 	if (Object.keys(img).length > 1) {
 		if (img?.desktop) {
@@ -200,7 +238,7 @@ const getImageCSS = (img) => {
 };
 
 const getVideoCSS = (video, selector) => {
-	const { url, loop } = video;
+	const { url, loop } = video || {};
 	const parentEl = document.querySelector(selector);
 
 	const el = parentEl?.querySelector('.bPlVideo');
@@ -229,7 +267,7 @@ const getVideoCSS = (video, selector) => {
   	}`;
 }
 export const getAdvBGCSS = (background, selector, isHover = false) => {
-	const { type, color, gradient, img, video } = background || {};
+	const { type, color, gradient, img, video, transition } = background || {};
 
 	const bgCSS =
 		type === 'color'
@@ -244,20 +282,25 @@ export const getAdvBGCSS = (background, selector, isHover = false) => {
 	const mobile = type === 'image' ? getImageCSS(img).mobile : '';
 
 	const sl = isHover ? `${selector}:hover` : selector;
+	console.log(transition);
 
 	return `
 		${type === 'video' ? getVideoCSS(video, selector) : ''}
 		
+		${selector}{
+			${transition ? `transition: all ${transition || 0.3}s ease-in-out;` : ''}
+		}
+
 		${sl}{
 			${bgCSS}
 		}
   
-		@media only screen and (min-width:641px) and (max-width: 1024px) {
+		${tabBreakpoint} {
 			${sl}{
 				${tablet}
 			}
 		}
-		@media only screen and (max-width: 640px) {
+		${mobileBreakpoint} {
 			${sl}{
 				${mobile}
 			}
@@ -266,9 +309,10 @@ export const getAdvBGCSS = (background, selector, isHover = false) => {
 };
 
 export const getOverlayCSS = (overlay, selector, isHover = false) => {
-	const { isEnabled, colors, opacity, blend, isCssFilter, blur, brightness, contrast, saturation, hue } = overlay || {};
+	const { isEnabled, colors, opacity, blend, filter = '', blur = 0, brightness = 100, contrast = 100, saturation = 100, hue = 0 } = overlay || {};
 
-	const filter = isCssFilter ? `filter: brightness(${brightness}%) contrast(${contrast}%) saturate(${saturation}%) blur(${blur}px) hue-rotate(${hue}deg); -webkit-filter:brightness(${brightness}%) contrast(${contrast}%) saturate(${saturation}%) blur(${blur}px) hue-rotate(${hue}deg);` : '';
+	const filterCSSValue = `${100 !== brightness ? `brightness(${brightness}%)` : ''} ${100 !== contrast ? `contrast(${contrast}%)` : ''} ${100 !== saturation ? `saturate(${saturation}%)` : ''} ${0 !== blur ? `blur(${blur}px)` : ''} ${0 !== hue ? `hue-rotate(${hue}deg)` : ''}`;
+	const filterCSS = `${filter}: ${filter ? filterCSSValue : ''}; -webkit-${filter}: ${filter ? filterCSSValue : ''};`;
 
 	const blendCSS = blend ? `mix-blend-mode: ${blend};` : ''
 
@@ -284,7 +328,7 @@ export const getOverlayCSS = (overlay, selector, isHover = false) => {
 		${sl}{
 			opacity: ${opacity};
 			${blendCSS}
-			${filter}
+			${filterCSS}
 		}
 	`.replace(/\s+/g, ' ').trim() : ''
 };

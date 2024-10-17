@@ -5,27 +5,27 @@ import { bookIcon, headsetIcon, starIcon, rightArrowIcon } from '../../utils/ico
 import './HelpPanel.scss';
 
 export const HelpPanel = ({ slug, docsLink }) => {
-	return <PanelBody className='bPlPanelBody bPlHelpPanel' title={__('Help', 'bplugins')} initialOpen={false}>
+	return <PanelBody className='bPlPanelBody bPlHelpPanel' title={__('Help')} initialOpen={false}>
 
 		<div className='helpItems'>
 			{docsLink && <a href={docsLink} target='_blank' rel='noreferrer'>
 				{bookIcon}
-				<p>{__('Read Documentation', 'bplugins')}</p>
+				<p>{__('Read Documentation')}</p>
 			</a>}
 
 			<a href='https://bplugins.com/support' target='_blank' rel='noreferrer'>
 				{headsetIcon}
-				<p>{__('Contact Support', 'bplugins')}</p>
+				<p>{__('Contact Support')}</p>
 			</a>
 
 			{slug && <a href={`https://wordpress.org/support/plugin/${slug}/reviews/#new-post`} target='_blank' rel='noreferrer'>
 				{starIcon}
-				<p>{__('Rate Plugin', 'bplugins')}</p>
+				<p>{__('Rate Plugin')}</p>
 			</a>}
 
 			<a href='https://bplugins.com/products' target='_blank' rel='noreferrer'>
 				{rightArrowIcon}
-				<p>{__('Other Plugins', 'bplugins')}</p>
+				<p>{__('Other Plugins')}</p>
 			</a>
 		</div>
 	</PanelBody>

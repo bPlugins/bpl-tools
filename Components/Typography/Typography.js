@@ -19,7 +19,7 @@ import fontLists from './fontLists';
 import { fontStyles, textTransforms, textDecorations } from './options';
 
 export const Typography = props => {
-	const { className = '', label = __('Typography:', 'bplugins'), value, onChange, defaults = {}, isFamily = true } = props;
+	const { className = '', label = __('Typography:'), value, onChange, defaults = {}, isFamily = true } = props;
 
 	const defaultVal = { fontFamily: 'Default', fontCategory: 'sans-serif', fontWeight: 400, isUploadFont: true, fontSize: { desktop: 15, tablet: 15, mobile: 15 }, fontStyle: 'normal', textTransform: 'none', textDecoration: 'auto', lineHeight: '135%', letterSpace: '0px' }
 
@@ -64,8 +64,8 @@ export const Typography = props => {
 				{/* Font Family & Weight */}
 				{isFamily ? <>
 					<PanelRow className='bPlTypoFontTitle'>
-						<Label className=''>{__('Font Family:', 'bplugins')}</Label>
-						<Label className=''>{__('Weight:', 'bplugins')}</Label>
+						<Label className=''>{__('Font Family:')}</Label>
+						<Label className=''>{__('Weight:')}</Label>
 					</PanelRow>
 					<PanelRow className='bPlTypoFont'>
 						<div className='bPlTypoFontSelect'>
@@ -85,49 +85,49 @@ export const Typography = props => {
 						<SelectControl value={getValue('fontVariant')} onChange={val => { onChange({ ...value, ['fontWeight']: parseInt(val?.replace('00i', '00')), ['fontVariant']: val }) }} options={fontWeights()} />
 					</PanelRow>
 
-					<ToggleControl className='mt10' label={__('Upload Google Font', 'bplugins')} checked={getValue('isUploadFont')} onChange={val => setValue('isUploadFont', val)} />
+					<ToggleControl className='mt10' label={__('Upload Google Font')} checked={getValue('isUploadFont')} onChange={val => setValue('isUploadFont', val)} />
 				</> : <PanelRow>
-					<Label className=''>{__('Weight:', 'bplugins')}</Label>
+					<Label className=''>{__('Weight:')}</Label>
 					<SelectControl value={getValue('fontWeight')} onChange={val => setValue('fontWeight', val)} options={fontWeights()} />
 				</PanelRow>}
 
 
 				{/* Font Size */}
 				<PanelRow className='mt20'>
-					<Label className=''>{__('Font Size:', 'bplugins')}</Label>
+					<Label className=''>{__('Font Size:')}</Label>
 					<BDevice device={device} onChange={val => setDevice(val)} />
 				</PanelRow>
 				<RangeControl value={getValue('fontSize')?.[device] || getValue('fontSize')} onChange={val => setValue('fontSize', val, device)} min={0} max={120} step={1} allowReset={true} resetFallbackValue={getDefault('fontSize')?.[device] || getDefault('fontSize')} initialPosition={getDefault('fontSize')?.[device] || getDefault('fontSize')} />
 
 				{/* Font Style */}
 				<PanelRow className='mt20'>
-					<Label className=''>{__('Font Style:', 'bplugins')}</Label>
+					<Label className=''>{__('Font Style:')}</Label>
 					<SelectControl value={getValue('fontStyle')} onChange={val => setValue('fontStyle', val)} options={fontStyles} />
 					{resetValue('fontStyle')}
 				</PanelRow>
 
 				{/* Text Transform */}
 				<PanelRow className='mt20'>
-					<Label className='mt5'>{__('Text Transform:', 'bplugins')}</Label>
+					<Label className='mt5'>{__('Text Transform:')}</Label>
 					<BtnGroup value={getValue('textTransform')} onChange={val => setValue('textTransform', val)} options={textTransforms} isTextIcon={true} />
 				</PanelRow>
 
 				{/* Text Decoration */}
 				<PanelRow className='mt20'>
-					<Label className=''>{__('Text Decoration:', 'bplugins')}</Label>
+					<Label className=''>{__('Text Decoration:')}</Label>
 					<SelectControl value={getValue('textDecoration')} onChange={val => setValue('textDecoration', val)} options={textDecorations} />
 					{resetValue('textDecoration')}
 				</PanelRow>
 
 				{/* Line Height */}
 				<PanelRow className='mt20'>
-					<UnitControl label={__('Line Height:', 'bplugins')} labelPosition='left' value={getValue('lineHeight')} onChange={val => setValue('lineHeight', val)} units={[pxUnit(24), perUnit(135), emUnit(2), remUnit(2)]} isResetValueOnUnitChange={true} />
+					<UnitControl label={__('Line Height:')} labelPosition='left' value={getValue('lineHeight')} onChange={val => setValue('lineHeight', val)} units={[pxUnit(24), perUnit(135), emUnit(2), remUnit(2)]} isResetValueOnUnitChange={true} />
 					{resetValue('lineHeight')}
 				</PanelRow>
 
 				{/* Letter Spacing */}
 				<PanelRow className='mt20'>
-					<UnitControl label={__('Letter Spacing:', 'bplugins')} labelPosition='left' value={getValue('letterSpace')} onChange={val => setValue('letterSpace', val)} units={[pxUnit(), emUnit(), remUnit()]} />
+					<UnitControl label={__('Letter Spacing:')} labelPosition='left' value={getValue('letterSpace')} onChange={val => setValue('letterSpace', val)} units={[pxUnit(), emUnit(), remUnit()]} />
 					{resetValue('letterSpace')}
 				</PanelRow>
 			</>}

@@ -56,7 +56,15 @@ export const bgTypes = [
 ];
 
 export const advBgOptions = {
-	normal: { type: "color", color: "#0000", gradient: {}, img: {} },
-	hover: { type: "color", color: "#0000", gradient: {}, img: {} },
-	hoverType: "normal",
+	normal: { type: 'color', color: '#0000', gradient: {}, img: {} },
+	hover: { type: 'color', color: '#0000', gradient: {}, img: {} },
+	hoverType: 'normal',
 };
+
+export const overflows = [
+	{ label: 'Default', value: '' },
+	{ label: 'Auto', value: 'auto' },
+	{ label: 'Hidden', value: 'hidden' },
+	{ label: 'Visible', value: 'visible' },
+	{ label: 'Scroll', value: 'scroll' },
+];

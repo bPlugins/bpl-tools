@@ -15,7 +15,7 @@ import { gradients } from '../../utils/options';
 import { bgTypes, attachments, repeats, sizes } from './options';
 
 export const Background = props => {
-	const { className = '', label = __('Background', 'bplugins'), value = {}, onChange, defaults = {}, isSolid = true, isGradient = true, isImage = true } = props;
+	const { className = '', label = __('Background'), value = {}, onChange, defaults = {}, isSolid = true, isGradient = true, isImage = true } = props;
 
 	const defaultVal = { type: 'solid', color: '#000000b3', gradient: 'linear-gradient(135deg, #4527a4, #8344c5)', image: {}, position: 'center center', attachment: 'initial', repeat: 'no-repeat', size: 'cover', overlayColor: '#000000b3' }
 
@@ -35,7 +35,7 @@ export const Background = props => {
 			renderContent={() => <>
 				{/* Type */}
 				<PanelRow>
-					<Label className=''>{__('Type:', 'bplugins')}</Label>
+					<Label className=''>{__('Type:')}</Label>
 					<BtnGroup value={getValue('type')} onChange={val => setValue('type', val)} options={bgTypes.filter(bgType => {
 						switch (bgType.value) {
 							case 'solid':
@@ -50,39 +50,39 @@ export const Background = props => {
 					})} />
 				</PanelRow>
 
-				{'solid' === getValue('type') && isSolid && <ColorControl className='mt20' label={__('Color:', 'bplugins')} value={getValue('color')} onChange={val => setValue('color', val)} defaultColor={getDefault('color')} />}
+				{'solid' === getValue('type') && isSolid && <ColorControl className='mt20' label={__('Color:')} value={getValue('color')} onChange={val => setValue('color', val)} defaultColor={getDefault('color')} />}
 
 				{'gradient' === getValue('type') && isGradient && <Gradient className='mt20' value={getValue('gradient')} onChange={val => setValue('gradient', val)} gradients={gradients} />}
 
 				{'image' === getValue('type') && isImage && <>
-					<Label className='mb5'>{__('Image', 'bplugins')}</Label>
+					<Label className='mb5'>{__('Image')}</Label>
 					<InlineDetailMediaUpload types={['image']} value={getValue('image')} onChange={val => setValue('image', val)} />
 
 					<PanelRow>
-						<Label className=''>{__('Position', 'bplugins')}</Label>
+						<Label className=''>{__('Position')}</Label>
 						<AlignmentMatrixControl value={getValue('position')} onChange={val => setValue('position', val)} />
 						{resetValue('position')}
 					</PanelRow>
 
 					<PanelRow>
-						<Label className=''>{__('Attachment:', 'bplugins')}</Label>
+						<Label className=''>{__('Attachment:')}</Label>
 						<SelectControl value={getValue('attachment')} onChange={val => setValue('attachment', val)} options={attachments} />
 						{resetValue('attachments')}
 					</PanelRow>
 
 					<PanelRow>
-						<Label className=''>{__('Repeat:', 'bplugins')}</Label>
+						<Label className=''>{__('Repeat:')}</Label>
 						<SelectControl value={getValue('repeat')} onChange={val => setValue('repeat', val)} options={repeats} />
 						{resetValue('repeat')}
 					</PanelRow>
 
 					<PanelRow>
-						<Label className=''>{__('Size:', 'bplugins')}</Label>
+						<Label className=''>{__('Size:')}</Label>
 						<SelectControl value={getValue('size')} onChange={val => setValue('size', val)} options={sizes} />
 						{resetValue('size')}
 					</PanelRow>
 
-					<ColorControl className='mt20' label={__('Overlay Color:', 'bplugins')} value={getValue('overlayColor')} onChange={val => setValue('overlayColor', val)} defaultColor={getDefault('overlayColor')} />
+					<ColorControl className='mt20' label={__('Overlay Color:')} value={getValue('overlayColor')} onChange={val => setValue('overlayColor', val)} defaultColor={getDefault('overlayColor')} />
 				</>}
 			</>}
 		/>

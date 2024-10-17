@@ -37,7 +37,7 @@ const ThemeColors = withSelect((select) => {
 });
 
 export const ColorControl = props => {
-	const { className = '', label = __('Color:', 'bplugins'), value, onChange, defaultColor, disableAlpha = false } = props;
+	const { className = '', label = __('Color:'), value, onChange, defaultColor, disableAlpha = false } = props;
 
 	return <PanelRow className={className}>
 		<Label className=''>{label}</Label>
@@ -49,7 +49,7 @@ export const ColorControl = props => {
 						<button className='bPlColorButton' onClick={onToggle} aria-expanded={isOpen} style={{ backgroundColor: value || 'transparent' }} />
 					</div>
 
-					{defaultColor && defaultColor != value && <Button className='bPlResetVal' icon='image-rotate' label={__('Reset', 'bplugins')} onClick={() => onChange(defaultColor)} />}
+					{defaultColor && defaultColor != value && <Button className='bPlResetVal' icon='image-rotate' label={__('Reset')} onClick={() => onChange(defaultColor)} />}
 				</>;
 			}}
 
@@ -64,7 +64,7 @@ export const ColorControl = props => {
 
 
 export const HexColorControl = props => {
-	const { className = '', label = __('Color:', 'bplugins'), value, onChange, defaultColor, disableAlpha } = props;
+	const { className = '', label = __('Color:'), value, onChange, defaultColor, disableAlpha } = props;
 
 	return <PanelRow className={className}>
 		<Label className=''>{label}</Label>
@@ -75,7 +75,7 @@ export const HexColorControl = props => {
 					<button className='bPlColorButton' onClick={onToggle} aria-expanded={isOpen} style={{ backgroundColor: value || 'transparent' }} />
 				</div>
 
-				{defaultColor && defaultColor != value && <Button className='bPlResetVal' icon='image-rotate' label={__('Reset', 'bplugins')} onClick={() => onChange(defaultColor)} />}
+				{defaultColor && defaultColor != value && <Button className='bPlResetVal' icon='image-rotate' label={__('Reset')} onClick={() => onChange(defaultColor)} />}
 			</>}
 
 			renderContent={({ isOpen, onClose }) => <>

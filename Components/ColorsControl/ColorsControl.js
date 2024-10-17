@@ -15,7 +15,7 @@ import { Label, BtnGroup, ColorControl } from '../index';
 import { gradients, bgTypes } from '../../utils/options';
 
 export const ColorsControl = props => {
-	const { className = '', label = __('Colors:', 'bplugins'), value, onChange, defaults = {} } = props;
+	const { className = '', label = __('Colors:'), value, onChange, defaults = {} } = props;
 
 	const defaultVal = { color: '#333', bgType: 'solid', bg: '#0000', gradient: 'linear-gradient(135deg, #4527a4, #8344c5)' }
 
@@ -30,14 +30,14 @@ export const ColorsControl = props => {
 		<Dropdown className='bPlDropdownContainer' contentClassName='bPlDropdownPopover' popoverProps={{ placement: 'bottom-end' }}
 			renderToggle={({ isOpen, onToggle }) => <Button icon='edit' onClick={onToggle} aria-expanded={isOpen} />}
 			renderContent={() => <>
-				<ColorControl label={__('Color:', 'bplugins')} value={getValue('color')} onChange={val => setValue('color', val)} defaultColor={getDefault('color')} />
+				<ColorControl label={__('Color:')} value={getValue('color')} onChange={val => setValue('color', val)} defaultColor={getDefault('color')} />
 
 				<PanelRow className='mt20'>
-					<Label className=''>{__('Background:', 'bplugins')}</Label>
+					<Label className=''>{__('Background:')}</Label>
 					<BtnGroup value={getValue('bgType')} onChange={val => setValue('bgType', val)} options={bgTypes} size='small' />
 				</PanelRow>
 
-				{'gradient' === getValue('bgType') ? <Gradient value={getValue('gradient')} onChange={val => setValue('gradient', val)} gradients={gradients} /> : <ColorControl label={__('Background Color:', 'bplugins')} value={getValue('bg')} onChange={val => setValue('bg', val)} defaultColor={getDefault('bg')} />}
+				{'gradient' === getValue('bgType') ? <Gradient value={getValue('gradient')} onChange={val => setValue('gradient', val)} gradients={gradients} /> : <ColorControl label={__('Background Color:')} value={getValue('bg')} onChange={val => setValue('bg', val)} defaultColor={getDefault('bg')} />}
 			</>}
 		/>
 	</PanelRow>

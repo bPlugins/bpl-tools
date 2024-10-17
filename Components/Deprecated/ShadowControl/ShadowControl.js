@@ -14,7 +14,7 @@ import { Label, ColorControl } from '../../index';
 import { pxUnit, emUnit, remUnit } from '../../../utils/options';
 
 export const ShadowControl = props => {
-	const { className = '', label = __('Shadow', 'bplugins'), value, onChange, defaults = {} } = props;
+	const { className = '', label = __('Shadow'), value, onChange, defaults = {} } = props;
 
 	const defaultVal = { type: 'box', hOffset: '0px', vOffset: '0px', blur: '0px', spreed: '0px', color: '#7090b0', isInset: false }
 
@@ -32,29 +32,29 @@ export const ShadowControl = props => {
 			renderToggle={({ isOpen, onToggle }) => <Button icon='edit' onClick={onToggle} aria-expanded={isOpen} />}
 			renderContent={() => <>
 				<PanelRow>
-					<UnitControl label={__('Horizontal Offset:', 'bplugins')} labelPosition='left' value={getValue('hOffset')} onChange={val => setValue('hOffset', val)} units={[pxUnit(), emUnit(), remUnit()]} />
+					<UnitControl label={__('Horizontal Offset:')} labelPosition='left' value={getValue('hOffset')} onChange={val => setValue('hOffset', val)} units={[pxUnit(), emUnit(), remUnit()]} />
 					{value?.hOffset && value?.hOffset !== getDefault('hOffset') && resetValue('hOffset')}
 				</PanelRow>
 
 				<PanelRow>
-					<UnitControl label={__('Vertical Offset:', 'bplugins')} labelPosition='left' value={getValue('vOffset')} onChange={val => setValue('vOffset', val)} units={[pxUnit(), emUnit(), remUnit()]} />
+					<UnitControl label={__('Vertical Offset:')} labelPosition='left' value={getValue('vOffset')} onChange={val => setValue('vOffset', val)} units={[pxUnit(), emUnit(), remUnit()]} />
 					{value?.vOffset && value?.vOffset !== getDefault('vOffset') && resetValue('vOffset')}
 				</PanelRow>
 
 				<PanelRow>
-					<UnitControl label={__('Blur:', 'bplugins')} labelPosition='left' value={getValue('blur')} onChange={val => setValue('blur', val)} units={[pxUnit(), emUnit(), remUnit()]} />
+					<UnitControl label={__('Blur:')} labelPosition='left' value={getValue('blur')} onChange={val => setValue('blur', val)} units={[pxUnit(), emUnit(), remUnit()]} />
 					{value?.blur && value?.blur !== getDefault('blur') && resetValue('blur')}
 				</PanelRow>
-				<small>{__('Blur cannot be negative value!', 'bplugins')}</small>
+				<small>{__('Blur cannot be negative value!')}</small>
 
 				{'box' === getValue('type') && <PanelRow>
-					<UnitControl label={__('Spreed:', 'bplugins')} labelPosition='left' value={getValue('spreed')} onChange={val => setValue('spreed', val)} units={[pxUnit(), emUnit(), remUnit()]} />
+					<UnitControl label={__('Spreed:')} labelPosition='left' value={getValue('spreed')} onChange={val => setValue('spreed', val)} units={[pxUnit(), emUnit(), remUnit()]} />
 					{value?.spreed && value?.spreed !== getDefault('spreed') && resetValue('spreed')}
 				</PanelRow>}
 
-				<ColorControl label={__('Color:', 'bplugins')} value={getValue('color')} onChange={val => setValue('color', val)} defaultColor={getDefault('color')} />
+				<ColorControl label={__('Color:')} value={getValue('color')} onChange={val => setValue('color', val)} defaultColor={getDefault('color')} />
 
-				{'box' === getValue('type') && <ToggleControl className='mt20' label={__('Shadow Inset?', 'bplugins')} checked={getValue('isInset')} onChange={val => setValue('isInset', val)} />}
+				{'box' === getValue('type') && <ToggleControl className='mt20' label={__('Shadow Inset?')} checked={getValue('isInset')} onChange={val => setValue('isInset', val)} />}
 			</>}
 		/>
 	</PanelRow>

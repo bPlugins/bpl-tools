@@ -17,19 +17,19 @@ export const FrontShortCode = withSelect((select) => {
 		input.select();
 		input.setSelectionRange(0, 30);
 		document.execCommand('copy');
-		tooltip.current.innerHTML = __('Copied Successfully!', 'bplugins');
+		tooltip.current.innerHTML = __('Copied Successfully!');
 		setTimeout(() => {
-			tooltip.current.innerHTML = __('Copy To Clipboard', 'bplugins');
+			tooltip.current.innerHTML = __('Copy To Clipboard');
 		}, 1500);
 	};
 
 	return postType === currentPostType && <div className='bPlFrontShortCode'>
-		<Label className='mb5'>{__('Copy the shortcode and use it anywhere.', 'bplugins')}</Label>
+		<Label className='mb5'>{__('Copy the shortcode and use it anywhere.')}</Label>
 
 		<div className='bPlFrontShortCodeInput'>
 			<input onClick={handleCopyShortCode} value={shortCode} />
 			<span ref={tooltip} className='tooltip'>
-				{__('Copy To Clipboard', 'bplugins')}
+				{__('Copy To Clipboard')}
 			</span>
 		</div>
 	</div>

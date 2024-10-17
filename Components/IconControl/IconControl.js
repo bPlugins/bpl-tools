@@ -24,7 +24,7 @@ const generateName = cl => cl?.slice(cl?.indexOf(' fa-') + 4);
 const generateTitle = cl => generateName(cl)?.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
 
 export const IconControl = props => {
-	const { className = '', label = __('Select Icon:', 'bplugins'), value = {}, onChange, defaults = {}, isSize = true, isColor = true } = props;
+	const { className = '', label = __('Select Icon:'), value = {}, onChange, defaults = {}, isSize = true, isColor = true } = props;
 
 	const defaultVal = { class: '', fontSize: 16, colorType: 'solid', color: 'inherit', gradient: 'linear-gradient(135deg, #4527a4, #8344c5)' }
 
@@ -64,17 +64,17 @@ export const IconControl = props => {
 		</div>
 
 		{isSize && <>
-			<Label>{__('Icon Size:', 'bplugins')}</Label>
+			<Label>{__('Icon Size:')}</Label>
 			<RangeControl value={getValue('fontSize')} onChange={val => setValue('fontSize', val)} min={0} max={400} step={1} allowReset={true} resetFallbackValue={getDefault('fontSize')} initialPosition={getDefault('fontSize')} />
 		</>}
 
 		{isColor && <>
 			<PanelRow className='mt20'>
-				<Label className=''>{__('Icon Color Type:', 'bplugins')}</Label>
+				<Label className=''>{__('Icon Color Type:')}</Label>
 				<BtnGroup value={getValue('colorType')} onChange={val => setValue('colorType', val)} options={bgTypes} size='small' />
 			</PanelRow>
 
-			{'gradient' === getValue('colorType') ? <Gradient value={getValue('gradient')} onChange={val => setValue('gradient', val)} gradients={gradients} /> : <ColorControl label={__('Icon Color:', 'bplugins')} value={getValue('color')} onChange={val => setValue('color', val)} defaultColor={getDefault('color')} />}
+			{'gradient' === getValue('colorType') ? <Gradient value={getValue('gradient')} onChange={val => setValue('gradient', val)} gradients={gradients} /> : <ColorControl label={__('Icon Color:')} value={getValue('color')} onChange={val => setValue('color', val)} defaultColor={getDefault('color')} />}
 		</>}
 	</>
 };

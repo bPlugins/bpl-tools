@@ -1,24 +1,37 @@
 import Dimension from './Dimension';
 import Background from './Background';
+import BorderShadow from './BorderShadow';
+import Visibility from './Visibility';
+import Responsive from './Responsive';
+import CustomCSS from './CustomCSS';
 import { updateData } from '../utils/functions';
 
 const defEnabled = {
 	dimension: ['padding', 'margin'],
-	background: ['normal', 'hover']
+	background: ['normal', 'hover', 'overlay'],
+	borderShadow: ['normal', 'hover', 'border', 'shadow'],
+	visibility: ['zIndex', 'overflow'],
+	responsive: true,
+	css: true
 }
 
 const Advanced = ({ advanced, onChange, enabled = defEnabled }) => {
-	const { dimension, background } = advanced || {};
+	const { dimension = {}, background = {}, borderShadow = {}, visibility = {}, responsive = {}, css = '' } = advanced || {};
 
 	const isEnabled = (which) => Object.prototype.hasOwnProperty.call(enabled, which);
 
 	return <>
-		{isEnabled('dimension') && <Dimension dimension={dimension} onChange={val => {
-			console.log(val);
-			onChange(updateData(advanced, val, 'dimension'))
-		}} enabled={enabled.dimension} />}
+		{isEnabled('dimension') && <Dimension dimension={dimension} onChange={val => onChange(updateData(advanced, val, 'dimension'))} enabled={enabled.dimension} />}
 
 		{isEnabled('background') && <Background background={background} onChange={val => onChange(updateData(advanced, val, 'background'))} enabled={enabled.background} />}
+
+		{isEnabled('borderShadow') && (enabled.borderShadow?.includes('border') || enabled.borderShadow?.includes('shadow')) && <BorderShadow borderShadow={borderShadow} onChange={val => onChange(updateData(advanced, val, 'borderShadow'))} enabled={enabled.borderShadow} />}
+
+		{isEnabled('visibility') && <Visibility visibility={visibility} onChange={val => onChange(updateData(advanced, val, 'visibility'))} enabled={enabled.visibility} />}
+
+		{isEnabled('responsive') && <Responsive responsive={responsive} onChange={val => onChange(updateData(advanced, val, 'responsive'))} />}
+
+		{isEnabled('css') && <CustomCSS css={css} onChange={val => onChange(updateData(advanced, val, 'css'))} />}
 	</>
 }
 export default Advanced;

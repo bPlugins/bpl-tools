@@ -1,10 +1,11 @@
-import { getAdvBGCSS, getBoxCSS } from '../utils/getCSS';
+import { getAdvBGCSS, getOverlayCSS, getBorderBoxCSS, getPropertyBoxCSS, getMultiShadowCSS } from '../utils/getCSS';
+import { tabBreakpoint, mobileBreakpoint } from '../utils/data';
 
 const dimensionCSS = (dimension) => {
 	const { padding, margin } = dimension || {};
 
-	const pCSS = (p) => p ? `padding: ${getBoxCSS(p)};` : '';
-	const mCSS = (m) => m ? `margin: ${getBoxCSS(m)};` : '';
+	const pCSS = (p) => getPropertyBoxCSS('padding', p);
+	const mCSS = (m) => getPropertyBoxCSS('margin', m);
 
 	return {
 		desktop: pCSS(padding?.desktop) + mCSS(margin?.desktop),
@@ -14,34 +15,86 @@ const dimensionCSS = (dimension) => {
 		mobile: pCSS(padding?.mobile) + mCSS(margin?.mobile)
 	};
 }
+const borderShadowCSS = (borderShadow) => {
+	const { normal, hover } = borderShadow || {};
+
+	const stateGenerate = (state) => {
+		const { border, radius, shadow } = state || {};
+
+		const radiusCSS = radius ? getPropertyBoxCSS('border-radius', radius) : '';
+		const shadowCSS = shadow ? `box-shadow: ${getMultiShadowCSS(shadow)};` : '';
+
+		return getBorderBoxCSS(border) + radiusCSS + shadowCSS;
+	};
+
+	return {
+		normal: stateGenerate(normal),
+		hover: stateGenerate(hover)
+	};
+}
+const visibilityCSS = (visibility) => {
+	const { zIndex, overflow } = visibility || {};
+
+	const overflowCSS = overflow ? `overflow: ${overflow};` : '';
+	const zIndexCSS = device => zIndex?.[device] ? `z-index: ${zIndex[device]}` : '';
+
+	return {
+		desktop: zIndexCSS('desktop') + overflowCSS,
+		tablet: zIndexCSS('tablet'),
+		mobile: zIndexCSS('mobile')
+	};
+}
+const responsiveCSS = (responsive) => {
+	const { desktop = false, tablet = false, mobile = false } = responsive || {};
+
+	const resCSS = val => val ? `display: none;` : '';
+
+	return {
+		desktop: resCSS(desktop),
+		tablet: resCSS(tablet),
+		mobile: resCSS(mobile)
+	};
+}
 
 export const generateCSS = (id, advanced) => {
-	const { dimension, background } = advanced || {};
+	const { dimension, background, borderShadow, visibility, responsive, css = '' } = advanced || {};
 
-	const dCSS = dimensionCSS(dimension).desktop;
-	const tCSS = dimensionCSS(dimension).tablet;
-	const mCSS = dimensionCSS(dimension).mobile;
+	const selector = `#${id}`;
+
+	const dCSS = dimensionCSS(dimension).desktop + visibilityCSS(visibility).desktop + responsiveCSS(responsive).desktop;
+	const tCSS = dimensionCSS(dimension).tablet + visibilityCSS(visibility).tablet + responsiveCSS(responsive).tablet;
+	const mCSS = dimensionCSS(dimension).mobile + visibilityCSS(visibility).mobile + responsiveCSS(responsive).mobile;
+
+	const nCSS = borderShadowCSS(borderShadow).normal;
+	const hCSS = borderShadowCSS(borderShadow).hover;
 
 	return `
-		${dCSS ? `#${id} {
+		${(dCSS || nCSS) ? `${selector} {
 			${dCSS}
-			${background?.transition ? `transition all ${background?.transition} ease;` : ''}
+			${nCSS}
+		}` : ''}
+		${(hCSS) ? `${selector}:hover {
+			${hCSS}
 		}` : ''}
 
-		${tCSS ? `@media only screen and (min-width:641px) and (max-width: 1024px) {
-			#${id}{
+		${tCSS ? `${tabBreakpoint} {
+			${selector}{
 				${tCSS}
 			}
 		}` : ''}
 
-		${mCSS ? `@media only screen and (max-width: 640px) {
-			#${id}{
+		${mCSS ? `${mobileBreakpoint} {
+			${selector}{
 				${mCSS}
 			}
 		}` : ''}
 
-		${getAdvBGCSS(background?.normal, `#${id}`)}
-		${getAdvBGCSS(background?.hover, `#${id}`, true)}
+		${getAdvBGCSS(background?.normal, selector)}
+		${getAdvBGCSS(background?.hover, selector, true)}
+		${getOverlayCSS(background?.overlay, selector)}
+		${getOverlayCSS(background?.hoverOverlay, selector, true)}
+
+		${css}
 	`.replace(/\s+/g, ' ');
 }
 export default generateCSS;

@@ -1,22 +1,26 @@
 import { withSelect } from '@wordpress/data';
-import { PanelBody, TabPanel, RangeControl } from '@wordpress/components';
+import { PanelBody, TabPanel } from '@wordpress/components';
 
-import { AdvBackground } from '../Components';
+import { AdvBackground, OverlayControl } from '../Components';
 import { updateData } from '../utils/functions';
 
-const Background = ({ background, onChange, enabled, isVideo, device }) => {
-	const tabs = enabled?.map(e => ({ title: e, name: e }));
+const Background = ({ background, onChange, enabled, isVideo }) => {
+	const tabs = enabled?.filter(e => 'overlay' !== e)?.map(e => ({ title: e, name: e }));
 
 	const isEnabled = (which) => enabled.includes(which);
 
-	return <PanelBody className='bPlPanelBody' title='Background'>
+	return <PanelBody className='bPlPanelBody' title='Background' initialOpen={false}>
 		<TabPanel className='bPlTabPanel small' activeClass='activeTab' tabs={tabs}>{tab => <>
-			{'normal' === tab.name && <AdvBackground name={'Background'} value={background?.[tab.name]} onChange={(val) => onChange(updateData(background, val, tab.name))} isVideo={isVideo} device={device} />}
+			{'normal' === tab.name && <>
+				<AdvBackground name={'Background'} value={background?.[tab.name]} onChange={(val) => onChange(updateData(background, val, tab.name))} isVideo={isVideo} />
+
+				{isEnabled('overlay') && <OverlayControl value={background?.overlay} onChange={(val) => onChange(updateData(background, val, 'overlay'))} />}
+			</>}
 
 			{'hover' === tab.name && <>
-				<RangeControl className='mt10 mb5' label={`Hover Transition`} value={background?.transition} onChange={(val) => onChange(updateData(background, val, 'transition'))} min={0} max={5} step={0.05} />
+				<AdvBackground name={'Hover Background'} value={background?.[tab.name]} onChange={(val) => onChange(updateData(background, val, tab.name))} isVideo={false} isHover={true} />
 
-				<AdvBackground name={'Hover Background'} value={background?.[tab.name]} onChange={(val) => onChange(updateData(background, val, tab.name))} device={device} isVideo={false} />
+				{isEnabled('overlay') && <OverlayControl value={background?.hoverOverlay} onChange={(val) => onChange(updateData(background, val, 'hoverOverlay'))} />}
 			</>}
 		</>}
 		</TabPanel>
