@@ -56,12 +56,19 @@ const responsiveCSS = (responsive) => {
 	};
 }
 
+const transitionCSS = (background, borderShadow) => {
+	const { transition: bgT = 0.4 } = background || {};
+	const { transition: bsT = 0.4 } = borderShadow || {};
+
+	return `transition: background ${bgT}s, border ${bsT}s, border-radius ${bsT}s, box-shadow ${bsT}s;`
+}
+
 export const generateCSS = (id, advanced) => {
 	const { dimension, background, borderShadow, visibility, responsive, css = '' } = advanced || {};
 
 	const selector = `#${id}`;
 
-	const dCSS = dimensionCSS(dimension).desktop + visibilityCSS(visibility).desktop + responsiveCSS(responsive).desktop;
+	const dCSS = dimensionCSS(dimension).desktop + visibilityCSS(visibility).desktop + responsiveCSS(responsive).desktop + transitionCSS(background, borderShadow);
 	const tCSS = dimensionCSS(dimension).tablet + visibilityCSS(visibility).tablet + responsiveCSS(responsive).tablet;
 	const mCSS = dimensionCSS(dimension).mobile + visibilityCSS(visibility).mobile + responsiveCSS(responsive).mobile;
 

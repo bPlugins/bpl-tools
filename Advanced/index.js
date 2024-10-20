@@ -1,6 +1,7 @@
 import Dimension from './Dimension';
 import Background from './Background';
 import BorderShadow from './BorderShadow';
+import Animation from './Animation';
 import Visibility from './Visibility';
 import Responsive from './Responsive';
 import CustomCSS from './CustomCSS';
@@ -10,6 +11,7 @@ const defEnabled = {
 	dimension: ['padding', 'margin'],
 	background: ['normal', 'hover', 'overlay'],
 	borderShadow: ['normal', 'hover', 'border', 'shadow'],
+	animation: true,
 	visibility: ['zIndex', 'overflow'],
 	responsive: true,
 	css: true
@@ -26,6 +28,8 @@ const Advanced = ({ advanced, onChange, enabled = defEnabled }) => {
 		{isEnabled('background') && <Background background={background} onChange={val => onChange(updateData(advanced, val, 'background'))} enabled={enabled.background} />}
 
 		{isEnabled('borderShadow') && (enabled.borderShadow?.includes('border') || enabled.borderShadow?.includes('shadow')) && <BorderShadow borderShadow={borderShadow} onChange={val => onChange(updateData(advanced, val, 'borderShadow'))} enabled={enabled.borderShadow} />}
+
+		{/* {isEnabled('animation') && <Animation animation={animation} onChange={val => onChange(updateData(advanced, val, 'animation'))} />} */}
 
 		{isEnabled('visibility') && <Visibility visibility={visibility} onChange={val => onChange(updateData(advanced, val, 'visibility'))} enabled={enabled.visibility} />}
 

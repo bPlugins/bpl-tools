@@ -24,9 +24,9 @@ const Visibility = ({ visibility, onChange, enabled, device }) => {
 	</PanelBody>
 }
 export default withSelect((select) => {
-	const { __experimentalGetPreviewDeviceType } = select('core/edit-post');
+	const { getDeviceType } = select('core/editor');
 
 	return {
-		device: __experimentalGetPreviewDeviceType()?.toLowerCase()
+		device: getDeviceType()?.toLowerCase()
 	}
 })(Visibility);

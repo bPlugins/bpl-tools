@@ -1,5 +1,5 @@
 import { withSelect } from '@wordpress/data';
-import { PanelBody, TabPanel } from '@wordpress/components';
+import { PanelBody, TabPanel, RangeControl } from '@wordpress/components';
 
 import { AdvBackground, OverlayControl } from '../Components';
 import { updateData } from '../utils/functions';
@@ -18,6 +18,8 @@ const Background = ({ background, onChange, enabled, isVideo }) => {
 			</>}
 
 			{'hover' === tab.name && <>
+				<RangeControl className='mt10 mb10' label='Hover Transition' value={background?.transition || 0.4} onChange={val => onChange(updateData(background, val, 'transition'))} min={0} max={10} step={0.05} />
+
 				<AdvBackground name={'Hover Background'} value={background?.[tab.name]} onChange={(val) => onChange(updateData(background, val, tab.name))} isVideo={false} isHover={true} />
 
 				{isEnabled('overlay') && <OverlayControl value={background?.hoverOverlay} onChange={(val) => onChange(updateData(background, val, 'hoverOverlay'))} />}
@@ -27,9 +29,9 @@ const Background = ({ background, onChange, enabled, isVideo }) => {
 	</PanelBody>
 }
 export default withSelect((select) => {
-	const { __experimentalGetPreviewDeviceType } = select('core/edit-post');
+	const { getDeviceType } = select('core/editor');
 
 	return {
-		device: __experimentalGetPreviewDeviceType()?.toLowerCase()
+		device: getDeviceType()?.toLowerCase()
 	}
 })(Background);

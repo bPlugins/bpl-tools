@@ -269,6 +269,12 @@ $secondaryColor: #8344c5;
 // Panel Body
 .bPlPanelBody,
 .bPlDropdownPopover .components-popover__content {
+	label {
+		font-size: 13px !important;
+		font-weight: 400 !important;
+		text-transform: unset !important;
+	}
+
 	.components-notice {
 		margin: 0;
 

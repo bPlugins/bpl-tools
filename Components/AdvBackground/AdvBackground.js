@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { withSelect } from '@wordpress/data';
-import { TabPanel, PanelRow, __experimentalInputControl as InputControl, RangeControl, SelectControl, ToggleControl, __experimentalUnitControl as UnitControl } from '@wordpress/components';
+import { TabPanel, PanelRow, __experimentalInputControl as InputControl, SelectControl, ToggleControl, __experimentalUnitControl as UnitControl } from '@wordpress/components';
 
 import { Label } from '../Label/Label';
 import { SolidBackground } from '../SolidBackground/SolidBackground';
@@ -30,18 +30,15 @@ export const AdvBackground = ({ name = 'Background', value, onChange, isVideo = 
 			tablet: defImgProp,
 			mobile: defImgProp,
 		},
-		video: { url: '', loop: false },
-		transition: 0.3
+		video: { url: '', loop: false }
 	});
 
-	const { type, color, gradient, img = {}, video = {}, transition = 0.3 } = value || bgValue || {};
+	const { type, color, gradient, img = {}, video = {} } = value || bgValue || {};
 	const { position = 'center center', xPosition, yPosition, attachment, repeat = 'no-repeat', size = 'cover', customSize, } = img?.[device] || {};
 
 	useEffect(() => onChange(bgValue), [bgValue]);
 
 	return <>
-		{isHover && <RangeControl className='mt10 mb10' label={`${name} Transition`} value={transition} onChange={(val) => onChange({ ...value, transition: val })} min={0} max={5} step={0.05} />}
-
 		<Label className='mt10 mb10'>{name} Type</Label>
 		<TabPanel className='bPlTabPanel mini' activeClass='activeTab' tabs={isVideo ? bgTabs : bgTabs.filter(t => t.name !== 'video')} initialTabName={type} onSelect={tab => onChange({ ...value, type: tab })}>{tab => <>
 			{'color' === tab.name && <SolidBackground className='mt20' label={`${name} Color`} value={color} onChange={(val) => onChange({ ...value, color: val })} />}
@@ -151,9 +148,9 @@ export const AdvBackground = ({ name = 'Background', value, onChange, isVideo = 
 	</>
 };
 export default withSelect((select) => {
-	const { __experimentalGetPreviewDeviceType } = select('core/edit-post');
+	const { getDeviceType } = select('core/editor');
 
 	return {
-		device: __experimentalGetPreviewDeviceType()?.toLowerCase()
+		device: getDeviceType()?.toLowerCase()
 	}
 })(AdvBackground);

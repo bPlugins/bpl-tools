@@ -158,7 +158,6 @@ export const IconLibrary = ({ className = '', label = __('Icon Library'), value,
                                     <div className='bPl-icon-library-single-icon-wrapper'>
                                         {searchedIcons?.icons?.map((icon, i) => {
                                             const svgIcons = icon.svg;
-                                            // console.log(svgIcons);
 
                                             return Object.keys(svgIcons).map((key, idx) => (
                                                 <div

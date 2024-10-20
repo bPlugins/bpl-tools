@@ -1,6 +1,6 @@
 import { __ } from '@wordpress/i18n';
 import { withSelect } from '@wordpress/data';
-import { PanelBody, TabPanel, PanelRow, __experimentalBorderBoxControl as BorderBoxControl } from '@wordpress/components';
+import { PanelBody, TabPanel, PanelRow, RangeControl, __experimentalBorderBoxControl as BorderBoxControl } from '@wordpress/components';
 
 import { Label, ShadowControl, BoxControl } from '../Components';
 import { updateData } from '../utils/functions';
@@ -26,8 +26,10 @@ const BorderShadow = ({ borderShadow, onChange, enabled }) => {
 			</>}
 
 			{'hover' === tab.name && <>
+				<RangeControl className='mt10 mb10' label='Hover Transition' value={borderShadow?.transition || 0.4} onChange={val => onChange(updateData(borderShadow, val, 'transition'))} min={0} max={10} step={0.05} />
+
 				{isEnabled('border') && <>
-					<BorderBoxControl label={__('Borders')} value={borderShadow?.[tab.name]?.border} onChange={val => onChange(updateData(borderShadow, val, tab.name, 'border'))} />
+					<BorderBoxControl className='mt20' label={__('Borders')} value={borderShadow?.[tab.name]?.border} onChange={val => onChange(updateData(borderShadow, val, tab.name, 'border'))} />
 
 					<PanelRow className='mt20 mb5'>
 						<Label className=''>{__('Border Radius')}</Label>
@@ -42,9 +44,9 @@ const BorderShadow = ({ borderShadow, onChange, enabled }) => {
 	</PanelBody>
 }
 export default withSelect((select) => {
-	const { __experimentalGetPreviewDeviceType } = select('core/edit-post');
+	const { getDeviceType } = select('core/editor');
 
 	return {
-		device: __experimentalGetPreviewDeviceType()?.toLowerCase()
+		device: getDeviceType()?.toLowerCase()
 	}
 })(BorderShadow);

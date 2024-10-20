@@ -5,16 +5,16 @@ import './style.css';
 
 export const Device = compose(
 	withSelect((select) => {
-		const { __experimentalGetPreviewDeviceType } = select('core/edit-post');
+		const { getDeviceType } = select('core/editor');
 
 		return {
-			device: __experimentalGetPreviewDeviceType()?.toLowerCase(),
+			device: getDeviceType()?.toLowerCase(),
 		};
 	}),
 	withDispatch((dispatch) => {
 		return {
 			setDevice(device) {
-				return dispatch('core/edit-post').__experimentalSetPreviewDeviceType(device);
+				return dispatch('core/editor').setDeviceType(device);
 			},
 		};
 	})

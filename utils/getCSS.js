@@ -267,7 +267,7 @@ const getVideoCSS = (video, selector) => {
   	}`;
 }
 export const getAdvBGCSS = (background, selector, isHover = false) => {
-	const { type, color, gradient, img, video, transition } = background || {};
+	const { type, color, gradient, img, video } = background || {};
 
 	const bgCSS =
 		type === 'color'
@@ -282,14 +282,9 @@ export const getAdvBGCSS = (background, selector, isHover = false) => {
 	const mobile = type === 'image' ? getImageCSS(img).mobile : '';
 
 	const sl = isHover ? `${selector}:hover` : selector;
-	console.log(transition);
 
 	return `
 		${type === 'video' ? getVideoCSS(video, selector) : ''}
-		
-		${selector}{
-			${transition ? `transition: all ${transition || 0.3}s ease-in-out;` : ''}
-		}
 
 		${sl}{
 			${bgCSS}
