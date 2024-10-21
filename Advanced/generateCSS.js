@@ -36,7 +36,7 @@ const visibilityCSS = (visibility) => {
 	const { zIndex, overflow } = visibility || {};
 
 	const overflowCSS = overflow ? `overflow: ${overflow};` : '';
-	const zIndexCSS = device => zIndex?.[device] ? `z-index: ${zIndex[device]}` : '';
+	const zIndexCSS = device => zIndex?.[device] ? `z-index: ${zIndex[device]};` : '';
 
 	return {
 		desktop: zIndexCSS('desktop') + overflowCSS,
