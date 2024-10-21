@@ -55,16 +55,36 @@ export const bgTypes = [
 	{ label: 'Gradient', value: 'gradient' }
 ];
 
-export const advBgOptions = {
-	normal: { type: 'color', color: '#0000', gradient: {}, img: {} },
-	hover: { type: 'color', color: '#0000', gradient: {}, img: {} },
-	hoverType: 'normal',
-};
-
 export const overflows = [
-	{ label: 'Default', value: '' },
-	{ label: 'Auto', value: 'auto' },
-	{ label: 'Hidden', value: 'hidden' },
-	{ label: 'Visible', value: 'visible' },
-	{ label: 'Scroll', value: 'scroll' },
+	{ label: __('Default'), value: '' },
+	{ label: __('Auto'), value: 'auto' },
+	{ label: __('Hidden'), value: 'hidden' },
+	{ label: __('Visible'), value: 'visible' },
+	{ label: __('Scroll'), value: 'scroll' },
+];
+
+export const animationTypes = [
+	{ label: __('None'), value: '' },
+	{ label: __('Fade Up'), value: 'fade-up' },
+	{ label: __('Fade Down'), value: 'fade-down' },
+	{ label: __('Fade Left'), value: 'fade-left' },
+	{ label: __('Fade Right'), value: 'fade-right' },
+	{ label: __('Fade Up Left'), value: 'fade-up-left' },
+	{ label: __('Fade Up Right'), value: 'fade-up-right' },
+	{ label: __('Fade Down Left'), value: 'fade-down-left' },
+	{ label: __('Fade Down Right'), value: 'fade-down-right' },
+	{ label: __('Flip Left'), value: 'flip-left' },
+	{ label: __('Flip Right'), value: 'flip-right' },
+	{ label: __('Flip Up'), value: 'flip-up' },
+	{ label: __('Flip Down'), value: 'flip-down' },
+	{ label: __('Zoom In'), value: 'zoom-in' },
+	{ label: __('Zoom In Up'), value: 'zoom-in-up' },
+	{ label: __('Zoom In Down'), value: 'zoom-in-down' },
+	{ label: __('Zoom In Left'), value: 'zoom-in-left' },
+	{ label: __('Zoom In Right'), value: 'zoom-in-right' },
+	{ label: __('Zoom Out'), value: 'zoom-out' },
+	{ label: __('Zoom Out Up'), value: 'zoom-out-up' },
+	{ label: __('Zoom Out Down'), value: 'zoom-out-down' },
+	{ label: __('Zoom Out Right'), value: 'zoom-out-right' },
+	{ label: __('Zoom Out Left'), value: 'zoom-out-left' }
 ];

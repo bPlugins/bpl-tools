@@ -18,7 +18,7 @@ export const getBackgroundCSS = (bg, isSolid = true, isGradient = true, isImage 
 } // PHP version in Stepped Content
 
 export const getBorderCSS = (border) => {
-	const { width = '0px', style = 'solid', color = '#0000', side = 'all', radius = '0px' } = border || {};
+	const { width = '0px', style = 'solid', color = '', side = 'all', radius = '0px' } = border || {};
 
 	const borderSideCheck = s => {
 		const bSide = side?.toLowerCase();
@@ -59,7 +59,7 @@ export const getBorderBoxCSS = (border) => {
 }
 
 export const getColorsCSS = (colors) => {
-	const { color = '#333', bgType = 'solid', bg = '#0000', gradient = 'linear-gradient(135deg, #4527a4, #8344c5)' } = colors || {};
+	const { color = '#333', bgType = 'solid', bg = '', gradient = 'linear-gradient(135deg, #4527a4, #8344c5)' } = colors || {};
 
 	const styles = `
 		${color ? `color: ${color};` : ''}
@@ -267,7 +267,7 @@ const getVideoCSS = (video, selector) => {
   	}`;
 }
 export const getAdvBGCSS = (background, selector, isHover = false) => {
-	const { type, color, gradient, img, video } = background || {};
+	const { type = 'color', color, gradient, img, video } = background || {};
 
 	const bgCSS =
 		type === 'color'
@@ -304,7 +304,7 @@ export const getAdvBGCSS = (background, selector, isHover = false) => {
 };
 
 export const getOverlayCSS = (overlay, selector, isHover = false) => {
-	const { isEnabled, colors, opacity, blend, filter = '', blur = 0, brightness = 100, contrast = 100, saturation = 100, hue = 0 } = overlay || {};
+	const { isEnabled, colors, opacity = 1, blend, filter = '', blur = 0, brightness = 100, contrast = 100, saturation = 100, hue = 0 } = overlay || {};
 
 	const filterCSSValue = `${100 !== brightness ? `brightness(${brightness}%)` : ''} ${100 !== contrast ? `contrast(${contrast}%)` : ''} ${100 !== saturation ? `saturate(${saturation}%)` : ''} ${0 !== blur ? `blur(${blur}px)` : ''} ${0 !== hue ? `hue-rotate(${hue}deg)` : ''}`;
 	const filterCSS = `${filter}: ${filter ? filterCSSValue : ''}; -webkit-${filter}: ${filter ? filterCSSValue : ''};`;

@@ -65,7 +65,7 @@ function getBorderCSS( $border ) {
 	extract( $border );
 	$width = $width ?? '0px';
 	$style = $style ?? 'solid';
-	$color = $color ?? '#0000';
+	$color = $color ?? '';
 	$side = $side ?? 'all';
 	$radius = $radius ?? '0px';
 

@@ -20,7 +20,7 @@ Add an attribute in `block.json` file.
 	"type": "object",
 	"default": {
 		"color": "#333",
-		"bg": "#0000"
+		"bg": ""
 	}
 }
 ```
@@ -34,7 +34,7 @@ import { ColorsControl } from '../../Components';
 
 const { colors } = attributes;
 
-return <ColorsControl value={colors} onChange={val => setAttributes({ colors: val })} defaults={{ color: '#333', bg: '#0000' }} />
+return <ColorsControl value={colors} onChange={val => setAttributes({ colors: val })} defaults={{ color: '#333', bg: '' }} />
 ```
 
 More props in [Options](#options).
@@ -66,7 +66,7 @@ function getColorsCSS( $colors ) {
 	extract( $colors );
 	$color = $color ?? '#333';
 	$bgType = $bgType ?? 'solid';
-	$bg = $bg ?? '#0000';
+	$bg = $bg ?? '';
 	$gradient = $gradient ?? 'linear-gradient(135deg, #4527a4, #8344c5)';
 
 	$background = $bgType === 'gradient' ? $gradient : $bg;

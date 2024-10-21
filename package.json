@@ -1,13 +1,20 @@
 {
-  "name": "bpl-tools",
-  "version": "1.0.0",
-  "dependencies": {
-    "immer": "^10.1.1",
-    "react-ace": "^12.0.0",
-    "react-sortable-hoc": "^2.0.0",
-    "select-pure": "^0.6.2"
-  },
-  "devDependencies": {
-    "eslint-webpack-plugin": "^4.2.0"
-  }
+	"name": "bpl-tools",
+	"version": "1.0.0",
+	"description": "This tools is use for Gutenberg Blocks",
+	"author": "Wasek Bellah",
+	"license": "ISC",
+	"scripts": {
+		"lint": "eslint src"
+	},
+	"dependencies": {
+		"immer": "^10.1.1",
+		"react-ace": "^12.0.0",
+		"react-sortable-hoc": "^2.0.0",
+		"select-pure": "^0.6.2"
+	},
+	"devDependencies": {
+		"@wordpress/scripts": "^30.3.0",
+		"eslint-webpack-plugin": "^4.2.0"
+	}
 }

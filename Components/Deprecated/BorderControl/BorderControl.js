@@ -16,7 +16,7 @@ import { borderStyles, pxUnit, perUnit, emUnit, remUnit, sides } from '../../../
 export const BorderControl = props => {
 	const { className = '', label = __('Border:'), value, onChange, defaults = {} } = props;
 
-	const defaultVal = { width: '0px', style: 'solid', color: '#0000', side: 'all', radius: '0px' }
+	const defaultVal = { width: '0px', style: 'solid', color: '', side: 'all', radius: '0px' }
 
 	const getDefault = property => defaults?.[property] || defaultVal[property];
 	const setDefault = property => onChange({ ...value, [property]: getDefault(property) });

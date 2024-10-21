@@ -19,7 +19,7 @@ Add an attribute in `block.json` file.
 "background": {
 	"type": "object",
 	"default": {
-		"color": "#0000"
+		"color": ""
 	}
 }
 ```

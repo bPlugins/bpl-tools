@@ -1,0 +1,22 @@
+{
+	"editor.cursorBlinking": "expand",
+	"editor.cursorSmoothCaretAnimation": "on",
+	"editor.cursorWidth": 2,
+	"editor.fontSize": 17,
+	"editor.formatOnSave": true,
+	"editor.indentSize": 4,
+	"editor.minimap.enabled": true,
+	"editor.wordWrap": "on",
+	"files.autoSave": "onWindowChange",
+	"html.format.indentInnerHtml": true,
+	"html.completion.attributeDefaultValue": "singlequotes",
+	"javascript.preferences.quoteStyle": "single",
+	"javascript.updateImportsOnFileMove.enabled": "always",
+	"[php]": {
+		"editor.formatOnSave": false
+	},
+	"emmet.triggerExpansionOnTab": true,
+	"emmet.includeLanguages": {
+		"javascript": "javascriptreact",
+	}
+}

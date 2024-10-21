@@ -5,7 +5,7 @@ import './BoxControl.scss';
 import { Label } from '../Label/Label';
 
 export const BoxControl = (props) => {
-	const { label, values, onChange = () => { }, resetValues, defaultValues, units, sides, style, className, disableUnits = false } = props;
+	const { label, values = {}, onChange = () => { }, resetValues, defaultValues, units, sides, style, className, disableUnits = false } = props;
 	const [link, setLink] = useState(true);
 
 	const unitSides = sides || ['top', 'right', 'bottom', 'left'];

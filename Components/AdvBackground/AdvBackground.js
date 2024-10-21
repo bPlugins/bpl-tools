@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { withSelect } from '@wordpress/data';
 import { TabPanel, PanelRow, __experimentalInputControl as InputControl, SelectControl, ToggleControl, __experimentalUnitControl as UnitControl } from '@wordpress/components';
 
@@ -7,36 +6,11 @@ import { SolidBackground } from '../SolidBackground/SolidBackground';
 import { MediaArea } from '../MediaControl/MediaControl';
 import { Device } from '../Device/Device';
 import { Gradient } from '../Gradient/Gradient';
-import { advGradientOptions, bgTabs, imgAttachmentOptions, imgPositionOptions, imgRepeatOptions, imgSizeOptions, unitOptions, } from './utils/options';
+import { bgTabs, imgAttachmentOptions, imgPositionOptions, imgRepeatOptions, imgSizeOptions, unitOptions } from './utils/options';
 
-const defImgProp = {
-	position: 'center-center',
-	xPosition: 0,
-	yPosition: 0,
-	attachment: '',
-	repeat: 'no-repeat',
-	size: '',
-	customSize: '0px',
-}
-
-export const AdvBackground = ({ name = 'Background', value, onChange, isVideo = false, isHover = false, device }) => {
-	const [bgValue, setBgValue] = useState(value || {
-		type: 'color',
-		color: '#0000',
-		gradient: advGradientOptions,
-		img: {
-			url: '',
-			desktop: defImgProp,
-			tablet: defImgProp,
-			mobile: defImgProp,
-		},
-		video: { url: '', loop: false }
-	});
-
-	const { type, color, gradient, img = {}, video = {} } = value || bgValue || {};
+export const AdvBackground = ({ name = 'Background', value, onChange, isVideo = false, device }) => {
+	const { type = 'color', color = '', gradient = {}, img = {}, video = {} } = value || {};
 	const { position = 'center center', xPosition, yPosition, attachment, repeat = 'no-repeat', size = 'cover', customSize, } = img?.[device] || {};
-
-	useEffect(() => onChange(bgValue), [bgValue]);
 
 	return <>
 		<Label className='mt10 mb10'>{name} Type</Label>

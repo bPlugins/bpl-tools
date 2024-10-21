@@ -17,7 +17,7 @@ import { gradients, bgTypes } from '../../utils/options';
 export const ColorsControl = props => {
 	const { className = '', label = __('Colors:'), value, onChange, defaults = {} } = props;
 
-	const defaultVal = { color: '#333', bgType: 'solid', bg: '#0000', gradient: 'linear-gradient(135deg, #4527a4, #8344c5)' }
+	const defaultVal = { color: '#333', bgType: 'solid', bg: '', gradient: 'linear-gradient(135deg, #4527a4, #8344c5)' }
 
 	const getDefault = property => defaults?.[property] || defaultVal[property];
 

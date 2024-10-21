@@ -11,7 +11,6 @@
 import { PanelBody, RangeControl, SelectControl, ToggleControl } from '@wordpress/components';
 import { produce } from 'immer';
 
-import { advBgOptions } from '../../utils/options';
 import { AdvBackground } from '../AdvBackground/AdvBackground';
 
 const blendOptions = [
@@ -29,7 +28,7 @@ const blendOptions = [
 
 export const OverlayControl = (props) => {
 	const { value, onChange } = props;
-	const { isEnabled = false, colors = advBgOptions, opacity = 1, blend = 'normal', filter = '', blur = 0, brightness = 100, contrast = 100, saturation = 100, hue = 0, } = value || {};
+	const { isEnabled = false, colors = {}, opacity = 1, blend = 'normal', filter = '', blur = 0, brightness = 100, contrast = 100, saturation = 100, hue = 0, } = value || {};
 
 	const updateOverlay = (property, val, childP = null) => {
 		const newBG = produce(value || {}, (draft) => {

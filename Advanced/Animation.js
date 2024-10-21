@@ -1,38 +1,18 @@
-import { withSelect } from '@wordpress/data';
-import { PanelBody, PanelRow } from '@wordpress/components';
+import { __ } from '@wordpress/i18n';
+import { PanelBody, SelectControl, RangeControl } from '@wordpress/components';
 
-import { Label, Device, BoxControl } from '../Components';
 import { updateData } from '../utils/functions';
+import { animationTypes } from '../utils/options';
 
-const Dimension = ({ dimension, onChange, enabled, device }) => {
-	const { padding = {}, margin = {} } = dimension || {};
+const Animation = ({ animation, onChange }) => {
+	const { type = '', duration = 1, delay = 0 } = animation || {};
 
-	const isEnabled = (which) => enabled.includes(which);
+	return <PanelBody className='bPlPanelBody' title='Animation'>
+		<SelectControl label={__('Type')} labelPosition='left' value={type} onChange={val => onChange(updateData(animation, val, 'type'))} options={animationTypes} />
 
-	return <PanelBody className='bPlPanelBody' title='Dimension'>
-		{isEnabled('padding') && <>
-			<PanelRow className='mb5'>
-				<Label className=''>Padding</Label>
-				<Device />
-			</PanelRow>
+		<RangeControl className='mt20' label='Duration (s)' value={duration} onChange={val => onChange(updateData(animation, val, 'duration'))} min={0} max={3} step={0.05} />
 
-			<BoxControl values={padding[device]} onChange={val => onChange(updateData(dimension, val, 'padding', device))} />
-		</>}
-
-		{isEnabled('margin') && <>
-			<PanelRow className='mt20 mb5'>
-				<Label className=''>Margin</Label>
-				<Device />
-			</PanelRow>
-
-			<BoxControl values={margin[device]} onChange={val => onChange(updateData(dimension, val, 'margin', device))} />
-		</>}
+		<RangeControl className='mt20' label='Delay (s)' value={delay} onChange={val => onChange(updateData(animation, val, 'delay'))} min={0} max={3} step={0.05} />
 	</PanelBody>
 }
-export default withSelect((select) => {
-	const { getDeviceType } = select('core/editor');
-
-	return {
-		device: getDeviceType()?.toLowerCase()
-	}
-})(Dimension);
+export default Animation;
