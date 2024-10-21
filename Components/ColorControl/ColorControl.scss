@@ -1,4 +1,6 @@
 .bPlColorPopover {
+	z-index: 99999;
+
 	.components-popover__content {
 		min-width: auto;
 		max-width: 250px;
