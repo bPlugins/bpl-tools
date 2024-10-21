@@ -11,7 +11,7 @@
 import { PanelBody, RangeControl, SelectControl, ToggleControl } from '@wordpress/components';
 import { produce } from 'immer';
 
-import { AdvBackground } from '../AdvBackground/AdvBackground';
+import AdvBackground from '../AdvBackground/AdvBackground';
 
 const blendOptions = [
 	{ label: 'Normal', value: 'normal' },
