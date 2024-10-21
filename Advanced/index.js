@@ -17,7 +17,7 @@ const defEnabled = {
 	css: true
 }
 
-const Advanced = ({ advanced, onChange, enabled = defEnabled }) => {
+const Advanced = ({ advanced, onChange, enabled = defEnabled, isBGVideo = false }) => {
 	const { dimension = {}, background = {}, borderShadow = {}, visibility = {}, responsive = {}, css = '' } = advanced || {};
 
 	const isEnabled = (which) => Object.prototype.hasOwnProperty.call(enabled, which);
@@ -25,7 +25,7 @@ const Advanced = ({ advanced, onChange, enabled = defEnabled }) => {
 	return <>
 		{isEnabled('dimension') && <Dimension dimension={dimension} onChange={val => onChange(updateData(advanced, val, 'dimension'))} enabled={enabled.dimension} />}
 
-		{isEnabled('background') && <Background background={background} onChange={val => onChange(updateData(advanced, val, 'background'))} enabled={enabled.background} />}
+		{isEnabled('background') && <Background background={background} onChange={val => onChange(updateData(advanced, val, 'background'))} enabled={enabled.background} isVideo={isBGVideo} />}
 
 		{isEnabled('borderShadow') && (enabled.borderShadow?.includes('border') || enabled.borderShadow?.includes('shadow')) && <BorderShadow borderShadow={borderShadow} onChange={val => onChange(updateData(advanced, val, 'borderShadow'))} enabled={enabled.borderShadow} />}
 
