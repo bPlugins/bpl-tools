@@ -1,6 +1,6 @@
 import './style.scss';
 
-import { AdvBackground } from './AdvBackground/AdvBackground';
+import AdvBackground from './AdvBackground/AdvBackground';
 import { Background } from './Background/Background';
 import { BButtonGroup } from './BButtonGroup/BButtonGroup';
 import { BoxControl } from './BoxControl/BoxControl';

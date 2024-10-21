@@ -1,5 +1,4 @@
 import { __ } from '@wordpress/i18n';
-import { withSelect } from '@wordpress/data';
 import { PanelBody, TabPanel, PanelRow, RangeControl, __experimentalBorderBoxControl as BorderBoxControl } from '@wordpress/components';
 
 import { Label, ShadowControl, BoxControl } from '../Components';
@@ -43,10 +42,4 @@ const BorderShadow = ({ borderShadow, onChange, enabled }) => {
 		</TabPanel>
 	</PanelBody>
 }
-export default withSelect((select) => {
-	const { getDeviceType } = select('core/editor');
-
-	return {
-		device: getDeviceType()?.toLowerCase()
-	}
-})(BorderShadow);
+export default BorderShadow;

@@ -8,7 +8,7 @@ import { Device } from '../Device/Device';
 import { Gradient } from '../Gradient/Gradient';
 import { bgTabs, imgAttachmentOptions, imgPositionOptions, imgRepeatOptions, imgSizeOptions, unitOptions } from './utils/options';
 
-export const AdvBackground = ({ name = 'Background', value, onChange, isVideo = false, device }) => {
+const AdvBackground = ({ name = 'Background', value, onChange, isVideo = false, device }) => {
 	const { type = 'color', color = '', gradient = {}, img = {}, video = {} } = value || {};
 	const { position = 'center center', xPosition, yPosition, attachment, repeat = 'no-repeat', size = 'cover', customSize, } = img?.[device] || {};
 

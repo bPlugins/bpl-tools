@@ -3,7 +3,7 @@ import { SelectControl } from '@wordpress/components';
 
 import './SelectControlPro.scss';
 
-export const SelectControlPro = ({ className, onChange, isPremium = false, setIsProModalOpen = () => { }, options = [], proValues = [], ...restProps }) => {
+const SelectControlPro = ({ className, onChange, isPremium = false, setIsProModalOpen = () => { }, options = [], proValues = [], ...restProps }) => {
 	const newOptions = options.map(o => ({ ...o, label: (proValues?.includes(o.value) && !isPremium) ? `${o.label} - Pro` : o.label }));
 
 	const selectRef = useRef(null);
@@ -29,3 +29,4 @@ export const SelectControlPro = ({ className, onChange, isPremium = false, setIs
 		{...restProps}
 	/>
 }
+export default SelectControlPro;

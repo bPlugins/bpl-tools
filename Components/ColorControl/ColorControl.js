@@ -8,7 +8,6 @@
  * @return color (String)
  */
 
-import { useState } from 'react';
 import { __ } from '@wordpress/i18n';
 import { withSelect } from '@wordpress/data';
 import { Dropdown, ColorPicker, Button, PanelRow } from '@wordpress/components';
