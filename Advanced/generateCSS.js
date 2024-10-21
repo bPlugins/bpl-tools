@@ -1,5 +1,5 @@
 import { getAdvBGCSS, getOverlayCSS, getBorderBoxCSS, getPropertyBoxCSS, getMultiShadowCSS } from '../utils/getCSS';
-import { tabBreakpoint, mobileBreakpoint } from '../utils/data';
+import { deskBreakpoint, tabBreakpoint, mobileBreakpoint } from '../utils/data';
 
 const dimensionCSS = (dimension) => {
 	const { padding, margin } = dimension || {};
@@ -44,10 +44,12 @@ const visibilityCSS = (visibility) => {
 		mobile: zIndexCSS('mobile')
 	};
 }
-const responsiveCSS = (responsive) => {
+const responsiveCSS = (responsive, isBackend) => {
 	const { desktop = false, tablet = false, mobile = false } = responsive || {};
 
-	const resCSS = val => val ? `display: none;` : '';
+	const css = isBackend ? 'opacity: 0.5;' : 'display: none;';
+
+	const resCSS = val => val ? css : '';
 
 	return {
 		desktop: resCSS(desktop),
@@ -64,17 +66,19 @@ const transitionCSS = (background, borderShadow, animation) => {
 	return `transition: background ${bgT}s, border ${bsT}s, border-radius ${bsT}s, box-shadow ${bsT}s, opacity ${duration}s, transform ${duration}s, -webkit-transform ${duration}s;`
 }
 
-export const generateCSS = (id, advanced) => {
+export const generateCSS = (id, advanced, isBackend = false) => {
 	const { dimension, background, borderShadow, animation, visibility, responsive, css = '' } = advanced || {};
 
 	const selector = `#${id}`;
 
-	const dCSS = dimensionCSS(dimension).desktop + visibilityCSS(visibility).desktop + responsiveCSS(responsive).desktop + transitionCSS(background, borderShadow, animation);
-	const tCSS = dimensionCSS(dimension).tablet + visibilityCSS(visibility).tablet + responsiveCSS(responsive).tablet;
-	const mCSS = dimensionCSS(dimension).mobile + visibilityCSS(visibility).mobile + responsiveCSS(responsive).mobile;
+	const dCSS = dimensionCSS(dimension).desktop + visibilityCSS(visibility).desktop + transitionCSS(background, borderShadow, animation);
+	const tCSS = dimensionCSS(dimension).tablet + visibilityCSS(visibility).tablet + responsiveCSS(responsive, isBackend).tablet;
+	const mCSS = dimensionCSS(dimension).mobile + visibilityCSS(visibility).mobile + responsiveCSS(responsive, isBackend).mobile;
 
 	const nCSS = borderShadowCSS(borderShadow).normal;
 	const hCSS = borderShadowCSS(borderShadow).hover;
+
+	const resCSS = responsiveCSS(responsive, isBackend).desktop;
 
 	return `
 		${(dCSS || nCSS) ? `${selector} {
@@ -83,6 +87,12 @@ export const generateCSS = (id, advanced) => {
 		}` : ''}
 		${(hCSS) ? `${selector}:hover {
 			${hCSS}
+		}` : ''}
+
+		${resCSS ? `${deskBreakpoint} {
+			${selector}{
+				${resCSS}
+			}
 		}` : ''}
 
 		${tCSS ? `${tabBreakpoint} {
