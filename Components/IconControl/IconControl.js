@@ -14,16 +14,14 @@ import { PanelRow, RangeControl, Tooltip, __experimentalGradientPicker, Gradient
 const Gradient = GradientPicker || __experimentalGradientPicker;
 
 import './IconControl.scss';
-import { Label } from '../Label/Label';
-import { BtnGroup } from '../BtnGroup/BtnGroup';
-import { ColorControl } from '../ColorControl/ColorControl';
+import { BtnGroup, ColorControl, Label } from '../index';
 import { gradients, bgTypes } from '../../utils/options';
 import icons from './icons';
 
 const generateName = cl => cl?.slice(cl?.indexOf(' fa-') + 4);
 const generateTitle = cl => generateName(cl)?.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
 
-export const IconControl = props => {
+const IconControl = props => {
 	const { className = '', label = __('Select Icon:'), value = {}, onChange, defaults = {}, isSize = true, isColor = true } = props;
 
 	const defaultVal = { class: '', fontSize: 16, colorType: 'solid', color: 'inherit', gradient: 'linear-gradient(135deg, #4527a4, #8344c5)' }
@@ -78,3 +76,4 @@ export const IconControl = props => {
 		</>}
 	</>
 };
+export default IconControl;

@@ -3,7 +3,7 @@ import { __ } from '@wordpress/i18n';
 import { PanelRow, Flex, Button } from '@wordpress/components';
 
 import './IconLibrary.scss';
-import { Label } from '../Label/Label';
+import { Label } from '../index';
 import bootstrapIcons from './icons/bootstrap.json';
 import fontAwesomeIcons from './icons/font-awesome.json';
 import { debounce } from '../../utils/functions';
@@ -11,7 +11,7 @@ import { LogoSmall, MagnifyingGlass, XMarkIcon } from './utils/icons';
 
 const prefix = 'bPlIconLibrary';
 
-export const IconLibrary = ({ className = '', label = __('Icon Library'), value, onChange = () => { } }) => {
+const IconLibrary = ({ className = '', label = __('Icon Library'), value, onChange = () => { } }) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [iconLibrary, setIconLibrary] = useState('all');
 	const [searchQuery, setSearchQuery] = useState('');

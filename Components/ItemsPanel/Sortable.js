@@ -1,6 +1,4 @@
 import { useState } from 'react';
-import { __ } from '@wordpress/i18n';
-import { Button, Dashicon } from '@wordpress/components';
 import { SortableContainer, SortableElement, SortableHandle, arrayMove } from 'react-sortable-hoc';
 
 import './Sortable.scss';
@@ -44,7 +42,7 @@ const SortableList = SortableContainer((props) => {
 	</div>
 });
 
-export const Sortable = (props) => {
+const Sortable = (props) => {
 	const { attributes, setAttributes, arrKey } = props;
 	const items = attributes[arrKey];
 
@@ -63,3 +61,4 @@ export const Sortable = (props) => {
 
 	return <SortableList useDragHandle {...sortProps} />
 };
+export default Sortable;

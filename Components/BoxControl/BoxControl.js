@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react';
 import { __experimentalUnitControl as UnitControl } from '@wordpress/components';
 
 import './BoxControl.scss';
-import { Label } from '../Label/Label';
+import { Label } from '../index';
 
-export const BoxControl = (props) => {
+const BoxControl = (props) => {
 	const { label, values = {}, onChange = () => { }, resetValues, defaultValues, units, sides, style, className, disableUnits = false } = props;
 	const [link, setLink] = useState(true);
 
@@ -71,4 +71,4 @@ export const BoxControl = (props) => {
 		</div>
 	</div>
 };
-export default BoxControl
+export default BoxControl;

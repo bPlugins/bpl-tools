@@ -1,10 +1,10 @@
 import { __ } from '@wordpress/i18n';
 import { PanelBody, PanelRow, Button, Dashicon } from '@wordpress/components';
 
-import { Sortable } from './Sortable';
+import Sortable from './Sortable';
 import { copyIcon } from '../../utils/icons';
 
-export const ItemsPanel = (properties) => {
+const ItemsPanel = (properties) => {
 	const { attributes, setAttributes, arrKey, newItem, ItemSettings, itemLabel = 'Item', activeIndex, setActiveIndex, design = 'single', premiumProps, ...restProps } = properties;
 	const items = attributes[arrKey];
 
@@ -69,7 +69,7 @@ export const ItemsPanel = (properties) => {
 		</div>
 	</>
 };
-
+export default ItemsPanel;
 
 const ItemAction = ({ items, index, duplicateItem, removeItem }) => <PanelRow className='itemAction mt20 mb15'>
 	<Button className='duplicateItem' label={__('Duplicate')} onClick={e => duplicateItem(e, index)}>

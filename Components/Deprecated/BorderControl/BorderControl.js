@@ -13,7 +13,7 @@ import { Dropdown, PanelRow, SelectControl, __experimentalUnitControl as UnitCon
 import { Label, ColorControl } from '../../index';
 import { borderStyles, pxUnit, perUnit, emUnit, remUnit, sides } from '../../../utils/options';
 
-export const BorderControl = props => {
+const BorderControl = props => {
 	const { className = '', label = __('Border:'), value, onChange, defaults = {} } = props;
 
 	const defaultVal = { width: '0px', style: 'solid', color: '', side: 'all', radius: '0px' }

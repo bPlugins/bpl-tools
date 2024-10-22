@@ -4,7 +4,7 @@ import { produce } from 'immer';
 
 import './MultiSelectControl.scss';
 
-export const MultiSelectControl = ({ value = [], onChange, limit = 10, options = [] }) => {
+const MultiSelectControl = ({ value = [], onChange, limit = 10, options = [] }) => {
 	const [isPopover, setIsPopover] = useState(false)
 	const popoverRef = useRef()
 
@@ -63,3 +63,4 @@ export const MultiSelectControl = ({ value = [], onChange, limit = 10, options =
 		</Popover>}
 	</div>;
 };
+export default MultiSelectControl;

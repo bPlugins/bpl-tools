@@ -9,10 +9,10 @@
 import { useEffect, useRef } from 'react';
 import SelectPure from 'select-pure';
 
-import { Label } from '../index';
 import './SelectPureControl.scss';
+import { Label } from '../index';
 
-export const SelectPureControl = props => {
+const SelectPureControl = props => {
 	const { className = '', label = '', value, onChange, options = [] } = props;
 
 	const selectPureEl = useRef(null);
@@ -52,3 +52,4 @@ export const SelectPureControl = props => {
 		<div ref={selectPureEl}></div>
 	</div> : <div className={className} ref={selectPureEl}></div>;
 };
+export default SelectPureControl;

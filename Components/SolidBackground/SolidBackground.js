@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import { ColorControl } from '../ColorControl/ColorControl';
-import './panelCustomColorControl.css';
 import { Button, Dropdown, GradientPicker } from '@wordpress/components';
-import { BButtonGroup } from '../BButtonGroup/BButtonGroup';
+
+import './panelCustomColorControl.css';
+import { BButtonGroup, ColorControl } from '../index';
 import { useSelect } from '@wordpress/data';
 
-export const SolidBackground = (props) => {
+const SolidBackground = (props) => {
 	const { label = 'Color', value, onChange = () => { } } = props;
 	const defaultGradients = useSelect('core/block-editor').getSettings().gradients
 	const [tab, setTab] = useState('solid');
@@ -61,3 +61,4 @@ export const SolidBackground = (props) => {
 		</div>
 	</div>
 };
+export default SolidBackground;

@@ -3,7 +3,7 @@ import { Popover } from '@wordpress/components';
 
 import "./PanelSelectControl.scss";
 
-export const PanelSelectControl = ({ value = [], options, onChange = () => { }, className }) => {
+const PanelSelectControl = ({ value = [], options, onChange = () => { }, className }) => {
 	const [visible, setVisible] = useState(false);
 	const refHeadingTag = useRef();
 	const [newValue, setValue] = useState(value);
@@ -72,3 +72,4 @@ export const PanelSelectControl = ({ value = [], options, onChange = () => { }, 
 		</div>
 	);
 };
+export default PanelSelectControl;

@@ -208,10 +208,10 @@ const getImagePosition = (img) => {
 	const { position = 'center center', xPosition = 0, yPosition = 0, attachment = '', repeat = 'no-repeat', size = 'cover', customSize = '0px' } = img || {};
 
 	return `
-		${position ? `background-position: ${'custom' === position ? `${xPosition} ${yPosition};` : `${position};`}` : ''}
-		${attachment ? `background-attachment: ${attachment};` : ''}
-		${repeat ? `background-repeat: ${repeat};` : ''}
-		${size ? `background-size: ${'custom' === size ? `${customSize} auto` : size};` : ''}
+		background-position: ${'custom' === position ? `${xPosition} ${yPosition}` : position};
+		background-attachment: ${attachment};
+		background-repeat: ${repeat};
+		background-size: ${'custom' === size ? `${customSize} auto` : size};
 	`;
 };
 const getImageCSS = (img = {}) => {
@@ -264,7 +264,7 @@ const getVideoCSS = (video, selector) => {
 		width: -webkit-fill-available;
 		top: 0;
 		z-index: 0;
-  	}`;
+	}`;
 }
 export const getAdvBGCSS = (background, selector, isHover = false) => {
 	const { type = 'color', color, gradient, img, video } = background || {};
@@ -289,7 +289,7 @@ export const getAdvBGCSS = (background, selector, isHover = false) => {
 		${sl}{
 			${bgCSS}
 		}
-  
+
 		${tabBreakpoint} {
 			${sl}{
 				${tablet}

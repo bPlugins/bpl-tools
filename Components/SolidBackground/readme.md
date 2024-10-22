@@ -14,9 +14,9 @@ The `PanelCustomColorControl` component is a WP Gutenberg component that provide
 import { PanelCustomColorControl } from 'bpl-gutenberg-panel';
 
 <PanelCustomColorControl
-  label="Select Color"
-  value="#ff0000"
-  onChange={(newValue) => console.log(newValue)}
+	label="Select Color"
+	value="#ff0000"
+	onChange={(newValue) => console.log(newValue)}
 />
 ```
 

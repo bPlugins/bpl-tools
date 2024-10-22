@@ -10,7 +10,7 @@ const SortableList = SortableContainer(({ items, property }) => <ul>
 	{items.map((value, index) => <SortableItem key={index} index={index} sortIndex={index} value={property ? value[property] : value} />)}
 </ul>);
 
-export const SortableControl = ({ className = '', label = __('Sort:'), value = [], property, onChange }) => {
+const SortableControl = ({ className = '', label = __('Sort:'), value = [], property, onChange }) => {
 	const onSortEnd = ({ oldIndex, newIndex }) => {
 		onChange(arrayMove(value, oldIndex, newIndex))
 	};
@@ -22,3 +22,4 @@ export const SortableControl = ({ className = '', label = __('Sort:'), value = [
 		<small>{__('Drag and drop to sort')}</small>
 	</div>;
 }
+export default SortableControl;

@@ -13,8 +13,8 @@ import { Dropdown, PanelRow, __experimentalUnitControl as UnitControl, Button, T
 import { Label, ColorControl } from '../../index';
 import { pxUnit, emUnit, remUnit } from '../../../utils/options';
 
-export const ShadowControl = props => {
-	const { className = '', label = __('Shadow'), value, onChange, defaults = {} } = props;
+const ShadowControl = props => {
+	const { className = '', label = __('Shadow'), value, onChange, defaults = {}, type = 'box' } = props;
 
 	const defaultVal = { type: 'box', hOffset: '0px', vOffset: '0px', blur: '0px', spreed: '0px', color: '#7090b0', isInset: false }
 
@@ -47,15 +47,16 @@ export const ShadowControl = props => {
 				</PanelRow>
 				<small>{__('Blur cannot be negative value!')}</small>
 
-				{'box' === getValue('type') && <PanelRow>
+				{'box' === type && <PanelRow>
 					<UnitControl label={__('Spreed:')} labelPosition='left' value={getValue('spreed')} onChange={val => setValue('spreed', val)} units={[pxUnit(), emUnit(), remUnit()]} />
 					{value?.spreed && value?.spreed !== getDefault('spreed') && resetValue('spreed')}
 				</PanelRow>}
 
 				<ColorControl label={__('Color:')} value={getValue('color')} onChange={val => setValue('color', val)} defaultColor={getDefault('color')} />
 
-				{'box' === getValue('type') && <ToggleControl className='mt20' label={__('Shadow Inset?')} checked={getValue('isInset')} onChange={val => setValue('isInset', val)} />}
+				{'box' === type && <ToggleControl className='mt20' label={__('Shadow Inset?')} checked={getValue('isInset')} onChange={val => setValue('isInset', val)} />}
 			</>}
 		/>
 	</PanelRow>
 };
+export default ShadowControl;

@@ -9,7 +9,7 @@ import { PanelRow, Button, ButtonGroup } from '@wordpress/components';
 
 import { Label } from '../index';
 
-export const BtnGroup = props => {
+const BtnGroup = props => {
 	const { className, label = '', value, onChange, options, isIcon = false, isTextIcon = false, size } = props;
 
 	const Buttons = ({ className = '' }) => <ButtonGroup className={`bPlBtnGroup ${className || null}`}>
@@ -35,3 +35,4 @@ export const BtnGroup = props => {
 		<Buttons />
 	</PanelRow> : <Buttons className={className} />
 };
+export default BtnGroup;

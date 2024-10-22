@@ -16,7 +16,7 @@ import { Label, ColorControl, BButtonGroup } from '../index';
 import { pxUnit, emUnit, remUnit } from '../../utils/options';
 import { gearIcon } from '../../utils/icons';
 
-export const ShadowControl = props => {
+const ShadowControl = props => {
 	const { className = '', label = __('Shadow'), value, onChange, type = 'box', defaults = [] } = props;
 
 	const [activeIndex, setActiveIndex] = useState(0);
@@ -108,3 +108,4 @@ export const ShadowControl = props => {
 		/>
 	</PanelRow>;
 };
+export default ShadowControl;

@@ -1,16 +1,9 @@
-import {
-	Button,
-	Dashicon,
-	__experimentalNumberControl as NumberControl,
-	RangeControl,
-	Tooltip,
-} from '@wordpress/components';
-import { Fragment, useEffect, useState } from 'react';
-import { BButtonGroup } from '../BButtonGroup/BButtonGroup';
-
+import { useEffect, useState } from 'react';
+import { Button, Dashicon, __experimentalNumberControl as NumberControl, RangeControl, Tooltip } from '@wordpress/components';
 import { produce } from 'immer';
+
 import './Gradient.scss';
-import { ColorControl } from '../ColorControl/ColorControl';
+import { BButtonGroup, ColorControl } from '../index';
 
 /**
  * BGradient Component
@@ -21,18 +14,8 @@ import { ColorControl } from '../ColorControl/ColorControl';
  * @returns {JSX.Element} React component
  */
 
-export const Gradient = (props) => {
+const Gradient = (props) => {
 	const { value, onChange } = props;
-	// const [advGradient, setAdvGradient] = useState({
-	//   type: value.type || 'linear',
-	//   radialType: value.radialType || 'ellipse',
-	//   colors: value.colors || [
-	//     { color: '', position: 0 },
-	//     { color: '', position: 0 },
-	//   ],
-	//   centerPositions: value.centerPositions || { x: 0, y: 0 },
-	//   angel: value.angel || 90,
-	// });
 	const [advGradient, setAdvGradient] = useState(
 		value || {
 			type: 'linear',
@@ -123,3 +106,4 @@ export const Gradient = (props) => {
 			<RangeControl label='Angle' value={angel} onChange={(val) => setAdvGradient({ ...advGradient, angel: val })} min={0} max={360} />}
 	</>
 };
+export default Gradient;

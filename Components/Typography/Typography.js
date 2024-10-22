@@ -18,7 +18,7 @@ import { pxUnit, perUnit, emUnit, remUnit } from '../../utils/options';
 import fontLists from './fontLists';
 import { fontStyles, textTransforms, textDecorations } from './options';
 
-export const Typography = props => {
+const Typography = props => {
 	const { className = '', label = __('Typography:'), value, onChange, defaults = {}, isFamily = true } = props;
 
 	const defaultVal = { fontFamily: 'Default', fontCategory: 'sans-serif', fontWeight: 400, isUploadFont: true, fontSize: { desktop: 15, tablet: 15, mobile: 15 }, fontStyle: 'normal', textTransform: 'none', textDecoration: 'auto', lineHeight: '135%', letterSpace: '0px' }
@@ -134,3 +134,4 @@ export const Typography = props => {
 		/>
 	</PanelRow>
 };
+export default Typography;

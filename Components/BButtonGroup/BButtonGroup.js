@@ -22,7 +22,7 @@ import { useEffect, useRef, useState } from "react";
  * @returns {JSX.Element} React component
  */
 
-export const BButtonGroup = (props) => {
+const BButtonGroup = (props) => {
   const { options = [], label = "Button Group", value, onChange = () => { }, borderRadius = "30px", height, paddingX = "8px", paddingY = "4px", fontSize = "12px", fontWeight = 400, activeBg, activeColor = "#fff", inactiveColor = "#000", hoverBg, hoverColor, style, } = props;
   const [activeButton, setActiveButton] = useState(0);
 
@@ -131,3 +131,4 @@ export const BButtonGroup = (props) => {
     </div>
   );
 };
+export default BButtonGroup;

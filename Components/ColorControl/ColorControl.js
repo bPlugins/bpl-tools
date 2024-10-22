@@ -13,7 +13,7 @@ import { withSelect } from '@wordpress/data';
 import { Dropdown, ColorPicker, Button, PanelRow } from '@wordpress/components';
 
 import './ColorControl.scss';
-import { Label } from '../Label/Label';
+import { Label } from '../index';
 
 const ThemeColors = withSelect((select) => {
 	return {

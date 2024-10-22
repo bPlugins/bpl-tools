@@ -14,7 +14,7 @@ import { Label } from '../../index';
 import { pxUnit, perUnit, emUnit, remUnit } from '../../../utils/options';
 import { scrollIcon } from '../../../utils/icons';
 
-export const SpaceControl = props => {
+const SpaceControl = props => {
 	const { className = '', label = __('Space:'), value, onChange, defaults = {} } = props;
 
 	const defaultVal = { side: 2, vertical: '0px', horizontal: '0px', top: '0px', right: '0px', bottom: '0px', left: '0px' }
@@ -114,3 +114,4 @@ export const SpaceControl = props => {
 		</PanelRow>}
 	</div>
 };
+export default SpaceControl;

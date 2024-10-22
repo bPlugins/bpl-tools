@@ -1,95 +1,95 @@
 $primaryColor: #4527a4;
 
 .bPlSortablePanelItem {
-    .itemsPanelHeader {
-        border: 1px solid #ccc;
-        display: flex;
-        align-items: center;
-        height: 40px;
-        margin: 0px;
+	.itemsPanelHeader {
+		border: 1px solid #ccc;
+		display: flex;
+		align-items: center;
+		height: 40px;
+		margin: 0px;
 
-        .gripIcon {
-            cursor: grab;
-            margin: 0px;
-            display: grid;
-            padding: 0 10px;
-            height: 100%;
+		.gripIcon {
+			cursor: grab;
+			margin: 0px;
+			display: grid;
+			padding: 0 10px;
+			height: 100%;
 
-            svg {
-                width: 16px;
-                height: 16px;
-                place-self: center;
-            }
-        }
+			svg {
+				width: 16px;
+				height: 16px;
+				place-self: center;
+			}
+		}
 
-        .panel-header-title {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+		.panel-header-title {
+			width: 100%;
+			height: 100%;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
 
-            p {
-                cursor: pointer;
-                margin: 0px;
-                height: 100%;
-                width: 100%;
-                display: flex;
-                align-items: center;
-                padding-left: 5px;
-                transition: background-color 0.2s ease-in-out;
-                overflow: hidden;
+			p {
+				cursor: pointer;
+				margin: 0px;
+				height: 100%;
+				width: 100%;
+				display: flex;
+				align-items: center;
+				padding-left: 5px;
+				transition: background-color 0.2s ease-in-out;
+				overflow: hidden;
 
-                div {
-                    white-space: nowrap;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                }
+				div {
+					white-space: nowrap;
+					overflow: hidden;
+					text-overflow: ellipsis;
+				}
 
-                &:hover {
-                    background-color: #ccc;
-                }
+				&:hover {
+					background-color: #ccc;
+				}
 
-            }
+			}
 
-            .itemAction {
-                display: flex;
-                height: 100%;
+			.itemAction {
+				display: flex;
+				height: 100%;
 
-                >div {
-                    border-left: 1px solid #ccc;
-                    height: 100%;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    width: 35px;
-                    cursor: pointer;
-                    font-size: 17px;
+				>div {
+					border-left: 1px solid #ccc;
+					height: 100%;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					width: 35px;
+					cursor: pointer;
+					font-size: 17px;
 
-                    svg {
-                        width: 18px;
-                        height: 18px;
-                    }
+					svg {
+						width: 18px;
+						height: 18px;
+					}
 
-                    &:hover {
-                        background-color: #ccc;
-                    }
-                }
-            }
-        }
-    }
+					&:hover {
+						background-color: #ccc;
+					}
+				}
+			}
+		}
+	}
 
-    .itemsPanelBody {
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-top: 0px;
-        transition: all .5s ease;
+	.itemsPanelBody {
+		padding: 10px;
+		border: 1px solid #ccc;
+		border-top: 0px;
+		transition: all .5s ease;
 
-        &.hidden {
-            height: 0;
-        }
-    }
+		&.hidden {
+			height: 0;
+		}
+	}
 }

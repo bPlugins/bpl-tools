@@ -13,7 +13,7 @@ import { Dropdown, PanelRow, SelectControl, __experimentalUnitControl as UnitCon
 import { Label, ColorControl } from '../index';
 import { borderStyles, pxUnit, perUnit, emUnit, remUnit } from '../../utils/options';
 
-export const SeparatorControl = props => {
+const SeparatorControl = props => {
 	const { className = '', label = __('Separator'), value, onChange, defaults = {} } = props;
 
 	const defaultVal = { width: '50%', height: '2px', style: 'solid', color: '#bbb' }
@@ -52,3 +52,4 @@ export const SeparatorControl = props => {
 		/>
 	</PanelRow>
 };
+export default SeparatorControl;

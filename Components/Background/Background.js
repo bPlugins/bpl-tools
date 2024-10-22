@@ -14,7 +14,7 @@ import { Label, ColorControl, BtnGroup, InlineDetailMediaUpload } from '../index
 import { gradients } from '../../utils/options';
 import { bgTypes, attachments, repeats, sizes } from './options';
 
-export const Background = props => {
+const Background = props => {
 	const { className = '', label = __('Background'), value = {}, onChange, defaults = {}, isSolid = true, isGradient = true, isImage = true } = props;
 
 	const defaultVal = { type: 'solid', color: '#000000b3', gradient: 'linear-gradient(135deg, #4527a4, #8344c5)', image: {}, position: 'center center', attachment: 'initial', repeat: 'no-repeat', size: 'cover', overlayColor: '#000000b3' }
@@ -88,3 +88,4 @@ export const Background = props => {
 		/>
 	</PanelRow>
 };
+export default Background;

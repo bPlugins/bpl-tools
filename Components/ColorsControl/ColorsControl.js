@@ -14,7 +14,7 @@ const Gradient = __experimentalGradientPicker || GradientPicker;
 import { Label, BtnGroup, ColorControl } from '../index';
 import { gradients, bgTypes } from '../../utils/options';
 
-export const ColorsControl = props => {
+const ColorsControl = props => {
 	const { className = '', label = __('Colors:'), value, onChange, defaults = {} } = props;
 
 	const defaultVal = { color: '#333', bgType: 'solid', bg: '', gradient: 'linear-gradient(135deg, #4527a4, #8344c5)' }

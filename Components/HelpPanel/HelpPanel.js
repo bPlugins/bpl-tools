@@ -4,7 +4,7 @@ import { PanelBody } from '@wordpress/components';
 import { bookIcon, headsetIcon, starIcon, rightArrowIcon } from '../../utils/icons';
 import './HelpPanel.scss';
 
-export const HelpPanel = ({ slug, docsLink }) => {
+const HelpPanel = ({ slug, docsLink }) => {
 	return <PanelBody className='bPlPanelBody bPlHelpPanel' title={__('Help')} initialOpen={false}>
 
 		<div className='helpItems'>
@@ -30,3 +30,4 @@ export const HelpPanel = ({ slug, docsLink }) => {
 		</div>
 	</PanelBody>
 }
+export default HelpPanel;
