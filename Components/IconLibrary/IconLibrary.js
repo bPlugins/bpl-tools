@@ -9,197 +9,172 @@ import fontAwesomeIcons from './icons/font-awesome.json';
 import { debounce } from '../../utils/functions';
 import { LogoSmall, MagnifyingGlass, XMarkIcon } from './utils/icons';
 
+const prefix = 'bPlIconLibrary';
+
 export const IconLibrary = ({ className = '', label = __('Icon Library'), value, onChange = () => { } }) => {
-    const [isOpen, setIsOpen] = useState(false);
-    const [iconLibrary, setIconLibrary] = useState('all');
-    const [searchQuery, setSearchQuery] = useState('');
-    const [searchedIcons, setSearchedIcons] = useState({});
-    const [selectIcon, setSelectIcon] = useState(value || '');
-    const iconRef = useRef(null);
+	const [isOpen, setIsOpen] = useState(false);
+	const [iconLibrary, setIconLibrary] = useState('all');
+	const [searchQuery, setSearchQuery] = useState('');
+	const [searchedIcons, setSearchedIcons] = useState({});
+	const [selectIcon, setSelectIcon] = useState(value || '');
+	const [currentPage, setCurrentPage] = useState(1);
 
-    const items = [
-        { label: 'All Icons', value: 'all' },
-        { label: 'Font Awesome', value: 'fontawesome' },
-        { label: 'Bootstrap', value: 'bootstrap' },
-    ];
+	const iconRef = useRef(null);
+	const scrollRef = useRef(null);
 
-    const library = useMemo(() => {
-        return {
-            fontawesome: {
-                label: 'Font Awesome',
-                styles: ['regular', 'solid', 'brands'],
-                icons: fontAwesomeIcons,
-            },
-            bootstrap: {
-                label: 'Font Awesome',
-                styles: ['regular', 'fill'],
-                icons: bootstrapIcons,
-            },
-        };
-    }, []);
+	const items = [
+		{ label: 'All Icons', value: 'all' },
+		{ label: 'Font Awesome', value: 'fontawesome' },
+		{ label: 'Bootstrap', value: 'bootstrap' },
+	];
 
-    const icons =
-        iconLibrary !== 'all'
-            ? library[iconLibrary]
-            : { label: 'All Icons', icons: [...bootstrapIcons, ...fontAwesomeIcons] };
+	const library = {
+		fontawesome: {
+			label: 'Font Awesome',
+			styles: ['regular', 'solid', 'brands'],
+			icons: fontAwesomeIcons,
+		},
+		bootstrap: {
+			label: 'Font Awesome',
+			styles: ['regular', 'fill'],
+			icons: bootstrapIcons,
+		},
+	};
 
-    const handleSearch = useMemo(
-        () =>
-            debounce((sq) => {
-                const filteredIcons = searchQuery
-                    ? icons.icons.filter((icon) => {
-                        const label = icon.label.toLowerCase();
-                        const terms = icon.terms
-                            ? icon.terms.map((term) => term.toLowerCase())
-                            : [];
-                        return (
-                            terms.some((term) => term.includes(sq.toLowerCase())) ||
-                            label.includes(sq.toLowerCase())
-                        );
-                    })
-                    : icons.icons;
-                setSearchedIcons({ icons: filteredIcons });
-            }, 600),
-        [searchQuery]
-    );
+	const icons =
+		iconLibrary !== 'all'
+			? library[iconLibrary]
+			: { label: 'All Icons', icons: [...fontAwesomeIcons, ...bootstrapIcons] };
 
-    const handleInputChange = (e) => {
-        const sq = e.target.value;
-        setSearchQuery(sq);
-        handleSearch(sq);
-    };
+	const handleSearch = useMemo(() => debounce((sq) => {
+		const filteredIcons = searchQuery
+			? icons.icons.filter((icon) => {
+				const label = icon.label.toLowerCase();
+				const terms = icon.terms
+					? icon.terms.map((term) => term.toLowerCase())
+					: [];
+				return (
+					terms.some((term) => term.includes(sq.toLowerCase())) ||
+					label.includes(sq.toLowerCase())
+				);
+			})
+			: icons.icons;
+		setSearchedIcons({ icons: filteredIcons });
+	}, 600), [searchQuery, currentPage]);
 
-    useEffect(() => {
-        setSearchedIcons({ icons: icons.icons.filter((icon, i) => i < 100) });
-        setTimeout(() => {
-            setSearchedIcons({ icons: icons.icons });
-        }, 500);
-    }, [iconLibrary]);
+	const handleInputChange = (e) => {
+		const sq = e.target.value;
+		setSearchQuery(sq);
+		handleSearch(sq);
+	};
 
-    useEffect(() => {
-        setSelectIcon(value);
-    }, [isOpen]);
+	useEffect(() => {
+		setSearchedIcons({ icons: icons.icons });
+	}, [iconLibrary]);
 
-    useEffect(() => {
-        const handle = (e) => {
-            if (!iconRef?.current?.contains(e.target)) {
-                setIsOpen(false);
-            }
-        };
-        document.addEventListener('mousedown', handle);
-        return () => {
-            document.removeEventListener('mousedown', handle);
-        };
-    }, [isOpen, iconRef?.current]);
+	useEffect(() => {
+		setSelectIcon(value);
+	}, [isOpen]);
 
-    return (
-        <div className='bPlIconLibrary'>
-            <PanelRow className={className}>
-                <Label className=''>{label}</Label>
+	useEffect(() => {
+		const handle = (e) => {
+			if (!iconRef?.current?.contains(e.target)) {
+				setIsOpen(false);
+			}
+		};
+		document.addEventListener('mousedown', handle);
+		return () => {
+			document.removeEventListener('mousedown', handle);
+		};
+	}, [isOpen, iconRef?.current]);
 
-                <Flex align='center' gap={4} justify='right'>
-                    {value && <div className='panel-icon' dangerouslySetInnerHTML={{ __html: value }} />}
-                    <Button variant='primary' onClick={() => setIsOpen(true)} icon='edit' />
-                </Flex>
-            </PanelRow>
+	const observer = new IntersectionObserver(
+		(entries) => {
+			if (entries.some((entry) => entry.isIntersecting)) {
+				setCurrentPage((prev) => prev + 1);
+			}
+		},
+		{ threshold: 0.3 }
+	);
 
-            {isOpen && (
-                <div
-                    className={`bPl-icon-library-main-wrapper ${isOpen ? 'isOpen' : ''}`}
-                >
-                    <div ref={iconRef} className='bPl-icon-library-wrapper'>
-                        <div className='bPl-icon-library-header'>
-                            <div className='bPl-icon-library-logo'>
-                                <LogoSmall />
-                                <h3>Icon Library</h3>
-                            </div>
-                            <div className='bPl-icon-library-closebtn'>
-                                <XMarkIcon onClick={() => setIsOpen(false)} />
-                            </div>
-                        </div>
-                        <div className='bPl-icon-library-body-main-wrapper'>
-                            <div className='bPl-icon-library-sidebar-wrapper'>
-                                <ul className='bPl-icon-menus'>
-                                    {items.map((item, i) => (
-                                        <li
-                                            key={i}
-                                            className={`${item.value === iconLibrary ? 'active' : ''
-                                                }`}
-                                            onClick={() => setIconLibrary(item.value)}
-                                        >
-                                            {item.label}
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-                            <div className='bPl-icon-library-body-wrapper'>
-                                {/* <div className='bPl-icon-library-body'> */}
-                                <div className='bPl-icon-library-searchField'>
-                                    <input
-                                        value={searchQuery}
-                                        onChange={handleInputChange}
-                                        type='text'
-                                        className='bPl-icon-library-search-input'
-                                        placeholder='Filter by name...'
-                                    />
-                                    <MagnifyingGlass className='bPl-icon-library-searchIcon' />
-                                </div>
-                                <div className='bPl-icon-library-iconsList'>
-                                    {/* {icons.styles && (
-                    <div className='bPl-icon-library-iconCategory'>
-                      {icons.styles.map((category, i) => (
-                        <span key={i} className='bPl-icon-singleCategory'>
-                          {category}
-                          <XMarkIcon height={15} />
-                        </span>
-                      ))}
-                    </div>
-                  )} */}
-                                    <div className='bPl-icon-library-single-icon-wrapper'>
-                                        {searchedIcons?.icons?.map((icon, i) => {
-                                            const svgIcons = icon.svg;
+	useEffect(() => {
+		if (scrollRef?.current) {
+			observer.observe(scrollRef?.current);
+		}
+	}, [scrollRef, isOpen, currentPage]);
 
-                                            return Object.keys(svgIcons).map((key, idx) => (
-                                                <div
+	return <div className={prefix}>
+		<PanelRow className={className}>
+			<Label className=''>{label}</Label>
 
-                                                    key={idx}
-                                                    onClick={() => setSelectIcon(svgIcons[key])}
-                                                    className={`bPl-icon-library-single-icon ${JSON.stringify(selectIcon) ===
-                                                        JSON.stringify(svgIcons[key])
-                                                        ? 'isActive'
-                                                        : ''
-                                                        } `}
-                                                >
-                                                    <span
-                                                        dangerouslySetInnerHTML={{ __html: svgIcons[key] }}
-                                                    ></span>
-                                                    <div className='bPl-icon-label' title={icon.label}>
-                                                        {icon.label}
-                                                    </div>
-                                                </div>
-                                            ));
-                                        })}
-                                    </div>
-                                </div>
-                                {/* </div> */}
-                            </div>
-                        </div>
-                        <div className='bPl-icon-library-footer'>
-                            <button
-                                className='bPl-icon-insert-btn'
-                                onClick={() => {
-                                    onChange(selectIcon);
-                                    setIsOpen(false);
-                                }}
-                            >
-                                Insert
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            )}
-        </div>
-    );
+			<Flex align='center' gap={4} justify='right'>
+				{value && <div className='panel-icon' dangerouslySetInnerHTML={{ __html: value }} />}
+
+				<Button variant='primary' onClick={() => setIsOpen(true)} icon='edit' />
+			</Flex>
+		</PanelRow>
+
+		{isOpen && <div className={`${prefix}ModalWrapper ${isOpen ? 'isOpen' : ''}`}>
+			<div ref={iconRef} className={`${prefix}Modal`}>
+				<div className={`${prefix}Header`}>
+					<div className={`${prefix}HeaderLogo`}>
+						<LogoSmall />
+
+						<h3>Icon Library</h3>
+					</div>
+
+					<div className={`${prefix}HeaderClose`}>
+						<XMarkIcon onClick={() => setIsOpen(false)} />
+					</div>
+				</div>
+
+				<div className={`${prefix}Body`}>
+					<div className={`${prefix}Sidebar`}>
+						<ul className={`${prefix}SidebarMenu`}>
+							{items.map((item, i) => <li key={i} className={`${item.value === iconLibrary ? 'active' : ''}`} onClick={() => setIconLibrary(item.value)}>
+								{item.label}
+							</li>)}
+						</ul>
+					</div>
+
+					<div className={`${prefix}Main`}>
+						<div className={`${prefix}Search`}>
+							<input value={searchQuery} onChange={handleInputChange} type='text' className={`${prefix}SearchInput`} placeholder='Filter by name...' />
+
+							<MagnifyingGlass className={`${prefix}SearchIcon`} />
+						</div>
+
+						<div className={`${prefix}IconsWrapper`}>
+							<div className={`${prefix}Icons`}>
+								{searchedIcons?.icons?.filter((_, i) => i < currentPage * 100).map(icon => {
+									const svgIcons = icon.svg;
+
+									return Object.keys(svgIcons).map((key, idx) => <div
+										key={idx}
+										ref={scrollRef}
+										onClick={() => setSelectIcon(svgIcons[key])}
+										className={`${prefix}Icon ${JSON.stringify(selectIcon) === JSON.stringify(svgIcons[key]) ? 'isActive' : ''} `}
+									>
+										<span dangerouslySetInnerHTML={{ __html: svgIcons[key] }} />
+
+										<div className={`${prefix}IconLabel`} title={icon.label}>
+											{icon.label}
+										</div>
+									</div>);
+								})}
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div className={`${prefix}Footer`}>
+					<button className={`${prefix}FooterInsert`} onClick={() => {
+						onChange(selectIcon);
+						setIsOpen(false);
+					}}>Insert</button>
+				</div>
+			</div>
+		</div>}
+	</div>
 };
-
 export default memo(IconLibrary);

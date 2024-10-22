@@ -1,288 +1,273 @@
 .bPlIconLibrary {
-    .panel-icon {
-        display: flex;
+	.panel-icon {
+		display: flex;
 
-        svg {
-            height: 18px;
-        }
-    }
+		svg {
+			height: 18px;
+		}
+	}
 
 
-    .bPl-icon-library-main-wrapper {
-        * {
-            box-sizing: border-box;
-        }
+	.bPlIconLibraryModalWrapper {
+		* {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
 
-        background: rgba(0, 0, 0, 0.158);
-        position: fixed;
-        inset: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: all 0.3s ease-in-out;
-        z-index: 9999999 !important;
+		background: rgba(0, 0, 0, 0.158);
+		position: fixed;
+		inset: 0;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		transition: all 0.3s ease-in-out;
+		z-index: 9999999 !important;
 
-        &.isOpen {
-            .bPl-icon-library-wrapper {
-                animation: open 0.3s ease-in;
-            }
+		&.isOpen {
+			.bPlIconLibraryModal {
+				animation: open 0.3s ease-in;
+			}
 
-            @keyframes open {
-                0% {
-                    transform: scale(0.8);
-                }
+			@keyframes open {
+				0% {
+					transform: scale(0.8);
+				}
 
-                100% {
-                    transform: scale(1);
-                }
-            }
-        }
+				100% {
+					transform: scale(1);
+				}
+			}
+		}
 
-        h1,
-        h2,
-        h3,
-        h4,
-        h5,
-        h6,
-        p,
-        ul,
-        li {
-            margin: 0;
-            padding: 0;
-        }
+		.bPlIconLibraryModal {
+			width: 55%;
+			height: 80%;
+			background: #fff;
+			border-radius: 5px;
 
-        .bPl-icon-library-wrapper {
-            width: 55%;
-            height: 80%;
-            background: #fff;
-            border-radius: 5px;
+			.bPlIconLibraryHeader {
+				border-bottom: 1px solid #ccc;
+				margin: 0;
+				height: 40px;
+				padding: 0 10px;
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
 
-            /* header section */
-            .bPl-icon-library-header {
-                border-bottom: 1px solid #ccc;
-                margin: 0;
-                height: 40px;
-                padding: 0 10px;
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
+				.bPlIconLibraryHeaderLogo {
+					display: flex;
+					align-items: center;
+					gap: 5px;
 
-                .bPl-icon-library-logo {
-                    display: flex;
-                    align-items: center;
-                    gap: 5px;
+					h3 {
+						font-size: 18px;
+						font-weight: 600;
+						text-transform: none;
+					}
+				}
 
-                    h3 {
-                        font-size: 18px;
-                        font-weight: 600;
-                        text-transform: none;
-                    }
-                }
+				.bPlIconLibraryHeaderClose {
+					border-left: 1px solid #ccc;
+					padding-left: 5px;
+					display: grid;
+					place-items: center;
 
-                .bPl-icon-library-closebtn {
-                    border-left: 1px solid #ccc;
-                    padding-left: 5px;
-                    display: grid;
-                    place-items: center;
+					svg {
+						cursor: pointer;
+					}
+				}
+			}
 
-                    svg {
-                        cursor: pointer;
-                    }
-                }
-            }
+			/* body section */
+			.bPlIconLibraryBody {
+				display: flex;
+				height: calc(100% - 90px);
 
-            /* body section */
-            .bPl-icon-library-body-main-wrapper {
-                display: flex;
-                height: calc(100% - 90px);
+				.bPlIconLibrarySidebar {
+					width: 255px;
+					border-right: 1px solid #ccc;
 
-                .bPl-icon-library-sidebar-wrapper {
-                    width: 255px;
-                    border-right: 1px solid #ccc;
+					.bPlIconLibrarySidebarMenu {
+						list-style: none;
+						font-size: 15px;
+						font-weight: 400;
+						color: gray;
 
-                    .bPl-icon-menus {
-                        list-style: none;
-                        font-size: 15px;
-                        font-weight: 400;
-                        color: gray;
+						li {
+							font-weight: 400;
+							padding: 15px 0;
+							padding-left: 30px;
+							cursor: pointer;
+							transition: background 0.2s ease-in-out;
+							border-left: 3px solid transparent;
 
-                        li {
-                            font-weight: 400;
-                            padding: 15px 0;
-                            padding-left: 30px;
-                            cursor: pointer;
-                            transition: background 0.2s ease-in-out;
-                            border-left: 3px solid transparent;
+							&:hover {
+								background: #f4f2fa;
+							}
 
-                            &:hover {
-                                background: #f4f2fa;
-                            }
+							&.active {
+								background: #efebfa;
+								border-left: 3px solid #4527a4;
+								color: #000;
+							}
+						}
+					}
+				}
 
-                            &.active {
-                                background: #efebfa;
-                                border-left: 3px solid #4527a4;
-                                color: #000;
-                            }
-                        }
-                    }
-                }
+				.bPlIconLibraryMain {
+					width: calc(100% - 255px);
+					padding-left: 70px;
+					padding-top: 20px;
+					padding-bottom: 0;
+					display: flex;
+					flex-direction: column;
 
-                .bPl-icon-library-body-wrapper {
-                    width: calc(100% - 255px);
-                    padding-left: 70px;
-                    padding-top: 20px;
-                    padding-bottom: 0;
-                    display: flex;
-                    flex-direction: column;
+					/* .bPl-icon-library-body { */
+					.bPlIconLibrarySearch {
+						position: relative;
+						margin-right: 70px;
 
-                    /* .bPl-icon-library-body { */
-                    .bPl-icon-library-searchField {
-                        position: relative;
-                        margin-right: 70px;
+						.bPlIconLibrarySearchInput {
+							width: 100%;
+							height: 30px;
+							padding: 0 15px;
+							color: #757575;
+							border: 1px solid #ccc;
+							border-radius: 3px;
+							transition: all 0.1s ease-in-out;
+							font-size: 13px;
 
-                        .bPl-icon-library-search-input {
-                            width: 100%;
-                            height: 30px;
-                            padding: 0 15px;
-                            color: #757575;
-                            border: 1px solid #ccc;
-                            border-radius: 3px;
-                            transition: all 0.1s ease-in-out;
-                            font-size: 13px;
+							&:focus {
+								outline: none;
+								box-shadow: none;
+								box-shadow: 0px 0px 0px 1px #4527a4;
+								border-color: #4527a4;
+							}
+						}
 
-                            &:focus {
-                                outline: none;
-                                box-shadow: none;
-                                box-shadow: 0px 0px 0px 1px #4527a4;
-                                border-color: #4527a4;
-                            }
-                        }
+						.bPlIconLibrarySearchIcon {
+							position: absolute;
+							height: 15px;
+							fill: #707070;
+							top: 50%;
+							transform: translateY(-50%);
+							right: 12px;
+						}
+					}
 
-                        .bPl-icon-library-searchIcon {
-                            position: absolute;
-                            height: 15px;
-                            fill: #707070;
-                            top: 50%;
-                            transform: translateY(-50%);
-                            right: 12px;
-                        }
-                    }
+					.bPlIconLibraryIconsWrapper {
+						margin-right: 45px;
+						flex: 1;
+						display: flex;
+						flex-direction: column;
+						overflow: hidden;
 
-                    .bPl-icon-library-iconsList {
-                        margin-right: 45px;
-                        flex: 1;
-                        display: flex;
-                        flex-direction: column;
-                        overflow: hidden;
+						.bPl-icon-library-iconCategory {
+							margin-top: 15px;
+							display: flex;
+							gap: 5px;
 
-                        .bPl-icon-library-iconCategory {
-                            margin-top: 15px;
-                            display: flex;
-                            gap: 5px;
+							.bPl-icon-singleCategory {
+								display: flex;
+								align-items: center;
+								gap: 2px;
+								background-color: #4527a4;
+								color: #fff;
+								text-transform: capitalize;
+								font-size: 10px;
+								font-weight: 400;
+								padding: 6px 10px;
+								/* padding-right: 5px; */
+								border-radius: 20px;
+								box-shadow: 0px 0px 5px 2px #d9d9d9;
 
-                            .bPl-icon-singleCategory {
-                                display: flex;
-                                align-items: center;
-                                gap: 2px;
-                                background-color: #4527a4;
-                                color: #fff;
-                                text-transform: capitalize;
-                                font-size: 10px;
-                                font-weight: 400;
-                                padding: 6px 10px;
-                                /* padding-right: 5px; */
-                                border-radius: 20px;
-                                box-shadow: 0px 0px 5px 2px #d9d9d9;
+								svg {
+									margin: 0;
+									padding: 0;
+									cursor: pointer;
+								}
+							}
+						}
 
-                                svg {
-                                    margin: 0;
-                                    padding: 0;
-                                    cursor: pointer;
-                                }
-                            }
-                        }
+						.bPlIconLibraryIcons {
+							display: flex;
+							/* flex: 1; */
+							flex-wrap: wrap;
+							gap: 10px;
+							overflow: hidden auto;
+							/* height: calc(100% - 76px); */
+							margin-top: 15px;
 
-                        .bPl-icon-library-single-icon-wrapper {
-                            display: flex;
-                            /* flex: 1; */
-                            flex-wrap: wrap;
-                            gap: 10px;
-                            overflow: hidden auto;
-                            /* height: calc(100% - 76px); */
-                            margin-top: 15px;
+							.bPlIconLibraryIcon {
+								height: 80px;
+								width: 80px;
+								border: 1px solid #ccc;
+								display: flex;
+								flex-direction: column;
+								align-items: center;
+								justify-content: center;
+								gap: 8px;
+								transition: background 0.2s ease-in-out;
+								cursor: pointer;
 
-                            .bPl-icon-library-single-icon {
-                                height: 80px;
-                                width: 80px;
-                                border: 1px solid #ccc;
-                                display: flex;
-                                flex-direction: column;
-                                align-items: center;
-                                justify-content: center;
-                                gap: 8px;
-                                transition: background 0.2s ease-in-out;
-                                cursor: pointer;
+								&.isActive {
+									background: #4527a4;
+									color: #fff;
+									fill: #fff;
 
-                                &.isActive {
-                                    background: #4527a4;
-                                    color: #fff;
-                                    fill: #fff;
+									&:hover {
+										background: #4527a4;
+									}
+								}
 
-                                    &:hover {
-                                        background: #4527a4;
-                                    }
-                                }
+								&:hover {
+									background: #f3f0ff;
+								}
 
-                                &:hover {
-                                    background: #f3f0ff;
-                                }
+								svg {
+									height: 22px;
+								}
 
-                                svg {
-                                    height: 22px;
-                                }
+								.bPlIconLibraryIconLabel {
+									font-size: 11px;
+									padding: 0px 12px 0;
+									max-width: 100%;
+									white-space: nowrap;
+									text-overflow: ellipsis;
+									overflow: hidden;
+								}
+							}
+						}
+					}
+				}
+			}
 
-                                .bPl-icon-label {
-                                    font-size: 11px;
-                                    padding: 0px 12px 0;
-                                    max-width: 100%;
-                                    white-space: nowrap;
-                                    text-overflow: ellipsis;
-                                    overflow: hidden;
-                                }
-                            }
-                        }
+			/* footer section */
+			.bPlIconLibraryFooter {
+				border-top: 1px solid #ccc;
+				height: 50px;
+				padding: 0 10px;
+				display: flex;
+				align-items: center;
+				justify-content: end;
 
-                        /* } */
-                    }
-                }
-            }
+				.bPlIconLibraryFooterInsert {
+					all: unset;
+					background: #4527a4;
+					padding: 6px 12px;
+					font-size: 13px;
+					color: #fff;
+					border-radius: 4px;
+					transition: background 0.2s ease-in-out;
+					cursor: pointer;
 
-            /* footer section */
-            .bPl-icon-library-footer {
-                border-top: 1px solid #ccc;
-                height: 50px;
-                padding: 0 10px;
-                display: flex;
-                align-items: center;
-                justify-content: end;
-
-                .bPl-icon-insert-btn {
-                    all: unset;
-                    background: #4527a4;
-                    padding: 6px 12px;
-                    font-size: 13px;
-                    color: #fff;
-                    border-radius: 4px;
-                    transition: background 0.2s ease-in-out;
-                    cursor: pointer;
-
-                    &:hover {
-                        box-shadow: 1px 1px 1px #d1d1d1;
-                        background: #6244c1;
-                    }
-                }
-            }
-        }
-    }
-
+					&:hover {
+						box-shadow: 1px 1px 1px #d1d1d1;
+						background: #6244c1;
+					}
+				}
+			}
+		}
+	}
 }
