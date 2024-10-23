@@ -12,13 +12,13 @@ export const advGradientOptions = {
 };
 
 export const imgAttachmentOptions = [
-    { label: "Default", value: "" },
+    { label: "Default", value: "initial" },
     { label: "Fixed", value: "fixed" },
     { label: "Scroll", value: "scroll" },
 ];
 
 export const imgPositionOptions = [
-    { label: "Default", value: "" },
+    { label: "Default", value: "initial" },
     { label: "Center Center", value: "center center" },
     { label: "Center Left", value: "center left" },
     { label: "Center Right", value: "center right" },
@@ -31,7 +31,7 @@ export const imgPositionOptions = [
     { label: "Custom", value: "custom" },
 ];
 export const imgRepeatOptions = [
-    { label: "Default", value: "" },
+    { label: "Default", value: "initial" },
     { label: "Repeat", value: "repeat" },
     { label: "Repeat-X", value: "repeat-x" },
     { label: "Repeat-Y", value: "repeat-y" },
@@ -39,7 +39,7 @@ export const imgRepeatOptions = [
 ];
 
 export const imgSizeOptions = [
-    { label: "Default", value: "" },
+    { label: "Default", value: "initial" },
     { label: "Auto", value: "auto" },
     { label: "Cover", value: "cover" },
     { label: "Contain", value: "contain" },

@@ -16,7 +16,7 @@ import { pxUnit, emUnit, remUnit } from '../../../utils/options';
 const ShadowControl = props => {
 	const { className = '', label = __('Shadow'), value, onChange, defaults = {}, type = 'box' } = props;
 
-	const defaultVal = { type: 'box', hOffset: '0px', vOffset: '0px', blur: '0px', spreed: '0px', color: '#7090b0', isInset: false }
+	const defaultVal = { hOffset: '0px', vOffset: '0px', blur: '0px', spreed: '0px', color: '#7090b0', isInset: false }
 
 	const getDefault = property => defaults?.[property] || defaultVal[property];
 	const setDefault = property => onChange({ ...value, [property]: getDefault(property) });

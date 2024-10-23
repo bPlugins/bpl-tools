@@ -111,8 +111,8 @@ export const getSeparatorCSS = (separator) => {
 	return styles;
 }
 
-export const getShadowCSS = (shadow) => {
-	const { type = 'box', hOffset = '0px', vOffset = '0px', blur = '0px', spreed = '0px', color = '#7090b0', isInset = false } = shadow || {};
+export const getShadowCSS = (shadow, type = 'box') => {
+	const { hOffset = '0px', vOffset = '0px', blur = '0px', spreed = '0px', color = '#7090b0', isInset = false } = shadow || {};
 
 	const inset = isInset ? 'inset' : '';
 	const offsetBlur = `${hOffset} ${vOffset} ${blur}`;
@@ -207,31 +207,21 @@ const getSolidBGCSS = (bg) => `${bg ? `background: ${bg};` : ''}`;
 const getImagePosition = (img) => {
 	const { position = 'center center', xPosition = 0, yPosition = 0, attachment = '', repeat = 'no-repeat', size = 'cover', customSize = '0px' } = img || {};
 
+	const cd = v => 'initial' !== v;
+
 	return `
-		background-position: ${'custom' === position ? `${xPosition} ${yPosition}` : position};
-		background-attachment: ${attachment};
-		background-repeat: ${repeat};
-		background-size: ${'custom' === size ? `${customSize} auto` : size};
+		${cd(position) ? `background-position: ${'custom' === position ? `${xPosition} ${yPosition}` : position};` : ''}
+		${attachment && cd(attachment) ? `background-attachment: ${attachment};` : ''}
+		${cd(repeat) ? `background-repeat: ${repeat};` : ''}
+		${cd(size) ? `background-size: ${'custom' === size ? `${customSize} auto` : size};` : ''}
 	`;
 };
 const getImageCSS = (img = {}) => {
-	let desktop, tablet, mobile;
-	if (Object.keys(img).length > 1) {
-		if (img?.desktop) {
-			desktop = getImagePosition(img?.desktop);
-		}
-		if (img?.tablet) {
-			tablet = getImagePosition(img?.tablet);
-		}
-		if (img?.mobile) {
-			mobile = getImagePosition(img?.mobile);
-		}
-	}
 	if (img) {
 		return {
-			desktop: img.url ? `background-image: url(${img.url}); ${desktop}` : '',
-			tablet: img.url ? tablet : '',
-			mobile: img.url ? mobile : '',
+			desktop: img.url ? `background-image: url(${img.url}); ${getImagePosition(img?.desktop)}` : '',
+			tablet: img.url ? getImagePosition(img?.tablet) : '',
+			mobile: img.url ? getImagePosition(img?.mobile) : '',
 		};
 	}
 	return '';
