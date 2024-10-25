@@ -1,7 +1,7 @@
 import Dimension from './Dimension';
 import Background from './Background';
 import BorderShadow from './BorderShadow';
-// import Animation from './Animation';
+import Animation from './Animation';
 import Visibility from './Visibility';
 import Responsive from './Responsive';
 import CustomCSS from './CustomCSS';
@@ -17,19 +17,19 @@ const defEnabled = {
 	css: true
 }
 
-const Advanced = ({ advanced, onChange, enabled = defEnabled, isBGVideo = false }) => {
-	const { dimension = {}, background = {}, borderShadow = {}, visibility = {}, responsive = {}, css = '' } = advanced || {};
+const Advanced = ({ advanced, onChange, enabled = defEnabled, id = null, isPremium = false }) => {
+	const { dimension = {}, background = {}, borderShadow = {}, animation = {}, visibility = {}, responsive = {}, css = '' } = advanced || {};
 
 	const isEnabled = (which) => Object.prototype.hasOwnProperty.call(enabled, which);
 
 	return <>
 		{isEnabled('dimension') && <Dimension dimension={dimension} onChange={val => onChange(updateData(advanced, val, 'dimension'))} enabled={enabled.dimension} />}
 
-		{isEnabled('background') && <Background background={background} onChange={val => onChange(updateData(advanced, val, 'background'))} enabled={enabled.background} isVideo={isBGVideo} />}
+		{isEnabled('background') && <Background background={background} onChange={val => onChange(updateData(advanced, val, 'background'))} enabled={enabled.background} isPremium={isPremium} />}
 
 		{isEnabled('borderShadow') && (enabled.borderShadow?.includes('border') || enabled.borderShadow?.includes('shadow')) && <BorderShadow borderShadow={borderShadow} onChange={val => onChange(updateData(advanced, val, 'borderShadow'))} enabled={enabled.borderShadow} />}
 
-		{/* {isEnabled('animation') && <Animation animation={animation} onChange={val => onChange(updateData(advanced, val, 'animation'))} />} */}
+		{isEnabled('animation') && <Animation animation={animation} onChange={val => onChange(updateData(advanced, val, 'animation'))} id={id} isPremium={isPremium} />}
 
 		{isEnabled('visibility') && <Visibility visibility={visibility} onChange={val => onChange(updateData(advanced, val, 'visibility'))} enabled={enabled.visibility} />}
 

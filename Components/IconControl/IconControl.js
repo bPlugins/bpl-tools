@@ -68,7 +68,7 @@ const IconControl = props => {
 
 		{isColor && <>
 			<PanelRow className='mt20'>
-				<Label className=''>{__('Icon Color Type:')}</Label>
+				<Label className=''>{__('Color Type:')}</Label>
 				<BtnGroup value={getValue('colorType')} onChange={val => setValue('colorType', val)} options={bgTypes} size='small' />
 			</PanelRow>
 

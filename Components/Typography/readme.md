@@ -83,7 +83,7 @@ function getTypoCSS( $selector, $typo, $isFamily = true ) {
 	$tabletFontSize = $fontSize['tablet'] ?? $desktopFontSize;
 	$mobileFontSize = $fontSize['mobile'] ?? $tabletFontSize;
 
-	$styles = ( $isEmptyFamily ? '' : "font-family: '$fontFamily', $fontCategory;" )
+	$styles = ( $isEmptyFamily ? '' : "font-family: $fontFamily, $fontCategory;" )
 		. self::generateCss( $fontWeight, 'font-weight' )
 		. 'font-size: '. $desktopFontSize .'px;'
 		. self::generateCss( $fontStyle, 'font-style' )

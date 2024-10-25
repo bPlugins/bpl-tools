@@ -58,20 +58,45 @@ const responsiveCSS = (responsive, isBackend) => {
 	};
 }
 
-const transitionCSS = (background, borderShadow, animation) => {
+const transitionCSS = (background, borderShadow) => {
 	const { transition: bgT = 0.4 } = background || {};
 	const { transition: bsT = 0.4 } = borderShadow || {};
-	const { duration = 0.4 } = animation || {};
 
-	return `transition: background ${bgT}s, border ${bsT}s, border-radius ${bsT}s, box-shadow ${bsT}s, opacity ${duration}s, transform ${duration}s, -webkit-transform ${duration}s;`
+	return `transition: background ${bgT}s, border ${bsT}s, border-radius ${bsT}s, box-shadow ${bsT}s;`
+}
+
+const animationFn = (animation, id, isBackend) => {
+	const element = document.getElementById(id);
+
+	const run = () => {
+		element.setAttribute('data-aos', animation.type);
+		element.setAttribute('data-aos-duration', animation.duration || 0.4);
+		element.setAttribute('data-aos-delay', animation.delay || 0);
+	}
+
+	if (element && animation && animation?.type) {
+		run();
+
+		if (isBackend) {
+			element.classList.remove('aos-init');
+			element.classList.remove('aos-animate');
+
+			setTimeout(() => {
+				element.classList.add('aos-init');
+				element.classList.add('aos-animate');
+			}, 500);
+		}
+	}
 }
 
 export const generateCSS = (id, advanced, isBackend = false) => {
 	const { dimension, background, borderShadow, animation, visibility, responsive, css = '' } = advanced || {};
 
-	const selector = `#${id}`;
+	const selector = `#${id} > div`;
 
-	const dCSS = dimensionCSS(dimension).desktop + visibilityCSS(visibility).desktop + transitionCSS(background, borderShadow, animation);
+	animationFn(animation, id, isBackend);
+
+	const dCSS = dimensionCSS(dimension).desktop + visibilityCSS(visibility).desktop + transitionCSS(background, borderShadow);
 	const tCSS = dimensionCSS(dimension).tablet + visibilityCSS(visibility).tablet + responsiveCSS(responsive, isBackend).tablet;
 	const mCSS = dimensionCSS(dimension).mobile + visibilityCSS(visibility).mobile + responsiveCSS(responsive, isBackend).mobile;
 

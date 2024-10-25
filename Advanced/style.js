@@ -11,17 +11,13 @@ document.addEventListener('DOMContentLoaded', () => {
 		if (dataAdvanced) {
 			try {
 				const advanced = JSON.parse(dataAdvanced);
-				// const { animation } = advanced;
+				const { animation } = advanced;
 
-				// if (animation && animation?.type) {
-				// 	element.setAttribute('data-aos', animation.type);
-				// 	element.setAttribute('data-aos-duration', animation.duration || 0.4);
-				// 	element.setAttribute('data-aos-delay', animation.delay || 0);
-
-				// 	setTimeout(() => {
-				// 		AOS.init();
-				// 	}, []);
-				// }
+				if (animation && animation?.type) {
+					setTimeout(() => {
+						window['AOS'].init();
+					}, []);
+				}
 
 				const newCSS = generateCSS(element.id, advanced);
 				css += newCSS;
