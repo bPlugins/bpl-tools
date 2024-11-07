@@ -5,7 +5,7 @@ import Sortable from './Sortable';
 import { copyIcon } from '../../utils/icons';
 
 const ItemsPanel = (properties) => {
-	const { attributes, setAttributes, arrKey, newItem, ItemSettings, itemLabel = 'Item', activeIndex, setActiveIndex, design = 'single', premiumProps, ...restProps } = properties;
+	const { attributes, setAttributes, clientId, arrKey, newItem, ItemSettings, itemLabel = 'Item', activeIndex, setActiveIndex, design = 'single', premiumProps, ...restProps } = properties;
 	const items = attributes[arrKey];
 
 	const addNewItem = () => {
@@ -33,27 +33,31 @@ const ItemsPanel = (properties) => {
 	const props = {
 		attributes,
 		setAttributes,
+		clientId,
 		arrKey,
 		ItemSettings,
 		removeItem,
 		duplicateItem,
 		itemLabel,
 		setActiveIndex,
+		premiumProps,
 		...restProps
 	}
+
+	const itemProps = { attributes, setAttributes, clientId, arrKey, setActiveIndex, premiumProps }
 
 	return <>
 		{'single' === design && undefined !== activeIndex && <>
 			<h3 className='bplItemTitle'>{__(`${itemLabel} ${activeIndex + 1}:`)}</h3>
 
-			<ItemSettings attributes={attributes} setAttributes={setAttributes} arrKey={arrKey} index={activeIndex} setActiveIndex={setActiveIndex} premiumProps={premiumProps} />
+			<ItemSettings {...itemProps} index={activeIndex} />
 
 			<ItemAction items={items} index={activeIndex} duplicateItem={duplicateItem} removeItem={removeItem} />
 		</>}
 
 		{'all' === design && items.map((item, index) => {
 			return <PanelBody key={index} className='bPlPanelBody itemPanelBody' title={__(`${itemLabel} ${index + 1}:`)} initialOpen={0 !== index ? false : true}>
-				<ItemSettings attributes={attributes} setAttributes={setAttributes} arrKey={arrKey} index={index} setActiveIndex={setActiveIndex} premiumProps={premiumProps} />
+				<ItemSettings {...itemProps} index={index} />
 
 				<ItemAction items={items} index={index} duplicateItem={duplicateItem} removeItem={removeItem} />
 			</PanelBody>

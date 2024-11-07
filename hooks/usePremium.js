@@ -1,4 +1,4 @@
-import { useWPAjax } from '../../../react-utils/hooks';
+import { useWPAjax } from './index';
 
 const usePremium = (pipeAction, nonce) => {
 	const { data = null, isLoading } = useWPAjax(pipeAction, { _wpnonce: nonce });

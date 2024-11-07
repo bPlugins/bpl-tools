@@ -29,7 +29,7 @@ const useWPAjax = (action, params = {}, set = true) => {
 			});
 	};
 
-	const request = async (payload = {}) => {
+	const request = (payload = {}) => {
 		sendRequest(payload);
 	};
 

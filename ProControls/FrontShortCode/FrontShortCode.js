@@ -12,6 +12,7 @@ export const FrontShortCode = withSelect((select) => {
 })(({ postType, shortCode, currentPostType }) => {
 	const tooltip = useRef(null);
 
+
 	const handleCopyShortCode = e => {
 		const input = e.target;
 		input.select();

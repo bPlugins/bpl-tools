@@ -2,30 +2,30 @@ $primaryColor: #4527a4;
 $secondaryColor: #8344c5;
 
 .bplAboutProModal {
-    h3 {
-        margin: 0 0 15px 0;
-    }
+	h3 {
+		margin: 0 0 15px 0;
+	}
 
-    .text {
-        font-size: 15px;
-        margin: 25px 0 0 0;
-    }
+	.text {
+		font-size: 15px;
+		margin: 25px 0 0 0;
+	}
 
-    .upgradeNow {
-        display: inline-block;
-        font-size: 16px;
-        font-weight: 500;
-        color: #fff;
-        background-color: $primaryColor;
-        text-decoration: none;
-        padding: 12px 20px;
-        margin-top: 20px;
-        border-radius: 50px;
+	.upgradeNow {
+		display: inline-block;
+		font-size: 16px;
+		font-weight: 500;
+		color: #fff;
+		background-color: $primaryColor;
+		text-decoration: none;
+		padding: 12px 20px;
+		margin-top: 20px;
+		border-radius: 50px;
 
-        &:hover,
-        &:focus {
-            color: #fff;
-            background-color: $secondaryColor;
-        }
-    }
+		&:hover,
+		&:focus {
+			color: #fff;
+			background-color: $secondaryColor;
+		}
+	}
 }

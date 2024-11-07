@@ -65,27 +65,13 @@ const transitionCSS = (background, borderShadow) => {
 	return `transition: background ${bgT}s, border ${bsT}s, border-radius ${bsT}s, box-shadow ${bsT}s;`
 }
 
-const animationFn = (animation, id, isBackend) => {
+export const animationFn = (animation, id) => {
 	const element = document.getElementById(id);
 
-	const run = () => {
+	if (element && animation && animation?.type) {
 		element.setAttribute('data-aos', animation.type);
 		element.setAttribute('data-aos-duration', animation.duration || 0.4);
 		element.setAttribute('data-aos-delay', animation.delay || 0);
-	}
-
-	if (element && animation && animation?.type) {
-		run();
-
-		if (isBackend) {
-			element.classList.remove('aos-init');
-			element.classList.remove('aos-animate');
-
-			setTimeout(() => {
-				element.classList.add('aos-init');
-				element.classList.add('aos-animate');
-			}, 500);
-		}
 	}
 }
 
@@ -94,7 +80,7 @@ export const generateCSS = (id, advanced, isBackend = false) => {
 
 	const selector = `#${id} > div`;
 
-	animationFn(animation, id, isBackend);
+	!isBackend && animationFn(animation, id);
 
 	const dCSS = dimensionCSS(dimension).desktop + visibilityCSS(visibility).desktop + transitionCSS(background, borderShadow);
 	const tCSS = dimensionCSS(dimension).tablet + visibilityCSS(visibility).tablet + responsiveCSS(responsive, isBackend).tablet;
