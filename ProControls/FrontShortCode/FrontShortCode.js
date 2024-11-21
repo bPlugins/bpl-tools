@@ -5,13 +5,8 @@ import { withSelect } from '@wordpress/data';
 import './FrontShortCode.scss';
 import { Label } from '../../Components';
 
-export const FrontShortCode = withSelect((select) => {
-	return {
-		currentPostType: select('core/editor').getCurrentPostType()
-	};
-})(({ postType, shortCode, currentPostType }) => {
+const FrontShortCode = ({ postType, shortCode, currentPostType }) => {
 	const tooltip = useRef(null);
-
 
 	const handleCopyShortCode = e => {
 		const input = e.target;
@@ -34,4 +29,9 @@ export const FrontShortCode = withSelect((select) => {
 			</span>
 		</div>
 	</div>
-});
+}
+export default withSelect((select) => {
+	return {
+		currentPostType: select('core/editor').getCurrentPostType()
+	};
+})(FrontShortCode);

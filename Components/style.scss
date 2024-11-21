@@ -167,6 +167,35 @@ $secondaryColor: #8344c5;
 	margin-bottom: 35px !important;
 }
 
+// Editing
+.bPlNowEditing {
+	outline: 2px solid $primaryColor;
+}
+
+// Inspector Panel Info
+.bPlInspectorInfo {
+	padding: 6px;
+
+	a {
+		text-decoration: none;
+		font-weight: 700;
+	}
+
+	.onSale {
+		font-size: 16px;
+		color: #007FFF;
+		padding: 5px;
+
+		* {
+			color: inherit;
+		}
+
+		strong {
+			font-weight: bold;
+		}
+	}
+}
+
 // Tab Panel
 .bPlTabPanel {
 	.components-tab-panel__tabs {
@@ -189,6 +218,14 @@ $secondaryColor: #8344c5;
 			border-bottom: 3px solid $primaryColor;
 			font-weight: bold;
 			background-color: rgba($primaryColor, .15);
+		}
+	}
+
+	&.bPlAutoTab {
+		.components-tab-panel__tabs {
+			button {
+				width: auto;
+			}
 		}
 	}
 

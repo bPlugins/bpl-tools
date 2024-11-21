@@ -1,4 +1,4 @@
-import { memo, useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { __ } from '@wordpress/i18n';
 import { PanelRow, Flex, Button } from '@wordpress/components';
 
@@ -177,4 +177,4 @@ const IconLibrary = ({ className = '', label = __('Icon Library'), value, onChan
 		</div>}
 	</div>
 };
-export default memo(IconLibrary);
+export default IconLibrary;

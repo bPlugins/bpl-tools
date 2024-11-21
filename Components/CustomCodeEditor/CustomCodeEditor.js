@@ -16,7 +16,7 @@ import 'ace-builds/src-noconflict/ext-language_tools';
 import 'ace-builds/src-noconflict/mode-css';
 import 'ace-builds/src-noconflict/theme-monokai';
 
-export const CustomCodeEditor = (props) => {
+const CustomCodeEditor = (props) => {
 	const { value, onChange, height = '300px', width = '100%' } = props;
 	const id = Math.floor(Math.random() * 99999999);
 

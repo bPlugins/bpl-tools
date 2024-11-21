@@ -10,7 +10,7 @@ import { PanelRow, Button, ButtonGroup } from '@wordpress/components';
 import './BtnGroupPro.scss';
 import { Label } from '../../Components';
 
-export const BtnGroupPro = props => {
+const BtnGroupPro = props => {
 	const { className, label, value, onChange, options, isIcon = false, isTextIcon = false, size, isPremium = false, setIsProModalOpen = () => { }, proValues } = props;
 	const newOptions = options.map(o => ({ ...o, className: (proValues?.includes(o.value) && !isPremium) ? 'bplProGroupBtn' : '' }));
 
@@ -42,3 +42,4 @@ export const BtnGroupPro = props => {
 		<Buttons />
 	</PanelRow> : <Buttons className={className} />
 };
+export default BtnGroupPro;

@@ -3,7 +3,7 @@ import { Modal } from '@wordpress/components';
 
 import './AboutProModal.scss';
 
-export const AboutProModal = ({ isProModalOpen, setIsProModalOpen, link, children }) => isProModalOpen && <Modal className='bplAboutProModal' title={__('Upgrade to PRO')} onRequestClose={() => setIsProModalOpen(false)}>
+const AboutProModal = ({ isProModalOpen, setIsProModalOpen, link, children }) => isProModalOpen && <Modal className='bplAboutProModal' title={__('Upgrade to PRO')} onRequestClose={() => setIsProModalOpen(false)}>
 	<h3>{__('Explore new features in Pro')}</h3>
 
 	<ul className='features'>
@@ -14,3 +14,4 @@ export const AboutProModal = ({ isProModalOpen, setIsProModalOpen, link, childre
 
 	<a className='upgradeNow' href={link} target='_blank' rel='noreferrer'>{__('Upgrade Now', 'advanced-post-block')}</a>
 </Modal>;
+export default AboutProModal;
