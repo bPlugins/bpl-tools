@@ -356,6 +356,10 @@ $secondaryColor: #8344c5;
 		width: 25px !important;
 		color: #fff !important;
 		background-color: $primaryColor !important;
+		height: 100%;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
 	}
 
 	// Checkbox Control
