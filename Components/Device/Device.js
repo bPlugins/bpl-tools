@@ -10,7 +10,7 @@ const Device = ({ style, className, position = 'horizontal', device, setDevice, 
 		{ label: 'Mobile', name: 'mobile', icon: 'dashicons-smartphone' },
 	];
 
-	return <div className={className} style={style} >
+	return <div className={className} style={style}>
 		<div style={{ display: position === 'horizontal' ? 'flex' : 'grid', gap: '5px', }} >
 			{deviceValue.map(({ label, name, icon }, i) => (
 				<button

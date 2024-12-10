@@ -23,7 +23,7 @@ import { useEffect, useRef, useState } from "react";
  */
 
 const BButtonGroup = (props) => {
-	const { options = [], label = "Button Group", value, onChange = () => { }, borderRadius = "30px", height, paddingX = "8px", paddingY = "4px", fontSize = "12px", fontWeight = 400, activeBg, activeColor = "#fff", inactiveColor = "#000", hoverBg, hoverColor, style, } = props;
+	const { className='',options = [], label = "Button Group", value, onChange = () => { }, borderRadius = "30px", height, paddingX = "8px", paddingY = "4px", fontSize = "12px", fontWeight = 400, activeBg, activeColor = "#fff", inactiveColor = "#000", hoverBg, hoverColor, style, } = props;
 	const [activeButton, setActiveButton] = useState(0);
 
 	const btnOptions = options.length > 0 ? options : [1, 2];
@@ -63,7 +63,7 @@ const BButtonGroup = (props) => {
 	};
 
 	return (
-		<div style={{ marginBottom: "10px", ...style }}>
+		<div className={className} style={{ marginBottom: "10px", ...style }}>
 			<style>{`
 				.bpl-buttonGroupHover-${uniqId}.bpl-button-group-${uniqId}:hover{
 					background:${hoverBg};

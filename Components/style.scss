@@ -355,11 +355,11 @@ $secondaryColor: #8344c5;
     font-size: 11px !important;
     width: 25px !important;
     color: #fff !important;
+    background-color: $primaryColor !important;
     height: 100%;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    background-color: $primaryColor !important;
   }
 
   // Checkbox Control
