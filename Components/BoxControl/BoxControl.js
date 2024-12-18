@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { __experimentalUnitControl as UnitControl } from '@wordpress/components';
 
 import './BoxControl.scss';
