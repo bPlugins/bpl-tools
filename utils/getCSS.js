@@ -1,18 +1,22 @@
 import { mobileBreakpoint, tabBreakpoint } from './data';
+import { isExist } from './functions';
+
+export const isValidCSS = (p, v) => isExist(v) ? `${p}: ${v};` : '';
 
 export const getBackgroundCSS = (bg, isSolid = true, isGradient = true, isImage = true) => {
-	const { type = 'solid', color = '#000000b3', gradient = 'linear-gradient(135deg, #4527a4, #8344c5)', image = {}, position = 'center center', attachment = 'initial', repeat = 'no-repeat', size = 'cover', overlayColor = '#000000b3' } = bg || {};
+	const { type = 'solid', color = '', gradient = '', image = {}, position = '', attachment = '', repeat = '', size = '', overlayColor = '' } = bg || {};
 
-	const styles = ('gradient' === type && isGradient) ? `background: ${gradient};` :
+	const styles = ('gradient' === type && isGradient) ? isValidCSS('background', gradient) :
 		('image' === type && isImage) ?
 			`background: url(${image?.url});
-				background-color: ${overlayColor};
-				background-position: ${position};
-				background-size: ${size};
-				background-repeat: ${repeat};
-				background-attachment: ${attachment};
+				${isValidCSS('background-color', overlayColor)}
+				${isValidCSS('background-position', position)}
+				${isValidCSS('background-size', size)}
+				${isValidCSS('background-repeat', repeat)}
+				${isValidCSS('background-attachment', attachment)}
+				${isValidCSS('background-repeat', repeat)}
 				background-blend-mode: overlay;` :
-			isSolid && `background: ${color};`;
+			isSolid && isValidCSS('background', color);
 
 	return styles;
 } // PHP version in Stepped Content
@@ -51,7 +55,7 @@ export const getBorderBoxCSS = (border) => {
 				border[side] ? `border-${side}: ${generateBorderCSS(border[side])};` : ''
 			).join(' ').trim();
 		} else {
-			return `border: ${generateBorderCSS(border)};`;
+			return isValidCSS('border', generateBorderCSS(border));
 		}
 	}
 
@@ -63,7 +67,7 @@ export const getColorsCSS = (colors) => {
 
 	const styles = `
 		${color ? `color: ${color};` : ''}
-		${gradient || bg ? `background: ${'gradient' === bgType ? gradient : bg};` : ''}
+		${gradient || bg ? isValidCSS('background', 'gradient' === bgType ? gradient : bg) : ''}
 	`;
 
 	return styles;
@@ -73,11 +77,10 @@ export const getIconCSS = (icon, isSize = true, isColor = true) => {
 	const { fontSize = 16, colorType = 'solid', color = 'inherit', gradient = 'linear-gradient(135deg, #4527a4, #8344c5)' } = icon || {};
 
 	const colorCSS = 'gradient' === colorType ?
-		`color: transparent; background-image: ${gradient}; -webkit-background-clip: text; background-clip: text;` :
-		`color: ${color};`;
+		`color: transparent; background-image: ${gradient}; -webkit-background-clip: text; background-clip: text;` : isValidCSS('color', color);
 
 	const styles = `
-		${!fontSize || !isSize ? '' : `font-size: ${fontSize}px;`}
+		${!fontSize || !isSize ? '' : isValidCSS('font-size', fontSize ? `${fontSize}px` : '')}
 		${isColor ? colorCSS : ''}
 	`;
 
@@ -133,8 +136,6 @@ export const getSpaceCSS = (space) => {
 export const getTypoCSS = (selector, typo, isFamily = true) => {
 	const { fontFamily = 'Default', fontCategory = 'sans-serif', fontVariant = 400, fontWeight = 400, isUploadFont = true, fontSize = { desktop: 15, tablet: 15, mobile: 15 }, fontStyle = 'normal', textTransform = 'none', textDecoration = 'auto', lineHeight = '135%', letterSpace = '0px' } = typo || {};
 
-	const generateCss = (value, cssProperty) => !value ? '' : `${cssProperty}: ${value};`;
-
 	const isEmptyFamily = !isFamily || !fontFamily || 'Default' === fontFamily;
 	const desktopFontSize = fontSize?.desktop || fontSize;
 	const tabletFontSize = fontSize?.tablet || desktopFontSize;
@@ -142,13 +143,13 @@ export const getTypoCSS = (selector, typo, isFamily = true) => {
 
 	const styles = `
 		${isEmptyFamily ? '' : `font-family: '${fontFamily}', ${fontCategory};`}
-		${generateCss(fontWeight, 'font-weight')}
-		${`font-size: ${desktopFontSize}px;`}
-		${generateCss(fontStyle, 'font-style')}
-		${generateCss(textTransform, 'text-transform')}
-		${generateCss(textDecoration, 'text-decoration')}
-		${generateCss(lineHeight, 'line-height')}
-		${generateCss(letterSpace, 'letter-spacing')}
+		${isValidCSS('font-weight', fontWeight)}
+		${isValidCSS('font-size', desktopFontSize ? `${desktopFontSize}px` : '')}
+		${isValidCSS('font-style', fontStyle)}
+		${isValidCSS('text-transform', textTransform)}
+		${isValidCSS('text-decoration', textDecoration)}
+		${isValidCSS('line-height', lineHeight)}
+		${isValidCSS('letter-spacing', letterSpace)}
 	`;
 
 	// Google font link
@@ -163,12 +164,12 @@ export const getTypoCSS = (selector, typo, isFamily = true) => {
 		}
 		${tabBreakpoint} {
 			${selector}{
-				${`font-size: ${tabletFontSize}px;`}
+				${isValidCSS('font-size', tabletFontSize ? `${tabletFontSize}px` : '')}
 			}
 		}
 		${mobileBreakpoint} {
 			${selector}{
-				${`font-size: ${mobileFontSize}px;`}
+				${isValidCSS('font-size', mobileFontSize ? `${mobileFontSize}px` : '')}
 			}
 		}`.replace(/\s+/g, ' ').trim()
 	}
@@ -186,7 +187,6 @@ export const getBoxCSS = (val) => {
 
 	return '0';
 };
-export const getPropertyBoxCSS = (property, value) => value ? `${property}: ${getBoxCSS(value)};` : '';
 
 // Murad Wahid
 export const getGradientCSS = (gradient) => {
@@ -197,17 +197,15 @@ export const getGradientCSS = (gradient) => {
 		const liner = `linear-gradient(${angel}deg, ${gradientColors})`;
 		const radial = `radial-gradient(${radialType} at ${centerPositions?.x}% ${centerPositions?.y}%,${gradientColors})`;
 
-		return type === 'linear' ? `background: ${liner};` : `background: ${radial};`;
+		return isValidCSS('background', type === 'linear' ? liner : radial);
 	}
 	return '';
 };
 
-const getSolidBGCSS = (bg) => `${bg ? `background: ${bg};` : ''}`;
-
 const getImagePosition = (img) => {
 	const { position = 'center center', xPosition = 0, yPosition = 0, attachment = '', repeat = 'no-repeat', size = 'cover', customSize = '0px' } = img || {};
 
-	const cd = v => 'initial' !== v;
+	const cd = v => 'initial' !== v || isExist(v);
 
 	return `
 		${cd(position) ? `background-position: ${'custom' === position ? `${xPosition} ${yPosition}` : position};` : ''}
@@ -219,9 +217,9 @@ const getImagePosition = (img) => {
 const getImageCSS = (img = {}) => {
 	if (img) {
 		return {
-			desktop: img.url ? `background-image: url(${img.url}); ${getImagePosition(img?.desktop)}` : '',
-			tablet: img.url ? getImagePosition(img?.tablet) : '',
-			mobile: img.url ? getImagePosition(img?.mobile) : '',
+			desktop: isExist(img.url) ? `background-image: url(${img.url}); ${getImagePosition(img?.desktop)}` : '',
+			tablet: isExist(img.url) ? getImagePosition(img?.tablet) : '',
+			mobile: isExist(img.url) ? getImagePosition(img?.mobile) : '',
 		};
 	}
 	return '';
@@ -261,7 +259,7 @@ export const getAdvBGCSS = (background, selector, isHover = false) => {
 
 	const bgCSS =
 		type === 'color'
-			? getSolidBGCSS(color)
+			? isValidCSS('background', color)
 			: type === 'gradient'
 				? getGradientCSS(gradient)
 				: type === 'image'
@@ -299,8 +297,6 @@ export const getOverlayCSS = (overlay, selector, isHover = false) => {
 	const filterCSSValue = `${100 !== brightness ? `brightness(${brightness}%)` : ''} ${100 !== contrast ? `contrast(${contrast}%)` : ''} ${100 !== saturation ? `saturate(${saturation}%)` : ''} ${0 !== blur ? `blur(${blur}px)` : ''} ${0 !== hue ? `hue-rotate(${hue}deg)` : ''}`;
 	const filterCSS = `${filter}: ${filter ? filterCSSValue : ''}; -webkit-${filter}: ${filter ? filterCSSValue : ''};`;
 
-	const blendCSS = blend ? `mix-blend-mode: ${blend};` : ''
-
 	const sl = isHover ? `${selector}:hover::after` : `${selector}::after`;
 
 	return isEnabled ? `
@@ -311,8 +307,8 @@ export const getOverlayCSS = (overlay, selector, isHover = false) => {
 		}
 		${getAdvBGCSS(colors, sl, false)}
 		${sl}{
-			opacity: ${opacity};
-			${blendCSS}
+			${isValidCSS('opacity', opacity)}
+			${isValidCSS('mix-blend-mode', blend)}
 			${filterCSS}
 		}
 	`.replace(/\s+/g, ' ').trim() : ''

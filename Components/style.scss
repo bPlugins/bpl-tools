@@ -635,12 +635,17 @@ $secondaryColor: #8344c5;
 
 		.components-button,
 		.is-primary {
+			>span {
+				display: flex;
+			}
+
 			border: 1px solid $secondaryColor;
 			box-shadow: none;
 			padding: 6px 10.5px;
 
 			&:hover {
-				color: $primaryColor;
+				color: #fff;
+				background-color: $secondaryColor;
 			}
 
 			.dashicon {
@@ -658,11 +663,11 @@ $secondaryColor: #8344c5;
 			background-color: $primaryColor;
 
 			&:hover {
-				background-color: $secondaryColor !important;
+				background-color: $primaryColor !important;
 			}
 
 			&:focus {
-				outline: 2px solid $secondaryColor !important;
+				outline: 2px solid $primaryColor !important;
 			}
 		}
 
