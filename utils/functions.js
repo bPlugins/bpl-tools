@@ -45,7 +45,7 @@ export const updateData = (attr, value, ...props) => {
 	const [currentProp, ...remainingProps] = props;
 	if (remainingProps.length === 0) {
 		return produce(attr, draft => {
-			if (draft === null || draft === undefined) {
+			if (Array.isArray(draft[currentProp]) &&( draft === null || draft === undefined)) {
 				draft = {};
 			}
 			draft[currentProp] = value;
