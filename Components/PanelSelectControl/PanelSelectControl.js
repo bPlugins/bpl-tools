@@ -14,6 +14,7 @@ const PanelSelectControl = ({ value = [], options, onChange = () => { }, classNa
 			setValue(restVal);
 		}
 	};
+
 	useEffect(() => {
 		const handle = (e) => {
 			if (!refHeadingTag?.current?.contains(e.target)) {

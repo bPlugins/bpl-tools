@@ -176,16 +176,21 @@ export const getTypoCSS = (selector, typo, isFamily = true) => {
 }
 
 export const getBoxCSS = (val) => {
-	if (!val) return '0';
+	if (!val) return '';
 
 	if (typeof val === 'string') return val;
 
 	if (typeof val === 'object' && !Array.isArray(val)) {
 		const order = ['top', 'right', 'bottom', 'left'];
-		return order.map(side => val[side] || '0').join(' ');
+
+		const values = order.map(side => val[side] || '');
+
+		const allEmpty = values.every(value => !value);
+
+		return allEmpty ? '' : order.map(side => val[side] || '0').join(' ');
 	}
 
-	return '0';
+	return '';
 };
 
 // Murad Wahid
