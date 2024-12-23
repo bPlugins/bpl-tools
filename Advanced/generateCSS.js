@@ -1,11 +1,11 @@
-import { getAdvBGCSS, getOverlayCSS, getBorderBoxCSS, getPropertyBoxCSS, getMultiShadowCSS } from '../utils/getCSS';
+import { getAdvBGCSS, getOverlayCSS, getBorderBoxCSS, getMultiShadowCSS, isValidCSS, getBoxCSS } from '../utils/getCSS';
 import { deskBreakpoint, tabBreakpoint, mobileBreakpoint } from '../utils/data';
 
 const dimensionCSS = (dimension) => {
 	const { padding, margin } = dimension || {};
 
-	const pCSS = (p) => getPropertyBoxCSS('padding', p);
-	const mCSS = (m) => getPropertyBoxCSS('margin', m);
+	const pCSS = (p) => isValidCSS('padding', getBoxCSS(p));
+	const mCSS = (m) => isValidCSS('margin', getBoxCSS(m));
 
 	return {
 		desktop: pCSS(padding?.desktop) + mCSS(margin?.desktop),
@@ -21,7 +21,7 @@ const borderShadowCSS = (borderShadow) => {
 	const stateGenerate = (state) => {
 		const { border, radius, shadow } = state || {};
 
-		const radiusCSS = radius ? getPropertyBoxCSS('border-radius', radius) : '';
+		const radiusCSS = radius ? isValidCSS('border-radius', getBoxCSS(radius)) : '';
 		const shadowCSS = shadow ? `box-shadow: ${getMultiShadowCSS(shadow)};` : '';
 
 		return getBorderBoxCSS(border) + radiusCSS + shadowCSS;

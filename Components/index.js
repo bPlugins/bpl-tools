@@ -25,5 +25,6 @@ import ShadowControl from './ShadowControl/ShadowControl';
 import SolidBackground from './SolidBackground/SolidBackground';
 import SortableControl from './SortableControl/SortableControl';
 import Typography from './Typography/Typography';
+import BBlocksAds from './Utility/BBlocksAds';
 
-export { AdvBackground, Background, BButtonGroup, BoxControl, BtnGroup, ColorControl, HexColorControl, ColorsControl, CustomCodeEditor, Device, Gradient, HelpPanel, IconControl, IconLibrary, ItemsPanel, Label, InlineMediaUpload, InlineDetailMediaUpload, MediaArea, MediaPlaceholder, MediaEditControl, MultiSelectControl, OverlayControl, PanelSelectControl, SelectPureControl, SeparatorControl, ShadowControl, SolidBackground, SortableControl, Typography }
+export { AdvBackground, Background, BButtonGroup, BoxControl, BtnGroup, ColorControl, HexColorControl, ColorsControl, CustomCodeEditor, Device, Gradient, HelpPanel, IconControl, IconLibrary, ItemsPanel, Label, InlineMediaUpload, InlineDetailMediaUpload, MediaArea, MediaPlaceholder, MediaEditControl, MultiSelectControl, OverlayControl, PanelSelectControl, SelectPureControl, SeparatorControl, ShadowControl, SolidBackground, SortableControl, Typography, BBlocksAds }

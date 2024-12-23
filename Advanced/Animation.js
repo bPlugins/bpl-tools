@@ -24,7 +24,7 @@ const Animation = ({ animation, onChange, id, isPremium }) => {
 	// 	}
 	// }, [type, duration, delay]);
 
-	return <PanelBody className='bPlPanelBody' title='Animation'>
+	return <PanelBody className='bPlPanelBody' title='Animation' initialOpen={false}>
 		<SelectControl label={__('Type')} labelPosition='left' value={type} onChange={val => onChange(updateData(animation, val, 'type'))} options={animationTypes} />
 
 		<RangeControl className='mt20' label='Duration (s)' value={duration} onChange={val => onChange(updateData(animation, val, 'duration'))} min={0} max={3} step={0.05} />

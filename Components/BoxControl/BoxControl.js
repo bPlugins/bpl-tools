@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { __experimentalUnitControl as UnitControl } from '@wordpress/components';
 
 import './BoxControl.scss';
@@ -41,10 +41,6 @@ const BoxControl = (props) => {
 			}
 		}
 	};
-
-	useEffect(() => {
-		onChange(values);
-	}, [values])
 
 	return <div style={{ ...style }} className={`bPlBoxControl ${className}`}>
 		{label && <Label className='mb5'>{label}</Label>}
