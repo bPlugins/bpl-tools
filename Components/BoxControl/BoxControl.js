@@ -5,7 +5,7 @@ import './BoxControl.scss';
 import { Label } from '../index';
 
 const BoxControl = (props) => {
-	const { label, values = {}, onChange = () => { }, resetValues, defaultValues, units, sides, style, className, disableUnits = false } = props;
+	const { label, values = {}, onChange = () => { }, resetValues, units, sides, style, className, disableUnits = false } = props;
 	const [link, setLink] = useState(true);
 
 	const unitSides = sides || ['top', 'right', 'bottom', 'left'];
@@ -50,7 +50,6 @@ const BoxControl = (props) => {
 				<UnitControl
 					onChange={(v) => handleChange(v, val)}
 					value={sides ? val === 'horizontal' ? values?.right : val === 'vertical' && values?.top : values?.[val]}
-					defaultValue={defaultValues || null}
 					units={units || defaultUnits}
 					disableUnits={disableUnits}
 				/>

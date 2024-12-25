@@ -655,6 +655,10 @@ $secondaryColor: #8344c5;
 
 			&.has-icon {
 				padding: 6px 9px;
+
+				&.is-small {
+					padding: 0 4px;
+				}
 			}
 		}
 
