@@ -85,7 +85,7 @@ const Typography = props => {
 						<SelectControl value={getValue('fontVariant')} onChange={val => { onChange({ ...value, ['fontWeight']: parseInt(val?.replace('00i', '00')), ['fontVariant']: val }) }} options={fontWeights()} />
 					</PanelRow>
 
-					<ToggleControl className='mt10' label={__('Upload Google Font')} checked={getValue('isUploadFont')} onChange={val => setValue('isUploadFont', val)} />
+					<ToggleControl className='mt10' label={__('Load Google Font')} checked={getValue('isUploadFont')} onChange={val => setValue('isUploadFont', val)} />
 				</> : <PanelRow>
 					<Label className=''>{__('Weight:')}</Label>
 					<SelectControl value={getValue('fontWeight')} onChange={val => setValue('fontWeight', val)} options={fontWeights()} />
