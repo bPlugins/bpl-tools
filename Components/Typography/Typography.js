@@ -19,7 +19,7 @@ import fontLists from './fontLists';
 import { fontStyles, textTransforms, textDecorations } from './options';
 
 const Typography = props => {
-	const { className = '', label = __('Typography:'), value, onChange, defaults = {}, isFamily = true } = props;
+	const { className = '', label = __('Typography:'), value, onChange, defaults = {}, isFamily = true, maxFontSize = 120 } = props;
 
 	const defaultVal = { fontFamily: 'Default', fontCategory: 'sans-serif', fontWeight: 400, isUploadFont: true, fontSize: { desktop: 15, tablet: 15, mobile: 15 }, fontStyle: 'normal', textTransform: 'none', textDecoration: 'auto', lineHeight: '135%', letterSpace: '0px' }
 
@@ -85,7 +85,7 @@ const Typography = props => {
 						<SelectControl value={getValue('fontVariant')} onChange={val => { onChange({ ...value, ['fontWeight']: parseInt(val?.replace('00i', '00')), ['fontVariant']: val }) }} options={fontWeights()} />
 					</PanelRow>
 
-					<ToggleControl className='mt10' label={__('Upload Google Font')} checked={getValue('isUploadFont')} onChange={val => setValue('isUploadFont', val)} />
+					<ToggleControl className='mt10' label={__('Load Google Font')} checked={getValue('isUploadFont')} onChange={val => setValue('isUploadFont', val)} />
 				</> : <PanelRow>
 					<Label className=''>{__('Weight:')}</Label>
 					<SelectControl value={getValue('fontWeight')} onChange={val => setValue('fontWeight', val)} options={fontWeights()} />
@@ -97,7 +97,7 @@ const Typography = props => {
 					<Label className=''>{__('Font Size:')}</Label>
 					<BDevice device={device} onChange={val => setDevice(val)} />
 				</PanelRow>
-				<RangeControl value={getValue('fontSize')?.[device] || getValue('fontSize')} onChange={val => setValue('fontSize', val, device)} min={0} max={120} step={1} allowReset={true} resetFallbackValue={getDefault('fontSize')?.[device] || getDefault('fontSize')} initialPosition={getDefault('fontSize')?.[device] || getDefault('fontSize')} />
+				<RangeControl value={getValue('fontSize')?.[device] || getValue('fontSize')} onChange={val => setValue('fontSize', val, device)} min={0} max={maxFontSize} step={1} allowReset={true} resetFallbackValue={getDefault('fontSize')?.[device] || getDefault('fontSize')} initialPosition={getDefault('fontSize')?.[device] || getDefault('fontSize')} />
 
 				{/* Font Style */}
 				<PanelRow className='mt20'>

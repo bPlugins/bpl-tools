@@ -8,6 +8,7 @@
 		"lint": "eslint src"
 	},
 	"dependencies": {
+		"dompurify": "^3.2.3",
 		"immer": "^10.1.1",
 		"react-ace": "^12.0.0",
 		"react-sortable-hoc": "^2.0.0",

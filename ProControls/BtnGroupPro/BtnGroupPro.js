@@ -11,14 +11,13 @@ import './BtnGroupPro.scss';
 import { Label } from '../../Components';
 
 const BtnGroupPro = props => {
-	const { className, label, value, onChange, options, isIcon = false, isTextIcon = false, size, isPremium = false, setIsProModalOpen = () => { }, proValues } = props;
+	const { className, label, value, onChange, options, isIcon = false, isTextIcon = false, size = 'compact', isPremium = false, setIsProModalOpen = () => { }, proValues } = props;
 	const newOptions = options.map(o => ({ ...o, className: (proValues?.includes(o.value) && !isPremium) ? 'bplProGroupBtn' : '' }));
 
 	const Buttons = ({ className = '' }) => <ButtonGroup className={`bPlBtnGroup ${className || null}`}>
 		{newOptions?.map(obj => {
 			const { className = '', value: val, icon = '', label = '', def = '' } = obj;
 			const isActive = value === val;
-			const isSm = size === 'small';
 
 			return <Button
 				key={val}
@@ -29,8 +28,7 @@ const BtnGroupPro = props => {
 				icon={isIcon ? icon : null}
 				variant={isActive ? 'primary' : ''}
 				aria-pressed={isActive}
-				isSmall={isSm}
-				isMedium={!isSm}
+				size={size}
 				onClick={() => isPremium ? onChange(val, def && def) : (proValues?.includes(val) ? setIsProModalOpen(true) : onChange(val, def && def))}
 			>{isTextIcon ? icon : isIcon ? '' : label}</Button>
 		})}

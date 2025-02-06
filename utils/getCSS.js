@@ -279,20 +279,21 @@ export const getAdvBGCSS = (background, selector, isHover = false) => {
 	return `
 		${type === 'video' ? getVideoCSS(video, selector) : ''}
 
-		${sl}{
+		${bgCSS ? `${sl}{
 			${bgCSS}
-		}
+		}` : ''}
 
-		${tabBreakpoint} {
+		${tablet ? `${tabBreakpoint} {
 			${sl}{
 				${tablet}
 			}
-		}
-		${mobileBreakpoint} {
+		}` : ''}
+
+		${mobile ? `${mobileBreakpoint} {
 			${sl}{
 				${mobile}
 			}
-		}
+		}` : ''}
 	`.replace(/\s+/g, ' ').trim()
 };
 
