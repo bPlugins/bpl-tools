@@ -809,3 +809,16 @@ $secondaryColor: #8344c5;
     }
   }
 }
+
+//Custom Popover
+.bPlCustomPopoverWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-top: 10px;
+}
+.bPlCustomPopoverChildren {
+  width: 240px;
+  padding: 10px;
+}

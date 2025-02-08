@@ -1,11 +1,12 @@
-import Dimension from './Dimension';
+import Transform from '../Components/Transform/Transform';
+import { updateData } from '../utils/functions';
+import Animation from './Animation';
 import Background from './Background';
 import BorderShadow from './BorderShadow';
-import Animation from './Animation';
-import Visibility from './Visibility';
-import Responsive from './Responsive';
 import CustomCSS from './CustomCSS';
-import { updateData } from '../utils/functions';
+import Dimension from './Dimension';
+import Responsive from './Responsive';
+import Visibility from './Visibility';
 
 const defEnabled = {
 	dimension: ['padding', 'margin'],
@@ -13,17 +14,20 @@ const defEnabled = {
 	borderShadow: ['normal', 'hover', 'border', 'shadow'],
 	animation: true,
 	visibility: ['zIndex', 'overflow'],
+	transform: true,
 	responsive: true,
 	css: true
 }
 
 const Advanced = ({ advanced, onChange, enabled = defEnabled, id = null, isPremium = false }) => {
-	const { dimension = {}, background = {}, borderShadow = {}, animation = {}, visibility = {}, responsive = {}, css = '' } = advanced || {};
+	const { dimension = {}, background = {}, borderShadow = {}, animation = {}, visibility = {}, responsive = {}, css = '', transform = {} } = advanced || {};
 
 	const isEnabled = (which) => Object.prototype.hasOwnProperty.call(enabled, which);
 
 	return <>
 		{isEnabled('dimension') && <Dimension dimension={dimension} onChange={val => onChange(updateData(advanced, val, 'dimension'))} enabled={enabled.dimension} />}
+
+		{isEnabled("transform") && <Transform transform={transform} onChange={val => onChange(updateData(advanced, val, "transform"))} />}
 
 		{isEnabled('background') && <Background background={background} onChange={val => onChange(updateData(advanced, val, 'background'))} enabled={enabled.background} isPremium={isPremium} />}
 

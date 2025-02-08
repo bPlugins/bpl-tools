@@ -1,5 +1,6 @@
-import { getAdvBGCSS, getOverlayCSS, getBorderBoxCSS, getMultiShadowCSS, isValidCSS, getBoxCSS } from '../utils/getCSS';
-import { deskBreakpoint, tabBreakpoint, mobileBreakpoint } from '../utils/data';
+import { deskBreakpoint, mobileBreakpoint, tabBreakpoint } from '../utils/data';
+import { isExist } from '../utils/functions';
+import { getAdvBGCSS, getBorderBoxCSS, getBoxCSS, getMultiShadowCSS, getOverlayCSS, getTransformCSS, isValidCSS } from '../utils/getCSS';
 
 const dimensionCSS = (dimension) => {
 	const { padding, margin } = dimension || {};
@@ -58,11 +59,12 @@ const responsiveCSS = (responsive, isBackend) => {
 	};
 }
 
-const transitionCSS = (background, borderShadow) => {
+const transitionCSS = (background, borderShadow,transform) => {
 	const { transition: bgT = 0.4 } = background || {};
 	const { transition: bsT = 0.4 } = borderShadow || {};
+	const {transition:tfT=200 } = transform;
 
-	return `transition: background ${bgT}s, border ${bsT}s, border-radius ${bsT}s, box-shadow ${bsT}s;`
+	return `transition: background ${bgT}s, border ${bsT}s, border-radius ${bsT}s, box-shadow ${bsT}s, transform ${tfT}ms ease-in-out;`
 }
 
 export const animationFn = (animation, id) => {
@@ -76,13 +78,13 @@ export const animationFn = (animation, id) => {
 }
 
 export const generateCSS = (id, advanced, isBackend = false) => {
-	const { dimension, background, borderShadow, animation, visibility, responsive, css = '' } = advanced || {};
+	const { dimension,transform,background, borderShadow, animation, visibility, responsive, css = '' } = advanced || {};
 
 	const selector = `#${id} > div`;
 
 	!isBackend && animationFn(animation, id);
 
-	const dCSS = dimensionCSS(dimension).desktop + visibilityCSS(visibility).desktop + transitionCSS(background, borderShadow);
+	const dCSS = dimensionCSS(dimension).desktop + visibilityCSS(visibility).desktop + transitionCSS(background, borderShadow,transform);
 	const tCSS = dimensionCSS(dimension).tablet + visibilityCSS(visibility).tablet + responsiveCSS(responsive, isBackend).tablet;
 	const mCSS = dimensionCSS(dimension).mobile + visibilityCSS(visibility).mobile + responsiveCSS(responsive, isBackend).mobile;
 
@@ -122,6 +124,8 @@ export const generateCSS = (id, advanced, isBackend = false) => {
 		${getAdvBGCSS(background?.hover, selector, true)}
 		${getOverlayCSS(background?.overlay, selector)}
 		${getOverlayCSS(background?.hoverOverlay, selector, true)}
+		${isExist(transform?.normal)?getTransformCSS(transform?.normal,selector):""}
+		${isExist(transform?.hover)?getTransformCSS(transform?.hover,selector,true):""}
 
 		${css}
 	`.replace(/\s+/g, ' ');
