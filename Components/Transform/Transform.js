@@ -9,7 +9,7 @@ import { offsetResetValue, rotateResetValue, scaleResetValue, skewResetValue } f
 
 const Transform = ({ transform = {}, onChange = () => { }, device }) => {
   const { normal, hover,transition } = transform || {}
-  return <PanelBody className="bPlPanelBody" title="Transform" initialOpen={true}>
+  return <PanelBody className="bPlPanelBody" title="Transform" initialOpen={false}>
         <TabPanel className='bPlTabPanel mini' activeClass='activeTab' tabs={normalHoverTabs}>
           {tab => <>
             {tab.name === "normal" && <TransformOptions value={normal} device={device} onChange={value => onChange({ ...transform, normal: value })} />}

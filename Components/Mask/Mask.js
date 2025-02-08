@@ -1,54 +1,42 @@
 import { PanelBody, PanelRow, SelectControl, ToggleControl, __experimentalUnitControl as UnitControl } from "@wordpress/components";
 import React from 'react';
-import { Label, MediaArea } from '../../../../../bpl-tools/Components';
+import Label from '../Label/Label';
+import { MediaArea } from '../MediaControl/MediaControl';
 import { positionOptions, repeatOptions, shapeOptions, sizeOptions } from './utils/options';
 
-const Mask = ({ value, onChange }) => {
-  const { isMask, shape, size, position, repeat } =value || {
-    isMask: true,
-    shape: {type:"circle",url:""},
-    size: {
-      type: "center center",
-      scale:"100%"
-    },
-    position: {
-      type:"center center",
-      x:50,
-    y:50
-    },
-    repeat: "no-repeat",
-  }
+const Mask = ({ mask, onChange }) => {
+  const { isMask = true, shape = {}, size = {}, position = {}, repeat = "no-repeat" } = mask || {}
   return (
     <PanelBody className="bPlPanelBody" title="Mask" initialOpen={true}>
-      <ToggleControl className='mb10' label="Mask" checked={isMask} value={isMask} onChange={val => onChange({ ...value, isMask: val })} />
+      <ToggleControl className='mb10' label="Mask" checked={isMask} value={isMask} onChange={val => onChange({ ...mask, isMask: val })} />
       {isMask && <>
         <PanelRow>
           <Label className="">Shape</Label>
-      <SelectControl options={shapeOptions} value={shape.type} onChange={val => onChange({ ...value, shape: {...value.shape, type: val } })} />
+      <SelectControl options={shapeOptions} value={shape.type} onChange={val => onChange({ ...mask, shape: {...mask.shape, type: val } })} />
         </PanelRow>
       {
-        shape.type === "custom" && <MediaArea value={{ url: shape.url }} onChange={val => onChange({ ...value, shape: {...value.shape, url: val.url } })} />
+        shape.type === "custom" && <MediaArea value={{ url: shape.url }} onChange={val => onChange({ ...mask, shape: {...mask.shape, url: val.url } })} />
         }
         <PanelRow className="mt10">
           <Label className="">Size</Label>
-      <SelectControl  options={sizeOptions} value={size.type} onChange={val => onChange({ ...value, size: {...value.size, type: val } })} />
+      <SelectControl  options={sizeOptions} value={size.type} onChange={val => onChange({ ...mask, size: {...mask.size, type: val } })} />
         </PanelRow>
       {
-        size.type === "custom" && <UnitControl label="Size" labelPosition="edge" min={0} max={200} value={size.scale} onChange={val => onChange({ ...value, size: {...value.size, scale: val } })} />
+        size.type === "custom" && <UnitControl label="Size" labelPosition="edge" min={0} max={200} value={size.scale} onChange={val => onChange({ ...mask, size: {...mask.size, scale: val } })} />
         }
         <PanelRow>
           <Label className="">Position</Label>
-      <SelectControl options={positionOptions} value={position.type} onChange={val => onChange({ ...value, position: {...value.position, type: val } })} />
+      <SelectControl options={positionOptions} value={position.type} onChange={val => onChange({ ...mask, position: {...mask.position, type: val } })} />
         </PanelRow>
       {
         position.type ==="custom" && <>
-          <UnitControl className="mt10" label="Position X" labelPosition="edge" min={-100} max={100} value={position.x} onChange={val => onChange({ ...value, position: {...value.position, x: val } })} />
-          <UnitControl className="mt10" label="Position Y" labelPosition="edge" min={-100} max={100} value={position.y} onChange={val => onChange({ ...value, position: {...value.position, y: val } })} />
+          <UnitControl className="mt10" label="Position X" labelPosition="edge" min={-100} max={100} value={position.x} onChange={val => onChange({ ...mask, position: {...mask.position, x: val } })} />
+          <UnitControl className="mt10" label="Position Y" labelPosition="edge" min={-100} max={100} value={position.y} onChange={val => onChange({ ...mask, position: {...mask.position, y: val } })} />
         </>
       }
       {size.type !== "cover"&&<PanelRow>
           <Label className="">Repeat</Label>
-      <SelectControl options={repeatOptions} value={repeat} onChange={val=> onChange({ ...value, repeat: val })} />
+      <SelectControl options={repeatOptions} value={repeat} onChange={val=> onChange({ ...mask, repeat: val })} />
         </PanelRow>}
       </>}
     </PanelBody>
