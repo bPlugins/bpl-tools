@@ -27,7 +27,7 @@ const Advanced = ({ advanced, onChange, enabled = defEnabled, id = null, isPremi
 	return <>
 		{isEnabled('dimension') && <Dimension dimension={dimension} onChange={val => onChange(updateData(advanced, val, 'dimension'))} enabled={enabled.dimension} />}
 
-		{isEnabled("transform") && <Transform transform={transform} onChange={val => onChange(updateData(advanced, val, "transform"))} />}
+		{(isEnabled("transform")&& isPremium) && <Transform transform={transform} onChange={val => onChange(updateData(advanced, val, "transform"))} />}
 
 		{isEnabled('background') && <Background background={background} onChange={val => onChange(updateData(advanced, val, 'background'))} enabled={enabled.background} isPremium={isPremium} />}
 
