@@ -1,6 +1,6 @@
 import { deskBreakpoint, mobileBreakpoint, tabBreakpoint } from '../utils/data';
 import { isExist } from '../utils/functions';
-import { getAdvBGCSS, getBorderBoxCSS, getBoxCSS, getMultiShadowCSS, getOverlayCSS, getTransformCSS, isValidCSS } from '../utils/getCSS';
+import { getAdvBGCSS, getBorderBoxCSS, getBoxCSS, getMaskCSS, getMultiShadowCSS, getOverlayCSS, getTransformCSS, isValidCSS } from '../utils/getCSS';
 
 const dimensionCSS = (dimension) => {
 	const { padding, margin } = dimension || {};
@@ -78,13 +78,13 @@ export const animationFn = (animation, id) => {
 }
 
 export const generateCSS = (id, advanced, isBackend = false) => {
-	const { dimension,transform,background, borderShadow, animation, visibility, responsive, css = '' } = advanced || {};
+	const { dimension,transform,background, borderShadow,mask,animation, visibility, responsive, css = '' } = advanced || {};
 
 	const selector = `#${id} > div`;
 
 	!isBackend && animationFn(animation, id);
 
-	const dCSS = dimensionCSS(dimension).desktop + visibilityCSS(visibility).desktop + transitionCSS(background, borderShadow,transform);
+	const dCSS = dimensionCSS(dimension).desktop + visibilityCSS(visibility).desktop + transitionCSS(background, borderShadow,transform) + getMaskCSS(mask);
 	const tCSS = dimensionCSS(dimension).tablet + visibilityCSS(visibility).tablet + responsiveCSS(responsive, isBackend).tablet;
 	const mCSS = dimensionCSS(dimension).mobile + visibilityCSS(visibility).mobile + responsiveCSS(responsive, isBackend).mobile;
 

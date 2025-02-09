@@ -1,3 +1,10 @@
+import blob from "../Components/Mask/assets/shapes/blob.svg";
+import circle from "../Components/Mask/assets/shapes/circle.svg";
+import flower from "../Components/Mask/assets/shapes/flower.svg";
+import hexagon from "../Components/Mask/assets/shapes/hexagon.svg";
+import sketch from "../Components/Mask/assets/shapes/sketch.svg";
+import triangle from "../Components/Mask/assets/shapes/triangle.svg";
+
 import { mobileBreakpoint, tabBreakpoint } from './data';
 import { isExist } from './functions';
 
@@ -383,4 +390,17 @@ export const getTransformCSS = (transform,selector, isHover=false) => {
         }
     }
   `;
+};
+
+export const getMaskCSS = (mask) => {
+	const { isMask = false, shape = { type: "circle" }, size = { type: "contain", scale: "100%" }, position = { type: "center center", x: 50, y: 50 }, repeat = "no-repeat" } = mask || {};
+	
+	const svgShape = [{ svg: circle, type: "circle" }, { svg: flower, type: "flower" }, { svg: sketch, type: "sketch" }, { svg: triangle, type: "triangle" }, { svg: blob, type: "blob" }, { svg: hexagon, type: "hexagon" },];
+	
+	const getShape = (type) => svgShape.find((e) => e.type === type);
+  return isMask
+    ? `-webkit-mask-image:url(${shape.type === "custom" ? shape.url : getShape(shape.type).svg});
+      -webkit-mask-size: ${size.type === "custom" ? size.scale : size.type};
+      ${position.type === "custom"? ` ${isValidCSS("-webkit-mask-position-x", position.x)}${isValidCSS("-webkit-mask-position-y",position.y)}`: `${isValidCSS("-webkit-mask-position", position.type)}`}
+      ${size.type !== "cover" ? `-webkit-mask-repeat: ${repeat};` : ""}` : ""
 };
