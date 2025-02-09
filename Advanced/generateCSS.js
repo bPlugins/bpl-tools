@@ -67,22 +67,52 @@ const transitionCSS = (background, borderShadow,transform) => {
 	return `transition: background ${bgT}s, border ${bsT}s, border-radius ${bsT}s, box-shadow ${bsT}s, transform ${tfT}ms ease-in-out;`
 }
 
-export const animationFn = (animation, id) => {
-	const element = document.getElementById(id);
+// export const animationFn = (animation, id,isBackend) => {
+// 	const selector = isBackend?`#${id} > div`:`$#${id}`;
+// 	const element = document.querySelector(selector);
+// 	if (element && animation && animation?.type) {
+// 		element.setAttribute('data-aos', animation.type);
+// 		element.setAttribute('data-aos-duration', animation.duration || 0.4);
+// 		element.setAttribute('data-aos-delay', animation.delay || 0);
+// 	}
+// }
+export const animationFn = (animation, id, isBackend) => {
+    const selector = isBackend ? `#${id} > div` : `#${id}`;
+    const element = document.querySelector(selector);
 
-	if (element && animation && animation?.type) {
-		element.setAttribute('data-aos', animation.type);
-		element.setAttribute('data-aos-duration', animation.duration || 0.4);
-		element.setAttribute('data-aos-delay', animation.delay || 0);
-	}
-}
+    if (element && animation && animation.type) {
+
+        element.setAttribute('data-aos', animation.type);
+        element.setAttribute('data-aos-duration', animation.duration || 0.4);
+        element.setAttribute('data-aos-delay', animation.delay || 0);
+
+        if (!element.classList.contains('aos-init')) {
+            element.classList.add('aos-init');
+            window?.AOS?.init();
+        }
+
+			if (isBackend) {
+				const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.intersectionRatio >= 0.7) { 
+                    element.classList.add('aos-animate');
+                } else { element.classList.remove('aos-animate');}
+            });
+        }, {threshold: [0.7] });
+
+        observer.observe(element);
+			}
+
+    }
+};
 
 export const generateCSS = (id, advanced, isBackend = false) => {
 	const { dimension,transform,background, borderShadow,mask,animation, visibility, responsive, css = '' } = advanced || {};
 
-	const selector = `#${id} > div`;
+	const selector = isBackend?`#${id} > div > div`:`#${id} > div`;
 
-	!isBackend && animationFn(animation, id);
+	// !isBackend && animationFn(animation, id);
+	animationFn(animation, id,isBackend);
 
 	const dCSS = dimensionCSS(dimension).desktop + visibilityCSS(visibility).desktop + transitionCSS(background, borderShadow,transform) + getMaskCSS(mask);
 	const tCSS = dimensionCSS(dimension).tablet + visibilityCSS(visibility).tablet + responsiveCSS(responsive, isBackend).tablet;
