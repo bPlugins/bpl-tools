@@ -238,6 +238,7 @@ $secondaryColor: #8344c5;
         justify-content: center;
         border-bottom: 0px;
         border: 1px solid $primaryColor;
+        white-space: nowrap;
 
         &:focus {
           color: $primaryColor;
@@ -410,7 +411,7 @@ $secondaryColor: #8344c5;
       background-color: $secondaryColor;
     }
 
-    .components-form-toggle__input:focus + .components-form-toggle__track {
+    .components-form-toggle__input:focus+.components-form-toggle__track {
       box-shadow:
         0 0 0 2px #fff,
         0 0 0 3.5px $primaryColor;
@@ -434,7 +435,7 @@ $secondaryColor: #8344c5;
       margin: 0 !important;
     }
 
-    > span {
+    >span {
       margin-top: 0;
     }
   }
@@ -450,7 +451,7 @@ $secondaryColor: #8344c5;
       height: 14px;
       margin-top: 8px;
 
-      > * {
+      >* {
         background-color: $primaryColor;
         border: 1px solid $primaryColor;
       }
@@ -524,6 +525,7 @@ $secondaryColor: #8344c5;
   // Date Picker
   .components-datetime {
     .components-datetime__time-field {
+
       input,
       select {
         &:focus {
@@ -639,9 +641,10 @@ $secondaryColor: #8344c5;
 
   // Button Group
   .bPlBtnGroup {
+
     .components-button,
     .is-primary {
-      > span {
+      >span {
         display: flex;
       }
 
@@ -727,6 +730,7 @@ $secondaryColor: #8344c5;
 
   // Item Action
   .itemAction {
+
     .removeItem,
     .duplicateItem {
       color: #fff;
@@ -818,6 +822,7 @@ $secondaryColor: #8344c5;
   width: 100%;
   margin-top: 10px;
 }
+
 .bPlCustomPopoverChildren {
   width: 240px;
   padding: 10px;

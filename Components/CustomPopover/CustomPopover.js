@@ -7,7 +7,8 @@ const CustomPopover = ({ icon, btnText, children, value, label, resetValues = {}
   const [visible, setVisible] = useState(false);
   const popOverRef = useRef(null);
   const btnRef = useRef(null);
-  const isShowResetBtn = !_.isEqual(value, resetValues) && isExist(resetValues);
+  const isShowResetBtn = isExist(value) && isExist(resetValues) && !_.isEqual(value, resetValues);
+  console.log(isShowResetBtn, " ", _.isEqual(value, resetValues))
   useEffect(() => {
     const handle = (e) => {
       if (
@@ -27,20 +28,20 @@ const CustomPopover = ({ icon, btnText, children, value, label, resetValues = {}
       {label && <Label className="">{label}</Label>}
       <div>
         <Flex>
-        
+
           {
             isShowResetBtn ? <Tooltip text="Back to default" delay={100} position="top center" placement='top'>
-              <Button icon="image-rotate" onClick={() => onClick(resetValues)}/>
-          </Tooltip>:""
+              <Button icon="image-rotate" onClick={() => onClick(resetValues)} />
+            </Tooltip> : ""
           }
           <Button
-          icon={icon}
-          ref={btnRef}
-          isSecondary
-          onClick={() => setVisible(!visible)}
-        >
-          {btnText}
-        </Button>
+            icon={icon}
+            ref={btnRef}
+            isSecondary
+            onClick={() => setVisible(!visible)}
+          >
+            {btnText}
+          </Button>
         </Flex>
         {visible && (
           <Popover ref={popOverRef} onMouseOver={() => setVisible(true)}>
