@@ -1,12 +1,13 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { __experimentalUnitControl as UnitControl } from '@wordpress/components';
 
 import './BoxControl.scss';
 import { Label } from '../index';
+import { isExist } from '../../utils/functions';
 
 const BoxControl = (props) => {
 	const { label, values = {}, onChange = () => { }, resetValues, units, sides, style, className, disableUnits = false } = props;
-	const [link, setLink] = useState(true);
+	const [link, setLink] = useState(false);
 
 	const unitSides = sides || ['top', 'right', 'bottom', 'left'];
 
@@ -31,7 +32,7 @@ const BoxControl = (props) => {
 	];
 
 	const handleChange = (val, dimension) => {
-		if (!link) {
+		if (link) {
 			onChange({ top: val, right: val, bottom: val, left: val });
 		} else {
 			if (sides) {
@@ -56,8 +57,8 @@ const BoxControl = (props) => {
 				<div className='sideLabel'>{val}</div>
 			</div>)}
 
-			{!sides && <button className='boxLinkButton' onClick={() => setLink(!link)}>
-				{link ? <span className='dashicons dashicons-admin-links'></span> : <span className='dashicons dashicons-editor-unlink'></span>}
+			{!sides && <button className={`boxLinkButton ${link ? "activeLink" : ""}`} onClick={() => setLink(!link)}>
+				{!link ? <span className='dashicons dashicons-admin-links'></span> : <span className='dashicons dashicons-editor-unlink'></span>}
 			</button>}
 
 			{isReset && <button className='boxLinkButton' onClick={() => onChange(resetValues)}>
