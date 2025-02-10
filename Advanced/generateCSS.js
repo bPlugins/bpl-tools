@@ -59,10 +59,10 @@ const responsiveCSS = (responsive, isBackend) => {
 	};
 }
 
-const transitionCSS = (background, borderShadow,transform) => {
+const transitionCSS = (background, borderShadow, transform) => {
 	const { transition: bgT = 0.4 } = background || {};
 	const { transition: bsT = 0.4 } = borderShadow || {};
-	const {transition:tfT=200 } = transform;
+	const { transition: tfT = 200 } = transform || {};
 
 	return `transition: background ${bgT}s, border ${bsT}s, border-radius ${bsT}s, box-shadow ${bsT}s, transform ${tfT}ms ease-in-out;`
 }
@@ -77,44 +77,44 @@ const transitionCSS = (background, borderShadow,transform) => {
 // 	}
 // }
 export const animationFn = (animation, id, isBackend) => {
-    const selector = isBackend ? `#${id} > div` : `#${id}`;
-    const element = document.querySelector(selector);
+	const selector = isBackend ? `#${id} > div` : `#${id}`;
+	const element = document.querySelector(selector);
 
-    if (element && animation && animation.type) {
+	if (element && animation && animation.type) {
 
-        element.setAttribute('data-aos', animation.type);
-        element.setAttribute('data-aos-duration', animation.duration || 0.4);
-        element.setAttribute('data-aos-delay', animation.delay || 0);
+		element.setAttribute('data-aos', animation.type);
+		element.setAttribute('data-aos-duration', animation.duration || 0.4);
+		element.setAttribute('data-aos-delay', animation.delay || 0);
 
-        if (!element.classList.contains('aos-init')) {
-            element.classList.add('aos-init');
-            window?.AOS?.init();
-        }
+		if (!element.classList.contains('aos-init')) {
+			element.classList.add('aos-init');
+			window?.AOS?.init();
+		}
 
-			if (isBackend) {
-				const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.intersectionRatio >= 0.7) { 
-                    element.classList.add('aos-animate');
-                } else { element.classList.remove('aos-animate');}
-            });
-        }, {threshold: [0.7] });
+		if (isBackend) {
+			const observer = new IntersectionObserver((entries) => {
+				entries.forEach(entry => {
+					if (entry.intersectionRatio >= 0.7) {
+						element.classList.add('aos-animate');
+					} else { element.classList.remove('aos-animate'); }
+				});
+			}, { threshold: [0.7] });
 
-        observer.observe(element);
-			}
+			observer.observe(element);
+		}
 
-    }
+	}
 };
 
 export const generateCSS = (id, advanced, isBackend = false) => {
-	const { dimension,transform,background, borderShadow,mask,animation, visibility, responsive, css = '' } = advanced || {};
+	const { dimension, transform, background, borderShadow, mask, animation, visibility, responsive, css = '' } = advanced || {};
 
-	const selector = isBackend?`#${id} > div > div`:`#${id} > div`;
+	const selector = isBackend ? `#${id} > div > div` : `#${id} > div`;
 
 	// !isBackend && animationFn(animation, id);
-	animationFn(animation, id,isBackend);
+	animationFn(animation, id, isBackend);
 
-	const dCSS = dimensionCSS(dimension).desktop + visibilityCSS(visibility).desktop + transitionCSS(background, borderShadow,transform) + getMaskCSS(mask);
+	const dCSS = dimensionCSS(dimension).desktop + visibilityCSS(visibility).desktop + transitionCSS(background, borderShadow, transform) + getMaskCSS(mask);
 	const tCSS = dimensionCSS(dimension).tablet + visibilityCSS(visibility).tablet + responsiveCSS(responsive, isBackend).tablet;
 	const mCSS = dimensionCSS(dimension).mobile + visibilityCSS(visibility).mobile + responsiveCSS(responsive, isBackend).mobile;
 
@@ -154,8 +154,8 @@ export const generateCSS = (id, advanced, isBackend = false) => {
 		${getAdvBGCSS(background?.hover, selector, true)}
 		${getOverlayCSS(background?.overlay, selector)}
 		${getOverlayCSS(background?.hoverOverlay, selector, true)}
-		${isExist(transform?.normal)?getTransformCSS(transform?.normal,selector):""}
-		${isExist(transform?.hover)?getTransformCSS(transform?.hover,selector,true):""}
+		${isExist(transform?.normal) ? getTransformCSS(transform?.normal, selector) : ""}
+		${isExist(transform?.hover) ? getTransformCSS(transform?.hover, selector, true) : ""}
 
 		${css}
 	`.replace(/\s+/g, ' ');
