@@ -79,7 +79,6 @@ const transitionCSS = (background, borderShadow, transform) => {
 export const animationFn = (animation, id, isBackend) => {
 	const selector = isBackend ? `#${id} > div` : `#${id}`;
 	const element = document.querySelector(selector);
-
 	if (element && animation && animation.type) {
 
 		element.setAttribute('data-aos', animation.type);
@@ -94,11 +93,11 @@ export const animationFn = (animation, id, isBackend) => {
 		if (isBackend) {
 			const observer = new IntersectionObserver((entries) => {
 				entries.forEach(entry => {
-					if (entry.intersectionRatio >= 0.7) {
+					if (entry.intersectionRatio > 0.5) {
 						element.classList.add('aos-animate');
 					} else { element.classList.remove('aos-animate'); }
 				});
-			}, { threshold: [0.7] });
+			}, { threshold: [0.5] });
 
 			observer.observe(element);
 		}

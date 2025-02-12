@@ -58,7 +58,7 @@ const BoxControl = (props) => {
 			</div>)}
 
 			{!sides && <button className={`boxLinkButton ${link ? "activeLink" : ""}`} onClick={() => setLink(!link)}>
-				{!link ? <span className='dashicons dashicons-admin-links'></span> : <span className='dashicons dashicons-editor-unlink'></span>}
+				{link ? <span className='dashicons dashicons-admin-links'></span> : <span className='dashicons dashicons-editor-unlink'></span>}
 			</button>}
 
 			{isReset && <button className='boxLinkButton' onClick={() => onChange(resetValues)}>
