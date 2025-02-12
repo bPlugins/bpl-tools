@@ -1,9 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { __experimentalUnitControl as UnitControl } from '@wordpress/components';
 
 import './BoxControl.scss';
 import { Label } from '../index';
-import { isExist } from '../../utils/functions';
 
 const BoxControl = (props) => {
 	const { label, values = {}, onChange = () => { }, resetValues, units, sides, style, className, disableUnits = false } = props;

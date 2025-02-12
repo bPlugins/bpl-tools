@@ -7,7 +7,9 @@ const CustomPopover = ({ icon, btnText, children, value, label, resetValues = {}
   const [visible, setVisible] = useState(false);
   const popOverRef = useRef(null);
   const btnRef = useRef(null);
-  const isShowResetBtn = isExist(value) && isExist(resetValues) && !_.isEqual(value, resetValues);
+  // const isShowResetBtn = isExist(value) && isExist(resetValues) && !_?.isEqual(value, resetValues);
+  const isShowResetBtn = isExist(value) && isExist(resetValues) && JSON.stringify(value) !== JSON.stringify(resetValues);
+
   useEffect(() => {
     const handle = (e) => {
       if (
