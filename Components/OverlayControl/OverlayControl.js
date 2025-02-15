@@ -45,7 +45,7 @@ const OverlayControl = (props) => {
 		<ToggleControl label='Enable' checked={isEnabled} value={isEnabled} onChange={(val) => updateOverlay('isEnabled', val)} />
 
 		{isEnabled && <>
-			<AdvBackground name='Overlay' value={colors} onChange={(val) => updateOverlay('colors', val)} />
+			<AdvBackground name='Overlay Type' value={colors} onChange={(val) => updateOverlay('colors', val)} />
 
 			<RangeControl className='mt20' label='Opacity' value={opacity} onChange={(val) => updateOverlay('opacity', val)} min={0} max={1} step={0.01} />
 

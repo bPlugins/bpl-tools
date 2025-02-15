@@ -1,5 +1,4 @@
 import Mask from '../Components/Mask/Mask';
-import Transform from '../Components/Transform/Transform';
 import { updateData } from '../utils/functions';
 import Animation from './Animation';
 import Background from './Background';
@@ -7,6 +6,7 @@ import BorderShadow from './BorderShadow';
 import CustomCSS from './CustomCSS';
 import Dimension from './Dimension';
 import Responsive from './Responsive';
+import Transform from './Transform';
 import Visibility from './Visibility';
 
 const defEnabled = {
@@ -22,7 +22,7 @@ const defEnabled = {
 }
 
 const Advanced = ({ advanced, onChange, enabled = defEnabled, id = null, isPremium = false }) => {
-	const { dimension = {}, transform = {}, background = {}, borderShadow = {}, mask = {},animation = {}, visibility = {}, responsive = {}, css = ''} = advanced || {};
+	const { dimension = {}, transform = {}, background = {}, borderShadow = {}, mask = {}, animation = {}, visibility = {}, responsive = {}, css = '' } = advanced || {};
 
 	const isEnabled = (which) => Object.prototype.hasOwnProperty.call(enabled, which);
 
@@ -34,8 +34,8 @@ const Advanced = ({ advanced, onChange, enabled = defEnabled, id = null, isPremi
 		{isEnabled('background') && <Background background={background} onChange={val => onChange(updateData(advanced, val, 'background'))} enabled={enabled.background} isPremium={isPremium} />}
 
 		{isEnabled('borderShadow') && (enabled.borderShadow?.includes('border') || enabled.borderShadow?.includes('shadow')) && <BorderShadow borderShadow={borderShadow} onChange={val => onChange(updateData(advanced, val, 'borderShadow'))} enabled={enabled.borderShadow} />}
-		
-		{(isEnabled("mask") && isPremium) && <Mask mask={mask} onChange={val=>onChange(updateData(advanced,val,"mask"))} />}
+
+		{(isEnabled("mask") && isPremium) && <Mask mask={mask} onChange={val => onChange(updateData(advanced, val, "mask"))} />}
 
 		{isEnabled('animation') && <Animation animation={animation} onChange={val => onChange(updateData(advanced, val, 'animation'))} id={id} isPremium={isPremium} />}
 

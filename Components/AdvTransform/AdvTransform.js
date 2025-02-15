@@ -1,41 +1,12 @@
-import { PanelBody, PanelRow, RangeControl, TabPanel, ToggleControl, __experimentalUnitControl as UnitControl } from "@wordpress/components";
+import { PanelRow, RangeControl, ToggleControl, __experimentalUnitControl as UnitControl } from "@wordpress/components";
 import { compose } from "@wordpress/compose";
 import { withSelect } from "@wordpress/data";
-import { normalHoverTabs } from '../../utils/options';
 import CustomPopover from '../CustomPopover/CustomPopover';
 import Device from '../Device/Device';
 import Label from "../Label/Label";
 import { offsetResetValue, rotateResetValue, scaleResetValue, skewResetValue } from './utils/options';
 
-const Transform = ({ transform = {}, onChange = () => { }, device }) => {
-    const { normal, hover, transition } = transform || {}
-    return <PanelBody className="bPlPanelBody" title="Transform" initialOpen={false}>
-        <TabPanel className='bPlTabPanel mini' activeClass='activeTab' tabs={normalHoverTabs}>
-            {tab => <>
-                {tab.name === "normal" && <TransformOptions value={normal} device={device} onChange={value => onChange({ ...transform, normal: value })} />}
-                {tab.name === "hover" && <>
-                    <TransformOptions value={hover} device={device} onChange={value => onChange({ ...transform, hover: value })} />
-                    <RangeControl className="bPlPanelBody" label="Transition Duration (ms)" value={transition} max={10000} onChange={(val) => onChange({ ...transform, transition: val })} />
-                </>
-                }
-            </>
-            }
-        </TabPanel>
-    </PanelBody>
-};
-
-export default compose(
-    withSelect((select) => {
-        const { getDeviceType } = select("core/editor");
-
-        return {
-            device: getDeviceType()?.toLowerCase(),
-        };
-    })
-)(Transform);
-
-
-const TransformOptions = ({ value, onChange = () => { }, device }) => {
+const AdvTransform = ({ value = {}, onChange = () => { }, device }) => {
     const { rotate = {}, offset = {}, scale = {}, skew = {}, flipX = false, flipY = false } = value || {};
     return <>
         <CustomPopover value={rotate} onClick={(val) => onChange({ ...value, rotate: val })} icon="edit" label="Rotate" resetValues={rotateResetValue}>
@@ -98,4 +69,15 @@ const TransformOptions = ({ value, onChange = () => { }, device }) => {
         />
 
     </>
-}
+};
+
+export default compose(
+    withSelect((select) => {
+        const { getDeviceType } = select("core/editor");
+
+        return {
+            device: getDeviceType()?.toLowerCase(),
+        };
+    })
+)(AdvTransform);
+
