@@ -9,7 +9,7 @@ const AdvBackground = ({ name = 'Background', value, onChange, isVideo = false, 
 	const { position = 'center center', xPosition, yPosition, attachment, repeat = 'no-repeat', size = 'cover', customSize, } = img?.[device] || {};
 
 	return <>
-		<Label className='mt10 mb10'>{name} Type</Label>
+		<Label className='mt10 mb10'>{name}</Label>
 		<TabPanel className='bPlTabPanel mini' activeClass='activeTab' tabs={isVideo ? bgTabs : bgTabs.filter(t => t.name !== 'video')} initialTabName={type} onSelect={tab => onChange({ ...value, type: tab })}>{tab => <>
 			{'color' === tab.name && <SolidBackground className='mt20' label={`${name} Color`} value={color} onChange={(val) => onChange({ ...value, color: val })} />}
 

@@ -9,13 +9,14 @@ import { ColorControl, HexColorControl } from './ColorControl/ColorControl';
 import ColorsControl from './ColorsControl/ColorsControl';
 import CustomCodeEditor from './CustomCodeEditor/CustomCodeEditor';
 import Device from './Device/Device';
+import DynamicTag from "./DynamicTag/DynamicTag";
 import Gradient from './Gradient/Gradient';
 import HelpPanel from './HelpPanel/HelpPanel';
 import IconControl from './IconControl/IconControl';
 import IconLibrary from './IconLibrary/IconLibrary';
 import ItemsPanel from './ItemsPanel/ItemsPanel';
 import Label from './Label/Label';
-import { InlineMediaUpload, InlineDetailMediaUpload, MediaArea, MediaPlaceholder, MediaEditControl } from './MediaControl/MediaControl';
+import { InlineDetailMediaUpload, InlineMediaUpload, MediaArea, MediaEditControl, MediaPlaceholder } from './MediaControl/MediaControl';
 import MultiSelectControl from './MultiSelectControl/MultiSelectControl';
 import OverlayControl from './OverlayControl/OverlayControl';
 import PanelSelectControl from './PanelSelectControl/PanelSelectControl';
@@ -24,7 +25,8 @@ import SeparatorControl from './SeparatorControl/SeparatorControl';
 import ShadowControl from './ShadowControl/ShadowControl';
 import SolidBackground from './SolidBackground/SolidBackground';
 import SortableControl from './SortableControl/SortableControl';
+import TinyEditor from "./TinyEditor/TinyEditor";
 import Typography from './Typography/Typography';
 import BBlocksAds from './Utility/BBlocksAds';
 
-export { AdvBackground, Background, BButtonGroup, BoxControl, BtnGroup, ColorControl, HexColorControl, ColorsControl, CustomCodeEditor, Device, Gradient, HelpPanel, IconControl, IconLibrary, ItemsPanel, Label, InlineMediaUpload, InlineDetailMediaUpload, MediaArea, MediaPlaceholder, MediaEditControl, MultiSelectControl, OverlayControl, PanelSelectControl, SelectPureControl, SeparatorControl, ShadowControl, SolidBackground, SortableControl, Typography, BBlocksAds }
+export { AdvBackground, Background, BBlocksAds, BButtonGroup, BoxControl, BtnGroup, ColorControl, ColorsControl, CustomCodeEditor, Device, DynamicTag, Gradient, HelpPanel, HexColorControl, IconControl, IconLibrary, InlineDetailMediaUpload, InlineMediaUpload, ItemsPanel, Label, MediaArea, MediaEditControl, MediaPlaceholder, MultiSelectControl, OverlayControl, PanelSelectControl, SelectPureControl, SeparatorControl, ShadowControl, SolidBackground, SortableControl, TinyEditor, Typography };

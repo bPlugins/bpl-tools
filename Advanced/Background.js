@@ -12,7 +12,7 @@ const Background = ({ background, onChange, enabled, isPremium }) => {
 	return <PanelBody className='bPlPanelBody' title='Background' initialOpen={false}>
 		<TabPanel className='bPlTabPanel small' activeClass='activeTab' tabs={tabs}>{tab => <>
 			{'normal' === tab.name && <>
-				<AdvBackground name={'Background'} value={background?.[tab.name]} onChange={(val) => onChange(updateData(background, val, tab.name))} isVideo={isPremium} />
+				<AdvBackground name={'Background Type'} value={background?.[tab.name]} onChange={(val) => onChange(updateData(background, val, tab.name))} isVideo={isPremium} />
 
 				{isEnabled('overlay') && <OverlayControl value={background?.overlay} onChange={(val) => onChange(updateData(background, val, 'overlay'))} />}
 			</>}
@@ -20,7 +20,7 @@ const Background = ({ background, onChange, enabled, isPremium }) => {
 			{'hover' === tab.name && <>
 				<RangeControl className='mt10 mb10' label='Hover Transition' value={background?.transition || 0.4} onChange={val => onChange(updateData(background, val, 'transition'))} min={0} max={10} step={0.05} />
 
-				<AdvBackground name={'Hover Background'} value={background?.[tab.name]} onChange={(val) => onChange(updateData(background, val, tab.name))} isVideo={false} isHover={true} />
+				<AdvBackground name={'Hover Background Type'} value={background?.[tab.name]} onChange={(val) => onChange(updateData(background, val, tab.name))} isVideo={false} isHover={true} />
 
 				{isEnabled('overlay') && <OverlayControl value={background?.hoverOverlay} onChange={(val) => onChange(updateData(background, val, 'hoverOverlay'))} />}
 			</>}

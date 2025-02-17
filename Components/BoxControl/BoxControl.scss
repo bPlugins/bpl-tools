@@ -42,12 +42,29 @@
 
 	.boxLinkButton {
 		background: transparent;
-		border: none;
-		padding: 0;
-		margin-top: -13px;
+		cursor: pointer;
+		height: 32px;
+		display: grid;
+		align-self: self-start;
+		align-content: center;
+		padding: 0 4px;
+		border: 1px solid #949494;
+		border-left: unset;
+		border-radius: 0 2px 2px 0;
 		cursor: pointer;
 
+		&.activeLink {
+			background-color: #4527a4;
+
+			.dashicons {
+				color: #fff;
+			}
+		}
+
 		.dashicons {
+			display: flex;
+			justify-content: center;
+			align-items: center;
 			font-size: 16px;
 		}
 

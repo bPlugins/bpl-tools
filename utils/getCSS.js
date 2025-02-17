@@ -1,3 +1,10 @@
+import blob from "../Components/Mask/assets/shapes/blob.svg";
+import circle from "../Components/Mask/assets/shapes/circle.svg";
+import flower from "../Components/Mask/assets/shapes/flower.svg";
+import hexagon from "../Components/Mask/assets/shapes/hexagon.svg";
+import sketch from "../Components/Mask/assets/shapes/sketch.svg";
+import triangle from "../Components/Mask/assets/shapes/triangle.svg";
+
 import { mobileBreakpoint, tabBreakpoint } from './data';
 import { isExist } from './functions';
 
@@ -318,4 +325,82 @@ export const getOverlayCSS = (overlay, selector, isHover = false) => {
 			${filterCSS}
 		}
 	`.replace(/\s+/g, ' ').trim() : ''
+};
+
+export const getTransformCSS = (transform,selector, isHover=false) => {
+
+  const generateTransformCSS = (value, device = "desktop") => {
+    if (!isExist(value)) return "";
+    const { skew, scale, rotate, offset, flipX, flipY } = value;
+    const { threeDRotate } = rotate || {};
+    const { isProportion } = scale || {};
+    const transforms = [];
+    //skew
+    if (isExist(skew)) {
+      if (isExist(skew?.[device]?.x)) transforms.push(`skewX(${skew[device].x}deg)`);
+      if (isExist(skew?.[device]?.y)) transforms.push(`skewY(${skew[device].y}deg)`);
+    }
+    //scale
+      if (isProportion) {
+        if (isExist(scale?.[device]?.scale)) transforms.push(`scale(${scale[device].scale})`);
+      } else {
+        if (isExist(scale?.[device]?.x)) transforms.push(`scaleX(${scale[device].x})`);
+        if (isExist(scale?.[device]?.y)) transforms.push(`scaleY(${scale[device].y})`);
+      }
+
+    //rotate
+    if (isExist(rotate)) {
+      if (isExist(rotate?.[device]?.z)) transforms.push(`rotateZ(${rotate[device].z}deg)`);
+      if (threeDRotate) {
+        if (isExist(rotate?.[device]?.x)) transforms.push(`rotateX(${rotate[device].x}deg)`);
+        if (isExist(rotate?.[device]?.y)) transforms.push(`rotateY(${rotate[device].y}deg)`);
+      }
+    }
+
+    //offset
+    if (isExist(offset)) {
+      if (isExist(offset?.[device]?.x)) transforms.push(`translateX(${offset[device].x})`);
+      if (isExist(offset?.[device]?.y)) transforms.push(`translateY(${offset[device].y})`);
+    }
+
+    //flip
+    if (isExist(flipX)) transforms.push(flipX ? "scaleX(-1)" : "");
+    if (isExist(flipY)) transforms.push(flipY ? "scaleY(-1)" : "");
+
+    if (transforms.length === 0) return "";
+
+    return isValidCSS("transform", transforms.join(" "));
+  };
+
+  const sl = isHover ? `${selector}:hover` : selector;
+  // ${isExist(hover?.transition)?`transition:transform ${hover.transition}ms ease-in-out`:'' }
+
+  return `
+    ${sl} {
+      ${generateTransformCSS(transform, "desktop")}
+    }
+    ${tabBreakpoint}{
+      ${sl} {
+      ${generateTransformCSS(transform, "tablet")}
+        }
+    }
+    ${mobileBreakpoint}{
+      ${sl} {
+      ${generateTransformCSS(transform, "mobile")}
+        }
+    }
+  `;
+};
+
+export const getMaskCSS = (mask) => {
+	const { isMask = false, shape = { type: "circle" }, size = { type: "contain", scale: "100%" }, position = { type: "center center", x: 50, y: 50 }, repeat = "no-repeat" } = mask || {};
+	
+	const svgShape = [{ svg: circle, type: "circle" }, { svg: flower, type: "flower" }, { svg: sketch, type: "sketch" }, { svg: triangle, type: "triangle" }, { svg: blob, type: "blob" }, { svg: hexagon, type: "hexagon" },];
+	
+	const getShape = (type) => svgShape.find((e) => e.type === type);
+  return isMask
+    ? `-webkit-mask-image:url(${shape.type === "custom" ? shape.url : getShape(shape.type).svg});
+      -webkit-mask-size: ${size.type === "custom" ? size.scale : size.type};
+      ${position.type === "custom"? ` ${isValidCSS("-webkit-mask-position-x", position.x)}${isValidCSS("-webkit-mask-position-y",position.y)}`: `${isValidCSS("-webkit-mask-position", position.type)}`}
+      ${size.type !== "cover" ? `-webkit-mask-repeat: ${repeat};` : ""}` : ""
 };
