@@ -133,5 +133,5 @@ const Typography = props => {
 			</>}
 		/>
 	</PanelRow>
-};
+}
 export default Typography;

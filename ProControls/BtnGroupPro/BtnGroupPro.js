@@ -34,10 +34,12 @@ const BtnGroupPro = props => {
 		})}
 	</ButtonGroup>
 
-	return label ? <PanelRow className={className}>
-		<Label className=''>{label}</Label>
+	return label ?
+		<PanelRow className={className}>
+			<Label className=''>{label}</Label>
 
-		<Buttons />
-	</PanelRow> : <Buttons className={className} />
-};
+			<Buttons />
+		</PanelRow> :
+		<Buttons className={className} />
+}
 export default BtnGroupPro;

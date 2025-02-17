@@ -40,7 +40,7 @@ const BoxControl = (props) => {
 				onChange({ ...values, [dimension]: val });
 			}
 		}
-	};
+	}
 
 	return <div style={{ ...style }} className={`bPlBoxControl ${className}`}>
 		{label && <Label className='mb5'>{label}</Label>}
@@ -65,5 +65,5 @@ const BoxControl = (props) => {
 			</button>}
 		</div>
 	</div>
-};
+}
 export default BoxControl;

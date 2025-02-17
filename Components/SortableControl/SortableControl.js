@@ -13,7 +13,8 @@ const SortableList = SortableContainer(({ items, property }) => <ul>
 const SortableControl = ({ className = '', label = __('Sort:'), value = [], property, onChange }) => {
 	const onSortEnd = ({ oldIndex, newIndex }) => {
 		onChange(arrayMove(value, oldIndex, newIndex))
-	};
+	}
+
 	return <div className={`bplSortableList ${className}`}>
 		<Label className='mb5'>{label}</Label>
 

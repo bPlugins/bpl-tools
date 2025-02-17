@@ -60,5 +60,5 @@ const SolidBackground = (props) => {
 			/>
 		</div>
 	</div>
-};
+}
 export default SolidBackground;

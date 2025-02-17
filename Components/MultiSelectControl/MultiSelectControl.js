@@ -30,31 +30,31 @@ const MultiSelectControl = ({ value = [], onChange, limit = 10, options = [] }) 
 	});
 
 	return <div className='bPlMultiSelect'>
-		<ul className="listWrap">
+		<ul className='listWrap'>
 			{value.length ? value.map((val, idx) => {
 				const selectedItem = options.find(opt => opt.value === val);
 
-				return <li key={idx} className="valueItem">
+				return <li key={idx} className='valueItem'>
 					{selectedItem.label}
-					<Dashicon onClick={() => onChange(value.filter((__, i) => i !== idx))} icon="no-alt" />
+					<Dashicon onClick={() => onChange(value.filter((__, i) => i !== idx))} icon='no-alt' />
 				</li>
 			}) : ''}
 
 			{value.length < limit && <>
-				<li onClick={() => setIsPopover(true)} className="plusIcon">
-					<Dashicon icon="plus" />
+				<li onClick={() => setIsPopover(true)} className='plusIcon'>
+					<Dashicon icon='plus' />
 				</li>
 
 				<input
 					onClick={() => setIsPopover(true)}
-					type="search"
-					autoCorrect="off"
-					autoCapitalize="off"
+					type='search'
+					autoCorrect='off'
+					autoCapitalize='off'
 				/>
 			</>}
 		</ul>
 
-		{isPopover && <Popover ref={popoverRef} className="bPlItemsPopover">
+		{isPopover && <Popover ref={popoverRef} className='bPlItemsPopover'>
 			{options.map(option => {
 				const { label, value: val } = option;
 
@@ -62,5 +62,5 @@ const MultiSelectControl = ({ value = [], onChange, limit = 10, options = [] }) 
 			})}
 		</Popover>}
 	</div>;
-};
+}
 export default MultiSelectControl;

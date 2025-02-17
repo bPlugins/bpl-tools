@@ -11,6 +11,6 @@ const usePremiumInEditor = (utilsAction, pipeAction) => {
 		refetch();
 	}, [utils]);
 
-	return { isPremium, isLoading };
-};
+	return { isPremium, isLoading }
+}
 export default usePremiumInEditor;

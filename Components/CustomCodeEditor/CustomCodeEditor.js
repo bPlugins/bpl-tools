@@ -52,5 +52,5 @@ const CustomCodeEditor = (props) => {
 			}}
 		/>
 	</div>
-};
+}
 export default CustomCodeEditor;

@@ -3,4 +3,4 @@ import useWPOptionQuery from './useWPOptionQuery';
 import usePremiumInEditor from './usePremiumInEditor';
 import usePremium from './usePremium';
 
-export { useWPAjax, useWPOptionQuery, usePremiumInEditor, usePremium };
+export { useWPAjax, useWPOptionQuery, usePremiumInEditor, usePremium }

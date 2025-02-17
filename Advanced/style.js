@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
 				console.error('Invalid JSON in data-bblocks-advanced attribute:', error);
 			}
 		}
-	};
+	}
 
 	advancedEls.length && advancedEls.forEach(advancedEl => {
 		regenerateCSS(advancedEl);

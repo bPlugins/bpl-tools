@@ -3093,7 +3093,7 @@
 	},
 	{
 		"terms": [
-			" city",
+			"city",
 			"building",
 			"diplomat",
 			"embassy",
@@ -3125,7 +3125,7 @@
 	},
 	{
 		"terms": [
-			" city",
+			"city",
 			"building",
 			"non governmental organization",
 			"office"
@@ -5714,9 +5714,9 @@
 	},
 	{
 		"terms": [
-			" conversation",
-			" discussion",
-			" talking",
+			"conversation",
+			"discussion",
+			"talking",
 			"Right Speech Bubble",
 			"answer",
 			"bubble",
@@ -5857,9 +5857,9 @@
 	},
 	{
 		"terms": [
-			" conversation",
-			" discussion",
-			" talking",
+			"conversation",
+			"discussion",
+			"talking",
 			"Two Speech Bubbles",
 			"answer",
 			"bubble",
@@ -7057,7 +7057,7 @@
 	{
 		"terms": [
 			"compress alt",
-			" scale",
+			"scale",
 			"collapse",
 			"fullscreen",
 			"minimize",
@@ -7824,15 +7824,15 @@
 	},
 	{
 		"terms": [
-			"  maximize",
-			"  resize",
-			"  scale",
-			" arrows",
-			" bigger",
-			" enlarge",
-			" fullscreen",
-			" resize",
-			" size",
+			"maximize",
+			"resize",
+			"scale",
+			"arrows",
+			"bigger",
+			"enlarge",
+			"fullscreen",
+			"resize",
+			"size",
 			"expand",
 			"viewfinder"
 		],
@@ -9494,14 +9494,14 @@
 	},
 	{
 		"terms": [
-			" beaker",
-			" chemicals",
-			" experiment",
-			" experimental",
-			" labs",
-			" liquid",
-			" science",
-			" vial",
+			"beaker",
+			"chemicals",
+			"experiment",
+			"experimental",
+			"labs",
+			"liquid",
+			"science",
+			"vial",
 			"ampule",
 			"chemistry",
 			"lab",
@@ -13263,14 +13263,14 @@
 	},
 	{
 		"terms": [
-			"  comic",
-			"  electric",
-			"  idea",
-			"  innovation",
-			"  inspiration",
-			"  light",
-			"  light bulb",
-			" bulb",
+			"comic",
+			"electric",
+			"idea",
+			"innovation",
+			"inspiration",
+			"light",
+			"light bulb",
+			"bulb",
 			"bulb",
 			"comic",
 			"electric",
@@ -13724,9 +13724,9 @@
 	},
 	{
 		"terms": [
-			" data",
-			" graph",
-			" intelligence",
+			"data",
+			"graph",
+			"intelligence",
 			"analysis",
 			"chart",
 			"magnifier",
@@ -14164,15 +14164,15 @@
 	{
 		"terms": [
 			"expand arrows alt",
-			"  maximize",
-			"  resize",
-			"  scale",
-			" arrows",
-			" bigger",
-			" enlarge",
-			" fullscreen",
-			" resize",
-			" size",
+			"maximize",
+			"resize",
+			"scale",
+			"arrows",
+			"bigger",
+			"enlarge",
+			"fullscreen",
+			"resize",
+			"size",
 			"expand"
 		],
 		"label": "Maximize",
@@ -14286,9 +14286,9 @@
 	{
 		"terms": [
 			"comment alt",
-			" conversation",
-			" discussion",
-			" talking",
+			"conversation",
+			"discussion",
+			"talking",
 			"answer",
 			"bubble",
 			"chat",
@@ -15793,9 +15793,9 @@
 	{
 		"terms": [
 			"people arrows left right",
-			" conversation",
-			" discussion",
-			" talking",
+			"conversation",
+			"discussion",
+			"talking",
 			"distance",
 			"insert",
 			"isolation",
@@ -19866,10 +19866,10 @@
 	{
 		"terms": [
 			"font awesome alt",
-			" flag",
-			" font",
-			" icons",
-			" typeface",
+			"flag",
+			"font",
+			"icons",
+			"typeface",
 			"awesome"
 		],
 		"label": "Square Font Awesome Stroke",
@@ -20329,11 +20329,11 @@
 	},
 	{
 		"terms": [
-			"  coding",
-			"  crown",
-			"  web",
-			" awesome",
-			" components"
+			"coding",
+			"crown",
+			"web",
+			"awesome",
+			"components"
 		],
 		"label": "Square Web Awesome",
 		"svg": {
@@ -20342,11 +20342,11 @@
 	},
 	{
 		"terms": [
-			"  coding",
-			"  crown",
-			"  web",
-			" awesome",
-			" components"
+			"coding",
+			"crown",
+			"web",
+			"awesome",
+			"components"
 		],
 		"label": "Square Web Awesome Stroke",
 		"svg": {
@@ -20364,8 +20364,8 @@
 	},
 	{
 		"terms": [
-			" elon",
-			" x",
+			"elon",
+			"x",
 			"twitter"
 		],
 		"label": "Square X Twitter",
@@ -21015,7 +21015,7 @@
 	{
 		"terms": [
 			"th",
-			" excel",
+			"excel",
 			"blocks",
 			"boxes",
 			"category",
@@ -21030,13 +21030,13 @@
 	},
 	{
 		"terms": [
-			" blocks",
-			" boxes",
-			" column",
-			" excel",
-			" grid",
-			" lock",
-			" squares",
+			"blocks",
+			"boxes",
+			"column",
+			"excel",
+			"grid",
+			"lock",
+			"squares",
 			"category",
 			"spreadsheet"
 		],
@@ -21048,7 +21048,7 @@
 	{
 		"terms": [
 			"th large",
-			" excel",
+			"excel",
 			"blocks",
 			"boxes",
 			"category",
@@ -21063,17 +21063,17 @@
 	},
 	{
 		"terms": [
-			"  blocks",
-			"  boxes",
-			"  column",
-			"  grid",
-			"  squares",
-			" category",
-			" column",
-			" excel",
-			" lock",
-			" lock",
-			" spreadsheet"
+			"blocks",
+			"boxes",
+			"column",
+			"grid",
+			"squares",
+			"category",
+			"column",
+			"excel",
+			"lock",
+			"lock",
+			"spreadsheet"
 		],
 		"label": "Table Cells Row Lock",
 		"svg": {
@@ -21486,11 +21486,11 @@
 	},
 	{
 		"terms": [
-			" bivouac",
-			" campground",
-			" refugee",
-			" shelter",
-			" tent",
+			"bivouac",
+			"campground",
+			"refugee",
+			"shelter",
+			"tent",
 			"campsite",
 			"permanent",
 			"refugee",
@@ -21503,11 +21503,11 @@
 	},
 	{
 		"terms": [
-			" bivouac",
-			" campground",
-			" refugee",
-			" shelter",
-			" tent",
+			"bivouac",
+			"campground",
+			"refugee",
+			"shelter",
+			"tent",
 			"campsite",
 			"refugee",
 			"shelter",
@@ -21520,11 +21520,11 @@
 	},
 	{
 		"terms": [
-			" bivouac",
-			" campground",
-			" refugee",
-			" shelter",
-			" tent",
+			"bivouac",
+			"campground",
+			"refugee",
+			"shelter",
+			"tent",
 			"campsite",
 			"refugee",
 			"shelter",
@@ -21537,11 +21537,11 @@
 	},
 	{
 		"terms": [
-			" bivouac",
-			" campground",
-			" refugee",
-			" shelter",
-			" tent",
+			"bivouac",
+			"campground",
+			"refugee",
+			"shelter",
+			"tent",
 			"campsite",
 			"insert",
 			"refugee",
@@ -21555,11 +21555,11 @@
 	},
 	{
 		"terms": [
-			" bivouac",
-			" campground",
-			" refugee",
-			" shelter",
-			" tent",
+			"bivouac",
+			"campground",
+			"refugee",
+			"shelter",
+			"tent",
 			"bivouac",
 			"campground",
 			"campsite",
@@ -22763,9 +22763,9 @@
 	{
 		"terms": [
 			"expand alt",
-			" maximize",
-			" resize",
-			" scale",
+			"maximize",
+			"resize",
+			"scale",
 			"arrows",
 			"bigger",
 			"enlarge",
@@ -23988,10 +23988,10 @@
 	},
 	{
 		"terms": [
-			" coding",
-			" components",
-			" crown",
-			" web",
+			"coding",
+			"components",
+			"crown",
+			"web",
 			"awesome"
 		],
 		"label": "Web Awesome",
@@ -24433,9 +24433,9 @@
 	},
 	{
 		"terms": [
-			"  elon",
-			" twitter",
-			" x"
+			"elon",
+			"twitter",
+			"x"
 		],
 		"label": "X Twitter",
 		"svg": {

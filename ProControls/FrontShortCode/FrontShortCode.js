@@ -17,7 +17,7 @@ const FrontShortCode = ({ postType, shortCode, currentPostType }) => {
 		setTimeout(() => {
 			tooltip.current.innerHTML = __('Copy To Clipboard');
 		}, 1500);
-	};
+	}
 
 	return postType === currentPostType && <div className='bPlFrontShortCode'>
 		<Label className='mb5'>{__('Copy the shortcode and use it anywhere.')}</Label>
@@ -33,5 +33,5 @@ const FrontShortCode = ({ postType, shortCode, currentPostType }) => {
 export default withSelect((select) => {
 	return {
 		currentPostType: select('core/editor').getCurrentPostType()
-	};
+	}
 })(FrontShortCode);

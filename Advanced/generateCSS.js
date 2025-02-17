@@ -14,7 +14,7 @@ const dimensionCSS = (dimension) => {
 		tablet: pCSS(padding?.tablet) + mCSS(margin?.tablet),
 
 		mobile: pCSS(padding?.mobile) + mCSS(margin?.mobile)
-	};
+	}
 }
 const borderShadowCSS = (borderShadow) => {
 	const { normal, hover } = borderShadow || {};
@@ -26,12 +26,12 @@ const borderShadowCSS = (borderShadow) => {
 		const shadowCSS = shadow ? `box-shadow: ${getMultiShadowCSS(shadow)};` : '';
 
 		return getBorderBoxCSS(border) + radiusCSS + shadowCSS;
-	};
+	}
 
 	return {
 		normal: stateGenerate(normal),
 		hover: stateGenerate(hover)
-	};
+	}
 }
 const visibilityCSS = (visibility) => {
 	const { zIndex, overflow } = visibility || {};
@@ -43,7 +43,7 @@ const visibilityCSS = (visibility) => {
 		desktop: zIndexCSS('desktop') + overflowCSS,
 		tablet: zIndexCSS('tablet'),
 		mobile: zIndexCSS('mobile')
-	};
+	}
 }
 const responsiveCSS = (responsive, isBackend) => {
 	const { desktop = false, tablet = false, mobile = false } = responsive || {};
@@ -56,7 +56,7 @@ const responsiveCSS = (responsive, isBackend) => {
 		desktop: resCSS(desktop),
 		tablet: resCSS(tablet),
 		mobile: resCSS(mobile)
-	};
+	}
 }
 
 const transitionCSS = (background, borderShadow, transform) => {

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from 'react';
 /**
  * BButtonGroup Component
  * 
@@ -23,7 +23,7 @@ import { useEffect, useRef, useState } from "react";
  */
 
 const BButtonGroup = (props) => {
-	const { className='',options = [], label = "Button Group", value, onChange = () => { }, borderRadius = "30px", height, paddingX = "8px", paddingY = "4px", fontSize = "12px", fontWeight = 400, activeBg, activeColor = "#fff", inactiveColor = "#000", hoverBg, hoverColor, style, } = props;
+	const { className = '', options = [], label = 'Button Group', value, onChange = () => { }, borderRadius = '30px', height, paddingX = '8px', paddingY = '4px', fontSize = '12px', fontWeight = 400, activeBg, activeColor = '#fff', inactiveColor = '#000', hoverBg, hoverColor, style, } = props;
 	const [activeButton, setActiveButton] = useState(0);
 
 	const btnOptions = options.length > 0 ? options : [1, 2];
@@ -60,75 +60,45 @@ const BButtonGroup = (props) => {
 	const handleSetValue = (e, option, i) => {
 		setActiveButton(i);
 		onChange(option.value);
-	};
+	}
 
-	return (
-		<div className={className} style={{ marginBottom: "10px", ...style }}>
-			<style>{`
+	return <div className={className} style={{ marginBottom: '10px', ...style }}>
+		<style>{`
 				.bpl-buttonGroupHover-${uniqId}.bpl-button-group-${uniqId}:hover{
 					background:${hoverBg};
 					color:${hoverColor};
 					transition: background 0.3s ease-in-out;
 				}
 			`}</style>
-			<div
-				style={{
-					display: "flex",
-					alignItems: "center",
-					justifyContent: "space-between",
-				}}
-			>
-				{label && <label style={{ fontWeight: 500 }}>{label}</label>}
-				<div
-					ref={btnRef}
+
+		<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}			>
+			{label && <label style={{ fontWeight: 500 }}>{label}</label>}
+
+			<div ref={btnRef} style={{ display: 'flex', position: 'relative', border: '1px solid #ccc', borderRadius }}>
+				{btnOptions.map((option, i) => <button
 					style={{
-						display: "flex",
-						position: "relative",
-						border: "1px solid #ccc",
+						background: hoverBg ? activeButton === i ? 'transparent' : '' : 'transparent',
 						borderRadius,
+						height,
+						padding: `${paddingY} ${paddingX}`,
+						fontSize,
+						zIndex: 20,
+						cursor: 'pointer',
+						fontWeight,
+						color: `${activeButton !== i ? inactiveColor : activeColor}`,
+						border: 'none'
 					}}
+
+					key={i}
+					onClick={(e) => handleSetValue(e, option, i)}
+					className={`${activeButton !== i ? `bpl-buttonGroupHover-${uniqId}` : ''} bpl-button-group-${uniqId}`}
 				>
-					{btnOptions.map((option, i) => (
-						<button
-							style={{
-								background: hoverBg
-									? activeButton === i
-										? "transparent"
-										: ""
-									: "transparent",
-								borderRadius,
-								height,
-								padding: `${paddingY} ${paddingX}`,
-								fontSize,
-								zIndex: 20,
-								cursor: "pointer",
-								fontWeight,
-								color: `${activeButton !== i ? inactiveColor : activeColor}`,
-								border: "none",
-							}}
-							key={i}
-							onClick={(e) => handleSetValue(e, option, i)}
-							className={`${activeButton !== i ? `bpl-buttonGroupHover-${uniqId}` : ""
-								} bpl-button-group-${uniqId}`}
-						>
-							{options.length ? option.label : "Button " + (i + 1)}
-						</button>
-					))}
-					<div
-						ref={bgSlideRef}
-						style={{
-							background: activeBg || "#4527a4",
-							transition: "left 0.2s ease-in-out",
-							position: "absolute",
-							top: 0,
-							left: 0,
-							zIndex: 10,
-							borderRadius,
-						}}
-					></div>
-				</div>
+					{options.length ? option.label : `Button ${(i + 1)}`}
+				</button>)}
+
+				<div ref={bgSlideRef} style={{ background: activeBg || '#4527a4', transition: 'left 0.2s ease-in-out', position: 'absolute', top: 0, left: 0, zIndex: 10, borderRadius }} />
 			</div>
 		</div>
-	);
-};
+	</div>
+}
 export default BButtonGroup;

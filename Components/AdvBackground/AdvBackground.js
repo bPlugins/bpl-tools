@@ -116,7 +116,7 @@ const AdvBackground = ({ name = 'Background', value, onChange, isVideo = false, 
 		</>}
 		</TabPanel>
 	</>
-};
+}
 export default withSelect((select) => {
 	const { getDeviceType } = select('core/editor');
 

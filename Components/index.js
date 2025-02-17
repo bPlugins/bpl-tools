@@ -9,7 +9,7 @@ import { ColorControl, HexColorControl } from './ColorControl/ColorControl';
 import ColorsControl from './ColorsControl/ColorsControl';
 import CustomCodeEditor from './CustomCodeEditor/CustomCodeEditor';
 import Device from './Device/Device';
-import DynamicTag from "./DynamicTag/DynamicTag";
+import DynamicTag from './DynamicTag/DynamicTag';
 import Gradient from './Gradient/Gradient';
 import HelpPanel from './HelpPanel/HelpPanel';
 import IconControl from './IconControl/IconControl';
@@ -25,7 +25,7 @@ import SeparatorControl from './SeparatorControl/SeparatorControl';
 import ShadowControl from './ShadowControl/ShadowControl';
 import SolidBackground from './SolidBackground/SolidBackground';
 import SortableControl from './SortableControl/SortableControl';
-import TinyEditor from "./TinyEditor/TinyEditor";
+import TinyEditor from './TinyEditor/TinyEditor';
 import Typography from './Typography/Typography';
 import BBlocksAds from './Utility/BBlocksAds';
 

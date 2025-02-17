@@ -28,8 +28,8 @@ const useWPOptionQuery = (key) => {
 		}
 
 		return newData;
-	};
+	}
 
-	return { data, isLoading, isError, error };
-};
+	return { data, isLoading, isError, error }
+}
 export default useWPOptionQuery;

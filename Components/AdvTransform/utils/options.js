@@ -1,23 +1,25 @@
+const xy = { x: '', y: '' }
+
 export const rotateResetValue = {
-  desktop: { z: "", y: "", x: "" },
-  tablet: { z: "", y: "", x: "" },
-  mobile: { z: "", y: "", x: "" },
-  threeDRotate: false
+	desktop: { ...xy, z: '' },
+	tablet: { ...xy, z: '' },
+	mobile: { ...xy, z: '' },
+	threeDRotate: false
 };
 
 export const offsetResetValue = {
-  desktop: { x: "", y: "" },
-  tablet: { x: "", y: "" },
-  mobile: { x: "", y: "" },
+	desktop: xy,
+	tablet: xy,
+	mobile: xy,
 };
 export const scaleResetValue = {
-  isProportion: true,
-  desktop: { x: "", y: "", scale: "" },
-  tablet: { x: "", y: "", scale: "" },
-  mobile: { x: "", y: "", scale: "" },
+	isProportion: true,
+	desktop: { ...xy, scale: '' },
+	tablet: { ...xy, scale: '' },
+	mobile: { ...xy, scale: '' },
 };
 export const skewResetValue = {
-  desktop: { x: "", y: "" },
-  tablet: { x: "", y: "" },
-  mobile: { x: "", y: "" },
+	desktop: xy,
+	tablet: xy,
+	mobile: xy,
 };

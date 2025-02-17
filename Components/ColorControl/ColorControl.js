@@ -59,7 +59,7 @@ export const ColorControl = props => {
 			</>}
 		/>
 	</PanelRow>
-};
+}
 
 
 export const HexColorControl = props => {
@@ -87,4 +87,4 @@ export const HexColorControl = props => {
 			</>}
 		/>
 	</PanelRow>
-};
+}

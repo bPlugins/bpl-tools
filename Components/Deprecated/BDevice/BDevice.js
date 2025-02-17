@@ -34,5 +34,5 @@ const BDevice = ({ device = 'desktop', onChange, className = 'iconButton', style
 			}}>{icon}</button>)}
 		</div>}
 	</div>
-};
+}
 export default BDevice;

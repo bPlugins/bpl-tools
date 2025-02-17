@@ -27,11 +27,11 @@ const useWPAjax = (action, params = {}, set = true) => {
 				setIsError(true);
 				setError(error);
 			});
-	};
+	}
 
 	const request = (payload = {}) => {
 		sendRequest(payload);
-	};
+	}
 
 	useEffect(() => {
 		if (set) {
@@ -39,6 +39,6 @@ const useWPAjax = (action, params = {}, set = true) => {
 		}
 	}, []);
 
-	return { data, saveData: request, refetch: request, isLoading, isError, error };
-};
+	return { data, saveData: request, refetch: request, isLoading, isError, error }
+}
 export default useWPAjax;

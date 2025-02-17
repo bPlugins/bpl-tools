@@ -41,5 +41,5 @@ const ColorsControl = props => {
 			</>}
 		/>
 	</PanelRow>
-};
+}
 export default ColorsControl;

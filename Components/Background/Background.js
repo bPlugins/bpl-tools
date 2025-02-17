@@ -87,5 +87,5 @@ const Background = props => {
 			</>}
 		/>
 	</PanelRow>
-};
+}
 export default Background;
