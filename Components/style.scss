@@ -709,7 +709,9 @@ $secondaryColor: #8344c5;
 			color: #fff;
 			// font-size: 15px;
 			// font-weight: 700;
-
+			&:hover{
+				color: #fff;
+			}
 			&:focus {
 				box-shadow: none;
 			}
