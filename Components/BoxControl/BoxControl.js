@@ -5,7 +5,7 @@ import './BoxControl.scss';
 import { Label } from '../index';
 
 const BoxControl = (props) => {
-	const { label, values = {}, onChange = () => { }, resetValues, units, sides, style, className, disableUnits = false } = props;
+	const { label, values = {}, onChange = () => { }, resetValues, units, sides, style, className='', disableUnits = false } = props;
 	const [link, setLink] = useState(false);
 
 	const unitSides = sides || ['top', 'right', 'bottom', 'left'];
@@ -56,11 +56,11 @@ const BoxControl = (props) => {
 				<div className='sideLabel'>{val}</div>
 			</div>)}
 
-			{!sides && <button className={`boxLinkButton ${link ? "activeLink" : ""}`} onClick={() => setLink(!link)}>
+			{!sides && <button className={`bplBoxControlLinkButton ${link ? "activeLink" : ""}`} onClick={() => setLink(!link)}>
 				{link ? <span className='dashicons dashicons-admin-links'></span> : <span className='dashicons dashicons-editor-unlink'></span>}
 			</button>}
 
-			{isReset && <button className='boxLinkButton' onClick={() => onChange(resetValues)}>
+			{isReset && <button className='bplBoxControlLinkButton' onClick={() => onChange(resetValues)}>
 				<span className='dashicons dashicons-image-rotate'></span>
 			</button>}
 		</div>

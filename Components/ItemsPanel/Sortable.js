@@ -43,10 +43,10 @@ const SortableList = SortableContainer((props) => {
 });
 
 const Sortable = (props) => {
-	const { attributes, setAttributes, arrKey } = props;
+	const { attributes, setAttributes, arrKey,activeIndex } = props;
 	const items = attributes[arrKey];
 
-	const [active, setActive] = useState(0);
+	const [active, setActive] = useState(activeIndex || 0);
 
 	const onSortEnd = ({ oldIndex, newIndex }) => {
 		setAttributes({ [arrKey]: arrayMove(items, oldIndex, newIndex) });
