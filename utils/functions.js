@@ -83,22 +83,3 @@ export const debounce = (fn, delay) => {
 		}, delay);
 	}
 }
-
-export const isExist = (value) => {
-	if (value === undefined || value === null || value === '') {
-		return false;
-	}
-	if (Array.isArray(value) && value.length === 0) {
-		return false;
-	}
-	if (typeof value === 'object' && Object.keys(value).length === 0) {
-		return false;
-	}
-	if (typeof value === 'string' && value.trim() === '') {
-		return false;
-	}
-	if (typeof value === 'number' && value === 0) {
-		return false;
-	}
-	return true;
-}
