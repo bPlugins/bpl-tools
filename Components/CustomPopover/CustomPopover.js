@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Button, Flex, Popover, Tooltip } from '@wordpress/components';
 
 import Label from '../Label/Label';
-import { isExist } from '../../utils/functions';
+import { isExist } from '../../utils/common';
 
 const CustomPopover = ({ icon, btnText, children, value, label, resetValues = {}, onClick = () => { } }) => {
 	const [visible, setVisible] = useState(false);

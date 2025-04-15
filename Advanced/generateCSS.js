@@ -1,5 +1,5 @@
 import { deskBreakpoint, mobileBreakpoint, tabBreakpoint } from '../utils/data';
-import { isExist } from '../utils/functions';
+import { isExist } from '../utils/common';
 import { getAdvBGCSS, getBorderBoxCSS, getBoxCSS, getMaskCSS, getMultiShadowCSS, getOverlayCSS, getTransformCSS, isValidCSS } from '../utils/getCSS';
 
 const dimensionCSS = (dimension) => {
