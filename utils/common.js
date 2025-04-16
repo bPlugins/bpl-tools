@@ -45,3 +45,65 @@ export const escapeHTML = (input = '') => {
 		return match?.replace(/</g, '&lt;').replace(/>/g, '&gt;');
 	});
 }
+
+export const sanitizeURL = (inputUrl) => {
+	try {
+		const url = new URL(inputUrl);
+
+		// 1. Check for safe protocols
+		if (!['http:', 'https:'].includes(url.protocol)) {
+			return null;
+		} else {
+			// 2. Strip query and fragment for safety
+			// url.search = '';
+			// url.hash = '';
+
+			return url.toString();
+		}
+	} catch (err) {
+		if (typeof inputUrl === 'string' && inputUrl.startsWith('/') && !inputUrl.startsWith('//')) {
+			return inputUrl;
+		} else {
+			return null;
+		}
+	}
+}
+
+export const sanitizeHTML = input => {
+	const parser = new DOMParser();
+	const doc = parser.parseFromString(input, 'text/html');
+
+	const allowedTags = ['b', 'strong', 'i', 'em', 'span', 'a', 'br'];
+	const allowedAttrs = ['style', 'href', 'target', 'rel', 'class'];
+
+	doc.body.querySelectorAll('*').forEach((node) => {
+		// Remove disallowed tags
+		if (!allowedTags.includes(node.tagName.toLowerCase())) {
+			node.remove();
+			return;
+		}
+
+		// Loop through attributes and sanitize
+		[...node.attributes].forEach(attr => {
+			if (!allowedAttrs.includes(attr.name)) {
+				node.removeAttribute(attr.name);
+			}
+
+			// if (attr.name === "href" && attr.value.trim().toLowerCase().startsWith("javascript:")) {
+			// 	node.removeAttribute("href");
+			// }
+
+			if (attr.name === 'href') {
+				const sanitizeHref = sanitizeURL(attr.value);
+
+				if (sanitizeHref) {
+					node.setAttribute('href', sanitizeHref)
+				} else {
+					node.removeAttribute('href');
+				}
+			}
+		});
+	});
+
+	return doc.body.innerHTML;
+}
