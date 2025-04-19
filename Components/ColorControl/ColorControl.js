@@ -36,12 +36,12 @@ const ThemeColors = withSelect((select) => {
 });
 
 export const ColorControl = props => {
-	const { className = '', label = __('Color:'), value, onChange, defaultColor, disableAlpha = false } = props;
+	const { className = '', label = __('Color:'), value='', onChange, defaultColor, disableAlpha = false } = props;
 
 	return <PanelRow className={className}>
 		<Label className=''>{label}</Label>
 
-		<Dropdown className='bPlDropdownContainer bPlColor' contentClassName='bPlDropdownPopover bPlColorPopover' popoverProps={{ placement: 'top-end' }}
+		<Dropdown className='bPlDropdownContainer bPlColor' contentClassName='bPlDropdownPopover' popoverProps={{ placement: 'top-end' }}
 			renderToggle={({ isOpen, onToggle }) => {
 				return <>
 					<div className='bPlColorButtonContainer'>
@@ -68,7 +68,7 @@ export const HexColorControl = props => {
 	return <PanelRow className={className}>
 		<Label className=''>{label}</Label>
 
-		<Dropdown className='bPlDropdownContainer bPlColor' contentClassName='bPlDropdownPopover bPlColorPopover' popoverProps={{ placement: 'top-end' }}
+		<Dropdown className='bPlDropdownContainer bPlColor' contentClassName='bPlDropdownPopover' popoverProps={{ placement: 'top-end' }}
 			renderToggle={({ isOpen, onToggle }) => <>
 				<div className='bPlColorButtonContainer'>
 					<button className='bPlColorButton' onClick={onToggle} aria-expanded={isOpen} style={{ backgroundColor: value || 'transparent' }} />

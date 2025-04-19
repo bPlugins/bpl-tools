@@ -28,5 +28,6 @@ import SortableControl from './SortableControl/SortableControl';
 import TinyEditor from './TinyEditor/TinyEditor';
 import Typography from './Typography/Typography';
 import BBlocksAds from './Utility/BBlocksAds';
+import BplBlockPreview from "./BplBlockPreview/BplBlockPreview"
 
-export { AdvBackground, Background, BBlocksAds, BButtonGroup, BoxControl, BtnGroup, ColorControl, ColorsControl, CustomCodeEditor, Device, DynamicTag, Gradient, HelpPanel, HexColorControl, IconControl, IconLibrary, InlineDetailMediaUpload, InlineMediaUpload, ItemsPanel, Label, MediaArea, MediaEditControl, MediaPlaceholder, MultiSelectControl, OverlayControl, PanelSelectControl, SelectPureControl, SeparatorControl, ShadowControl, SolidBackground, SortableControl, TinyEditor, Typography };
+export { AdvBackground, Background, BBlocksAds, BButtonGroup, BoxControl, BtnGroup, ColorControl, ColorsControl, CustomCodeEditor, Device, DynamicTag, Gradient, HelpPanel, HexColorControl, IconControl, IconLibrary, InlineDetailMediaUpload, InlineMediaUpload, ItemsPanel, Label, MediaArea, MediaEditControl, MediaPlaceholder, MultiSelectControl, OverlayControl, PanelSelectControl, SelectPureControl, SeparatorControl, ShadowControl, SolidBackground, SortableControl, TinyEditor, Typography, BplBlockPreview };

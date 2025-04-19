@@ -1,0 +1,10 @@
+.bPlBlockPreviewWrapper {
+  display: flex;
+  align-items: center;
+  .bPl-previewBtn {
+    &.bPl-activeBtn {
+      background: #4527a4;
+      color:#fff;
+    }
+  }
+}

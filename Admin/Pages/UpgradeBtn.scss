@@ -1,0 +1,120 @@
+/* Button base styles */
+.premium-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 19px;
+  white-space: nowrap;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  overflow: hidden;
+  background: linear-gradient(135deg, #9333ea, #3b82f6);
+  transition: transform 0.3s ease-out;
+  margin-top: 25px;
+}
+
+.premium-button:hover {
+  transform: scale(1.05);
+}
+
+.premium-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(147, 51, 234, 0.3);
+}
+
+/* Background effects */
+.button-background {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #7e22ce, #2563eb);
+  transform: translateX(0) skewX(-12deg);
+  transition: transform 0.3s ease-out;
+  opacity: 0.4;
+}
+
+.premium-button:hover .button-background {
+  transform: translateX(0) skewX(12deg);
+}
+
+/* Shine effect */
+.button-shine {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 33%;
+  background: linear-gradient(
+    90deg,
+    rgba(147, 51, 234, 0.2),
+    rgba(59, 130, 246, 0.2)
+  );
+  transform: translateX(0);
+  transition: transform 0.3s ease-out;
+}
+
+.premium-button:hover .button-shine {
+  transform: translateX(100%);
+}
+
+/* Overlay gradients */
+.button-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #9333ea, #3b82f6);
+  opacity: 0;
+  transition: opacity 0.3s ease-out;
+}
+
+.premium-button:hover .button-overlay {
+  opacity: 0.5;
+}
+
+/* Glow effect */
+.button-glow {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(147, 51, 234, 0.3),
+    rgba(59, 130, 246, 0.3)
+  );
+  mix-blend-mode: overlay;
+}
+
+/* Content styles */
+.button-content {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 18px;
+}
+
+/* Icon animation */
+.sparkle-icon {
+  width: 25px;
+  height: 25px;
+  animation: pulse 2s infinite;
+  color: #f7f7f7;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.6;
+    transform: scale(0.95);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+
+  100% {
+    opacity: 0.6;
+    transform: scale(0.95);
+  }
+}
