@@ -1,17 +1,16 @@
 import { useState } from 'react';
 import { Button, Dropdown, GradientPicker } from '@wordpress/components';
 
-import './panelCustomColorControl.css';
 import { BButtonGroup, ColorControl } from '../index';
 import { useSelect } from '@wordpress/data';
-
+import "./style.css";
 const SolidBackground = (props) => {
-	const { label = 'Color', value, onChange = () => { } } = props;
+	const { label = 'Color', value, onChange = () => { },className='' } = props;
 	const defaultGradients = useSelect('core/block-editor').getSettings().gradients
 	const [tab, setTab] = useState('solid');
 	const id = Math.floor(Math.random() * 9999999);
 
-	return <div>
+	return <div className={className}>
 		<style>
 			{`#customColorControlPanel-${id}-dualColor{
 				${value ? `background: ${value};` : `

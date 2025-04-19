@@ -17,7 +17,7 @@ const BtnGroup = props => {
 			const { value: val, icon = '', label = '', def = '' } = obj;
 			const isActive = value === val;
 
-			return <Button key={val} label={label} showTooltip={true} tooltipPosition='top'
+			return <Button  key={val} label={label} showTooltip={true} tooltipPosition='top'
 				icon={isIcon ? icon : null}
 				variant={isActive ? 'primary' : ''}
 				aria-pressed={isActive}

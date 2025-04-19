@@ -1,13 +1,12 @@
+import { Button, Dashicon, Flex, PanelBody, PanelRow } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
-import { PanelBody, PanelRow, Button, Dashicon } from '@wordpress/components';
 
-import Sortable from './Sortable';
 import { copyIcon } from '../../utils/icons';
+import Sortable from './Sortable';
 
 const ItemsPanel = (properties) => {
-	const { attributes, setAttributes, clientId, arrKey, newItem, ItemSettings, itemLabel = 'Item', activeIndex, setActiveIndex, design = 'single', premiumProps, ...restProps } = properties;
+	const { attributes, setAttributes, clientId, arrKey, newItem, ItemSettings, itemLabel = 'Item', activeIndex, setActiveIndex, design = 'single',title='',premiumProps, ...restProps } = properties;
 	const items = attributes[arrKey];
-
 	const addNewItem = () => {
 		setAttributes({ [arrKey]: [...items, newItem] });
 
@@ -30,19 +29,7 @@ const ItemsPanel = (properties) => {
 		setActiveIndex && setActiveIndex(0 === index ? 0 : index - 1);
 	}
 
-	const props = {
-		attributes,
-		setAttributes,
-		clientId,
-		arrKey,
-		ItemSettings,
-		removeItem,
-		duplicateItem,
-		itemLabel,
-		setActiveIndex,
-		premiumProps,
-		...restProps
-	}
+	const props = { attributes, setAttributes, clientId, arrKey, ItemSettings, removeItem, duplicateItem, itemLabel, activeIndex,setActiveIndex, premiumProps, title, ...restProps }
 
 	const itemProps = { attributes, setAttributes, clientId, arrKey, setActiveIndex, premiumProps }
 
@@ -56,7 +43,7 @@ const ItemsPanel = (properties) => {
 		</>}
 
 		{'all' === design && items.map((item, index) => {
-			return <PanelBody key={index} className='bPlPanelBody itemPanelBody' title={__(`${itemLabel} ${index + 1}:`)} initialOpen={0 !== index ? false : true}>
+			return <PanelBody key={index} className='bPlPanelBody itemPanelBody' title={__(`${itemLabel} ${index + 1}:`)} initialOpen={activeIndex ? activeIndex === index ? true : false : 0 !== index ? false : true}>
 				<ItemSettings {...itemProps} index={index} />
 
 				<ItemAction items={items} index={index} duplicateItem={duplicateItem} removeItem={removeItem} />
@@ -65,12 +52,12 @@ const ItemsPanel = (properties) => {
 
 		{'sortable' === design && <Sortable {...props} />}
 
-		<div className='addItem mt15'>
-			<Button label={__('Add New') + ' ' + itemLabel} onClick={addNewItem}>
+		<Flex justify='center' className='addItem mt15'>
+			<Button variant='primary' label={__('Add New') + ' ' + itemLabel} onClick={addNewItem}>
 				<Dashicon icon='plus' />
 				{__('Add New') + ' ' + itemLabel}
 			</Button>
-		</div>
+		</Flex>
 	</>
 };
 export default ItemsPanel;

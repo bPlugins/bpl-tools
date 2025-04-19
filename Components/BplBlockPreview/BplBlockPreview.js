@@ -8,14 +8,12 @@ const BplBlockPreview = ({
   blocks,
   clientId,
   value,
-  onChange,
   minHeight = "", 
   minWidth = "200px" 
 }) => {
   const [activeIndex, setActiveIndex] = useState(null);
 
   const handleButtonClick = (blockValue, idx,content) => {
-    onChange(blockValue);
     setActiveIndex(idx);
     handleBlockReplace(content)
   };

@@ -8,7 +8,7 @@ import React, { useEffect, useState } from 'react';
  * @props {string} height - The height of the editor
  */
 
-const TinyEditor = ({ value = '', onChange, media_button = true, quicktags = true, height = '180px' }) => {
+const TinyEditor = ({ value = '', onChange, media_button = true, quicktags = true, height = '180px',className }) => {
 	const [randomId, setEditorId] = useState(null);
 
 	// Initialize randomId only once
@@ -94,7 +94,7 @@ const TinyEditor = ({ value = '', onChange, media_button = true, quicktags = tru
 		}
 	}, [value, randomId]);
 
-	return <div>
+	return <div className={className}>
 		<style>{`
 				#bpl-wp-${randomId}editor{
 					border:none !important;
@@ -104,6 +104,9 @@ const TinyEditor = ({ value = '', onChange, media_button = true, quicktags = tru
 					outline: none !important;
 					box-shadow:none !important;
 				}
+					#wp-bpl-wp-${randomId}editor-wrap .wp-editor-tools .wp-media-buttons{
+						width:48%;
+					}
 			`}</style>
 
 		<textarea

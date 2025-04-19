@@ -1,6 +1,8 @@
+import useDeviceWidth from "./useDeviceWidth";
+import usePremium from './usePremium';
+import usePremiumInEditor from './usePremiumInEditor';
 import useWPAjax from './useWPAjax';
 import useWPOptionQuery from './useWPOptionQuery';
-import usePremiumInEditor from './usePremiumInEditor';
-import usePremium from './usePremium';
 
-export { useWPAjax, useWPOptionQuery, usePremiumInEditor, usePremium }
+export { useDeviceWidth, usePremium, usePremiumInEditor, useWPAjax, useWPOptionQuery };
+

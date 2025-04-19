@@ -22,15 +22,7 @@ const ThemeColors = withSelect((select) => {
 })(({ isOpen, onClose, onChange, themeColors }) => {
 	return themeColors.length ? <div className='bPlThemeColors'>
 		{themeColors.map(({ color }) => <div key={color} className='bPlColorButtonContainer'>
-			<button
-				className='bPlColorButton'
-				aria-expanded={isOpen}
-				style={{ backgroundColor: color || 'transparent' }}
-				onClick={() => {
-					onChange(color);
-					onClose;
-				}}
-			/>
+			<button className='bPlColorButton' aria-expanded={isOpen} style={{ backgroundColor: color || 'transparent' }} onClick={() => { onChange(color); onClose; }} />
 		</div>)}
 	</div> : null;
 });

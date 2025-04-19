@@ -233,7 +233,7 @@ $secondaryColor: #8344c5;
 	&.mini {
 		.components-tab-panel__tabs {
 			button {
-				height: 30px;
+				height: 30px !important;
 				text-transform: capitalize;
 				justify-content: center;
 				border-bottom: 0px;
