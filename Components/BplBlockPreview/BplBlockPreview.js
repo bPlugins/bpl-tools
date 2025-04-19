@@ -4,16 +4,11 @@ import { Button, Popover } from '@wordpress/components';
 import { useState } from 'react';
 import "./style.scss";
 
-const BplBlockPreview = ({ 
-  blocks,
-  clientId,
-  value,
-  minHeight = "", 
-  minWidth = "200px" 
+const BplBlockPreview = ({ blocks, clientId, value, minHeight = "", minWidth = "200px"
 }) => {
   const [activeIndex, setActiveIndex] = useState(null);
 
-  const handleButtonClick = (blockValue, idx,content) => {
+  const handleButtonClick = (blockValue, idx, content) => {
     setActiveIndex(idx);
     handleBlockReplace(content)
   };
@@ -33,16 +28,16 @@ const BplBlockPreview = ({
         <div key={idx}>
           <div>    <Button
             className={`bPl-previewBtn ${value === block.value ? "bPl-activeBtn" : ""}`}
-            onClick={() => handleButtonClick(block.value, idx,block.content)}
+            onClick={() => handleButtonClick(block.value, idx, block.content)}
             onMouseEnter={() => handleMouseInteraction(idx, true)}
             onMouseLeave={() => handleMouseInteraction(idx, false)}
           >
-          {block.label}
+            {block.label}
           </Button></div>
           {activeIndex === idx && (
-            <Popover 
-              style={{cursor: "pointer"}} 
-              onClick={() => handleButtonClick(block.value, idx,block.content)}
+            <Popover
+              style={{ cursor: "pointer" }}
+              onClick={() => handleButtonClick(block.value, idx, block.content)}
             >
               <div
                 onMouseEnter={() => handleMouseInteraction(idx, true)}
