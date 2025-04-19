@@ -8,18 +8,14 @@
 		"lint": "eslint src"
 	},
 	"dependencies": {
-		"dompurify": "^3.2.3",
+		"dompurify": "^3.2.5",
 		"immer": "^10.1.1",
-		"lodash": "^4.17.21",
-		"react-ace": "^12.0.0",
-		"react-dom": "^19.0.0",
-		"react-hot-toast": "^2.5.2",
-		"react-router-dom": "^7.1.5",
+		"react-ace": "^14.0.1",
 		"react-sortable-hoc": "^2.0.0",
 		"select-pure": "^0.6.2"
 	},
 	"devDependencies": {
-		"@wordpress/scripts": "^30.3.0",
-		"eslint-webpack-plugin": "^4.2.0"
+		"@wordpress/scripts": "^30.15.0",
+		"eslint-webpack-plugin": "^5.0.0"
 	}
 }

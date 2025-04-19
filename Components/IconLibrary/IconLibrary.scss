@@ -9,12 +9,6 @@
 
 
 	.bPlIconLibraryModalWrapper {
-		* {
-			box-sizing: border-box;
-			margin: 0;
-			padding: 0;
-		}
-
 		background: rgba(0, 0, 0, 0.158);
 		position: fixed;
 		inset: 0;
@@ -23,6 +17,12 @@
 		justify-content: center;
 		transition: all 0.3s ease-in-out;
 		z-index: 9999999 !important;
+
+		* {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
 
 		&.isOpen {
 			.bPlIconLibraryModal {

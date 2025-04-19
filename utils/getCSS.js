@@ -6,7 +6,7 @@ import sketch from '../Components/Mask/assets/shapes/sketch.svg';
 import triangle from '../Components/Mask/assets/shapes/triangle.svg';
 
 import { mobileBreakpoint, tabBreakpoint } from './data';
-import { isExist } from './functions';
+import { isExist } from './common';
 
 export const isValidCSS = (p, v) => isExist(v) ? `${p}: ${v};` : '';
 

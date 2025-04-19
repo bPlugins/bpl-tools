@@ -85,7 +85,7 @@ export const MediaArea = (props) => {
 	return <div style={style} className={`bPlMediaArea ${className}`}>
 		<MediaUpload
 			value={value}
-			onSelect={(val) => onChange(val)}
+			onSelect={({ id, url, alt, title }) => onChange({ id, url, alt, title })}
 			gallery={false}
 			allowedTypes={types}
 			multiple={false}
@@ -142,7 +142,7 @@ export const MediaPlaceholder = props => {
 		<MediaUploadCheck>
 			<MediaUpload
 				allowedTypes={[type]}
-				onSelect={val => onChange(val)}
+				onSelect={({ id, url, alt, title }) => onChange({ id, url, alt, title })}
 				render={({ open }) => <Button isPrimary onClick={open}> {__('Upload')} </Button>}
 			/>
 		</MediaUploadCheck>
@@ -181,7 +181,7 @@ export const MediaEditControl = props => {
 
 	return isRender && <ToolbarGroup className='bPlToolbar'>
 		<MediaUploadCheck>
-			<MediaUpload allowedTypes={types} value={isMultiple ? value.map(val => val.id) : value?.id} onSelect={val => onChange(val)} render={({ open }) => <ToolbarButton label={label} icon={icon} onClick={open} />} multiple={isMultiple} />
+			<MediaUpload allowedTypes={types} value={isMultiple ? value.map(val => val.id) : value?.id} onSelect={({ id, url, alt, title }) => onChange({ ...value, id, url, alt, title })} render={({ open }) => <ToolbarButton label={label} icon={icon} onClick={open} />} multiple={isMultiple} />
 		</MediaUploadCheck>
 	</ToolbarGroup>
 };
