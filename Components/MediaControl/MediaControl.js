@@ -84,7 +84,7 @@ export const MediaArea = (props) => {
 
 	return <div style={style} className={`bPlMediaArea ${className}`}>
 		<MediaUpload
-			value={value}
+			value={value?.id ? [value?.id] : []}
 			onSelect={({ id, url, alt, title }) => onChange({ id, url, alt, title })}
 			gallery={false}
 			allowedTypes={types}

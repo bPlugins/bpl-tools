@@ -9,7 +9,7 @@
 	"editor.minimap.enabled": true,
 	"editor.wordWrap": "on",
 	"files.autoSave": "onWindowChange",
-	"workbench.colorTheme": "Default Dark Modern",
+	"workbench.colorTheme": "Dracula Theme",
 	"workbench.iconTheme": "material-icon-theme",
 	"terminal.integrated.defaultProfile.windows": "Git Bash",
 	"terminal.integrated.env.windows": {},
