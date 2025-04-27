@@ -7,6 +7,16 @@ import Device from '../Device/Device';
 import Label from '../Label/Label';
 import { offsetResetValue, rotateResetValue, scaleResetValue, skewResetValue } from './utils/options';
 
+/**
+ * @function
+ * @name AdvTransform
+ * @description A wrapper for the transform control.
+ * @param {Object} props Component props
+ * @param {Object} [props.value] The current value of the transform.
+ * @param {function} [props.onChange] The function to call when the value changes.
+ * @param {string} [props.device] The device type.
+ * @returns {ReactElement} A React element.
+ */
 const AdvTransform = ({ value = {}, onChange = () => { }, device }) => {
 	const { rotate = {}, offset = {}, scale = {}, skew = {}, flipX = false, flipY = false } = value || {};
 

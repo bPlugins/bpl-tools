@@ -4,6 +4,18 @@ import { TabPanel, PanelRow, __experimentalInputControl as InputControl, SelectC
 import { Device, Gradient, Label, SolidBackground, MediaArea } from '../index';
 import { bgTabs, imgAttachmentOptions, imgPositionOptions, imgRepeatOptions, imgSizeOptions, unitOptions } from './utils/options';
 
+/**
+ * @function
+ * @name AdvBackground
+ * @description A wrapper for the background type control.
+ * @param {Object} props Component props
+ * @param {string} [props.name=Background] The name of the property.
+ * @param {Object} [props.value] The current value of the background.
+ * @param {function} [props.onChange] The function to call when the value changes.
+ * @param {boolean} [props.isVideo=false] Whether the background is a video or not.
+ * @param {string} [props.device] The device type.
+ * @returns {ReactElement} A React element.
+ */
 const AdvBackground = ({ name = 'Background', value, onChange, isVideo = false, device }) => {
 	const { type = 'color', color = '', gradient = {}, img = {}, video = {} } = value || {};
 	const { position = 'center center', xPosition, yPosition, attachment, repeat = 'no-repeat', size = 'cover', customSize, } = img?.[device] || {};

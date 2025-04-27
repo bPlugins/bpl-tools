@@ -74,6 +74,12 @@ export const updateData = (attr, value, ...props) => {
 	});
 }
 
+export const updateAttributes = (attributes, setAttributes) => {
+	return (object, val, ...props) => {
+		setAttributes({ [object]: updateData(attributes[object], val, ...props) });
+	};
+};
+
 export const debounce = (fn, delay) => {
 	let timeoutId;
 	return (...args) => {
