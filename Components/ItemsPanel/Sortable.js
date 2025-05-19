@@ -6,18 +6,21 @@ import { closeIcon, copyIcon, gripIcon } from '../../utils/icons';
 
 const DragHandle = SortableHandle(() => <div className='gripIcon'>{gripIcon}</div>);
 
-const SortableItem = SortableElement(({ sortIndex: index, removeItem, duplicateItem, ItemSettings, active, setActive, itemLabel,title, ...props }) => {
-	const { attributes, arrKey } = props;
+const SortableItem = SortableElement(({ sortIndex: index, removeItem, duplicateItem, ItemSettings, active, setActive, itemLabel, title, ...props }) => {
+	const { attributes, arrKey, setActiveIndex } = props;
 	const items = attributes[arrKey];
-	const itemTitle =items?.[index]?.[title] || "" ;
+	const itemTitle = items?.[index]?.[title] || "";
 
 	return <div className='bPlSortablePanelItem'>
 		<div className='itemsPanelHeader mt10'>
 			<DragHandle />
 
 			<div className='panel-header-title'>
-				<div className='repeater-panel-title' onClick={() => setActive(active === index ? null : index)}>
-					{title ? itemTitle :itemLabel + ' ' + (index + 1)}
+				<div className='repeater-panel-title' onClick={() => {
+					setActive(active === index ? null : index)
+					setActiveIndex && setActiveIndex(index);
+				}}>
+					{title ? itemTitle : itemLabel + ' ' + (index + 1)}
 				</div>
 
 				<div className='itemAction'>
@@ -44,16 +47,16 @@ const SortableList = SortableContainer((props) => {
 });
 
 const Sortable = (props) => {
-	const { attributes, setAttributes, arrKey,activeIndex } = props;
+	const { attributes, setAttributes, arrKey, activeIndex } = props;
 	const items = attributes[arrKey];
 
 	const [active, setActive] = useState(activeIndex || 0);
 	const onSortEnd = ({ oldIndex, newIndex }) => {
 		setAttributes({ [arrKey]: arrayMove(items, oldIndex, newIndex) });
 	};
-  useEffect(() => {
-    setActive(activeIndex || 0);
-  }, [activeIndex]);
+	useEffect(() => {
+		setActive(activeIndex || 0);
+	}, [activeIndex]);
 	const sortProps = {
 		...props,
 		active,
