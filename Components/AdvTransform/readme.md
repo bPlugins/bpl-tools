@@ -1,24 +1,24 @@
   "transform": {
     "normal": {
       "rotate": {
-        "desktop": { "z": 0, "y": "", "x": ""},
+        "desktop": { "z": "", "y": "", "x": ""},
         "tablet": { "z": "", "y": "", "x": "" },
         "mobile": { "z": "", "y": "", "x": "" },
         "threeDRotate": false
       },
       "offset": {
-        "desktop": {  "x": "5px",  "y": "9px" },
+        "desktop": {  "x": "",  "y": "" },
         "tablet": { "x": "", "y": "" },
         "mobile": { "x": "", "y": "" }
       },
       "scale": {
-        "isProportion": false,
-        "desktop": { "x": 1, "y": 1, "scale": 1.7 },
+        "isProportion": true,
+        "desktop": { "x": "", "y": "", "scale": "" },
         "tablet": { "x": "", "y": "", "scale": "" },
         "mobile": { "x": "", "y": "", "scale": "" }
       },
       "skew": {
-        "desktop": { "x": 0, "y": 0 },
+        "desktop": { "x": "", "y": "" },
         "tablet": { "x": "", "y": "" },
         "mobile": { "x": "", "y": "" }
       },

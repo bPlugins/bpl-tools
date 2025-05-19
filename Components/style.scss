@@ -231,8 +231,14 @@
 
             &.small,
             &.mini {
+
                 .components-tab-panel__tabs {
                     button {
+                        &:hover {
+                            background-color: #774cff;
+                            color: #fff;
+                        }
+
                         height: 30px !important;
                         text-transform: capitalize;
                         justify-content: center;

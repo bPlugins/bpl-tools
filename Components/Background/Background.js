@@ -6,13 +6,13 @@
  * @props defaults (optional): { type, color, gradient, image, position, attachment, repeat, size, overlayColor } (Object)
  */
 
+import { __experimentalGradientPicker, __experimentalAlignmentMatrixControl as AlignmentMatrixControl, Button, Dropdown, GradientPicker, PanelRow, SelectControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
-import { Button, PanelRow, Dropdown, __experimentalGradientPicker, GradientPicker, __experimentalAlignmentMatrixControl as AlignmentMatrixControl, SelectControl } from '@wordpress/components';
 const Gradient = __experimentalGradientPicker || GradientPicker;
 
-import { Label, ColorControl, BtnGroup, InlineDetailMediaUpload } from '../index';
 import { gradients } from '../../utils/options';
-import { bgTypes, attachments, repeats, sizes } from './options';
+import { BtnGroup, ColorControl, InlineDetailMediaUpload, Label } from '../index';
+import { attachments, bgTypes, repeats, sizes } from './options';
 
 const Background = props => {
 	const { className = '', label = __('Background'), value = {}, onChange, defaults = {}, isSolid = true, isGradient = true, isImage = true } = props;

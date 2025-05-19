@@ -1,6 +1,6 @@
+import { PanelRow, RangeControl, ToggleControl, __experimentalUnitControl as UnitControl } from '@wordpress/components';
 import { compose } from '@wordpress/compose';
 import { withSelect } from '@wordpress/data';
-import { PanelRow, RangeControl, ToggleControl, __experimentalUnitControl as UnitControl } from '@wordpress/components';
 
 import CustomPopover from '../CustomPopover/CustomPopover';
 import Device from '../Device/Device';

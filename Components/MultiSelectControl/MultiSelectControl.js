@@ -45,12 +45,7 @@ const MultiSelectControl = ({ value = [], onChange, limit = 10, options = [] }) 
 					<Dashicon icon='plus' />
 				</li>
 
-				<input
-					onClick={() => setIsPopover(true)}
-					type='search'
-					autoCorrect='off'
-					autoCapitalize='off'
-				/>
+				<input onClick={() => setIsPopover(true)} type='search' autoCorrect='off' autoCapitalize='off' />
 			</>}
 		</ul>
 
