@@ -8,12 +8,12 @@
  * @return color (String)
  */
 
-import { __ } from '@wordpress/i18n';
+import { Button, ColorPicker, Dropdown, PanelRow } from '@wordpress/components';
 import { withSelect } from '@wordpress/data';
-import { Dropdown, ColorPicker, Button, PanelRow } from '@wordpress/components';
+import { __ } from '@wordpress/i18n';
 
-import './ColorControl.scss';
 import { Label } from '../index';
+import './ColorControl.scss';
 
 const ThemeColors = withSelect((select) => {
 	return {
@@ -27,8 +27,20 @@ const ThemeColors = withSelect((select) => {
 	</div> : null;
 });
 
+/**
+ * ColorControl Component - A color picker component that supports RGBA color format
+ * @component
+ * @param {Object} props
+ * @param {string} [props.className=''] - Additional CSS class for styling
+ * @param {string} [props.label='Color:'] - Label text for the color control
+ * @param {string} [props.value=''] - Current color value in RGBA format
+ * @param {Function} props.onChange - Callback function when color changes, receives color string as parameter
+ * @param {string} [props.defaultColor] - Default color value for reset functionality
+ * @param {boolean} [props.disableAlpha=false] - Whether to disable alpha channel in color picker
+ * @returns {JSX.Element} ColorControl component with color picker and theme colors
+ */
 export const ColorControl = props => {
-	const { className = '', label = __('Color:'), value='', onChange, defaultColor, disableAlpha = false } = props;
+	const { className = '', label = __('Color:'), value = '', onChange, defaultColor, disableAlpha = false } = props;
 
 	return <PanelRow className={className}>
 		<Label className=''>{label}</Label>

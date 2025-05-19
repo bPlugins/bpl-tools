@@ -8,7 +8,7 @@ import triangle from '../Components/Mask/assets/shapes/triangle.svg';
 import { mobileBreakpoint, tabBreakpoint } from './data';
 import { isExist } from './common';
 
-export const isValidCSS = (p, v) => isExist(v) ? `${p}: ${v};` : '';
+export const isValidCSS = (p, v,i) => isExist(v) ? `${p}: ${v};` : '';
 
 export const getBackgroundCSS = (bg, isSolid = true, isGradient = true, isImage = true) => {
 	const { type = 'solid', color = '', gradient = '', image = {}, position = '', attachment = '', repeat = '', size = '', overlayColor = '' } = bg || {};

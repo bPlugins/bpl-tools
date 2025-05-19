@@ -4,6 +4,7 @@ import AdvBackground from './AdvBackground/AdvBackground';
 import Background from './Background/Background';
 import BButtonGroup from './BButtonGroup/BButtonGroup';
 import BoxControl from './BoxControl/BoxControl';
+import BplBlockPreview from "./BplBlockPreview/BplBlockPreview";
 import BtnGroup from './BtnGroup/BtnGroup';
 import { ColorControl, HexColorControl } from './ColorControl/ColorControl';
 import ColorsControl from './ColorsControl/ColorsControl';
@@ -21,6 +22,7 @@ import MultiSelectControl from './MultiSelectControl/MultiSelectControl';
 import OverlayControl from './OverlayControl/OverlayControl';
 import PanelSelectControl from './PanelSelectControl/PanelSelectControl';
 import SelectPureControl from './SelectPureControl/SelectPureControl';
+import SelectTokenField from './SelectTokenField/SelectTokenField';
 import SeparatorControl from './SeparatorControl/SeparatorControl';
 import ShadowControl from './ShadowControl/ShadowControl';
 import SolidBackground from './SolidBackground/SolidBackground';
@@ -28,6 +30,6 @@ import SortableControl from './SortableControl/SortableControl';
 import TinyEditor from './TinyEditor/TinyEditor';
 import Typography from './Typography/Typography';
 import BBlocksAds from './Utility/BBlocksAds';
-import BplBlockPreview from "./BplBlockPreview/BplBlockPreview"
 
-export { AdvBackground, Background, BBlocksAds, BButtonGroup, BoxControl, BtnGroup, ColorControl, ColorsControl, CustomCodeEditor, Device, DynamicTag, Gradient, HelpPanel, HexColorControl, IconControl, IconLibrary, InlineDetailMediaUpload, InlineMediaUpload, ItemsPanel, Label, MediaArea, MediaEditControl, MediaPlaceholder, MultiSelectControl, OverlayControl, PanelSelectControl, SelectPureControl, SeparatorControl, ShadowControl, SolidBackground, SortableControl, TinyEditor, Typography, BplBlockPreview };
+export { AdvBackground, Background, BBlocksAds, BButtonGroup, BoxControl, BplBlockPreview, BtnGroup, ColorControl, ColorsControl, CustomCodeEditor, Device, DynamicTag, Gradient, HelpPanel, HexColorControl, IconControl, IconLibrary, InlineDetailMediaUpload, InlineMediaUpload, ItemsPanel, Label, MediaArea, MediaEditControl, MediaPlaceholder, MultiSelectControl, OverlayControl, PanelSelectControl, SelectPureControl, SelectTokenField, SeparatorControl, ShadowControl, SolidBackground, SortableControl, TinyEditor, Typography };
+
