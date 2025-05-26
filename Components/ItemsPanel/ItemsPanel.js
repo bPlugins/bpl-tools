@@ -5,10 +5,12 @@ import { copyIcon } from '../../utils/icons';
 import Sortable from './Sortable';
 
 const ItemsPanel = (properties) => {
-	const { attributes, setAttributes, clientId, arrKey, newItem, ItemSettings, itemLabel = 'Item', activeIndex, setActiveIndex, design = 'single',title='',premiumProps, ...restProps } = properties;
-	const items = attributes[arrKey];
+	const { value, onChange, attributes, setAttributes, clientId, arrKey, newItem, ItemSettings, itemLabel = 'Item', activeIndex, setActiveIndex, design = 'single', title = '', premiumProps, ...restProps } = properties;
+	const items = attributes ? attributes[arrKey] : value[arrKey];
 	const addNewItem = () => {
-		setAttributes({ [arrKey]: [...items, newItem] });
+		const newValue = [...items, newItem];
+
+		attributes ? setAttributes({ [arrKey]: newValue }) : onChange(newValue);
 
 		setActiveIndex && setActiveIndex(items.length);
 	};
@@ -16,7 +18,9 @@ const ItemsPanel = (properties) => {
 	const duplicateItem = (e, index) => {
 		e.preventDefault();
 
-		setAttributes({ [arrKey]: [...items.slice(0, index), { ...items[index] }, ...items.slice(index)] });
+		const newValue = [...items.slice(0, index), { ...items[index] }, ...items.slice(index)];
+
+		attributes ? setAttributes({ [arrKey]: newValue }) : onChange(newValue);
 
 		setActiveIndex && setActiveIndex(index + 1);
 	}
@@ -24,14 +28,16 @@ const ItemsPanel = (properties) => {
 	const removeItem = (e, index) => {
 		e.preventDefault();
 
-		setAttributes({ [arrKey]: [...items.slice(0, index), ...items.slice(index + 1)] });
+		const newValue = [...items.slice(0, index), ...items.slice(index + 1)];
+
+		attributes ? setAttributes({ [arrKey]: newValue }) : onChange(newValue);
 
 		setActiveIndex && setActiveIndex(0 === index ? 0 : index - 1);
 	}
 
-	const props = { attributes, setAttributes, clientId, arrKey, ItemSettings, removeItem, duplicateItem, itemLabel, activeIndex,setActiveIndex, premiumProps, title, ...restProps }
+	const props = { value, onChange, attributes, setAttributes, clientId, arrKey, ItemSettings, removeItem, duplicateItem, itemLabel, activeIndex, setActiveIndex, premiumProps, title, ...restProps }
 
-	const itemProps = { attributes, setAttributes, clientId, arrKey, setActiveIndex, premiumProps }
+	const itemProps = { value, onChange, attributes, setAttributes, clientId, arrKey, setActiveIndex, premiumProps }
 
 	return <>
 		{'single' === design && undefined !== activeIndex && <>

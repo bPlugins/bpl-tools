@@ -1,0 +1,25 @@
+.bPlDeviceControl {
+	gap: 5px;
+
+	button {
+		border: 1px solid #ccc;
+		border-radius: 2px;
+		padding: 1px;
+		height: 17px !important;
+		width: 17px !important;
+		display: flex;
+		cursor: pointer;
+
+		.dashicons {
+			font-size: 13px;
+		}
+
+		&.active {
+			border-color: #4527a4;
+
+			.dashicons {
+				color: #4527a4;
+			}
+		}
+	}
+}

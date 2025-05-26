@@ -8,20 +8,20 @@
 
 import { useState } from 'react';
 import { __ } from '@wordpress/i18n';
-import { Button, Dropdown, PanelRow, SelectControl, __experimentalUnitControl as UnitControl, RangeControl, ToggleControl } from '@wordpress/components';
+import { Button, Dropdown, PanelRow, SelectControl, __experimentalUnitControl as UnitControl, ToggleControl, Flex } from '@wordpress/components';
 import { produce } from 'immer';
 
 import './Typography.scss';
 import { Label, BtnGroup } from '../index';
 import { BDevice } from '../Deprecated';
-import { pxUnit, perUnit, emUnit, remUnit } from '../../utils/options';
+import { pxUnit, perUnit, emUnit, remUnit, vwUnit } from '../../utils/options';
 import fontLists from './fontLists';
 import { fontStyles, textTransforms, textDecorations } from './options';
 
 const Typography = props => {
-	const { className = '', label = __('Typography:'), value, onChange, defaults = {}, isFamily = true, maxFontSize = 120 } = props;
+	const { className = '', label = __('Typography:'), value, onChange, defaults = {}, isFamily = true } = props;
 
-	const defaultVal = { fontFamily: 'Default', fontCategory: 'sans-serif', fontWeight: 400, isUploadFont: true, fontSize: { desktop: 15, tablet: 15, mobile: 15 }, fontStyle: 'normal', textTransform: 'none', textDecoration: 'auto', lineHeight: '135%', letterSpace: '0px' }
+	const defaultVal = { fontFamily: 'Default', fontCategory: 'sans-serif', fontWeight: 400, isUploadFont: true, fontSize: { desktop: 15, tablet: 15, mobile: 15 }, fontSizeUnit: 'px', fontStyle: 'normal', textTransform: 'none', textDecoration: 'auto', lineHeight: '135%', letterSpace: '0px' }
 
 	const getDefault = property => defaults?.[property] || defaultVal[property];
 	const setDefault = property => onChange({ ...value, [property]: getDefault(property) });
@@ -93,11 +93,13 @@ const Typography = props => {
 
 
 				{/* Font Size */}
-				<PanelRow className='mt20'>
+				<Flex className='mt20'>
 					<Label className=''>{__('Font Size:')}</Label>
+
 					<BDevice device={device} onChange={val => setDevice(val)} />
-				</PanelRow>
-				<RangeControl value={getValue('fontSize')?.[device] || getValue('fontSize')} onChange={val => setValue('fontSize', val, device)} min={0} max={maxFontSize} step={1} allowReset={true} resetFallbackValue={getDefault('fontSize')?.[device] || getDefault('fontSize')} initialPosition={getDefault('fontSize')?.[device] || getDefault('fontSize')} />
+
+					<UnitControl value={getValue('fontSize')?.[device] || getValue('fontSize')} onChange={val => setValue('fontSize', val, device)} units={[pxUnit(16), remUnit(1), emUnit(1), vwUnit(0.85)]} style={{ width: '100px' }} />
+				</Flex>
 
 				{/* Font Style */}
 				<PanelRow className='mt20'>

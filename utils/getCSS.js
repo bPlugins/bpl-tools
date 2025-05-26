@@ -8,7 +8,7 @@ import triangle from '../Components/Mask/assets/shapes/triangle.svg';
 import { mobileBreakpoint, tabBreakpoint } from './data';
 import { isExist } from './common';
 
-export const isValidCSS = (p, v,i) => isExist(v) ? `${p}: ${v};` : '';
+export const isValidCSS = (p, v, i) => isExist(v) ? `${p}: ${v};` : '';
 
 export const getBackgroundCSS = (bg, isSolid = true, isGradient = true, isImage = true) => {
 	const { type = 'solid', color = '', gradient = '', image = {}, position = '', attachment = '', repeat = '', size = '', overlayColor = '' } = bg || {};
@@ -141,17 +141,29 @@ export const getSpaceCSS = (space) => {
 }
 
 export const getTypoCSS = (selector, typo, isFamily = true) => {
-	const { fontFamily = 'Default', fontCategory = 'sans-serif', fontVariant = 400, fontWeight = 400, isUploadFont = true, fontSize = { desktop: 15, tablet: 15, mobile: 15 }, fontStyle = 'normal', textTransform = 'none', textDecoration = 'auto', lineHeight = '135%', letterSpace = '0px' } = typo || {};
+	const { fontFamily = 'Default', fontCategory = 'sans-serif', fontVariant = 400, fontWeight = 400, isUploadFont = true, fontSize = { desktop: 15, tablet: 15, mobile: 15 }, fontSizeUnit = 'px', fontStyle = 'normal', textTransform = 'none', textDecoration = 'auto', lineHeight = '135%', letterSpace = '0px' } = typo || {};
 
 	const isEmptyFamily = !isFamily || !fontFamily || 'Default' === fontFamily;
 	const desktopFontSize = fontSize?.desktop || fontSize;
 	const tabletFontSize = fontSize?.tablet || desktopFontSize;
 	const mobileFontSize = fontSize?.mobile || tabletFontSize;
 
+	const checkUnit = (size = 15) => {
+		const value = String(size);
+
+		const units = ['px', 'em', 'rem', '%', 'vh', 'vw'];
+
+		if (units.some(unit => value.endsWith(unit))) {
+			return value;
+		}
+
+		return `${value}px`;
+	}
+
 	const styles = `
 		${isEmptyFamily ? '' : `font-family: '${fontFamily}', ${fontCategory};`}
 		${isValidCSS('font-weight', fontWeight)}
-		${isValidCSS('font-size', desktopFontSize ? `${desktopFontSize}px` : '')}
+		${isValidCSS('font-size', checkUnit(desktopFontSize))}
 		${isValidCSS('font-style', fontStyle)}
 		${isValidCSS('text-transform', textTransform)}
 		${isValidCSS('text-decoration', textDecoration)}
@@ -171,12 +183,12 @@ export const getTypoCSS = (selector, typo, isFamily = true) => {
 		}
 		${tabBreakpoint} {
 			${selector}{
-				${isValidCSS('font-size', tabletFontSize ? `${tabletFontSize}px` : '')}
+				${isValidCSS('font-size', checkUnit(tabletFontSize))}
 			}
 		}
 		${mobileBreakpoint} {
 			${selector}{
-				${isValidCSS('font-size', mobileFontSize ? `${mobileFontSize}px` : '')}
+				${isValidCSS('font-size', checkUnit(mobileFontSize))}
 			}
 		}`.replace(/\s+/g, ' ').trim()
 	}
