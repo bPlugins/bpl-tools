@@ -12,6 +12,6 @@ const AboutProModal = ({ isProModalOpen, setIsProModalOpen, link, children }) =>
 
 	<h4 className='text'>{__('To unlock those features! Upgrade to Pro')}</h4>
 
-	<a className='upgradeNow' href={link} target='_blank' rel='noreferrer'>{__('Upgrade Now', 'advanced-post-block')}</a>
+	<a className='upgradeNow' href={link} target='_blank' rel='noreferrer'>{__('Upgrade Now')}</a>
 </Modal>;
 export default AboutProModal;
