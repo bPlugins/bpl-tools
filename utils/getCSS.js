@@ -141,7 +141,7 @@ export const getSpaceCSS = (space) => {
 }
 
 export const getTypoCSS = (selector, typo, isFamily = true) => {
-	const { fontFamily = 'Default', fontCategory = 'sans-serif', fontVariant = 400, fontWeight = 400, isUploadFont = true, fontSize = { desktop: 15, tablet: 15, mobile: 15 }, fontSizeUnit = 'px', fontStyle = 'normal', textTransform = 'none', textDecoration = 'auto', lineHeight = '135%', letterSpace = '0px' } = typo || {};
+	const { fontFamily = 'Default', fontCategory = 'sans-serif', fontVariant = 400, fontWeight, isUploadFont, fontSize = { desktop: null, tablet: null, mobile: null }, fontStyle, textTransform, textDecoration, lineHeight, letterSpace } = typo || {};
 
 	const isEmptyFamily = !isFamily || !fontFamily || 'Default' === fontFamily;
 	const desktopFontSize = fontSize?.desktop || fontSize;

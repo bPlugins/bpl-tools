@@ -21,7 +21,7 @@ import { fontStyles, textTransforms, textDecorations } from './options';
 const Typography = props => {
 	const { className = '', label = __('Typography:'), value, onChange, defaults = {}, isFamily = true } = props;
 
-	const defaultVal = { fontFamily: 'Default', fontCategory: 'sans-serif', fontWeight: 400, isUploadFont: true, fontSize: { desktop: 15, tablet: 15, mobile: 15 }, fontSizeUnit: 'px', fontStyle: 'normal', textTransform: 'none', textDecoration: 'auto', lineHeight: '135%', letterSpace: '0px' }
+	const defaultVal = { fontFamily: 'Default', fontCategory: 'sans-serif', fontWeight: null, isUploadFont: true, fontSize: { desktop: null, tablet: null, mobile: null }, fontStyle: null, textTransform: null, textDecoration: null, lineHeight: null, letterSpace: null }
 
 	const getDefault = property => defaults?.[property] || defaultVal[property];
 	const setDefault = property => onChange({ ...value, [property]: getDefault(property) });
