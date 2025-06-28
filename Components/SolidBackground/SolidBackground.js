@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { Button, Dropdown, GradientPicker } from '@wordpress/components';
 
-import { BButtonGroup, ColorControl } from '../index';
+import { Label, BButtonGroup, ColorControl } from '../index';
 import { useSelect } from '@wordpress/data';
 import "./style.css";
 const SolidBackground = (props) => {
-	const { label = 'Color', value, onChange = () => { },className='' } = props;
+	const { label = 'Color', value, onChange = () => { }, className = '' } = props;
 	const defaultGradients = useSelect('core/block-editor').getSettings().gradients
 	const [tab, setTab] = useState('solid');
 	const id = Math.floor(Math.random() * 9999999);
@@ -21,9 +21,10 @@ const SolidBackground = (props) => {
 			}`}
 		</style>
 		<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', }}>
-			<div>
-				<span>{label}</span>
-			</div>
+			<Label className=''>
+				{label}
+			</Label>
+
 			<Dropdown
 				className='my-container-class-name'
 				contentClassName='my-popover-content-classname'
