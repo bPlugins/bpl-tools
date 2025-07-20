@@ -5,7 +5,7 @@
  * @param {string} [props.label=''] - Label text to display above the button group
  * @param {string} props.value - Currently selected button value
  * @param {Function} props.onChange - Callback function when button selection changes
- *                                   Receives (value, default) as parameters
+ * Receives (value, default) as parameters
  * @param {Object[]} props.options - Array of button options
  * @param {string} props.options[].value - Unique value for the button
  * @param {string} props.options[].label - Display text for the button

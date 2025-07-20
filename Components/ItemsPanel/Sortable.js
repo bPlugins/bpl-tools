@@ -42,7 +42,7 @@ const SortableList = SortableContainer((props) => {
 	const items = attributes ? attributes[arrKey] : value[arrKey];
 
 	return <div className='bPlItemsPanel'>
-		{items.map((__, index) => <SortableItem key={index} index={index} sortIndex={index}	{...props} />)}
+		{items.map((_, index) => <SortableItem key={index} index={index} sortIndex={index}	{...props} />)}
 	</div>
 });
 

@@ -1,4 +1,5 @@
-$primaryColor: #4527a4;
+$primaryColor: #146EF5;
+$primaryColor400: #5495f8;
 
 .bplSelectPure {
 	font-size: 15px;
@@ -67,7 +68,7 @@ $primaryColor: #4527a4;
 		left: 0;
 		top: 100% !important;
 		border-radius: 4px;
-		box-shadow: 0 4px 15px 0 #4527a480;
+		box-shadow: 0 4px 15px 0 $primaryColor400;
 		overflow: hidden;
 		overflow-y: scroll;
 		z-index: 99;
@@ -101,7 +102,7 @@ $primaryColor: #4527a4;
 	}
 
 	.selectOptionSelected {
-		color: #4527a450;
+		color: $primaryColor400;
 		cursor: initial;
 		pointer-events: none;
 	}

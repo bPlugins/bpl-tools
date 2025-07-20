@@ -5,13 +5,14 @@ import hexagon from '../Components/Mask/assets/shapes/hexagon.svg';
 import sketch from '../Components/Mask/assets/shapes/sketch.svg';
 import triangle from '../Components/Mask/assets/shapes/triangle.svg';
 
-import { mobileBreakpoint, tabBreakpoint } from './data';
+import { mobileBreakpoint, primaryColor300, tabBreakpoint } from './data';
 import { isExist } from './common';
+import { gradient as defaultGradient } from './data';
 
-export const isValidCSS = (p, v, i) => isExist(v) ? `${p}: ${v};` : '';
+export const isValidCSS = (p, v) => isExist(v) ? `${p}: ${v};` : '';
 
 export const getBackgroundCSS = (bg, isSolid = true, isGradient = true, isImage = true) => {
-	const { type = 'solid', color = '', gradient = '', image = {}, position = '', attachment = '', repeat = '', size = '', overlayColor = '' } = bg || {};
+	const { type = 'solid', color = '', gradient = defaultGradient, image = {}, position = 'center center', attachment = '', repeat = '', size = '', overlayColor = '' } = bg || {};
 
 	const styles = ('gradient' === type && isGradient) ? isValidCSS('background', gradient) :
 		('image' === type && isImage) ?
@@ -26,7 +27,7 @@ export const getBackgroundCSS = (bg, isSolid = true, isGradient = true, isImage 
 			isSolid && isValidCSS('background', color);
 
 	return styles;
-} // PHP version in Stepped Content
+}
 
 export const getBorderCSS = (border) => {
 	const { width = '0px', style = 'solid', color = '', side = 'all', radius = '0px' } = border || {};
@@ -70,10 +71,10 @@ export const getBorderBoxCSS = (border) => {
 }
 
 export const getColorsCSS = (colors) => {
-	const { color = '#333', bgType = 'solid', bg = '', gradient = 'linear-gradient(135deg, #4527a4, #8344c5)' } = colors || {};
+	const { color = '', bgType = 'solid', bg = '', gradient = defaultGradient } = colors || {};
 
 	const styles = `
-		${color ? `color: ${color};` : ''}
+		${isValidCSS('color', color)}
 		${gradient || bg ? isValidCSS('background', 'gradient' === bgType ? gradient : bg) : ''}
 	`;
 
@@ -81,7 +82,7 @@ export const getColorsCSS = (colors) => {
 }
 
 export const getIconCSS = (icon, isSize = true, isColor = true) => {
-	const { fontSize = 16, colorType = 'solid', color = 'inherit', gradient = 'linear-gradient(135deg, #4527a4, #8344c5)' } = icon || {};
+	const { fontSize = 16, colorType = 'solid', color = 'inherit', gradient = defaultGradient } = icon || {};
 
 	const colorCSS = 'gradient' === colorType ?
 		`color: transparent; background-image: ${gradient}; -webkit-background-clip: text; background-clip: text;` : isValidCSS('color', color);
@@ -98,7 +99,7 @@ export const getMultiShadowCSS = (value, type = 'box') => {
 	let styles = '';
 
 	value?.map((item, index) => {
-		const { hOffset = '0px', vOffset = '0px', blur = '0px', spreed = '0px', color = '#7090b0', isInset = false } = item || {};
+		const { hOffset = '0px', vOffset = '0px', blur = '0px', spreed = '0px', color = '#e7f0fe', isInset = false } = item || {};
 
 		const inset = isInset ? 'inset' : '';
 		const offsetBlur = `${hOffset} ${vOffset} ${blur}`;
@@ -111,11 +112,11 @@ export const getMultiShadowCSS = (value, type = 'box') => {
 }
 
 export const getSeparatorCSS = (separator) => {
-	const { width = '50%', height = '2px', style = 'solid', color = '#bbb' } = separator || {};
+	const { width = '50%', height = '2px', style = 'solid', color = primaryColor300 } = separator || {};
 
 	const styles = `
-		width: ${width};
-		${'0px' === height && '0em' === height && '0rem' === height ? '' : `border-top: ${height} ${style} ${color};`}
+		${isValidCSS('width', width)}
+		${0 === parseInt(height) ? '' : `border-top: ${height} ${style} ${color};`}
 	`;
 
 	return styles;
@@ -141,23 +142,25 @@ export const getSpaceCSS = (space) => {
 }
 
 export const getTypoCSS = (selector, typo, isFamily = true) => {
-	const { fontFamily = 'Default', fontCategory = 'sans-serif', fontVariant = 400, fontWeight, isUploadFont, fontSize = { desktop: null, tablet: null, mobile: null }, fontStyle, textTransform, textDecoration, lineHeight, letterSpace } = typo || {};
+	const { fontFamily = 'Default', fontCategory = 'sans-serif', fontVariant = 400, fontWeight, isUploadFont = true, fontSize = { desktop: null, tablet: null, mobile: null }, fontStyle, textTransform, textDecoration, lineHeight, letterSpace } = typo || {};
 
 	const isEmptyFamily = !isFamily || !fontFamily || 'Default' === fontFamily;
 	const desktopFontSize = fontSize?.desktop || fontSize;
 	const tabletFontSize = fontSize?.tablet || desktopFontSize;
 	const mobileFontSize = fontSize?.mobile || tabletFontSize;
 
-	const checkUnit = (size = 15) => {
+	const checkUnit = (size) => {
 		const value = String(size);
 
 		const units = ['px', 'em', 'rem', '%', 'vh', 'vw'];
 
 		if (units.some(unit => value.endsWith(unit))) {
 			return value;
+		} else if (typeof size === 'number') {
+			return `${value}px`;
 		}
 
-		return `${value}px`;
+		return '';
 	}
 
 	const styles = `

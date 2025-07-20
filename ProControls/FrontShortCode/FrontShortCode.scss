@@ -1,3 +1,5 @@
+$primaryColor: #146EF5;
+
 .bPlFrontShortCode {
 	text-align: center;
 	padding: 0 0 10px 0;
@@ -18,7 +20,7 @@
 			text-align: center;
 			border: none;
 			outline: none;
-			background-color: #4527a4;
+			background-color: $primaryColor;
 			color: #fff;
 			padding: 4px 10px;
 			border-radius: 3px;

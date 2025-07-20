@@ -1,5 +1,4 @@
 import { PanelRow, RangeControl, ToggleControl, __experimentalUnitControl as UnitControl } from '@wordpress/components';
-import { compose } from '@wordpress/compose';
 import { withSelect } from '@wordpress/data';
 
 import CustomPopover from '../CustomPopover/CustomPopover';
@@ -119,13 +118,11 @@ const AdvTransform = ({ value = {}, onChange = () => { }, device }) => {
 		/>
 	</>
 }
-export default compose(
-	withSelect((select) => {
-		const { getDeviceType } = select('core/editor');
+export default withSelect((select) => {
+	const { getDeviceType } = select('core/editor');
 
-		return {
-			device: getDeviceType()?.toLowerCase(),
-		}
-	})
-)(AdvTransform);
+	return {
+		device: getDeviceType()?.toLowerCase(),
+	}
+})(AdvTransform);
 

@@ -5,6 +5,7 @@ export const bgTypes = [
 ];
 
 export const attachments = [
+	{ label: 'Default', value: '' },
 	{ label: 'Initial', value: 'initial' },
 	{ label: 'Scroll', value: 'scroll' },
 	{ label: 'Fixed', value: 'fixed' },
@@ -12,6 +13,7 @@ export const attachments = [
 ];
 
 export const repeats = [
+	{ label: 'Default', value: '' },
 	{ label: 'No Repeat', value: 'no-repeat' },
 	{ label: 'Repeat', value: 'repeat' },
 	{ label: 'Repeat X', value: 'repeat-x' },
@@ -19,6 +21,7 @@ export const repeats = [
 ];
 
 export const sizes = [
+	{ label: 'Default', value: '' },
 	{ label: 'Cover', value: 'cover' },
 	{ label: 'Auto', value: 'auto' },
 	{ label: 'Contain', value: 'contain' },

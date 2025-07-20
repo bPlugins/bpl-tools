@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
+
+import { primaryColor } from '../../utils/data';
 /**
  * BButtonGroup Component
  * 
@@ -96,7 +98,7 @@ const BButtonGroup = (props) => {
 					{options.length ? option.label : `Button ${(i + 1)}`}
 				</button>)}
 
-				<div ref={bgSlideRef} style={{ background: activeBg || '#4527a4', transition: 'left 0.2s ease-in-out', position: 'absolute', top: 0, left: 0, zIndex: 10, borderRadius }} />
+				<div ref={bgSlideRef} style={{ background: activeBg || primaryColor, transition: 'left 0.2s ease-in-out', position: 'absolute', top: 0, left: 0, zIndex: 10, borderRadius }} />
 			</div>
 		</div>
 	</div>

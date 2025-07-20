@@ -33,6 +33,7 @@ export default compose(
 			device: getDeviceType()?.toLowerCase(),
 		};
 	}),
+
 	withDispatch((dispatch) => {
 		return {
 			setDevice(device) {

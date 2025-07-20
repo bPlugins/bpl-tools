@@ -1,5 +1,5 @@
-$primaryColor: #4527a4;
-$secondaryColor: #8344c5;
+$primaryColor: #146EF5;
+$secondaryColor: #FF7A00;
 
 .bplAboutProModal {
 	h3 {
@@ -21,6 +21,7 @@ $secondaryColor: #8344c5;
 		padding: 12px 20px;
 		margin-top: 20px;
 		border-radius: 50px;
+		transition: all .3s ease;
 
 		&:hover,
 		&:focus {

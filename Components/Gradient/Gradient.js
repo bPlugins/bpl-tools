@@ -4,6 +4,7 @@ import { produce } from 'immer';
 
 import './Gradient.scss';
 import { BButtonGroup, ColorControl } from '../index';
+import { primaryColor } from '../../utils/data';
 
 /**
  * BGradient Component
@@ -82,7 +83,7 @@ const Gradient = (props) => {
 		</div>)}
 
 		<div style={{ display: 'flex', justifyContent: 'center', margin: '10px 0', }}>
-			<Button text='Add Color' variant='tertiary' style={{ background: '#4527a4', color: '#fff' }} icon='plus' iconPosition='right' onClick={addColor} />
+			<Button text='Add Color' variant='tertiary' style={{ color: '#fff', background: primaryColor }} icon='plus' iconPosition='right' onClick={addColor} />
 		</div>
 
 		{type === 'radial' ?

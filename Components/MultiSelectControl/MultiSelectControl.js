@@ -36,7 +36,7 @@ const MultiSelectControl = ({ value = [], onChange, limit = 10, options = [] }) 
 
 				return <li key={idx} className='valueItem'>
 					{selectedItem.label}
-					<Dashicon onClick={() => onChange(value.filter((__, i) => i !== idx))} icon='no-alt' />
+					<Dashicon onClick={() => onChange(value.filter((_, i) => i !== idx))} icon='no-alt' />
 				</li>
 			}) : ''}
 

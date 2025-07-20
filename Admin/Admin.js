@@ -1,5 +1,6 @@
-import React from 'react';
 import { HashRouter } from 'react-router-dom';
+
+import App from './App';
 
 /**
  * Admin component for Image Compare Block
@@ -15,16 +16,11 @@ import { HashRouter } from 'react-router-dom';
  * @return {React.Component} Admin component
  */
 
-
-import App from './App';
-
 const Admin = (props) => {
-  // const {title, features=[], version, isPremium, options=[],logo="" } = props;
-  return (
-    <HashRouter>
-      <App {...props} />
-    </HashRouter>
-  );
-}
+	// const {title, features=[], version, isPremium, options=[],logo='' } = props;
 
+	return <HashRouter>
+		<App {...props} />
+	</HashRouter>
+}
 export default Admin;

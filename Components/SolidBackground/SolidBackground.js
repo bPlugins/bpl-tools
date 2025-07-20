@@ -1,12 +1,13 @@
 import { useState } from 'react';
+import { withSelect } from '@wordpress/data';
 import { Button, Dropdown, GradientPicker } from '@wordpress/components';
 
 import { Label, BButtonGroup, ColorControl } from '../index';
-import { useSelect } from '@wordpress/data';
-import "./style.css";
+import './style.css';
+import { gradient } from '../../utils/data';
+
 const SolidBackground = (props) => {
-	const { label = 'Color', value, onChange = () => { }, className = '' } = props;
-	const defaultGradients = useSelect('core/block-editor').getSettings().gradients
+	const { label = 'Color', value, onChange = () => { }, className = '', gradients } = props;
 	const [tab, setTab] = useState('solid');
 	const id = Math.floor(Math.random() * 9999999);
 
@@ -48,9 +49,9 @@ const SolidBackground = (props) => {
 
 						{tab === 'gradient' && <div style={{ marginTop: '10px' }}>
 							<GradientPicker
-								value={value || defaultGradients?.[0]?.gradient}
+								value={value || gradient}
 								onChange={(value) => onChange(value)}
-								gradients={defaultGradients}
+								gradients={gradients}
 							/>
 						</div>}
 
@@ -61,4 +62,10 @@ const SolidBackground = (props) => {
 		</div>
 	</div>
 }
-export default SolidBackground;
+export default withSelect((select) => {
+	const { gradients } = select('core/block-editor').getSettings();
+
+	return {
+		gradients: gradients.length > 12 ? gradients.slice(0, 12) : gradients
+	};
+})(SolidBackground);

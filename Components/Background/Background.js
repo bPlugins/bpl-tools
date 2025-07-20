@@ -6,18 +6,19 @@
  * @props defaults (optional): { type, color, gradient, image, position, attachment, repeat, size, overlayColor } (Object)
  */
 
-import { __experimentalGradientPicker, __experimentalAlignmentMatrixControl as AlignmentMatrixControl, Button, Dropdown, GradientPicker, PanelRow, SelectControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
+import { withSelect } from '@wordpress/data';
+import { __experimentalGradientPicker, __experimentalAlignmentMatrixControl as AlignmentMatrixControl, Button, Dropdown, GradientPicker, PanelRow, SelectControl } from '@wordpress/components';
 const Gradient = __experimentalGradientPicker || GradientPicker;
 
-import { gradients } from '../../utils/options';
 import { BtnGroup, ColorControl, InlineDetailMediaUpload, Label } from '../index';
 import { attachments, bgTypes, repeats, sizes } from './options';
+import { gradient } from '../../utils/data';
 
 const Background = props => {
-	const { className = '', label = __('Background'), value = {}, onChange, defaults = {}, isSolid = true, isGradient = true, isImage = true } = props;
+	const { className = '', label = __('Background'), value = {}, onChange, defaults = {}, isSolid = true, isGradient = true, isImage = true, gradients } = props;
 
-	const defaultVal = { type: 'solid', color: '#000000b3', gradient: 'linear-gradient(135deg, #4527a4, #8344c5)', image: {}, position: 'center center', attachment: 'initial', repeat: 'no-repeat', size: 'cover', overlayColor: '#000000b3' }
+	const defaultVal = { type: 'solid', color: '', gradient, image: {}, position: 'center center', attachment: '', repeat: '', size: '', overlayColor: '' }
 
 	const getDefault = property => defaults?.[property] || defaultVal[property];
 	const setDefault = property => onChange({ ...value, [property]: getDefault(property) });
@@ -88,4 +89,10 @@ const Background = props => {
 		/>
 	</PanelRow>
 }
-export default Background;
+export default withSelect((select) => {
+	const { gradients } = select('core/block-editor').getSettings();
+
+	return {
+		gradients: gradients.length > 12 ? gradients.slice(0, 12) : gradients
+	};
+})(Background);

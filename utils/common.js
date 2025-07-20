@@ -34,9 +34,9 @@ export const escapeHTML = (input = '') => {
 			const sanitizedAttrs = attrs.replace(/([a-z0-9-]+)=["'][^"']*["']/gi, (attrMatch, attrName) => {
 				// Only keep allowed attributes
 				if (allowedAttrs.includes(attrName.toLowerCase())) {
-					return attrMatch;  // Keep allowed attributes as they are
+					return attrMatch; // Keep allowed attributes as they are
 				}
-				return '';  // Remove any other attributes
+				return ''; // Remove any other attributes
 			});
 
 			return `<${tagName}${sanitizedAttrs}>`;
@@ -89,8 +89,8 @@ export const sanitizeHTML = input => {
 				node.removeAttribute(attr.name);
 			}
 
-			// if (attr.name === "href" && attr.value.trim().toLowerCase().startsWith("javascript:")) {
-			// 	node.removeAttribute("href");
+			// if (attr.name === 'href' && attr.value.trim().toLowerCase().startsWith('javascript:')) {
+			// 	node.removeAttribute('href');
 			// }
 
 			if (attr.name === 'href') {

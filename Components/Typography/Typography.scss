@@ -1,3 +1,6 @@
+$primaryColor300: #85b4fa;
+$primaryColor400: #5495f8;
+
 .bPlDropdown {
 	.dashicon {
 		margin-right: 0 !important;
@@ -33,14 +36,14 @@
 				z-index: 99;
 				margin: 0;
 				border-radius: 8px;
-				box-shadow: 0 4px 15px 0 #4527a480;
+				box-shadow: 0 4px 15px 0 $primaryColor400;
 
 				li {
 					margin: 0;
 					padding: 3px 10px;
 
 					&:hover {
-						background-color: #4527a40f;
+						background-color: $primaryColor300;
 						cursor: pointer;
 					}
 				}

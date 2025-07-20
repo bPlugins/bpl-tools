@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 /**
  * @props {string} value - The initial content of the editor
@@ -8,7 +8,7 @@ import React, { useEffect, useState } from 'react';
  * @props {string} height - The height of the editor
  */
 
-const TinyEditor = ({ value = '', onChange, media_button = true, quicktags = true, height = '180px',className }) => {
+const TinyEditor = ({ value = '', onChange, media_button = true, quicktags = true, height = '180px', className }) => {
 	const [randomId, setEditorId] = useState(null);
 
 	// Initialize randomId only once

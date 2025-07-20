@@ -64,16 +64,15 @@ In order to use colors object in `php`. You have to create a function like `getC
 ```php
 function getColorsCSS( $colors ) {
 	extract( $colors );
-	$color = $color ?? '#333';
+	$color = $color ?? '';
 	$bgType = $bgType ?? 'solid';
 	$bg = $bg ?? '';
-	$gradient = $gradient ?? 'linear-gradient(135deg, #4527a4, #8344c5)';
+	$gradient = $gradient ?? 'linear-gradient(135deg, #0040E3, #18D4FD)';
 
-	$background = $bgType === 'gradient' ? $gradient : $bg;
+	$background = ( $bgType === 'gradient' ) ? $gradient : $bg;
 
-	$styles = '';
-	$styles .= $color ? "color: $color;" : '';
-	$styles .= ( $gradient || $bg ) ? "background: $background;" : '';
+	$styles = self::isValidCSS('color', $color);
+	$styles .= ($gradient || $bg) ? self::isValidCSS('background', $background) : '';
 
 	return $styles;
 }

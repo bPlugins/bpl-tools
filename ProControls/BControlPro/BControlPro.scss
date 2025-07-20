@@ -1,9 +1,11 @@
+$primaryColor: #146EF5;
+
 .bplProIdentifier {
 	.labelPro {
 		padding: 0px 5px;
 		border-radius: 5px;
 		color: #fff;
-		background-color: #4527a4;
+		background-color: $primaryColor;
 	}
 
 	.components-input-control__container {

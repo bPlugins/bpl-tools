@@ -29,13 +29,13 @@ const Advanced = ({ advanced, onChange, enabled = defEnabled, id = null, isPremi
 	return <>
 		{isEnabled('dimension') && <Dimension dimension={dimension} onChange={val => onChange(updateData(advanced, val, 'dimension'))} enabled={enabled.dimension} />}
 
-		{(isEnabled("transform") && isPremium) && <Transform transform={transform} onChange={val => onChange(updateData(advanced, val, "transform"))} />}
+		{(isEnabled('transform') && isPremium) && <Transform transform={transform} onChange={val => onChange(updateData(advanced, val, 'transform'))} />}
 
 		{isEnabled('background') && <Background background={background} onChange={val => onChange(updateData(advanced, val, 'background'))} enabled={enabled.background} isPremium={isPremium} />}
 
 		{isEnabled('borderShadow') && (enabled.borderShadow?.includes('border') || enabled.borderShadow?.includes('shadow')) && <BorderShadow borderShadow={borderShadow} onChange={val => onChange(updateData(advanced, val, 'borderShadow'))} enabled={enabled.borderShadow} />}
 
-		{(isEnabled("mask") && isPremium) && <Mask mask={mask} onChange={val => onChange(updateData(advanced, val, "mask"))} />}
+		{(isEnabled('mask') && isPremium) && <Mask mask={mask} onChange={val => onChange(updateData(advanced, val, 'mask'))} />}
 
 		{isEnabled('animation') && <Animation animation={animation} onChange={val => onChange(updateData(advanced, val, 'animation'))} id={id} isPremium={isPremium} />}
 

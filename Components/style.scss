@@ -1,13 +1,35 @@
-$primaryColor: #4527a4;
-$secondaryColor: #8344c5;
+$primaryColor: #146EF5;
+$primaryColor100: #e7f0fe;
+$primaryColor200: #b6d2fc;
+$primaryColor300: #85b4fa;
+$primaryColor400: #5495f8;
+$primaryColor500: #2377f6;
+$primaryColor600: #095edc;
+$primaryColor700: #0749ab;
+$primaryColor800: #05347a;
+$primaryColor900: #031f49;
+$primaryColor1000: #010a18;
+$secondaryColor: #FF7A00;
+$titleColor: #070127;
+$contentColor: #485781;
+
+// Block Icon Color
+svg.bPlBlockIcon {
+	fill: $primaryColor !important;
+}
+
+.block-editor-autocompleters__block.is-selected svg.bPlBlockIcon,
+.block-editor-list-view-leaf.is-selected svg.bPlBlockIcon {
+	fill: #fff !important;
+}
 
 // Block Align
 .edit-post-visual-editor .editor-styles-wrapper {
 	max-width: inherit !important;
 }
 
-.block-editor-block-list__block[data-align="full"],
-.wp-block[data-align="full"] {
+.block-editor-block-list__block[data-align='full'],
+.wp-block[data-align='full'] {
 	max-width: 100% !important;
 }
 
@@ -208,6 +230,7 @@ $secondaryColor: #8344c5;
 			width: 50%;
 			border-bottom: 3px solid #0000;
 
+			&:hover,
 			&:focus {
 				color: $primaryColor;
 				box-shadow: none;
@@ -215,9 +238,9 @@ $secondaryColor: #8344c5;
 		}
 
 		.activeTab {
-			border-bottom: 3px solid $primaryColor;
 			font-weight: bold;
 			background-color: rgba($primaryColor, 0.15);
+			border-bottom: 3px solid $secondaryColor;
 		}
 	}
 
@@ -235,7 +258,7 @@ $secondaryColor: #8344c5;
 		.components-tab-panel__tabs {
 			button {
 				&:hover {
-					background-color: #774cff;
+					background-color: $secondaryColor;
 					color: #fff;
 				}
 
@@ -301,7 +324,7 @@ $secondaryColor: #8344c5;
 		margin-top: -8px;
 		border: none;
 		box-sizing: border-box;
-		box-shadow: 0 3px 15px 0 #4527a480;
+		box-shadow: 0 3px 15px 0 $primaryColor400;
 		border-radius: 5px;
 	}
 
@@ -374,7 +397,7 @@ $secondaryColor: #8344c5;
 		.components-base-control__field {
 			display: flex;
 
-			.components-checkbox-control__input[type="checkbox"] {
+			.components-checkbox-control__input[type='checkbox'] {
 				border-radius: 4px;
 				border-color: $primaryColor;
 
@@ -410,17 +433,17 @@ $secondaryColor: #8344c5;
 
 	.components-form-toggle {
 		.components-form-toggle__track {
-			border: 1px solid $primaryColor;
+			border: 1px solid $primaryColor700;
 		}
 
 		&.is-checked .components-form-toggle__track {
-			background-color: $secondaryColor;
+			background-color: $primaryColor;
 		}
 
 		.components-form-toggle__input:focus+.components-form-toggle__track {
 			box-shadow:
 				0 0 0 2px #fff,
-				0 0 0 3.5px $primaryColor;
+				0 0 0 3.5px $primaryColor800;
 		}
 
 		.components-form-toggle__thumb {
@@ -448,7 +471,7 @@ $secondaryColor: #8344c5;
 
 	.components-range-control__wrapper {
 		.components-range-control__track {
-			background-color: $secondaryColor;
+			background-color: $primaryColor;
 		}
 
 		.css-5p7d2w-ThumbWrapper,
@@ -458,8 +481,12 @@ $secondaryColor: #8344c5;
 			margin-top: 8px;
 
 			>* {
-				background-color: $primaryColor;
-				border: 1px solid $primaryColor;
+				background-color: $secondaryColor;
+				border: 1px solid $secondaryColor;
+
+				&::before {
+					background-color: $secondaryColor;
+				}
 			}
 		}
 
@@ -477,7 +504,7 @@ $secondaryColor: #8344c5;
 			margin-right: 0;
 		}
 
-		.components-radio-control__input[type="radio"] {
+		.components-radio-control__input[type='radio'] {
 			border: 1px solid $primaryColor;
 
 			&:checked {
@@ -654,7 +681,7 @@ $secondaryColor: #8344c5;
 				display: flex;
 			}
 
-			border: 1px solid $secondaryColor;
+			border: 1px solid $primaryColor800;
 			box-shadow: none;
 			padding: 6px 10.5px;
 

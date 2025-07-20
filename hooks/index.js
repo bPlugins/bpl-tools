@@ -1,4 +1,4 @@
-import useDeviceWidth from "./useDeviceWidth";
+import useDeviceWidth from './useDeviceWidth';
 import usePremium from './usePremium';
 import usePremiumInEditor from './usePremiumInEditor';
 import useWPAjax from './useWPAjax';

@@ -19,7 +19,9 @@ Add an attribute in `block.json` file.
 "typography": {
 	"type": "object",
 	"default": {
-		"fontSize": 16
+		"fontSize": {
+			"desktop": "16px"
+		}
 	}
 }
 ```
@@ -60,8 +62,27 @@ __html: `
 In order to use typography object in `php`. You have to create a function like `getTypoCSS`.
 
 ```php
-function generateCss( $value, $cssProperty ) {
-	return !$value ? '' : "$cssProperty: $value;";
+function isValidCSS($property, $value) {
+	if ( empty( $value ) && $value !== '0' && $value !== 0 ) {
+		return '';
+	}
+	return "$property: $value;";
+}
+function checkUnit( $size ) {
+	$value = (string)$size;
+	$units = ['px', 'em', 'rem', '%', 'vh', 'vw'];
+
+	foreach ( $units as $unit ) {
+		if ( substr( $value, -strlen( $unit ) ) === $unit ) {
+			return $value;
+		}
+	}
+
+	if ( is_numeric( $size ) ) {
+		return $value . 'px';
+	}
+
+	return '';
 }
 
 function getTypoCSS( $selector, $typo, $isFamily = true ) {
@@ -69,45 +90,57 @@ function getTypoCSS( $selector, $typo, $isFamily = true ) {
 	$fontFamily = $fontFamily ?? 'Default';
 	$fontCategory = $fontCategory ?? 'sans-serif';
 	$fontVariant = $fontVariant ?? 400;
-	$fontWeight = $fontWeight ?? 400;
+	$fontWeight = $fontWeight ?? '';
 	$isUploadFont = $isUploadFont ?? true;
-	$fontSize = $fontSize ?? [ 'desktop' => 15, 'tablet' => 15, 'mobile' => 15 ];
-	$fontStyle = $fontStyle ?? 'normal';
-	$textTransform = $textTransform ?? 'none';
-	$textDecoration = $textDecoration ?? 'auto';
-	$lineHeight = $lineHeight ?? '135%';
-	$letterSpace = $letterSpace ?? '0px';
+	$fontSize = $fontSize ?? [ 'desktop' => null, 'tablet' => null, 'mobile' => null ];
+	$fontStyle = $fontStyle ?? '';
+	$textTransform = $textTransform ?? '';
+	$textDecoration = $textDecoration ?? '';
+	$lineHeight = $lineHeight ?? '';
+	$letterSpace = $letterSpace ?? '';
 
 	$isEmptyFamily = !$isFamily || !$fontFamily || 'Default' === $fontFamily;
 	$desktopFontSize = $fontSize['desktop'] ?? $fontSize;
 	$tabletFontSize = $fontSize['tablet'] ?? $desktopFontSize;
 	$mobileFontSize = $fontSize['mobile'] ?? $tabletFontSize;
 
-	$styles = ( $isEmptyFamily ? '' : "font-family: $fontFamily, $fontCategory;" )
-		. self::generateCss( $fontWeight, 'font-weight' )
-		. 'font-size: '. $desktopFontSize .'px;'
-		. self::generateCss( $fontStyle, 'font-style' )
-		. self::generateCss( $textTransform, 'text-transform' )
-		. self::generateCss( $textDecoration, 'text-decoration' )
-		. self::generateCss( $lineHeight, 'line-height' )
-		. self::generateCss( $letterSpace, 'letter-spacing' );
+	$tabBreakpoint = '@media only screen and (max-width: 1024px)';
+	$mobileBreakpoint = '@media only screen and (max-width: 640px)';
+
+	$styles = 
+		($isEmptyFamily ? '' : "font-family: '$fontFamily', $fontCategory;") .
+		self::isValidCSS('font-weight', $fontWeight) .
+		self::isValidCSS('font-size', self::checkUnit($desktopFontSize)) .
+		self::isValidCSS('font-style', $fontStyle) .
+		self::isValidCSS('text-transform', $textTransform) .
+		self::isValidCSS('text-decoration', $textDecoration) .
+		self::isValidCSS('line-height', $lineHeight) .
+		self::isValidCSS('letter-spacing', $letterSpace);
 
 	// Google font link
-	$linkQuery = ( !$fontVariant || 400 === $fontVariant ) ? '' : ( '400i' === $fontVariant ? ':ital@1' : ( false !== strpos( $fontVariant, '00i' ) ? ': ital, wght@1, '. str_replace( '00i', '00', $fontVariant ) .' ' : ": wght@$fontVariant " ) );
+	if (!$fontVariant || $fontVariant === 400) {
+		$linkQuery = '';
+	} elseif ($fontVariant === '400i') {
+		$linkQuery = ':ital@1';
+	} elseif (strpos($fontVariant, '00i') !== false) {
+		$linkQuery = ':ital,wght@1,' . str_replace('00i', '00', $fontVariant);
+	} else {
+		$linkQuery = ":wght@$fontVariant";
+	}
 
-	$link = $isEmptyFamily ? '' : 'https://fonts.googleapis.com/css2?family='. str_replace( ' ', '+', $fontFamily ) ."$linkQuery&display=swap";
+	$link = $isEmptyFamily ? '' : 'https://fonts.googleapis.com/css2?family=' . str_replace(' ', '+', $fontFamily) . $linkQuery . '&display=swap';
 
 	return [
-		'googleFontLink' => !$isUploadFont || $isEmptyFamily ? '' : "@import url( $link );",
-		'styles' => preg_replace( '/\s+/', ' ', trim( "
-			$selector{ $styles }
-			@media (max-width: 768px) {
-				$selector{ font-size: $tabletFontSize" . "px; }
+		'googleFontLink' => (!$isUploadFont || $isEmptyFamily) ? '' : "@import url($link);",
+		'styles' => preg_replace('/\s+/', ' ', trim("
+			$selector { $styles }
+			$tabBreakpoint {
+				$selector { " . self::isValidCSS('font-size', self::checkUnit($tabletFontSize)) . " }
 			}
-			@media (max-width: 576px) {
-				$selector{ font-size: $mobileFontSize" . "px; }
+			$mobileBreakpoint {
+				$selector { " . self::isValidCSS('font-size', self::checkUnit($mobileFontSize)) . " }
 			}
-		" ) )
+		"))
 	];
 }
 ```

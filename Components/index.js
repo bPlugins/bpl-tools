@@ -4,7 +4,7 @@ import AdvBackground from './AdvBackground/AdvBackground';
 import Background from './Background/Background';
 import BButtonGroup from './BButtonGroup/BButtonGroup';
 import BoxControl from './BoxControl/BoxControl';
-import BplBlockPreview from "./BplBlockPreview/BplBlockPreview";
+import BplBlockPreview from './BplBlockPreview/BplBlockPreview';
 import BtnGroup from './BtnGroup/BtnGroup';
 import { ColorControl, HexColorControl } from './ColorControl/ColorControl';
 import ColorsControl from './ColorsControl/ColorsControl';

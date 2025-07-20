@@ -10,21 +10,23 @@
 
 import { useState } from 'react';
 import { __ } from '@wordpress/i18n';
+import { withSelect } from '@wordpress/data';
 import { PanelRow, RangeControl, Tooltip, __experimentalGradientPicker, GradientPicker } from '@wordpress/components';
 const Gradient = GradientPicker || __experimentalGradientPicker;
 
 import './IconControl.scss';
 import { BtnGroup, ColorControl, Label } from '../index';
-import { gradients, bgTypes } from '../../utils/options';
+import { bgTypes } from '../../utils/options';
 import icons from './icons';
+import { gradient } from '../../utils/data';
 
 const generateName = cl => cl?.slice(cl?.indexOf(' fa-') + 4);
 const generateTitle = cl => generateName(cl)?.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
 
 const IconControl = props => {
-	const { className = '', label = __('Select Icon:'), value = {}, onChange, defaults = {}, isSize = true, isColor = true } = props;
+	const { className = '', label = __('Select Icon:'), value = {}, onChange, defaults = {}, isSize = true, isColor = true, gradients } = props;
 
-	const defaultVal = { class: '', fontSize: 16, colorType: 'solid', color: 'inherit', gradient: 'linear-gradient(135deg, #4527a4, #8344c5)' }
+	const defaultVal = { class: '', fontSize: 16, colorType: 'solid', color: 'inherit', gradient }
 
 	const getDefault = property => defaults[property] || defaultVal[property];
 
@@ -76,4 +78,10 @@ const IconControl = props => {
 		</>}
 	</>
 };
-export default IconControl;
+export default withSelect((select) => {
+	const { gradients } = select('core/block-editor').getSettings();
+
+	return {
+		gradients: gradients.length > 12 ? gradients.slice(0, 12) : gradients
+	};
+})(IconControl);

@@ -42,13 +42,36 @@ export const sides = [
 ];
 
 export const gradients = [
-	{ name: 'Daisy Bush to Fuchsia Blue', gradient: 'linear-gradient(135deg, #4527a4, #8344c5)', slug: 'daisy-bush-to-fuchsia-blue' },
-	{ name: 'Reddish Orange to Yellowish Orange', gradient: 'linear-gradient(135deg, #fe6601, #fbb040)', slug: 'reddish-orange-to-yellowish-orange' },
-	{ name: 'Tuft Bush to Carnation Pink', gradient: 'linear-gradient(135deg, #fed1c7, #fe8dc6)', slug: 'tuft-bush-to-carnation-pink' },
-	{ name: 'Golden Fizz to Yellow Orange', gradient: 'linear-gradient(135deg, #f9ed32, #fbb040)', slug: 'golden-fizz-to-yellow-orange' },
-	{ name: 'Light Electric Violet to Electric Violet', gradient: 'linear-gradient(135deg, #e100ff, #7f00ff)', slug: 'light-electric-violet-to-electric-violet' },
-	{ name: 'Hot Pink to Violet Red', gradient: 'linear-gradient(135deg, #ff7db8, #ee2a7b)', slug: 'hot-pink-to-violet-red' },
-	{ name: 'Spring Green to Azure Radiance', gradient: 'linear-gradient(135deg, #00ff8f, #00a1ff)', slug: 'spring-green-to-azure-radiance' }
+	{
+		name: 'Rose Pink',
+		slug: 'rose-pink',
+		gradient: 'linear-gradient(135deg, #F64C7F, #FC8CAD)'
+	},
+	{
+		name: 'Sky Blue',
+		slug: 'sky-blue',
+		gradient: 'linear-gradient(135deg, #0040E3, #18D4FD)'
+	},
+	{
+		name: 'Sunset Orange',
+		slug: 'sunset-orange',
+		gradient: 'linear-gradient(135deg, #E47B00, #FFB460)'
+	},
+	{
+		name: 'Emerald Green',
+		slug: 'emerald-green',
+		gradient: 'linear-gradient(135deg, #0B8E41, #34E074)'
+	},
+	{
+		name: 'Lavender Red',
+		slug: 'lavender-red',
+		gradient: 'linear-gradient(135deg, #8237FF, #EF6D7F)'
+	},
+	{
+		name: 'Violet Purple',
+		slug: 'violet-purple',
+		gradient: 'linear-gradient(135deg, #856BFE, #A997F7)'
+	}
 ];
 export const bgTypes = [
 	{ label: 'Solid', value: 'solid' },

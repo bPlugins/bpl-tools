@@ -70,7 +70,7 @@ const BoxControl = (props) => {
 				<div className='sideLabel'>{val}</div>
 			</div>)}
 
-			{!sides && <button className={`bplBoxControlLinkButton ${link ? "activeLink" : ""}`} onClick={() => setLink(!link)}>
+			{!sides && <button className={`bplBoxControlLinkButton ${link ? 'activeLink' : ''}`} onClick={() => setLink(!link)}>
 				{link ? <span className='dashicons dashicons-admin-links'></span> : <span className='dashicons dashicons-editor-unlink'></span>}
 			</button>}
 

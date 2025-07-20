@@ -7,17 +7,19 @@
  */
 
 import { __ } from '@wordpress/i18n';
+import { withSelect } from '@wordpress/data';
 import { Button, PanelRow, Dropdown, __experimentalGradientPicker, GradientPicker, ColorIndicator } from '@wordpress/components';
 const Gradient = __experimentalGradientPicker || GradientPicker;
 
 // Variables
 import { Label, BtnGroup, ColorControl } from '../index';
-import { gradients, bgTypes } from '../../utils/options';
+import { bgTypes } from '../../utils/options';
+import { gradient } from '../../utils/data';
 
 const ColorsControl = props => {
-	const { className = '', label = __('Colors:'), value, onChange, defaults = {} } = props;
+	const { className = '', label = __('Colors:'), value, onChange, defaults = {}, gradients } = props;
 
-	const defaultVal = { color: '#333', bgType: 'solid', bg: '', gradient: 'linear-gradient(135deg, #4527a4, #8344c5)' }
+	const defaultVal = { color: '#333', bgType: 'solid', bg: '', gradient }
 
 	const getDefault = property => defaults?.[property] || defaultVal[property];
 
@@ -42,4 +44,10 @@ const ColorsControl = props => {
 		/>
 	</PanelRow>
 }
-export default ColorsControl;
+export default withSelect((select) => {
+	const { gradients } = select('core/block-editor').getSettings();
+
+	return {
+		gradients: gradients.length > 12 ? gradients.slice(0, 12) : gradients
+	};
+})(ColorsControl);

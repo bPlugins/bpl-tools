@@ -64,23 +64,30 @@ In order to use background object in `php`. You have to create a function like `
 function getBackgroundCSS( $bg, $isSolid = true, $isGradient = true, $isImage = true ) {
 	extract( $bg );
 	$type = $type ?? 'solid';
-	$color = $color ?? '#000000b3';
-	$gradient = $gradient ?? 'linear-gradient(135deg, #4527a4, #8344c5)';
+	$color = $color ?? '';
+	$gradient = $gradient ?? 'linear-gradient(135deg, #0040E3, #18D4FD)';
 	$image = $image ?? [];
 	$position = $position ?? 'center center';
-	$attachment = $attachment ?? 'initial';
-	$repeat = $repeat ?? 'no-repeat';
-	$size = $size ?? 'cover';
-	$overlayColor = $overlayColor ?? '#000000b3';
+	$attachment = $attachment ?? '';
+	$repeat = $repeat ?? '';
+	$size = $size ?? '';
+	$overlayColor = $overlayColor ?? '';
 
-	$gradientCSS = $isGradient ? "background: $gradient;" : '';
-
-	$imgUrl = $image['url'] ?? '';
-	$imageCSS = $isImage ? "background: url($imgUrl); background-color: $overlayColor; background-position: $position; background-size: $size; background-repeat: $repeat; background-attachment: $attachment; background-blend-mode: overlay;" : '';
-
-	$solidCSS = $isSolid ? "background: $color;" : '';
-
-	$styles = 'gradient' === $type ? $gradientCSS : ( 'image' === $type ? $imageCSS : $solidCSS );
+	if ( 'gradient' === $type && $isGradient ) {
+		$styles = self::isValidCSS('background', $gradient);
+	} elseif ( 'image' === $type && $isImage ) {
+		$imgUrl = $image['url'] ?? '';
+		$styles = "background: url($imgUrl);"
+			. self::isValidCSS('background-color', $overlayColor)
+			. self::isValidCSS('background-position', $position)
+			. self::isValidCSS('background-size', $size)
+			. self::isValidCSS('background-repeat', $repeat)
+			. self::isValidCSS('background-attachment', $attachment)
+			. self::isValidCSS('background-repeat', $repeat)
+			. "background-blend-mode: overlay;";
+	} else {
+		$styles = $isSolid ? self::isValidCSS('background', $color) : '';
+	}
 
 	return $styles;
 }

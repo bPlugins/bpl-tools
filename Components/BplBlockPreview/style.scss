@@ -1,10 +1,13 @@
+$primaryColor: #146EF5;
+
 .bPlBlockPreviewWrapper {
-  display: flex;
-  align-items: center;
-  .bPl-previewBtn {
-    &.bPl-activeBtn {
-      background: #4527a4;
-      color:#fff;
-    }
-  }
+	display: flex;
+	align-items: center;
+
+	.bPl-previewBtn {
+		&.bPl-activeBtn {
+			color: #fff;
+			background: $primaryColor;
+		}
+	}
 }
