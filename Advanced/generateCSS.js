@@ -109,7 +109,7 @@ export const animationFn = (animation, id, isBackend) => {
 export const generateCSS = (id, advanced, isBackend = false) => {
 	const { dimension, transform, background, borderShadow, mask, animation, visibility, responsive, css = '' } = advanced || {};
 
-	const selector = isBackend ? `#${id} > div > div` : `#${id} > div`;
+	const selector = isBackend ? `#${id} > div > div:first-child` : `#${id} > div`;
 
 	// !isBackend && animationFn(animation, id);
 	animationFn(animation, id, isBackend);
