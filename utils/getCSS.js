@@ -108,7 +108,7 @@ export const getMultiShadowCSS = (value, type = 'box') => {
 		styles += 'text' === type ? `${offsetBlur} ${color}${isComa}` : `${offsetBlur} ${spreed} ${color} ${inset}${isComa}`;
 	});
 
-	return styles || 'none';
+	return styles || '';
 }
 
 export const getSeparatorCSS = (separator) => {
