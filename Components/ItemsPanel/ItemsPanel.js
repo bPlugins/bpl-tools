@@ -6,7 +6,7 @@ import Sortable from './Sortable';
 
 const ItemsPanel = (properties) => {
 	const { value, onChange, attributes, setAttributes, clientId, arrKey, newItem, ItemSettings, itemLabel = 'Item', activeIndex, setActiveIndex, design = 'single', title = '', premiumProps, ...restProps } = properties;
-	const items = attributes ? attributes[arrKey] : value[arrKey];
+	const items = attributes ? attributes[arrKey] : value;
 	const addNewItem = () => {
 		const newValue = [...items, newItem];
 
