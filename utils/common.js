@@ -107,3 +107,7 @@ export const sanitizeHTML = input => {
 
 	return doc.body.innerHTML;
 }
+
+export const sanitizeInput = (input) => {
+	return input.replace(/[<>]/g, '').replace(/javascript:/gi, '').replace(/on\w+=/gi, '').trim();
+};

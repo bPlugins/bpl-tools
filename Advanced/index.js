@@ -1,16 +1,18 @@
+import { Notice, PanelBody } from '@wordpress/components';
+import Dimension from '../Components/Dimension/Dimension';
 import Mask from '../Components/Mask/Mask';
 import { updateData } from '../utils/functions';
 import Animation from './Animation';
 import Background from './Background';
 import BorderShadow from './BorderShadow';
 import CustomCSS from './CustomCSS';
-import Dimension from './Dimension';
 import Responsive from './Responsive';
 import Transform from './Transform';
 import Visibility from './Visibility';
 
 const defEnabled = {
-	dimension: ['padding', 'margin'],
+	dimension: ['padding', 'margin', 'width'],
+	// dimension: ['padding', 'margin', 'width', 'minWidth', 'maxWidth', 'height', 'minHeight', 'maxHeight'],
 	transform: true,
 	background: ['normal', 'hover', 'overlay'],
 	borderShadow: ['normal', 'hover', 'border', 'shadow'],
@@ -27,6 +29,10 @@ const Advanced = ({ advanced, onChange, enabled = defEnabled, id = null, isPremi
 	const isEnabled = (which) => Object.prototype.hasOwnProperty.call(enabled, which);
 
 	return <>
+		<PanelBody>
+			<Notice status='info' isDismissible={false}>Leve blank if you don&apos;t want to use/apply this option.</Notice>
+		</PanelBody>
+
 		{isEnabled('dimension') && <Dimension dimension={dimension} onChange={val => onChange(updateData(advanced, val, 'dimension'))} enabled={enabled.dimension} />}
 
 		{(isEnabled('transform') && isPremium) && <Transform transform={transform} onChange={val => onChange(updateData(advanced, val, 'transform'))} />}

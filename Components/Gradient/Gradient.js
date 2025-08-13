@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
 import { Button, Dashicon, __experimentalNumberControl as NumberControl, RangeControl, Tooltip } from '@wordpress/components';
 import { produce } from 'immer';
+import { useEffect, useState } from 'react';
 
-import './Gradient.scss';
-import { BButtonGroup, ColorControl } from '../index';
 import { primaryColor } from '../../utils/data';
+import { BButtonGroup, ColorControl } from '../index';
+import './Gradient.scss';
 
 /**
  * BGradient Component
@@ -60,7 +60,7 @@ const Gradient = (props) => {
 	}, [advGradient, value]);
 
 	return <>
-		<BButtonGroup label='Gradient Type' value={type} onChange={(val) => setAdvGradient({ ...advGradient, type: val })} options={[
+		<BButtonGroup className='mt10' label='Gradient Type' value={type} onChange={(val) => setAdvGradient({ ...advGradient, type: val })} options={[
 			{ label: 'Linear', value: 'linear' },
 			{ label: 'Radial', value: 'radial' }
 		]} />

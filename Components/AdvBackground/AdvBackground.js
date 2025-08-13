@@ -37,24 +37,14 @@ const AdvBackground = ({ name = 'Background', value, onChange, isVideo = false, 
 						<Label className=''>Position</Label>
 						<Device />
 					</PanelRow>
-					<SelectControl
-						value={position}
-						options={imgPositionOptions}
-						onChange={val => onChange({ ...value, img: { ...img, [device]: { ...img[device], position: val } } })}
-					/>
+					<SelectControl value={position} options={imgPositionOptions} onChange={val => onChange({ ...value, img: { ...img, [device]: { ...img[device], position: val } } })} />
 
 					{position === 'custom' && <>
 						<PanelRow className='mt15'>
 							<Label className=''>X Position</Label>
 							<Device />
 						</PanelRow>
-						<UnitControl
-							units={unitOptions}
-							value={xPosition}
-							min={-2000}
-							max={2000}
-							onChange={val => onChange({ ...value, img: { ...img, [device]: { ...img[device], xPosition: val } } })}
-						/>
+						<UnitControl units={unitOptions} value={xPosition} min={-2000} max={2000} onChange={val => onChange({ ...value, img: { ...img, [device]: { ...img[device], xPosition: val } } })} />
 
 						<PanelRow className='mt15'>
 							<Label className=''>Y Position</Label>

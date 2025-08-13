@@ -1,0 +1,44 @@
+$primaryColor: #146EF5;
+$prefix: "radioControl";
+
+.#{$prefix}RadioControlPro {
+  width: 100%;
+
+  .bplProIdentifier {
+    // flex: 145px;
+    opacity: 0.75;
+
+    .components-input-control__container {
+      opacity: 0.75;
+    }
+
+    .components-form-toggle {
+      opacity: 0.75;
+    }
+  }
+
+  .bPlLabel {
+    width: 100%;
+  }
+
+  .#{$prefix}labelContainer {
+    display: flex;
+    gap: 5px;
+  }
+
+  .#{$prefix}labelPro {
+    padding: 0px 5px;
+    border-radius: 5px;
+    color: #fff;
+    background-color: $primaryColor;
+  }
+
+  .#{$prefix}bplOpacity75 {
+    opacity: 0.75;
+    white-space: nowrap;
+  }
+
+  .#{$prefix}bplOpacity50 {
+    opacity: 0.50;
+  }
+}

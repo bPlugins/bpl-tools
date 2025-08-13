@@ -181,7 +181,15 @@ export const MediaEditControl = props => {
 
 	return isRender && <ToolbarGroup className='bPlToolbar'>
 		<MediaUploadCheck>
-			<MediaUpload allowedTypes={types} value={isMultiple ? value.map(val => val.id) : value?.id} onSelect={({ id, url, alt, title }) => onChange({ ...value, id, url, alt, title })} render={({ open }) => <ToolbarButton label={label} icon={icon} onClick={open} />} multiple={isMultiple} />
+			<MediaUpload allowedTypes={types} value={isMultiple ? value.map(val => val.id) : value?.id} onSelect={(value) => {
+				if (isMultiple) {
+					const newValue = value.map(val => ({ id: val?.id, url: val?.url, alt: val?.alt, name: val?.name, title: val?.title, sizes: val?.sizes, caption: val?.caption, description: val?.description, link: val?.link }));
+					onChange(newValue);
+				} else {
+					const newValue = { id: value?.id, url: value?.url, alt: value?.alt, name: value?.name, title: value?.title, sizes: value?.sizes, caption: value?.caption, description: value?.description, link: value?.link };
+					onChange(newValue);
+				}
+			}} render={({ open }) => <ToolbarButton label={label} icon={icon} onClick={open} />} multiple={isMultiple} />
 		</MediaUploadCheck>
 	</ToolbarGroup>
 };

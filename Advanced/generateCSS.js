@@ -3,17 +3,21 @@ import { deskBreakpoint, mobileBreakpoint, tabBreakpoint } from '../utils/data';
 import { getAdvBGCSS, getBorderBoxCSS, getBoxCSS, getMaskCSS, getMultiShadowCSS, getOverlayCSS, getTransformCSS, isValidCSS } from '../utils/getCSS';
 
 const dimensionCSS = (dimension) => {
-	const { padding, margin } = dimension || {};
+	const { padding, margin, height, width } = dimension || {};
+
+	const hwCSS = (p, v) => isValidCSS(p, v);
+
+	const heightWidthCSS = (type, obj, d) => hwCSS(type, obj?.[type]?.[d]) + hwCSS(`min-${type}`, obj?.min?.[d]) + hwCSS(`max-${type}`, obj?.max?.[d]);
 
 	const pCSS = (p) => isValidCSS('padding', getBoxCSS(p));
 	const mCSS = (m) => isValidCSS('margin', getBoxCSS(m));
 
 	return {
-		desktop: pCSS(padding?.desktop) + mCSS(margin?.desktop),
+		desktop: pCSS(padding?.desktop) + mCSS(margin?.desktop) + heightWidthCSS('height', height, 'desktop') + heightWidthCSS('width', width, 'desktop'),
 
-		tablet: pCSS(padding?.tablet) + mCSS(margin?.tablet),
+		tablet: pCSS(padding?.tablet) + mCSS(margin?.tablet) + heightWidthCSS('height', height, 'tablet') + heightWidthCSS('width', width, 'tablet'),
 
-		mobile: pCSS(padding?.mobile) + mCSS(margin?.mobile)
+		mobile: pCSS(padding?.mobile) + mCSS(margin?.mobile) + heightWidthCSS('height', height, 'mobile') + heightWidthCSS('width', width, 'mobile')
 	}
 }
 
@@ -23,8 +27,8 @@ const borderShadowCSS = (borderShadow) => {
 	const stateGenerate = (state) => {
 		const { border, radius, shadow } = state || {};
 
-		const radiusCSS = radius ? isValidCSS('border-radius', getBoxCSS(radius)) : '';
-		const shadowCSS = shadow ? `box-shadow: ${getMultiShadowCSS(shadow)};` : '';
+		const radiusCSS = isValidCSS('border-radius', getBoxCSS(radius));
+		const shadowCSS = isValidCSS('box-shadow', getMultiShadowCSS(shadow, 'box'));
 
 		return getBorderBoxCSS(border) + radiusCSS + shadowCSS;
 	}
@@ -83,8 +87,8 @@ export const animationFn = (animation, id, isBackend) => {
 	if (element && animation && animation.type) {
 
 		element.setAttribute('data-aos', animation.type);
-		element.setAttribute('data-aos-duration', animation.duration || 0.4);
-		element.setAttribute('data-aos-delay', animation.delay || 0);
+		element.setAttribute('data-aos-duration', animation.duration * 1000 || 0.4);
+		element.setAttribute('data-aos-delay', animation.delay * 1000 || 0);
 
 		if (!element.classList.contains('aos-init')) {
 			element.classList.add('aos-init');

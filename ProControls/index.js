@@ -2,8 +2,9 @@ import './style.scss';
 
 import AboutProModal from './AboutProModal/AboutProModal';
 import BControlPro from './BControlPro/BControlPro';
-import SelectControlPro from './SelectControlPro/SelectControlPro';
 import BtnGroupPro from './BtnGroupPro/BtnGroupPro';
 import FrontShortCode from './FrontShortCode/FrontShortCode';
+import RadioControlPro from './RadioControlPro/RadioControlPro';
+import SelectControlPro from './SelectControlPro/SelectControlPro';
 
-export { AboutProModal, BControlPro, SelectControlPro, BtnGroupPro, FrontShortCode }
+export { AboutProModal, BControlPro, BtnGroupPro, FrontShortCode, RadioControlPro, SelectControlPro };
