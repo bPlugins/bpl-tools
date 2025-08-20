@@ -6,7 +6,7 @@ import './style.scss';
 import '../lib/fs';
 
 const Pricing = (props) => {
-	const { pricingInfo, } = props;
+	const { pricingInfo } = props;
 	const { cycles, plans } = pricingInfo;
 
 	const [cycle, setCycle] = useState(cycles?.find(c => c.isDefault)?.cycle || cycles[0]?.cycle);

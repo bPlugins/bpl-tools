@@ -2,13 +2,13 @@ import { BlockPreview } from '@wordpress/block-editor';
 import { parse } from '@wordpress/blocks';
 import { Button, Popover } from '@wordpress/components';
 import { useState } from 'react';
-import './style.scss';
+import { withDispatch } from '@wordpress/data';
+import "./style.scss";
 
-const BplBlockPreview = ({ blocks, clientId, value, minHeight = '', minWidth = '200px'
-}) => {
+const BplBlockPreview = ({ blocks, clientId, value, minHeight = '', minWidth = '200px', replaceBlock }) => {
 	const [activeIndex, setActiveIndex] = useState(null);
 
-	const handleButtonClick = (blockValue, idx, content) => {
+	const handleButtonClick = (idx, content) => {
 		setActiveIndex(idx);
 		handleBlockReplace(content)
 	};
@@ -19,7 +19,7 @@ const BplBlockPreview = ({ blocks, clientId, value, minHeight = '', minWidth = '
 
 	const handleBlockReplace = (blockContent) => {
 		const parsedBlock = parse(blockContent);
-		wp.data.dispatch('core/block-editor').replaceBlock(clientId, parsedBlock);
+		replaceBlock(clientId, parsedBlock);
 	};
 
 	return <div className='bPlBlockPreviewWrapper'>
@@ -55,4 +55,8 @@ const BplBlockPreview = ({ blocks, clientId, value, minHeight = '', minWidth = '
 		))}
 	</div>
 };
-export default BplBlockPreview;
+export default withDispatch((dispatch) => {
+	return {
+		replaceBlock: dispatch('core/block-editor').replaceBlock,
+	};
+})(BplBlockPreview);

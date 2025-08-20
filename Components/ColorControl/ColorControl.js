@@ -22,7 +22,7 @@ const ThemeColors = withSelect((select) => {
 })(({ isOpen, onClose, onChange, themeColors }) => {
 	return themeColors.length ? <div className='bPlThemeColors'>
 		{themeColors.map(({ color }) => <div key={color} className='bPlColorButtonContainer'>
-			<button className='bPlColorButton' aria-expanded={isOpen} style={{ backgroundColor: color || 'transparent' }} onClick={() => { onChange(color); onClose; }} />
+			<button type='button' className='bPlColorButton' aria-expanded={isOpen} style={{ backgroundColor: color || 'transparent' }} onClick={() => { onChange(color); onClose; }} />
 		</div>)}
 	</div> : null;
 });
@@ -49,7 +49,7 @@ export const ColorControl = props => {
 			renderToggle={({ isOpen, onToggle }) => {
 				return <>
 					<div className='bPlColorButtonContainer'>
-						<button className='bPlColorButton' onClick={onToggle} aria-expanded={isOpen} style={{ backgroundColor: value || 'transparent' }} />
+						<button type='button' className='bPlColorButton' onClick={onToggle} aria-expanded={isOpen} style={{ backgroundColor: value || 'transparent' }} />
 					</div>
 
 					{defaultColor && defaultColor != value && <Button className='bPlResetVal' icon='image-rotate' label={__('Reset')} onClick={() => onChange(defaultColor)} />}
@@ -75,7 +75,7 @@ export const HexColorControl = props => {
 		<Dropdown className='bPlDropdownContainer bPlColor' contentClassName='bPlDropdownPopover' popoverProps={{ placement: 'top-end' }}
 			renderToggle={({ isOpen, onToggle }) => <>
 				<div className='bPlColorButtonContainer'>
-					<button className='bPlColorButton' onClick={onToggle} aria-expanded={isOpen} style={{ backgroundColor: value || 'transparent' }} />
+					<button type='button' className='bPlColorButton' onClick={onToggle} aria-expanded={isOpen} style={{ backgroundColor: value || 'transparent' }} />
 				</div>
 
 				{defaultColor && defaultColor != value && <Button className='bPlResetVal' icon='image-rotate' label={__('Reset')} onClick={() => onChange(defaultColor)} />}
