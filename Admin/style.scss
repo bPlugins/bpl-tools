@@ -1,0 +1,53 @@
+$primaryColor: #146EF5;
+$secondaryColor: #FF7A00;
+$titleColor: #070127;
+$contentColor: #485781;
+
+.bPlDashboard {
+	width: calc(100% + 20px);
+	max-width: calc(100% + 20px);
+	min-height: 100vh;
+	background:
+		linear-gradient(180deg, #faa72b22 0%, #2b69fa00 100%),
+		radial-gradient(circle at 10% 60%, #56EBFF3f, transparent 25%),
+		radial-gradient(circle at 90% 70%, #F7117A1f, transparent 20%),
+		repeating-linear-gradient(to right, #48578111 0px, #48578111 1px, transparent 1px, transparent 50px),
+		repeating-linear-gradient(to bottom, #48578111 0px, #48578111 1px, transparent 1px, transparent 50px);
+	margin: 0 -20px 0 -20px;
+
+	* {
+		padding: 0;
+		margin: 0;
+		box-sizing: border-box;
+		line-height: 1.5;
+	}
+
+	.bPlDashboardContainer {
+		width: 100%;
+		max-width: 1320px;
+		padding: 0 15px;
+		margin: 0 auto;
+	}
+
+	.bPlDashboardMain {
+		.bPlDashboardContainer {
+			display: flex;
+			flex-direction: column;
+			gap: 35px;
+			padding: 20px 0;
+		}
+	}
+
+	.bPlDashboardBox {
+		background-color: #fff;
+		border: 1px solid rgba($contentColor, 50%);
+		border-radius: 20px 20px 20px 20px;
+		box-shadow: 0px 0px 0px 0px rgba(20, 10, 245, 0.2);
+	}
+
+	.bPlDashboardButtons {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+	}
+}

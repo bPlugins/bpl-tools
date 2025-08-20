@@ -1,0 +1,57 @@
+$primaryColor: #146EF5;
+$secondaryColor: #FF7A00;
+$titleColor: #070127;
+$contentColor: #485781;
+
+.bPlDashboardChangelog {
+	background: #fff;
+	padding: 25px 30px !important;
+
+	.toggleArea {
+		h2 {
+			font-size: 22px;
+			color: $titleColor;
+			font-weight: 500;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			cursor: pointer;
+
+			svg {
+				width: 1.2em;
+				height: 1.2em;
+				fill: currentColor;
+			}
+		}
+	}
+
+	.changelogsWrap {
+		overflow: hidden;
+		transition: all .3s ease-in-out;
+	}
+
+	.changelogs {
+		display: flex;
+		flex-direction: column;
+		gap: 25px;
+		padding-top: 30px;
+
+		h4 {
+			font-size: 14px;
+			font-weight: bold;
+			color: #fff;
+			background-color: $titleColor;
+			display: inline-block;
+			padding: 4px 12px;
+			border-radius: 5px;
+			margin-bottom: 10px;
+		}
+
+		.list {
+			color: $contentColor;
+			font-size: 15px;
+			font-weight: 400;
+			list-style: inside;
+		}
+	}
+}

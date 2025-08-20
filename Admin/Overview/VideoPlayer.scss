@@ -1,0 +1,385 @@
+// Color Variables
+$primary: #ff6b6b;
+$white: #fff;
+$black: #000;
+$shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+
+.bPlVideoPlayer {
+	position: relative;
+	max-width: 100%;
+	background: $black;
+	border-radius: 12px;
+	overflow: hidden;
+	box-shadow: $shadow;
+
+	&:hover {
+		.center-play-btn {
+			&.pause {
+				opacity: 1;
+			}
+		}
+	}
+
+	.bPlVideoPlayerYoutube {
+		position: relative;
+		padding-bottom: 56.25%;
+		height: 0;
+		overflow: hidden;
+		max-width: 100%;
+
+		iframe,
+		object,
+		embed {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+		}
+	}
+
+	.video-element {
+		width: 100%;
+		height: auto;
+		display: block;
+		max-height: 70vh;
+	}
+
+	.preview-video {
+		display: none;
+	}
+
+	.center-play-btn {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		width: 60px;
+		height: 60px;
+		background: #146ef5;
+		border-radius: 50%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		cursor: pointer;
+		transition: all 0.3s ease;
+		z-index: 10;
+
+		&.pause {
+			opacity: 0;
+		}
+
+		&:hover {
+			transform: translate(-50%, -50%) scale(1.1);
+		}
+
+		.play-icon {
+			width: 32px;
+			height: 32px;
+			color: #dddddd;
+			display: grid;
+			place-items: center;
+
+			// margin-left: 4px;
+			svg.video-player-pause-icon {
+				fill: #dddddd;
+				width: 18px;
+			}
+		}
+	}
+
+	.loading-spinner {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		display: flex;
+		z-index: 5;
+
+		.spinner {
+			width: 40px;
+			height: 40px;
+			border: 4px solid rgba($white, 0.3);
+			border-top: 4px solid $white;
+			border-radius: 50%;
+			animation: bPlDashboardSpin 1s linear infinite;
+		}
+	}
+
+	.video-controls {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+		padding: 20px;
+		display: flex;
+		align-items: center;
+		gap: 15px;
+		opacity: 0;
+		transition: opacity 0.3s ease;
+
+		&.visible {
+			opacity: 1;
+		}
+	}
+
+	&:hover .video-controls {
+		opacity: 1;
+	}
+
+	.control-btn {
+		background: none;
+		border: none;
+		color: $white;
+		cursor: pointer;
+		padding: 8px;
+		border-radius: 4px;
+		transition: background-color 0.2s ease;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		&:hover {
+			background: rgba($white, 0.2);
+		}
+
+		svg {
+			width: 20px;
+			height: 20px;
+		}
+	}
+
+	.time-display {
+		color: $white;
+		font-size: 14px;
+		display: flex;
+		align-items: center;
+		gap: 5px;
+		min-width: 80px;
+
+		.separator {
+			opacity: 0.7;
+		}
+	}
+
+	.progress-container {
+		flex: 1;
+		margin: 0 10px;
+		position: relative;
+
+		.progress-bar {
+			position: relative;
+			height: 6px;
+			background: rgba($white, 0.3);
+			border-radius: 3px;
+			cursor: pointer;
+			transition: height 0.2s ease;
+
+			&:hover {
+				height: 8px;
+			}
+
+			.progress-filled {
+				height: 100%;
+				background: $primary;
+				border-radius: 3px;
+				// transition: width 0.1s ease;
+			}
+
+			.progress-handle {
+				position: absolute;
+				top: 50%;
+				width: 14px;
+				height: 14px;
+				background: $primary;
+				border-radius: 50%;
+				transform: translate(-50%, -50%);
+				opacity: 0;
+				transition: opacity 0.2s ease;
+			}
+
+			&:hover .progress-handle {
+				opacity: 1;
+			}
+		}
+	}
+
+	.progress-preview {
+		position: absolute;
+		bottom: 25px;
+		transform: translateX(-50%);
+		z-index: 20;
+		pointer-events: none;
+		width: 120px;
+
+		.preview-thumbnail {
+			position: relative;
+			background: rgba(0, 0, 0, 0.9);
+			border-radius: 8px;
+			overflow: hidden;
+			box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+			border: 2px solid rgba($white, 0.2);
+
+			&::after {
+				content: "";
+				position: absolute;
+				bottom: -8px;
+				left: 50%;
+				transform: translateX(-50%);
+				width: 0;
+				height: 0;
+				border-left: 8px solid transparent;
+				border-right: 8px solid transparent;
+				border-top: 8px solid rgba(0, 0, 0, 0.9);
+			}
+		}
+
+		.preview-video-display {
+			width: 120px;
+			height: 68px;
+			object-fit: cover;
+			display: block;
+			background: $black;
+		}
+
+		.preview-time {
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			background: rgba(0, 0, 0, 0.8);
+			color: $white;
+			font-size: 11px;
+			padding: 4px 8px;
+			text-align: center;
+			font-weight: 500;
+		}
+	}
+
+	.volume-container {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+
+		.volume-slider {
+			width: 80px;
+			// opacity: 0;
+			transition: opacity 0.2s ease;
+		}
+
+		&:hover .volume-slider {
+			// opacity: 1;
+		}
+
+		.volume-bar {
+			position: relative;
+			height: 4px;
+			background: rgba($white, 0.3);
+			border-radius: 2px;
+			cursor: pointer;
+
+			.volume-filled {
+				height: 100%;
+				background: $white;
+				border-radius: 2px;
+				transition: width 0.1s ease;
+			}
+
+			.volume-handle {
+				position: absolute;
+				top: 50%;
+				width: 12px;
+				height: 12px;
+				background: $white;
+				border-radius: 50%;
+				transform: translate(-50%, -50%);
+				transition: left 0.1s ease;
+			}
+		}
+	}
+
+	// Responsive Design
+	@media (max-width: 768px) {
+		.center-play-btn {
+			width: 60px;
+			height: 60px;
+
+			.play-icon {
+				width: 24px;
+				height: 24px;
+			}
+		}
+
+		.video-controls {
+			padding: 15px 10px;
+			gap: 10px;
+		}
+
+		.volume-container {
+			display: none;
+		}
+
+		.time-display {
+			font-size: 12px;
+			min-width: 70px;
+		}
+
+		.preview-video-display {
+			width: 100px;
+			height: 56px;
+		}
+
+		.preview-time {
+			font-size: 10px;
+			padding: 3px 6px;
+		}
+	}
+
+	@media (max-width: 480px) {
+		.video-controls {
+			padding: 10px;
+			gap: 8px;
+		}
+
+		.control-btn svg {
+			width: 18px;
+			height: 18px;
+		}
+
+		.progress-container {
+			margin: 0 5px;
+		}
+
+		.preview-video-display {
+			width: 80px;
+			height: 45px;
+		}
+
+		.progress-preview {
+			bottom: 20px;
+		}
+	}
+
+	// Fullscreen Styles
+	&:fullscreen {
+		width: 100vw;
+		height: 100vh;
+		border-radius: 0;
+
+		.video-element {
+			max-height: 100vh;
+			height: 100vh;
+			object-fit: contain;
+		}
+
+		.preview-video-display {
+			width: 160px;
+			height: 90px;
+		}
+
+		.progress-preview {
+			bottom: 35px;
+		}
+	}
+}

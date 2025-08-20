@@ -12,6 +12,7 @@
 		"dompurify": "^3.2.5",
 		"immer": "^10.1.1",
 		"react-ace": "^14.0.1",
+		"react-router-dom": "^7.8.0",
 		"react-sortable-hoc": "^2.0.0",
 		"select-pure": "^0.6.2",
 		"slick-carousel": "^1.8.1"

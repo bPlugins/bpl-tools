@@ -1,0 +1,153 @@
+$primaryColor: #146EF5;
+$secondaryColor: #FF7A00;
+$titleColor: #070127;
+
+.bPlButton {
+	font-size: 16px;
+	font-weight: 500;
+	text-decoration: none;
+	display: inline-flex;
+	align-items: center;
+	gap: 10px;
+	position: relative;
+	padding: 12px 28px;
+	border: none;
+	border-radius: .5em;
+	outline: 0;
+	z-index: 0;
+	cursor: pointer;
+	overflow: hidden;
+	transition: all .5s ease-in-out;
+
+	svg {
+		fill: currentColor;
+		width: 1.2em;
+		height: 1.2em;
+	}
+
+	&:hover,
+	&:focus {
+		outline: 0;
+		box-shadow: none;
+	}
+
+	&.variant-primary,
+	&.variant-secondary {
+		color: #fff;
+
+		&::before {
+			background: $titleColor;
+			content: '';
+			width: 0;
+			height: 100%;
+			position: absolute;
+			left: 0;
+			top: 0;
+			z-index: -1;
+			transition: all .5s ease-in-out;
+		}
+
+		&:hover {
+			&::before {
+				width: 100%;
+			}
+		}
+
+		&.white {
+			&::before {
+				background: #fff;
+			}
+		}
+	}
+
+	&.variant-primary {
+		background: $primaryColor;
+
+		&.white {
+			&:hover {
+				color: $primaryColor ;
+			}
+		}
+
+		&.outline {
+			color: $primaryColor;
+			background: transparent;
+			border: 2px solid $primaryColor;
+
+			&::before {
+				background: $primaryColor;
+			}
+
+			&:hover {
+				color: #fff;
+			}
+
+			&.white {
+				color: #fff;
+				border: 2px solid #fff;
+
+				&::before {
+					background: #fff;
+				}
+
+				&:hover {
+					color: $primaryColor;
+				}
+			}
+		}
+	}
+
+	&.variant-secondary {
+		background: $secondaryColor;
+
+		&.white {
+			&:hover {
+				color: $secondaryColor ;
+			}
+		}
+
+		&.outline {
+			color: $secondaryColor;
+			background: transparent;
+			border: 2px solid $secondaryColor;
+
+			&::before {
+				background: $secondaryColor;
+			}
+
+			&:hover {
+				color: #fff;
+			}
+		}
+	}
+
+	// &.variant-outline {
+	// 	color: $primaryColor;
+	// 	background: transparent;
+	// 	border: 2px solid $primaryColor;
+	// }
+
+	// &.variant-outline-fill {
+	// 	color: $primaryColor;
+	// 	background: transparent;
+	// 	border: 2px solid $primaryColor;
+
+	// 	&:hover {
+	// 		color: white;
+	// 		background: $primaryColor;
+	// 	}
+	// }
+
+	// color: $primaryColor;
+	// background: transparent;
+
+	&.size-medium {
+		font-size: 14px;
+		padding: 8px 18px;
+	}
+
+	&.size-small {
+		font-size: 12px;
+		padding: 6px 14px;
+	}
+}

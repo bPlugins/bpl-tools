@@ -1,17 +1,17 @@
+import { __ } from '@wordpress/i18n';
 import { withSelect } from '@wordpress/data';
 import { Flex, PanelBody, PanelRow, __experimentalUnitControl as UnitControl } from '@wordpress/components';
 
 import { BoxControl, Device, Label } from '../index'
 import { updateData } from '../../utils/functions';
 
-const Dimension = ({ dimension, onChange, enabled, device }) => {
+const Dimension = ({ dimension, onChange, title = __('Dimension'), enabled, device }) => {
 	const { padding = {}, margin = {}, width = {}, height = {} } = dimension || {};
 
 	const isEnabled = (which) => enabled.includes(which);
 	// const isAlignShow = enabled.includes('width') || enabled.includes('minWidth') || enabled.includes('maxWidth');
 
-	return <PanelBody className='bPlPanelBody' title='Dimension'>
-
+	return <PanelBody className='bPlPanelBody' title={title}>
 		{isEnabled('width') && <Flex className='mb5' gap='20px'>
 			<Flex className='flex1' gap='2px'> <Label className=''>Width</Label> <Device /> </Flex>
 			<UnitControl className='flex1' label="" labelPosition='edge' value={width?.width?.[device]} onChange={val => onChange(updateData(dimension, val, 'width', 'width', device))} />
