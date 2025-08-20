@@ -1,4 +1,4 @@
-import { checkIcon, minusIcon } from '../../utils/icons'
+import { checkIcon, closeIcon } from '../../utils/icons'
 
 import './style.scss';
 
@@ -28,8 +28,8 @@ const FeatureCompare = (props) => {
 
 						{plans?.map(plan => {
 							const { id } = plan;
-							return <td key={id}>
-								{featurePlans?.includes(id) ? checkIcon : minusIcon}
+							return <td key={id} className={`icon ${featurePlans?.includes(id) ? 'check' : 'cross'}`}>
+								{featurePlans?.includes(id) ? checkIcon : closeIcon}
 							</td>
 						})}
 					</tr>

@@ -59,19 +59,25 @@ $contentColor: #485781;
 				>* {
 					display: inline-block;
 				}
-			}
 
-			svg {
-				width: 28px;
-				height: 28px;
-			}
+				svg {
+					fill: currentColor;
+					width: 28px;
+					height: 28px;
+				}
 
-			.check {
-				fill: #00c951;
-			}
+				&.icon.check {
+					color: #00c951;
+				}
 
-			.minus {
-				fill: $contentColor;
+				&.icon.cross {
+					color: #ff6c64;
+
+					svg {
+						width: 26px;
+						height: 26px;
+					}
+				}
 			}
 		}
 	}

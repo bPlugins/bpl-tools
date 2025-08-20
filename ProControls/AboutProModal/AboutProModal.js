@@ -2,6 +2,7 @@ import { Modal } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
 import './AboutProModal.scss';
+import { Button } from '../../Components';
 
 const AboutProModal = ({ isProModalOpen, setIsProModalOpen, link, children }) => isProModalOpen && <Modal className='bplAboutProModal' title={__('Upgrade to PRO')} onRequestClose={() => setIsProModalOpen(false)}>
     <h3>{__('Explore new features in Pro')}</h3>
@@ -12,6 +13,7 @@ const AboutProModal = ({ isProModalOpen, setIsProModalOpen, link, children }) =>
 
     <h4 className='text'>{__('To unlock those features! Upgrade to Pro')}</h4>
 
-    <a className='upgradeNow' href={link} target='_blank' rel='noreferrer'>{__('Upgrade Now')}</a>
+    <br />
+    <Button href={link} target='_blank'>{__('Upgrade Now')}</Button>
 </Modal>;
 export default AboutProModal;
