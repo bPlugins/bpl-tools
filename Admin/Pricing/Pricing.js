@@ -6,7 +6,7 @@ import './style.scss';
 import '../lib/fs';
 
 const Pricing = (props) => {
-	const { pricingInfo } = props;
+	const { pricingInfo, children } = props;
 	const { cycles, plans } = pricingInfo;
 
 	const [cycle, setCycle] = useState(cycles?.find(c => c.isDefault)?.cycle || cycles[0]?.cycle);
@@ -21,6 +21,7 @@ const Pricing = (props) => {
 	};
 
 	return <div className='bPlDashboardPricing bPlDashboardBox'>
+		{children}
 		{cycles?.length > 1 && <div className='cycles'>
 			{cycles.map(c => {
 				return <button key={c.cycle} className={c.cycle === cycle ? 'active' : ''} onClick={() => setCycle(c.cycle)}>
