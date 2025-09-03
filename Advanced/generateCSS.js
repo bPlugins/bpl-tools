@@ -42,7 +42,7 @@ const visibilityCSS = (visibility) => {
 	const { zIndex, overflow } = visibility || {};
 
 	const overflowCSS = overflow ? `overflow: ${overflow};` : '';
-	const zIndexCSS = device => zIndex?.[device] ? `z-index: ${zIndex[device]};` : '';
+	const zIndexCSS = device => `${isValidCSS('z-index', zIndex[device])} ${isValidCSS('position', isExist(zIndex[device]) ? 'relative' : '')}`;
 
 	return {
 		desktop: zIndexCSS('desktop') + overflowCSS,

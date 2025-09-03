@@ -30,7 +30,7 @@ const Advanced = ({ advanced, onChange, enabled = defEnabled, id = null, isPremi
 
 	return <>
 		<PanelBody>
-			<Notice status='info' isDismissible={false}>Leve blank if you don&apos;t want to use/apply this option.</Notice>
+			<Notice status='info' isDismissible={false}>Leave blank if you don&apos;t want to use/apply this option.</Notice>
 		</PanelBody>
 
 		{isEnabled('dimension') && <Dimension dimension={dimension} onChange={val => onChange(updateData(advanced, val, 'dimension'))} enabled={enabled.dimension} />}

@@ -25,13 +25,13 @@ export const InlineMediaUpload = props => {
 		<PanelRow className={`bPlInlineMediaUpload`}>
 			<TextControl value={value} onChange={val => onChange(val)} placeholder={placeholder} />
 
-			<MediaUploadCheck>
-				<MediaUpload
-					allowedTypes={types}
-					onSelect={val => onChange(val.url)}
-					render={({ open }) => <Button className='button button-primary' onClick={open} icon={'upload'}></Button>}
-				/>
-			</MediaUploadCheck>
+			{/* <MediaUploadCheck> */}
+			<MediaUpload
+				allowedTypes={types}
+				onSelect={val => onChange(val.url)}
+				render={({ open }) => <Button className='button button-primary' onClick={open} icon={'upload'}></Button>}
+			/>
+			{/* </MediaUploadCheck> */}
 		</PanelRow>
 	</div>
 }

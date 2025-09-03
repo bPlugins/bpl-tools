@@ -5,7 +5,7 @@ $contentColor: #485781;
 
 .bPlDashboardChangelog {
 	background: #fff;
-	padding: 25px 30px !important;
+	padding: 10px 30px !important;
 
 	.toggleArea {
 		h2 {
@@ -15,6 +15,7 @@ $contentColor: #485781;
 			display: flex;
 			align-items: center;
 			justify-content: space-between;
+			padding: 15px 0;
 			cursor: pointer;
 
 			svg {
@@ -34,7 +35,7 @@ $contentColor: #485781;
 		display: flex;
 		flex-direction: column;
 		gap: 25px;
-		padding-top: 30px;
+		padding: 15px 0;
 
 		h4 {
 			font-size: 14px;

@@ -8,10 +8,10 @@
  * @returns {JSX.Element} React component
  */
 
-import { PanelBody, RangeControl, SelectControl, ToggleControl } from '@wordpress/components';
+import { PanelBody, RangeControl, SelectControl, ToggleControl, __experimentalNumberControl as NumberControl } from '@wordpress/components';
 import { produce } from 'immer';
 
-import { AdvBackground } from '../index';
+import { AdvBackground, BoxControl } from '../index';
 
 const blendOptions = [
 	{ label: 'Normal', value: 'normal' },
@@ -26,9 +26,10 @@ const blendOptions = [
 	{ label: 'Luminosity', value: 'luminosity' },
 ];
 
+const positionDef = { top: 0, right: 0, bottom: 0, left: 0 }
 const OverlayControl = (props) => {
 	const { value, onChange } = props;
-	const { isEnabled = false, colors = {}, opacity = 1, blend = 'normal', filter = '', blur = 0, brightness = 100, contrast = 100, saturation = 100, hue = 0, } = value || {};
+	const { isEnabled = false, colors = {}, opacity = 1, blend = 'normal', filter = '', blur = 0, brightness = 100, contrast = 100, saturation = 100, hue = 0, position = positionDef, zIndex = -1 } = value || {};
 
 	const updateOverlay = (property, val, childP = null) => {
 		const newBG = produce(value || {}, (draft) => {
@@ -45,7 +46,9 @@ const OverlayControl = (props) => {
 		<ToggleControl label='Enable' checked={isEnabled} value={isEnabled} onChange={(val) => updateOverlay('isEnabled', val)} />
 
 		{isEnabled && <>
-			<AdvBackground name='Overlay Type' value={colors} onChange={(val) => updateOverlay('colors', val)} />
+			<AdvBackground name='Overlay' value={colors} onChange={(val) => updateOverlay('colors', val)} />
+
+			<BoxControl label='Overlay Position' values={position} resetValues={positionDef} onChange={(val) => updateOverlay('position', val)} />
 
 			<RangeControl className='mt20' label='Opacity' value={opacity} onChange={(val) => updateOverlay('opacity', val)} min={0} max={1} step={0.01} />
 
@@ -68,6 +71,7 @@ const OverlayControl = (props) => {
 
 				<RangeControl className='mt15' label='Hue' value={hue} onChange={(val) => updateOverlay('hue', val)} min={0} max={360} />
 			</>}
+			<NumberControl label="Z Index" labelPosition='edge' value={zIndex} onChange={val => updateOverlay('zIndex', val)} />
 		</>}
 	</PanelBody>
 };

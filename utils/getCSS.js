@@ -5,9 +5,8 @@ import hexagon from '../Components/Mask/assets/shapes/hexagon.svg';
 import sketch from '../Components/Mask/assets/shapes/sketch.svg';
 import triangle from '../Components/Mask/assets/shapes/triangle.svg';
 
-import { mobileBreakpoint, primaryColor300, tabBreakpoint } from './data';
 import { isExist } from './common';
-import { gradient as defaultGradient } from './data';
+import { gradient as defaultGradient, mobileBreakpoint, primaryColor300, tabBreakpoint } from './data';
 
 export const isValidCSS = (p, v) => isExist(v) ? `${p}: ${v};` : '';
 
@@ -30,19 +29,17 @@ export const getBackgroundCSS = (bg, isSolid = true, isGradient = true, isImage 
 }
 
 export const getBorderCSS = (border) => {
-	const { width = '0px', style = 'solid', color = '', side = 'all', radius = '0px' } = border || {};
+	const { width = '', style = 'solid', color = '', side = 'all', radius = '' } = border || {};
 
 	const borderSideCheck = s => {
 		const bSide = side?.toLowerCase();
 		return bSide?.includes('all') || bSide?.includes(s);
 	}
-
-	const noWidth = width === '0px' || !width;
 	const borderCSS = `${width} ${style} ${color}`;
 
 	const styles = `
-		${noWidth ? '' : ['top', 'right', 'bottom', 'left'].map(side => borderSideCheck(side) ? `border-${side}: ${borderCSS};` : '').join('')}
-		${!radius ? '' : `border-radius: ${radius};`}
+		${!width || parseInt(width) === 0 ? '' : ['top', 'right', 'bottom', 'left'].map(side => borderSideCheck(side) ? `border-${side}: ${borderCSS};` : '').join('')}
+		${isValidCSS('border-radius', radius)}
 	`;
 
 	return styles;
@@ -217,14 +214,13 @@ export const getBoxCSS = (val) => {
 
 // Murad Wahid
 export const getGradientCSS = (gradient) => {
-	const { type, radialType, colors, centerPositions, angel } = gradient || {};
-
-	if (gradient) {
+	const { type = 'linear', radialType = 'ellipse', colors = [], centerPositions = { x: 0, y: 0 }, angel = 0 } = gradient || {};
+	if (isExist(gradient)) {
 		const gradientColors = colors?.map(({ color, position }) => `${color} ${position}%`);
 		const liner = `linear-gradient(${angel}deg, ${gradientColors})`;
 		const radial = `radial-gradient(${radialType} at ${centerPositions?.x}% ${centerPositions?.y}%,${gradientColors})`;
 
-		return isValidCSS('background', type === 'linear' ? liner : radial);
+		return isValidCSS('background', type === 'radial' ? radial : liner);
 	}
 	return '';
 }
@@ -322,7 +318,7 @@ export const getAdvBGCSS = (background, selector, isHover = false) => {
 }
 
 export const getOverlayCSS = (overlay, selector, isHover = false) => {
-	const { isEnabled, colors, opacity = 1, blend, filter = '', blur = 0, brightness = 100, contrast = 100, saturation = 100, hue = 0 } = overlay || {};
+	const { isEnabled, colors, opacity = 1, blend, filter = '', blur = 0, brightness = 100, contrast = 100, saturation = 100, hue = 0, position = { top: 0, right: 0, bottom: 0, left: 0 }, zIndex = -1 } = overlay || {};
 
 	const filterCSSValue = `${100 !== brightness ? `brightness(${brightness}%)` : ''} ${100 !== contrast ? `contrast(${contrast}%)` : ''} ${100 !== saturation ? `saturate(${saturation}%)` : ''} ${0 !== blur ? `blur(${blur}px)` : ''} ${0 !== hue ? `hue-rotate(${hue}deg)` : ''}`;
 	const filterCSS = `${filter}: ${filter ? filterCSSValue : ''}; -webkit-${filter}: ${filter ? filterCSSValue : ''};`;
@@ -330,10 +326,18 @@ export const getOverlayCSS = (overlay, selector, isHover = false) => {
 	const sl = isHover ? `${selector}:hover::after` : `${selector}::after`;
 
 	return isEnabled ? `
+		${selector}{
+			position:relative;
+			z-index:1;
+		}
 		${selector}::after{
 			content: '';
 			position: absolute;
-			inset: 0;
+			top:${isExist(position.top) ? position.top : 0};
+			right:${isExist(position.right) ? position.right : 0};
+			bottom:${isExist(position.bottom) ? position.bottom : 0};
+			left:${isExist(position.left) ? position.left : 0};
+			z-index:${zIndex};
 		}
 		${getAdvBGCSS(colors, sl, false)}
 		${sl}{

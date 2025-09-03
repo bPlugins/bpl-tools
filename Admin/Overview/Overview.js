@@ -3,6 +3,24 @@ import Button from '../../Components/Button/Button';
 import './style.scss';
 import VideoPlayer from './VideoPlayer';
 
+/**
+ * Renders the overview section of the plugin dashboard.
+ *
+ * @param {object} props - The component props.
+ * @param {string} [props.name] - The name of the plugin, used in the welcome title.
+ * @param {string} [props.displayName] - The display name of the plugin.
+ * @param {string} [props.description] - A short description of the plugin.
+ * @param {string} props.slug - The WordPress.org plugin slug for generating the review link.
+ * @param {string} [props.logo] - URL for the plugin's logo image.
+ * @param {string} [props.banner] - URL for the plugin's banner image.
+ * @param {string} [props.video] - URL for a promotional video.
+ * @param {boolean} [props.isYoutube] - Indicates if the video is a YouTube video.
+ * @param {object} [props.pages] - An object containing links to various pages.
+ * @param {string} [props.pages.docs] - Link to the documentation page.
+ * @param {string} [props.pages.landing] - Link to the plugin's landing page.
+ * @param {React.ReactNode} [props.children] - Custom elements to be rendered in the button area.
+ * @returns {JSX.Element} The rendered overview component.
+ */
 const Overview = (props) => {
 	const { name, displayName, description, slug, logo, banner, video, isYoutube, pages, children } = props;
 
