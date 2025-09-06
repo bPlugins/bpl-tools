@@ -6,6 +6,7 @@ import './IconLibrary.scss';
 import { Label } from '../index';
 import bootstrapIcons from './icons/bootstrap.json';
 import fontAwesomeIcons from './icons/font-awesome.json';
+import lucidIcons from './icons/lucidicons.json';
 import { debounce } from '../../utils/functions';
 import { LogoSmall, MagnifyingGlass, XMarkIcon } from './utils/icons';
 
@@ -26,6 +27,7 @@ const IconLibrary = ({ className = '', label = __('Icon Library'), value, onChan
 		{ label: 'All Icons', value: 'all' },
 		{ label: 'Font Awesome', value: 'fontawesome' },
 		{ label: 'Bootstrap', value: 'bootstrap' },
+		{ label: 'Lucid Icons', value: 'lucid' },
 	];
 
 	const library = {
@@ -35,16 +37,21 @@ const IconLibrary = ({ className = '', label = __('Icon Library'), value, onChan
 			icons: fontAwesomeIcons,
 		},
 		bootstrap: {
-			label: 'Font Awesome',
+			label: 'Bootstrap',
 			styles: ['regular', 'fill'],
 			icons: bootstrapIcons,
+		},
+		lucid: {
+			label: 'Lucid Icons',
+			styles: ['regular'],
+			icons: lucidIcons,
 		},
 	};
 
 	const icons =
 		iconLibrary !== 'all'
 			? library[iconLibrary]
-			: { label: 'All Icons', icons: [...fontAwesomeIcons, ...bootstrapIcons] };
+			: { label: 'All Icons', icons: [...fontAwesomeIcons, ...bootstrapIcons, ...lucidIcons] };
 
 	const handleSearch = useMemo(() => debounce((sq) => {
 		const filteredIcons = searchQuery
