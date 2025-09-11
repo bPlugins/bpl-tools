@@ -74,11 +74,11 @@ const Overview = (props) => {
 				</div>
 			</div>
 
-			<div className='overviewLeftBottom bPlDashboardButtons'>
+			{(children || pages?.landing) && <div className='overviewLeftBottom bPlDashboardButtons'>
 				{children}
 
 				{pages?.landing && <Button href={pages.landing} target='_blank' rel='noopener noreferrer' variant='primary'>Learn More</Button>}
-			</div>
+			</div>}
 		</div>
 
 		<div className='overviewRight'>

@@ -3,6 +3,7 @@ import { Button, PanelRow, Placeholder, TextControl, ToolbarButton, ToolbarGroup
 import { __ } from '@wordpress/i18n';
 import { useState } from 'react';
 
+// import { MimeTypeChecker } from '../../utils/functions';
 import { Label } from '../index';
 import './MediaControl.scss';
 
@@ -80,12 +81,23 @@ export const InlineDetailMediaUpload = props => {
  * @property {Object} [style] - The style of the component
  */
 export const MediaArea = (props) => {
-	const { className = '', label = 'Choose', value, types = ['image'], onChange = () => { }, default: defaults = '', height = '50px', width = '50px', style } = props;
+	const { className = '', label = 'Choose', value, types = ['image/*'], onChange = () => { }, default: defaults = '', height = '50px', width = '50px', style } = props;
+	// const [validationError, setValidationError] = useState([])
+	// const { validateFile } = MimeTypeChecker.helpers;
 
 	return <div style={style} className={`bPlMediaArea ${className}`}>
 		<MediaUpload
 			value={value?.id ? [value?.id] : []}
-			onSelect={({ id, url, alt, title }) => onChange({ id, url, alt, title })}
+			onSelect={({ id, url, alt, title }) => {
+				// const { isValid, error } = validateFile(url, { allowedTypes: types })
+				// if (isValid) {
+				// 	onChange({ id, url, alt, title })
+				// 	setValidationError([])
+				// } else {
+				// 	setValidationError(error)
+				// }
+				onChange({ id, url, alt, title })
+			}}
 			gallery={false}
 			allowedTypes={types}
 			multiple={false}
@@ -116,6 +128,8 @@ export const MediaArea = (props) => {
 				</div>
 			</div>}
 		/>
+		{/* {validationError.length > 0 && <p className="bplMediaAreaErrorMessage">{validationError.length > 1 ? validationError.join(', ') : validationError[0]}</p>} */}
+		{/* <p>{validationError.join('. ')}</p> */}
 	</div>
 };
 

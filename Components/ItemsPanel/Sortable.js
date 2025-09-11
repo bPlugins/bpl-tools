@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { SortableContainer, SortableElement, SortableHandle, arrayMove } from 'react-sortable-hoc';
 
-import './Sortable.scss';
 import { closeIcon, copyIcon, gripIcon } from '../../utils/icons';
+import './Sortable.scss';
 
 const DragHandle = SortableHandle(() => <div className='gripIcon'>{gripIcon}</div>);
 
-const SortableItem = SortableElement(({ sortIndex: index, removeItem, duplicateItem, ItemSettings, active, setActive, itemLabel, title, ...props }) => {
+const SortableItem = SortableElement(({ sortIndex: index, removeItem, duplicateItem, ItemSettings, active, setActive, itemLabel, minItem, title, ...props }) => {
 	const { value, attributes, arrKey, setActiveIndex } = props;
 	const items = attributes ? attributes[arrKey] : value;
 	const itemTitle = items?.[index]?.[title] || '';
@@ -26,7 +26,7 @@ const SortableItem = SortableElement(({ sortIndex: index, removeItem, duplicateI
 				<div className='itemAction'>
 					<div onClick={e => duplicateItem(e, index)}>{copyIcon}</div>
 
-					{items.length > 1 && <div onClick={e => removeItem(e, index)}>{closeIcon}</div>}
+					{items.length > Number(minItem) && <div onClick={e => removeItem(e, index)}>{closeIcon}</div>}
 				</div>
 			</div>
 		</div>

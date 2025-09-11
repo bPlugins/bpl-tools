@@ -5,7 +5,7 @@ import { copyIcon } from '../../utils/icons';
 import Sortable from './Sortable';
 
 const ItemsPanel = (properties) => {
-	const { value, onChange, attributes, setAttributes, clientId, arrKey, newItem, ItemSettings, itemLabel = 'Item', activeIndex, setActiveIndex, design = 'single', title = '', premiumProps, ...restProps } = properties;
+	const { value, onChange, attributes, setAttributes, clientId, arrKey, newItem, ItemSettings, itemLabel = 'Item', activeIndex, setActiveIndex, design = 'single', title = '', premiumProps, minItem = 1, ...restProps } = properties;
 	const items = attributes ? attributes[arrKey] : value;
 	const addNewItem = () => {
 		const newValue = [...items, newItem];
@@ -35,7 +35,7 @@ const ItemsPanel = (properties) => {
 		setActiveIndex && setActiveIndex(0 === index ? 0 : index - 1);
 	}
 
-	const props = { value, onChange, attributes, setAttributes, clientId, arrKey, ItemSettings, removeItem, duplicateItem, itemLabel, activeIndex, setActiveIndex, premiumProps, title, ...restProps }
+	const props = { value, onChange, attributes, setAttributes, clientId, arrKey, ItemSettings, removeItem, duplicateItem, itemLabel, activeIndex, setActiveIndex, premiumProps, title, minItem, ...restProps }
 
 	const itemProps = { value, onChange, attributes, setAttributes, clientId, arrKey, setActiveIndex, premiumProps }
 
