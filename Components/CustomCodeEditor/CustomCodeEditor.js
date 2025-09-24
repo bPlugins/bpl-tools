@@ -17,7 +17,7 @@ import 'ace-builds/src-noconflict/mode-css';
 import 'ace-builds/src-noconflict/theme-monokai';
 
 const CustomCodeEditor = (props) => {
-	const { value, onChange, height = '300px', width = '100%' } = props;
+	const { value, onChange, height = '300px', width = '100%', wrap = false } = props;
 	const id = Math.floor(Math.random() * 99999999);
 
 	let timeout;
@@ -36,12 +36,14 @@ const CustomCodeEditor = (props) => {
 			// onLoad={this.onLoad}
 			onChange={debouncedOnChange}
 			fontSize={14}
+
 			lineHeight={19}
 			height={height}
 			width={width}
 			showPrintMargin={true}
 			showGutter={true}
 			highlightActiveLine={true}
+			wrapEnabled={wrap}
 			value={value}
 			setOptions={{
 				enableBasicAutocompletion: true,

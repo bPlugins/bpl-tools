@@ -30,6 +30,8 @@ const Pricing = (props) => {
 			})}
 		</div>}
 
+		{cycles?.length === 1 && cycles[0]?.cycle === 'lifetime' && <h2 className='pricingTitle'>One-time payment, lifetime access</h2>}
+
 		<div className='plans'>
 			{plans.map((plan, index) => <Plan key={index} {...props} plan={plan} cycle={cycle} />)}
 		</div>

@@ -56,6 +56,20 @@ $contentColor: #485781;
 				}
 			}
 		}
+
+	}
+
+	h2.pricingTitle {
+		font-size: 18px;
+		font-weight: 700;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		background-color: #e1efff;
+		padding: 12px 32px;
+		border: 1px solid #b3d5fd;
+		border-radius: 10px;
+		margin-bottom: 25px;
 	}
 
 	.plans {

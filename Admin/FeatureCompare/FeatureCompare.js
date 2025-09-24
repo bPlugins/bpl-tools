@@ -1,9 +1,10 @@
 import { checkIcon, closeIcon } from '../../utils/icons'
+import Button from "../../Components/Button/Button"
 
 import './style.scss';
 
 const FeatureCompare = (props) => {
-	const { featureCompareInfo } = props;
+	const { featureCompareInfo, isPremium = false } = props;
 	const { title, plans, features } = featureCompareInfo;
 
 	return <div className='bPlDashboardFeatureCompare bPlDashboardBox'>
@@ -34,6 +35,14 @@ const FeatureCompare = (props) => {
 						})}
 					</tr>
 				})}
+
+				{!isPremium && <tr>
+					<td />
+					<td />
+					<td>
+						<Button href='#pricing'>Buy Now</Button>
+					</td>
+				</tr>}
 			</tbody>
 		</table>
 	</div>

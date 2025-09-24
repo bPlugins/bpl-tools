@@ -81,9 +81,27 @@ export const InlineDetailMediaUpload = props => {
  * @property {Object} [style] - The style of the component
  */
 export const MediaArea = (props) => {
-	const { className = '', label = 'Choose', value, types = ['image/*'], onChange = () => { }, default: defaults = '', height = '50px', width = '50px', style } = props;
+	const { className = '', label = 'Choose', value, types = ['image/*'], onChange = () => { }, default: defaults = '', height = '50px', width = '50px', style, onClick = () => { }, isSvgEnabled = false } = props;
 	// const [validationError, setValidationError] = useState([])
 	// const { validateFile } = MimeTypeChecker.helpers;
+
+	const mediaFrame = () => wp.media({
+		library: { type: ['image/svg+xml'] },
+		mimeType: 'image/svg+xml',
+	});
+
+	const imgProps = (open) => {
+		return {
+			onClick: () => {
+				onClick()
+				isSvgEnabled && mediaFrame()
+				open()
+			}
+		}
+	}
+
+	const image = (open) => isSvgEnabled ? <img src={`data:image/svg+xml;utf8,${value?.url || defaults}`} alt='' className='mediaImage' {...imgProps(open)} style={{ height, width }} /> : <img className='mediaImage' src={value?.url || defaults} alt='' {...imgProps(open)} style={{ height, width }} />;
+
 
 	return <div style={style} className={`bPlMediaArea ${className}`}>
 		<MediaUpload
@@ -102,19 +120,14 @@ export const MediaArea = (props) => {
 			allowedTypes={types}
 			multiple={false}
 			render={({ open }) => <div className='mediaAreaContainer'>
-				{defaults ?
-					<img className='mediaImage' src={value?.url || defaults} alt='' onClick={open} style={{ height, width }} /> :
-
-					value?.url ?
-						<img className='mediaImage' src={value?.url || defaults} alt='' onClick={open} style={{ height, width }} /> :
-
-						<div className='mediaPlusBtnWrapper' onClick={open}>
-							<div className='mediaPlusBtnCircle'>
-								<svg xmlns='http://www.w3.org/2000/svg' className='mediaPlusBtn' width='1em' height='1em' viewBox='0 0 448 512' fill='currentColor'>
-									<path d='M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z' />
-								</svg>
-							</div>
+				{defaults ? image(open) : value?.url ? image(open) :
+					<div className='mediaPlusBtnWrapper' {...imgProps(open)}>
+						<div className='mediaPlusBtnCircle'>
+							<svg xmlns='http://www.w3.org/2000/svg' className='mediaPlusBtn' width='1em' height='1em' viewBox='0 0 448 512' fill='currentColor'>
+								<path d='M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z' />
+							</svg>
 						</div>
+					</div>
 				}
 
 				<div onClick={() => onChange({})} className='mediaDelete'>
@@ -123,7 +136,7 @@ export const MediaArea = (props) => {
 					</svg>
 				</div>
 
-				<div onClick={open} className='mediaButton'>
+				<div {...imgProps(open)} className='mediaButton'>
 					<span>{label}</span>
 				</div>
 			</div>}
