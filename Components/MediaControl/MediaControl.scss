@@ -128,7 +128,7 @@ $primaryColor: #146EF5;
 		}
 
 		.mediaImage {
-			object-fit: cover;
+			object-fit: unset !important;
 			border: none;
 		}
 

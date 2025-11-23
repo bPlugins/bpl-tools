@@ -15,11 +15,11 @@
 
 import './style.scss';
 
-const Button = ({ href = '', target = '', onClick = null, className, variant = 'primary', size = '', children, ...props }) => {
-	const cls = `bPlButton ${variant ? `variant-${variant}` : ''} ${size ? `size-${size}` : ''} ${className ? className : ''}`;
+const Button = ({ type = 'button', href = '', target = '', onClick = null, className, variant = 'primary', size = '', children, disabled = false, ...props }) => {
+	const cls = `bPlButton ${variant ? `variant-${variant}` : ''} ${size ? `size-${size}` : ''} ${className ? className : ''} ${disabled ? 'bPlButton-disabled' : ''}`;
 
-	return 'function' === typeof onClick ?
-		<button className={cls} {...props} onClick={onClick}>
+	return ('function' === typeof onClick || !href) ?
+		<button type={type} className={cls} {...props} onClick={onClick}>
 			{children}
 		</button> :
 		<a href={href} target={target} className={cls} {...props}>

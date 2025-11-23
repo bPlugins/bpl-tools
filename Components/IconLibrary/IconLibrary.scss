@@ -9,7 +9,6 @@ $primaryColor: #146EF5;
 		}
 	}
 
-
 	.bPlIconLibraryModalWrapper {
 		background: rgba(0, 0, 0, 0.158);
 		position: fixed;
@@ -62,10 +61,15 @@ $primaryColor: #146EF5;
 					align-items: center;
 					gap: 5px;
 
+					svg {
+						height: 22px;
+					}
+
 					h3 {
 						font-size: 18px;
 						font-weight: 600;
 						text-transform: none;
+						white-space: nowrap;
 					}
 				}
 

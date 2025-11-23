@@ -6,6 +6,7 @@
 	"editor.fontSize": 17,
 	"editor.formatOnSave": true,
 	"editor.indentSize": 4,
+	"editor.tabSize": 4,
 	"editor.minimap.enabled": true,
 	"editor.wordWrap": "on",
 	"files.autoSave": "onWindowChange",

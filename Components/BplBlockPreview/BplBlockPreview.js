@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { withDispatch } from '@wordpress/data';
 import "./style.scss";
 
-const BplBlockPreview = ({ blocks, clientId, value, minHeight = '', minWidth = '200px', replaceBlock }) => {
+const BplBlockPreview = ({ blocks, clientId, value, minHeight = '', minWidth = '200px', viewportWidth = 1600, replaceBlock }) => {
 	const [activeIndex, setActiveIndex] = useState(null);
 
 	const handleButtonClick = (idx, content) => {
@@ -28,7 +28,7 @@ const BplBlockPreview = ({ blocks, clientId, value, minHeight = '', minWidth = '
 				<div>
 					<Button
 						className={`bPl-previewBtn ${value === block.value ? 'bPl-activeBtn' : ''}`}
-						onClick={() => handleButtonClick(block.value, idx, block.content)}
+						onClick={() => handleButtonClick(idx, block.content)}
 						onMouseEnter={() => handleMouseInteraction(idx, true)}
 						onMouseLeave={() => handleMouseInteraction(idx, false)}
 					>
@@ -38,7 +38,7 @@ const BplBlockPreview = ({ blocks, clientId, value, minHeight = '', minWidth = '
 
 				{activeIndex === idx && <Popover
 					style={{ cursor: 'pointer' }}
-					onClick={() => handleButtonClick(block.value, idx, block.content)}
+					onClick={() => handleButtonClick(idx, block.content)}
 				>
 					<div
 						onMouseEnter={() => handleMouseInteraction(idx, true)}
@@ -47,7 +47,8 @@ const BplBlockPreview = ({ blocks, clientId, value, minHeight = '', minWidth = '
 					>
 						<BlockPreview
 							blocks={parse(block.content)}
-							viewportWidth={1600}
+							viewportWidth={viewportWidth}
+							minHeight={minHeight}
 						/>
 					</div>
 				</Popover>}
