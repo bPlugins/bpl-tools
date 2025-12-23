@@ -14,6 +14,7 @@ import { __ } from '@wordpress/i18n';
 
 import { Label } from '../index';
 import './ColorControl.scss';
+import { forwardRef } from 'react';
 
 const ThemeColors = withSelect((select) => {
 	return {
@@ -39,10 +40,10 @@ const ThemeColors = withSelect((select) => {
  * @param {boolean} [props.disableAlpha=false] - Whether to disable alpha channel in color picker
  * @returns {JSX.Element} ColorControl component with color picker and theme colors
  */
-export const ColorControl = props => {
+export const ColorControl = forwardRef((props, ref) => {
 	const { className = '', label = __('Color:'), value = '', onChange, defaultColor, disableAlpha = false } = props;
 
-	return <PanelRow className={className}>
+	return <PanelRow ref={ref} className={className}>
 		<Label className=''>{label}</Label>
 
 		<Dropdown className='bPlDropdownContainer bPlColor' contentClassName='bPlDropdownPopover' popoverProps={{ placement: 'top-end' }}
@@ -63,7 +64,7 @@ export const ColorControl = props => {
 			</>}
 		/>
 	</PanelRow>
-}
+})
 
 
 export const HexColorControl = props => {

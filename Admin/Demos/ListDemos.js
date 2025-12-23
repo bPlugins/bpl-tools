@@ -111,7 +111,7 @@ const Demos = (props) => {
 					<iframe
 						src={activeDemo.url}
 						title={`${activeDemo.title} Demo`}
-						loading={isLoading}
+						loading={isLoading ? 'lazy' : undefined}
 						onLoad={() => setIsLoading(false)}
 						sandbox='allow-scripts allow-same-origin allow-popups allow-forms'
 					/> :

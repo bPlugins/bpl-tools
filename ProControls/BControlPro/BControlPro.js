@@ -11,7 +11,7 @@ const BControlPro = ({ label, className, onChange, isPremium = false, Component,
 		className={`${className} ${isPremium ? '' : 'bplProIdentifier'}`}
 		label={labelMiddleWare(label)}
 		onChange={(val) => isPremium ? onChange(val) : setIsProModalOpen(true)}
-		isPremium={isPremium}
+		// isPremium={isPremium}
 		{...restProps}
 	/>
 }

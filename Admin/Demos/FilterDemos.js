@@ -45,7 +45,7 @@ const FilterDemos = (props) => {
 		}
 
 		<div className='demoHeader'>
-			<BButtonGroup label='' value={category} onChange={value => setCategory(value)} options={categories} activeBg={primaryColor} wrap={true} fontSize='16px' style={{ marginBottom: '0' }} />
+			<BButtonGroup label='' value={category} onChange={value => setCategory(value)} options={categories} activeBg={primaryColor} fontSize='16px' style={{ marginBottom: '0' }} />
 
 			{children}
 		</div>

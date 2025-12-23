@@ -649,7 +649,11 @@ const App = (props) => {
             <Route
               path="pricing"
               element={
-                <DynamicPricing pricingInfo={pricingInfo} options={{}} />
+                <DynamicPricing
+                  pricingInfo={pricingInfo}
+                  options={{}}
+                  {...props}
+                />
               }
             />
           )}

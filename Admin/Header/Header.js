@@ -15,7 +15,7 @@ const Header = (props) => {
 
 	return <div className='bPlDashboardHeader'>
 		<div className='bPlDashboardContainer'>
-			<div className='pluginInfo' wrap={true}>
+			<div className='pluginInfo'>
 				<div>
 					{logo && <img className='pluginLogo' src={logo} alt={name || 'Plugin from bPlugins'} />}
 

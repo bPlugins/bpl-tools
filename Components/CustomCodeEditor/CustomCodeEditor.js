@@ -9,48 +9,52 @@
  * @returns {JSX.Element} React component
  */
 
-import { useCallback } from 'react';
+import { useCallback, useRef } from 'react';
 import AceEditor from 'react-ace';
 
 import 'ace-builds/src-noconflict/ext-language_tools';
 import 'ace-builds/src-noconflict/mode-css';
+import 'ace-builds/src-noconflict/snippets/css';
+import 'ace-builds/src-noconflict/worker-css';
 import 'ace-builds/src-noconflict/theme-monokai';
+import "ace-builds/src-noconflict/worker-html";
+import "ace-builds/src-noconflict/snippets/html";
+
 
 const CustomCodeEditor = (props) => {
 	const { value, onChange, height = '300px', width = '100%', wrap = false } = props;
 	const id = Math.floor(Math.random() * 99999999);
 
-	let timeout;
-	const debouncedOnChange = useCallback(newVal => {
-		clearTimeout(timeout);
-		timeout = setTimeout(() => {
-			onChange(newVal);
-		}, 600);
-	}, [onChange, timeout]);
+	const timeoutRef = useRef(null);
+	const debouncedOnChange = useCallback((newVal) => {
+		clearTimeout(timeoutRef.current);
+		timeoutRef.current = setTimeout(() => onChange(newVal), 600);
+	}, [onChange]);
 
-	return <div className='bPlCustomCodeEditor'>
+	return <div className="bPlCustomCodeEditor">
 		<AceEditor
-			mode='css'
-			theme='monokai'
+			mode="css"
+			theme="monokai"
 			name={`advEditor-${id}`}
-			// onLoad={this.onLoad}
 			onChange={debouncedOnChange}
 			fontSize={14}
-
 			lineHeight={19}
 			height={height}
 			width={width}
-			showPrintMargin={true}
-			showGutter={true}
-			highlightActiveLine={true}
+			showPrintMargin
+			showGutter
+			highlightActiveLine
 			wrapEnabled={wrap}
 			value={value}
 			setOptions={{
+				useWorker: false,
 				enableBasicAutocompletion: true,
 				enableLiveAutocompletion: true,
 				enableSnippets: true,
+				// choose one:
+				// useWorker: false,
 				showLineNumbers: true,
-				tabSize: 2
+				tabSize: 2,
 			}}
 		/>
 	</div>

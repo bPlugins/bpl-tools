@@ -20,7 +20,7 @@ $primaryColor: #146EF5;
 		max-height: 240px;
 		z-index: 9999;
 
-		.bPl-token-field-dropdown-list {
+		.bPlTools-token-field-dropdown-list {
 			list-style: none;
 			margin: 0;
 			padding: 0;
@@ -28,29 +28,29 @@ $primaryColor: #146EF5;
 			li {
 				color: #444;
 				cursor: pointer;
-				/* background:linear-gradient(#5c3bc7 20%, #422c8d 50%, #422c8d 52%, #5c3bc7 100%); */
+				/* background:linear-gradient(#146EF5 20%, #422c8d 50%, #422c8d 52%, #146EF5 100%); */
 				padding: 5px 5px;
 				margin-bottom: 2px;
 				font-size: 14px;
 			}
 
-			li:hover:not(.multipleActiveItem) {
+			>li:hover:not(.bPlTools-multipleActiveItem) {
 				color: #fff;
-				background: linear-gradient(#5c3bc7 20%,
-						#422c8d 50%,
-						#422c8d 52%,
-						#5c3bc7 100%);
+				background: linear-gradient(#146EF5 20%,
+						#2e6ac3 50%,
+						#336abb 52%,
+						#146EF5 100%) !important;
 			}
 
 			.activeItemInList {
 				color: #fff;
-				background: linear-gradient(#5c3bc7 20%,
-						#422c8d 50%,
-						#422c8d 52%,
-						#5c3bc7 100%);
+				background: linear-gradient(#146EF5 20%,
+						#2e6ac3 50%,
+						#336abb 52%,
+						#146EF5 100%);
 			}
 
-			.multipleActiveItem {
+			.bPlTools-multipleActiveItem {
 				color: #ccc;
 			}
 		}

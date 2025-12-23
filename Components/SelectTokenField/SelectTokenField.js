@@ -112,14 +112,14 @@ const SelectTokenField = ({ multiple = true, defaultValue, value, onChange = () 
 				)}
 				{options.length > 0 && toggle && (
 					<div className='bPl-token-field-dropdown-wrapper'>
-						<ul className='bPl-token-field-dropdown-list'>
+						<ul className='bPlTools-token-field-dropdown-list'>
 							{searchTerm.map((option, index) => (
 								<li
 									className={`${multiple
 										? activeMultipleItem.find(
 											(item) => item.value === option.value
 										)
-											? 'multipleActiveItem'
+											? 'bPlTools-multipleActiveItem'
 											: ''
 										: option.value === defaultWithValue
 											? 'activeItemInList'

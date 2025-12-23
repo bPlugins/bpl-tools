@@ -106,6 +106,10 @@ const TinyEditor = ({ value = '', onChange, media_button = true, quicktags = tru
 				}
 					#wp-bpl-wp-${randomId}editor-wrap .wp-editor-tools .wp-media-buttons{
 						width:48%;
+						margin:0px;
+					}
+					#wp-bpl-wp-${randomId}editor-wrap .wp-editor-tools .wp-editor-tabs>button{
+						font-size:9px;
 					}
 			`}</style>
 
