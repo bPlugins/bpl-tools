@@ -859,8 +859,13 @@ svg.bPlBlockIcon {
 .bPlPanelBody {
 	.components-base-control {
 		.components-base-control__field {
-			.components-toggle-group-control::before {
-				background: $primaryColor;
+			.components-toggle-group-control {
+				border-width: 1px !important;
+				border-color: $primaryColor !important;
+
+				&::before {
+					background: $primaryColor;
+				}
 			}
 		}
 	}

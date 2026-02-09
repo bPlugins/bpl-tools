@@ -5,11 +5,14 @@ import { copyIcon } from '../../utils/icons';
 import Sortable from './Sortable';
 
 const ItemsPanel = (properties) => {
-	const { value, onChange, attributes, setAttributes, clientId, arrKey, newItem, ItemSettings, itemLabel = 'Item', activeIndex, setActiveIndex, design = 'single', title = '', premiumProps, minItem = 1, ...restProps } = properties;
+	const { value, onChange, attributes, setAttributes, clientId, arrKey, newItem, ItemSettings, itemLabel = 'Item', activeIndex, setActiveIndex, design = 'single', title = '', premiumProps, minItem = 1, handleCopy, handleDelete, handleAdd, ...restProps } = properties;
 	const items = attributes ? attributes[arrKey] : value;
 	const addNewItem = () => {
 		const newValue = [...items, newItem];
-
+		if (typeof handleAdd === 'function') {
+			handleAdd(newValue);
+			return;
+		}
 		attributes ? setAttributes({ [arrKey]: newValue }) : onChange(newValue);
 
 		setActiveIndex && setActiveIndex(items.length);
@@ -17,6 +20,10 @@ const ItemsPanel = (properties) => {
 
 	const duplicateItem = (e, index) => {
 		e.preventDefault();
+		if (typeof handleCopy === 'function') {
+			handleCopy(index);
+			return;
+		}
 
 		const newValue = [...items.slice(0, index), { ...items[index] }, ...items.slice(index)];
 
@@ -27,6 +34,10 @@ const ItemsPanel = (properties) => {
 
 	const removeItem = (e, index) => {
 		e.preventDefault();
+		if (typeof handleDelete === 'function') {
+			handleDelete(index);
+			return;
+		}
 
 		const newValue = [...items.slice(0, index), ...items.slice(index + 1)];
 

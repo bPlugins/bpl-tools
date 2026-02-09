@@ -82,13 +82,13 @@ const Typography = props => {
                             </ul>}
                         </div>
 
-                        <SelectControl value={getValue('fontVariant')} onChange={val => { onChange({ ...value, ['fontWeight']: parseInt(val?.replace('00i', '00')), ['fontVariant']: val }) }} options={fontWeights()} />
+                        <SelectControl value={getValue('fontVariant') || ''} onChange={val => { onChange({ ...value, ['fontWeight']: parseInt(val?.replace('00i', '00')), ['fontVariant']: val }) }} options={fontWeights()} />
                     </PanelRow>
 
                     <ToggleControl className='mt10' label={__('Load Google Font')} checked={getValue('isUploadFont')} onChange={val => setValue('isUploadFont', val)} />
                 </> : <PanelRow>
                     <Label className=''>{__('Weight:')}</Label>
-                    <SelectControl value={getValue('fontWeight')} onChange={val => setValue('fontWeight', val)} options={fontWeights()} />
+                    <SelectControl value={getValue('fontWeight') || ''} onChange={val => setValue('fontWeight', val)} options={fontWeights()} />
                 </PanelRow>}
 
 
@@ -104,7 +104,7 @@ const Typography = props => {
                 {/* Font Style */}
                 <PanelRow className='mt20'>
                     <Label className=''>{__('Font Style:')}</Label>
-                    <SelectControl value={getValue('fontStyle')} onChange={val => setValue('fontStyle', val)} options={fontStyles} />
+                    <SelectControl value={getValue('fontStyle') || ''} onChange={val => setValue('fontStyle', val)} options={fontStyles} />
                     {resetValue('fontStyle')}
                 </PanelRow>
 
@@ -117,7 +117,7 @@ const Typography = props => {
                 {/* Text Decoration */}
                 <PanelRow className='mt20'>
                     <Label className=''>{__('Text Decoration:')}</Label>
-                    <SelectControl value={getValue('textDecoration')} onChange={val => setValue('textDecoration', val)} options={textDecorations} />
+                    <SelectControl value={getValue('textDecoration') || ''} onChange={val => setValue('textDecoration', val)} options={textDecorations} />
                     {resetValue('textDecoration')}
                 </PanelRow>
 

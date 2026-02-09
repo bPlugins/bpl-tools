@@ -118,6 +118,7 @@ const IconLibrary = ({ className = '', label = __('Icon Library'), value, onChan
 				{value && <div className='panel-icon' dangerouslySetInnerHTML={{ __html: value }} />}
 
 				<Button variant='primary' onClick={() => setIsOpen(true)} icon='edit' />
+				{value && <Button className={`${prefix}-removeIconBtn`} variant='tertiary' onClick={() => onChange('')} icon='trash' />}
 			</Flex>
 		</PanelRow>
 

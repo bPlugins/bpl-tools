@@ -9,6 +9,18 @@ $primaryColor: #146EF5;
 		}
 	}
 
+	.bPlIconLibrary-removeIconBtn {
+		background: #da5757;
+		color: white;
+		transition: all 0.2s ease-in-out;
+
+		&:hover {
+			opacity: 0.8;
+			background: #da5757 !important;
+			color: white !important;
+		}
+	}
+
 	.bPlIconLibraryModalWrapper {
 		background: rgba(0, 0, 0, 0.158);
 		position: fixed;
