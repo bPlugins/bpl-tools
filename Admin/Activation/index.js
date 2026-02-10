@@ -1,10 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Spinner, Tooltip } from '@wordpress/components';
 
 import './style.scss';
 
 import Button from '../../Components/Button/Button';
 import { circleCheckIcon, linkIcon, pluginIcon, questionIcon } from '../../utils/icons';
+import useLicense from './useLicense';
 
 /**
  * License Activation Component
@@ -22,89 +23,27 @@ const Activation = (props) => {
 	const { product_id, public_key } = freemius || {};
 	const { logo } = media || {};
 
-	// State management
+	// Hook management
+	const {
+		isActivated,
+		isLoading,
+		error,
+		activatedLicense,
+		activateLicense,
+		deactivateLicense
+	} = useLicense({ product_id, public_key });
+
+	// Local state management
 	const [licenseKey, setLicenseKey] = useState('');
-	const [isActivated, setIsActivated] = useState(false);
-	const [isLoading, setIsLoading] = useState(true);
-	const [error, setError] = useState('');
 	const [showLicense, setShowLicense] = useState(false);
-	const [activatedLicense, setActivatedLicense] = useState('');
 	const [showActivationForm, setShowActivationForm] = useState(false);
-
-	// Fetch license status on mount
-	useEffect(() => {
-		const fetchLicenseStatus = async () => {
-			try {
-				const response = await fetch(window.apbAdmin?.ajaxurl || '/wp-admin/admin-ajax.php', {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/x-www-form-urlencoded',
-					},
-					body: new URLSearchParams({
-						action: 'get_license_status',
-						nonce: window.apbAdmin?.nonce || ''
-					})
-				});
-
-				const data = await response.json();
-
-				if (data.success && data.data) {
-					setIsActivated(data.data.is_activated || false);
-					if (data.data.license_key) {
-						setActivatedLicense(data.data.license_key);
-					}
-				}
-			} catch (err) {
-				// Silently fail - component will show not activated state
-			} finally {
-				setIsLoading(false);
-			}
-		};
-
-		fetchLicenseStatus();
-	}, []);
 
 	// Handle license activation
 	const handleActivation = async () => {
-		if (!licenseKey.trim()) {
-			setError('Please enter a license key');
-			return;
-		}
-
-		setIsLoading(true);
-		setError('');
-
-		try {
-			const response = await fetch(window.apbAdmin?.ajaxurl || '/wp-admin/admin-ajax.php', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/x-www-form-urlencoded',
-				},
-				body: new URLSearchParams({
-					action: 'activate_freemius_license',
-					license_key: licenseKey,
-					product_id: product_id || '',
-					public_key: public_key || '',
-					nonce: window.apbAdmin?.nonce || ''
-				})
-			});
-
-			const data = await response.json();
-
-			if (data.success) {
-				setIsActivated(true);
-				setActivatedLicense(licenseKey);
-				setLicenseKey('');
-				setShowActivationForm(false); // Hide form after successful activation
-			} else {
-				setError(data.data?.message || 'Activation failed. Please check your license key.');
-			}
-		} catch (err) {
-			// eslint-disable-next-line no-console
-			console.error('Activation error:', err);
-			setError('An error occurred during activation. Please try again.');
-		} finally {
-			setIsLoading(false);
+		const success = await activateLicense(licenseKey);
+		if (success) {
+			setLicenseKey('');
+			setShowActivationForm(false); // Hide form after successful activation
 		}
 	};
 
@@ -114,37 +53,10 @@ const Activation = (props) => {
 			return;
 		}
 
-		setIsLoading(true);
-		setError('');
-
-		try {
-			const response = await fetch(window.apbAdmin?.ajaxurl || '/wp-admin/admin-ajax.php', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/x-www-form-urlencoded',
-				},
-				body: new URLSearchParams({
-					action: 'deactivate_freemius_license',
-					nonce: window.apbAdmin?.nonce || ''
-				})
-			});
-
-			const data = await response.json();
-
-			if (data.success) {
-				setIsActivated(false);
-				setActivatedLicense('');
-				setShowActivationForm(true);
-				setLicenseKey('');
-			} else {
-				setError(data.data?.message || 'Deactivation failed. Please try again.');
-			}
-		} catch (err) {
-			// eslint-disable-next-line no-console
-			console.error('Deactivation error:', err);
-			setError('Deactivation error: ' + (err.message || err));
-		} finally {
-			setIsLoading(false);
+		const success = await deactivateLicense();
+		if (success) {
+			setShowActivationForm(true);
+			setLicenseKey('');
 		}
 	};
 
@@ -194,7 +106,7 @@ const Activation = (props) => {
 
 					<div className='licenseDisplay'>
 						<input
-							type="text"
+							type='text'
 							value={getMaskedLicense(activatedLicense)}
 							readOnly
 							className='licenseInput'
@@ -204,14 +116,14 @@ const Activation = (props) => {
 							onClick={() => setShowLicense(prev => !prev)}
 							aria-label={showLicense ? 'Hide license' : 'Show license'}
 						>
-							<svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+							<svg width='24' height='24' viewBox='0 0 24 24' fill='none'>
 								{showLicense ? <>
-									<path d="M3 3L21 21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-									<path d="M10.5 10.677a2 2 0 002.823 2.823" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-									<path d="M7.362 7.561C5.68 8.74 4.279 10.42 3 12c1.889 2.991 5.282 6 9 6 1.55 0 3.043-.523 4.395-1.35M12 6c4.008 0 6.701 3.158 9 6a15.66 15.66 0 01-1.078 1.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+									<path d='M3 3L21 21' stroke='currentColor' strokeWidth='2' strokeLinecap='round' />
+									<path d='M10.5 10.677a2 2 0 002.823 2.823' stroke='currentColor' strokeWidth='2' strokeLinecap='round' />
+									<path d='M7.362 7.561C5.68 8.74 4.279 10.42 3 12c1.889 2.991 5.282 6 9 6 1.55 0 3.043-.523 4.395-1.35M12 6c4.008 0 6.701 3.158 9 6a15.66 15.66 0 01-1.078 1.5' stroke='currentColor' strokeWidth='2' strokeLinecap='round' />
 								</> : <>
-									<path d="M12 5C7.52 5 3.73 7.61 1 12c2.73 4.39 6.52 7 11 7s8.27-2.61 11-7c-2.73-4.39-6.52-7-11-7z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-									<circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="2" />
+									<path d='M12 5C7.52 5 3.73 7.61 1 12c2.73 4.39 6.52 7 11 7s8.27-2.61 11-7c-2.73-4.39-6.52-7-11-7z' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round' />
+									<circle cx='12' cy='12' r='3' stroke='currentColor' strokeWidth='2' />
 								</>}
 							</svg>
 						</button>
@@ -230,12 +142,12 @@ const Activation = (props) => {
 						<h2>{showActivationForm && isActivated ? 'Change License' : 'Activate License'}</h2>
 
 						<p className='formDescription'>
-							Enter Your license key below. {!showActivationForm && !isActivated && <><a href={`https://dashboard.freemius.com/license-recovery/${product_id}/${slug}/`} target="_blank" rel="noopener noreferrer">Can&apos;t find license key?</a> or <a href={`https://freemius.com/help/documentation/wordpress-sdk/license-activation-issues/`} target="_blank" rel="noopener noreferrer">License issues?</a></>}
+							Enter Your license key below. {!showActivationForm && !isActivated && <><a href={`https://dashboard.freemius.com/license-recovery/${product_id}/${slug}/`} target='_blank' rel='noopener noreferrer'>Can&apos;t find license key?</a> or <a href={`https://freemius.com/help/documentation/wordpress-sdk/license-activation-issues/`} target='_blank' rel='noopener noreferrer'>License issues?</a></>}
 						</p>
 
 						<div className='formGroup'>
 							<input
-								type="text"
+								type='text'
 								className='licenseInput'
 								placeholder='Enter your purchase code here.'
 								value={licenseKey}
@@ -247,7 +159,7 @@ const Activation = (props) => {
 						{error && <div className='errorMessage'>{error}</div>}
 
 						<Button
-							variant="primary"
+							variant='primary'
 							onClick={handleActivation}
 							disabled={isLoading}
 							className='activateButton'
@@ -265,7 +177,7 @@ const Activation = (props) => {
 									{linkIcon}
 
 									<div>
-										<h4>View License Essentials <Tooltip text="To let you manage &amp; control where the license is activated and ensure plugin security &amp; feature updates are only delivered to websites you authorize." placement='top' delay={300}>
+										<h4>View License Essentials <Tooltip text='To let you manage &amp; control where the license is activated and ensure plugin security &amp; feature updates are only delivered to websites you authorize.' placement='top' delay={300}>
 											{questionIcon}
 										</Tooltip></h4>
 
@@ -277,7 +189,7 @@ const Activation = (props) => {
 									{pluginIcon}
 
 									<div>
-										<h4>View Plugin State <Tooltip text="So you can reuse the license when the plugin is no longer active." placement='top' delay={300}>
+										<h4>View Plugin State <Tooltip text='So you can reuse the license when the plugin is no longer active.' placement='top' delay={300}>
 											{questionIcon}
 										</Tooltip></h4>
 
@@ -287,16 +199,16 @@ const Activation = (props) => {
 							</ul>
 
 							<div className='links'>
-								<a href={`https://freemius.com/product/license-activation/14262/advanced-post-block/`} target="_blank" rel="noopener noreferrer">Powered by Freemius</a>
+								<a href={`https://freemius.com/product/license-activation/14262/advanced-post-block/`} target='_blank' rel='noopener noreferrer'>Powered by Freemius</a>
 
-								<a href={`https://freemius.com/privacy/`} target="_blank" rel="noopener noreferrer">Privacy Policy</a>
+								<a href={`https://freemius.com/privacy/`} target='_blank' rel='noopener noreferrer'>Privacy Policy</a>
 
-								<a href={`https://freemius.com/product/14262/advanced-post-block/legal/eula/`} target="_blank" rel="noopener noreferrer">License Agreement</a>
+								<a href={`https://freemius.com/product/14262/advanced-post-block/legal/eula/`} target='_blank' rel='noopener noreferrer'>License Agreement</a>
 							</div>
 						</>}
 
 						{showActivationForm && isActivated && <Button
-							variant="secondary"
+							variant='secondary'
 							onClick={() => setShowActivationForm(false)}
 							className='cancelButton'
 						>
