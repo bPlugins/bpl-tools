@@ -1,240 +1,395 @@
-$primaryColor: #146ef5;
-$secondaryColor: #ff7a00;
+@import '../__variables';
 
-.bPlblocksPage {
-    background-color: white;
-    border-radius: 0.5rem;
-    width: 100%;
-    margin-bottom: 40px;
-    border: 1px solid rgba(0, 0, 0, 0.1882352941);
-    min-height: 70dvh;
-        .bPlSavingNotice {
-        font-size: 15px;
-        position: fixed;
-        top: 50px;
-        left: 50%;
-        transform: translateX(-50%);
-        color: #fff;
-        background-color: $primaryColor;
-        padding: 10px 20px;
-        border-radius: 5px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        z-index: 1000;
-    }
-    .bPlDashboardBtn {
-        font-size: 14px;
-        font-weight: 600;
-        text-decoration: none;
-        color: #fff;
-        background-color: $primaryColor;
-        display: flex;
-        align-items: center;
-        gap: 5px;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
+.bPlDashboardBlocks {
+	width: 100%;
+	max-width: 1440px;
+	background: #fff;
+	border-radius: 10px;
+	margin: 0 auto;
+	position: relative;
 
-        &:hover,
-        &:focus {
-            color: #fff;
-        }
+	// Toast notifications
+	.dashboardBlocksToast {
+		position: fixed;
+		bottom: 20px;
+		right: 20px;
+		padding: 16px 20px;
+		border-radius: 8px;
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		font-size: 14px;
+		font-weight: 500;
+		z-index: 1000;
+		animation: slideInUp 0.3s ease-out;
+		box-shadow: 0 4px 12px #00000026;
 
-        &.secondary {
-            background-color: $secondaryColor;
-        }
+		&-loading {
+			background-color: #e3f2fd;
+			color: #1976d2;
 
-        &.activeAllBtn {
-            margin: 0 10px 0 auto;
-        }
+			.spinner {
+				display: inline-block;
+				width: 16px;
+				height: 16px;
+				border: 2px solid #1976d2;
+				border-top: 2px solid transparent;
+				border-radius: 50%;
+				animation: spin 0.6s linear infinite;
+			}
+		}
 
-    }
+		&-success {
+			background-color: #e8f5e9;
+			color: #2e7d32;
 
-    .blocksTop {
-        display: flex;
-        align-items: center;
-        padding: 20px 30px;
-        border-bottom: 1px solid #00000030;
+			.checkmark {
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				width: 20px;
+				height: 20px;
+				background-color: #2e7d32;
+				color: white;
+				border-radius: 50%;
+				font-size: 12px;
+				font-weight: bold;
+			}
+		}
 
-        h2 {
-            font-size: 20px;
-            font-weight: 500;
-            color: #000;
-            margin: 0 50px 0 0;
-        }
+		&-error {
+			background-color: #ffebee;
+			color: #c62828;
 
-        .bPlDashboardSearch {
-            width: 280px;
-            position: relative;
+			.error-icon {
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				width: 20px;
+				height: 20px;
+				background-color: #c62828;
+				color: white;
+				border-radius: 50%;
+				font-size: 12px;
+				font-weight: bold;
+			}
+		}
+	}
 
-            input {
-                width: 100%;
-                height: 38px;
-                padding: 0 38px;
-                border: 1px solid #ccc;
-                border-radius: 3px;
+	@keyframes slideInUp {
+		from {
+			opacity: 0;
+			transform: translateY(20px);
+		}
 
-                &:focus {
-                    outline-color: $primaryColor;
-                }
-            }
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
 
-            >svg,
-            span {
-                position: absolute;
-                top: 50%;
-                transform: translateY(-50%);
-            }
+	@keyframes spin {
+		from {
+			transform: rotate(0deg);
+		}
 
-            >svg {
-                width: 20px;
-                height: 20px;
-                left: 8px;
-            }
+		to {
+			transform: rotate(360deg);
+		}
+	}
 
-            span {
-                width: 38px;
-                height: 38px;
-                display: inline-flex;
-                align-items: center;
-                justify-content: center;
-                right: 0;
-                cursor: pointer;
+	.blocksTop {
+		display: flex;
+		align-items: center;
+		padding: 20px 30px;
+		border-bottom: 1px solid #00000030;
 
-                svg {
-                    width: 20px;
-                    height: 20px;
-                }
-            }
-        }
+		h2 {
+			font-size: 24px;
+			font-weight: 600;
+			color: $secondaryColor;
+			margin: 0 50px 0 0;
+		}
 
-        .activeAllBtn {
-            margin: 0 10px 0 auto;
-        }
-    }
+		.blocksSearch {
+			width: 280px;
+			position: relative;
 
-    .blocks {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 25px;
-        padding: 30px;
+			input {
+				width: 100%;
+				height: 38px;
+				padding: 0 38px;
+				border: 1px solid rgba($primaryColor, 0.5);
+				border-radius: 8px;
 
-        .block {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            background-color: #fff;
-            border-radius: 5px;
-            padding: 14px 20px;
-            box-shadow: 0px 0px 3px 0px rgb(0 0 0 / 18%);
-            opacity: 1;
-            transition: opacity 0.3s ease;
+				&:focus {
+					outline-color: $primaryColor;
+				}
+			}
 
-            &.disabled {
-                opacity: 0.5;
-            }
+			>svg,
+			span {
+				position: absolute;
+				top: 50%;
+				transform: translateY(-50%);
+			}
 
-            .icon {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                width: 40px;
-                height: 40px;
-                background: #f0f3ff;
-                border-radius: 6px;
+			>svg {
+				width: 20px;
+				height: 20px;
+				left: 8px;
+			}
 
-                svg {
-                    fill: $primaryColor;
-                    width: 25px;
-                    height: 25px;
-                }
-            }
+			span {
+				width: 38px;
+				height: 38px;
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				right: 0;
+				cursor: pointer;
 
-            .name {
-                font-size: 17px;
-                font-weight: 500;
-                text-transform: capitalize;
-                flex-grow: 1;
-                color: #3b3b3b;
-                margin-right: auto;
-            }
+				svg {
+					width: 20px;
+					height: 20px;
+				}
+			}
+		}
 
-            .actionBtn {
-                width: 30px;
-                height: 30px;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                background-color: #f7f7f7;
-                border-radius: 6px;
-                cursor: pointer;
-                transition: background 0.3s ease;
+		.bPlButton {
+			padding: 10px 21px;
+			border-radius: 5px;
 
-                &:hover {
-                    background-color: #ebebeb;
-                }
+			&::before {
+				display: none;
+			}
+		}
 
-                svg {
-                    width: 16px;
-                    height: 16px;
-                    fill: #9e9e9e;
-                }
-            }
+		.activeAllBtn {
+			background: $primaryColor;
+			margin: 0 10px 0 auto;
 
-            .toggleSwitch {
-                position: relative;
-                display: inline-block;
-                width: 40px;
-                height: 20px;
+			&:hover {
+				background: $secondaryColor;
+			}
+		}
 
-                input {
-                    width: 0;
-                    height: 0;
-                    opacity: 0;
-                }
+		.deActiveAllBtn {
+			background: $secondaryColor;
 
-                .slider {
-                    background-color: #ccc;
-                    position: absolute;
-                    top: 0;
-                    right: 0;
-                    bottom: 0;
-                    left: 0;
-                    transition: 0.4s;
-                    border-radius: 20px;
-                    cursor: pointer;
+			&:hover {
+				background: $primaryColor;
+			}
+		}
+	}
 
-                    &:before {
-                        content: '';
-                        background-color: white;
-                        position: absolute;
-                        width: 14px;
-                        height: 14px;
-                        bottom: 3px;
-                        left: 3px;
-                        transition: 0.4s;
-                        border-radius: 50%;
-                    }
-                }
+	.blocksContent {
+		padding: 30px;
 
-                input:checked+.slider {
-                    background-color: $primaryColor;
+		.blocksGroup {
+			padding-bottom: 20px;
+			border-bottom: 2px solid #f0f0f0;
+			margin-bottom: 32px;
 
-                    &:before {
-                        transform: translateX(20px);
-                    }
-                }
+			.groupTitle {
+				font-size: 18px;
+				font-weight: 600;
+				text-transform: capitalize;
+				color: $secondaryColor;
+				padding: 0;
+				margin: 0 0 10px 0;
+			}
+		}
+	}
 
-                input:disabled+.slider {
-                    opacity: 0.5;
-                }
-            }
-        }
-    }
+	.blocks {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(440px, 1fr));
+		gap: 25px;
+		padding: 0;
+		margin: 0;
 
-    .noBlocksFound {
-        color: red;
-        padding: 30px;
-        margin: 0;
-    }
+		.block {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+			background: #FAFAFA;
+			border-radius: 10px;
+			padding: 12px 18px;
+			border: 1.5px solid #E9E9E9;
+			opacity: 1;
+			transition: opacity 0.3s ease;
+			position: relative;
+
+			.blockTitle {
+				flex-grow: 1;
+				font-size: 16px;
+				font-weight: 500;
+				color: $contentColor;
+				text-transform: capitalize;
+				margin: 0px !important;
+			}
+
+			&.disabled {
+
+				.icon,
+				.blockTitle,
+				.actionBtn,
+				.toggleSwitch {
+					opacity: 0.5;
+				}
+
+				// opacity: 0.5;
+			}
+
+			.icon {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				width: 40px;
+				height: 40px;
+				background: #DFDCFF;
+				border-radius: 50px;
+
+				svg {
+					fill: $primaryColor !important;
+					width: 20px;
+					height: 20px;
+				}
+			}
+
+			.name {
+				display: flex;
+				flex-direction: column;
+				font-size: 16px;
+				font-weight: 500;
+				text-transform: capitalize;
+				flex-grow: 1;
+				color: $secondaryColor;
+				margin-right: auto;
+
+				>a {
+					font-size: 12px;
+					margin-top: 5px;
+					color: $primaryColor;
+					text-decoration: none;
+					cursor: pointer;
+
+					&:hover {
+						text-decoration: underline;
+					}
+				}
+			}
+
+			.actionBtn {
+				width: 30px;
+				height: 30px;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				background-color: #f7f7f7;
+				border-radius: 6px;
+				cursor: pointer;
+				transition: background 0.3s ease;
+
+				&:hover {
+					background-color: #ebebeb;
+				}
+
+				svg {
+					width: 16px;
+					height: 16px;
+					fill: #9e9e9e;
+				}
+			}
+
+			.toggleSwitch {
+				position: relative;
+				display: inline-block;
+				width: 34px;
+				height: 20px;
+
+				input {
+					width: 0;
+					height: 0;
+					opacity: 0;
+				}
+
+				.slider {
+					background-color: #ccc;
+					position: absolute;
+					top: 0;
+					right: 0;
+					bottom: 0;
+					left: 0;
+					transition: 0.4s;
+					border-radius: 20px;
+					cursor: pointer;
+
+					&:before {
+						content: '';
+						color: $primaryColor;
+						background-color: white;
+						position: absolute;
+						width: 14px;
+						height: 14px;
+						bottom: 3px;
+						left: 3px;
+						transition: 0.4s;
+						border-radius: 50%;
+					}
+				}
+
+				input:checked+.slider {
+					background-color: $primaryColor;
+
+					&:before {
+						content: url("data:image/svg+xml,%3Csvg%20className%3D'check'%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%20-960%20960%20960'%20fill%3D'currentColor'%3E%3Cpath%20d%3D'm382-354%20339-339q12-12%2028-12t28%2012q12%2012%2012%2028.5T777-636L410-268q-12%2012-28%2012t-28-12L182-440q-12-12-11.5-28.5T183-497q12-12%2028.5-12t28.5%2012l142%20143Z'%20%2F%3E%3C%2Fsvg%3E");
+						transform: translateX(14px);
+					}
+				}
+
+				input:disabled+.slider {
+					opacity: 0.5;
+				}
+			}
+
+			.blockBadge {
+				font-size: 12px;
+				position: absolute;
+				/* text-transform: uppercase; */
+				color: #ffffff;
+				background: $primaryColor;
+				top: 0;
+				left: 20px;
+				transform: translateY(-50%);
+				padding: 0px 11px;
+				border-radius: 9px;
+				z-index: 999;
+				font-weight: 500;
+			}
+
+			.blockProBadge {
+				color: #ffffff;
+				background: #f2a80b;
+				left: auto;
+				right: 20px;
+			}
+
+			.blockRequiredBadge {
+				background: #d32f2f;
+				color: #ffffff;
+				left: auto;
+				right: 70px;
+				transform: translateY(-50%);
+			}
+		}
+	}
+
+	.noBlocksFound {
+		text-align: center;
+		color: red;
+		padding: 30px;
+		margin: 0;
+	}
 }

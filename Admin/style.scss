@@ -1,21 +1,17 @@
-$primaryColor: #146EF5;
-$secondaryColor: #FF7A00;
-$titleColor: #070127;
-$contentColor: #485781;
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@900&family=Rubik:wght@300..900&display=swap');
+
+@import '__variables.scss';
 
 .bPlDashboard {
+	font-family: "Rubik", sans-serif;
 	width: calc(100% + 20px);
 	max-width: calc(100% + 20px);
 	min-height: 100vh;
-	background:
-		linear-gradient(180deg, #faa72b22 0%, #2b69fa00 100%),
-		radial-gradient(circle at 10% 60%, #56EBFF3f, transparent 25%),
-		radial-gradient(circle at 90% 70%, #F7117A1f, transparent 20%),
-		repeating-linear-gradient(to right, #48578111 0px, #48578111 1px, transparent 1px, transparent 50px),
-		repeating-linear-gradient(to bottom, #48578111 0px, #48578111 1px, transparent 1px, transparent 50px);
+	background: #f6f8fa;
 	margin: 0 -20px 0 -20px;
 
 	* {
+		font-family: "Rubik", sans-serif;
 		padding: 0;
 		margin: 0;
 		box-sizing: border-box;
@@ -30,6 +26,8 @@ $contentColor: #485781;
 	}
 
 	.bPlDashboardMain {
+		padding: 52px 32px;
+
 		.bPlDashboardContainer {
 			display: flex;
 			flex-direction: column;
@@ -38,11 +36,10 @@ $contentColor: #485781;
 		}
 	}
 
-	.bPlDashboardBox {
+	.bPlDashboardCard {
 		background-color: #fff;
-		border: 1px solid rgba($contentColor, 50%);
-		border-radius: 20px 20px 20px 20px;
-		box-shadow: 0px 0px 0px 0px rgba(20, 10, 245, 0.2);
+		padding: 24px;
+		border-radius: 12px;
 	}
 
 	.bPlDashboardButtons {

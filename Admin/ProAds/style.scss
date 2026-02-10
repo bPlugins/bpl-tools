@@ -1,0 +1,86 @@
+@import '../__variables';
+
+.bPlDashboardProAds {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap-reverse;
+	gap: 25px;
+
+	>div {
+		flex: 1;
+	}
+
+	h3 {
+		font-size: 20px;
+		font-weight: 600;
+		color: #1B2E4B;
+		margin-bottom: 21px;
+	}
+
+	ul {
+		list-style-type: none;
+		margin-bottom: 42px;
+		min-width: 230px;
+
+		li {
+			font-size: 16px;
+			color: #5F6D81;
+			margin-bottom: 0;
+			display: flex;
+			align-items: start;
+			justify-content: start;
+			gap: 6px;
+
+			&:not(:last-child) {
+				margin-bottom: 10px;
+			}
+
+			span {
+				min-width: 18px;
+				height: 18px;
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				background: linear-gradient(to top right, #0B81EE, #8C74FD);
+				border-radius: 50%;
+				margin-top: 3px;
+
+				svg {
+					fill: #fff;
+					width: 15px;
+					height: 15px;
+				}
+			}
+		}
+	}
+
+	.bPlButton {
+		font-size: 16px;
+		color: #fff;
+		background: $secondaryColor;
+		padding: 10px 21px;
+
+		&:hover {
+			background: $primaryColor;
+		}
+
+		&::before {
+			display: none;
+		}
+	}
+
+	figure {
+		width: 275px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: #DFDCFF;
+		padding: 16px;
+		border-radius: 18px;
+
+		img {
+			max-width: 100%;
+		}
+	}
+}

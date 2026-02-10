@@ -1,0 +1,88 @@
+$primaryColor: #146EF5;
+$secondaryColor: #FF7A00;
+$titleColor: #070127;
+$contentColor: #485781;
+
+.bPlDashboardHeader {
+	width: 100%;
+	background-color: white;
+	margin: 0 auto;
+	padding-top: 20px;
+
+	.pluginInfo {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		flex-flow: wrap;
+		gap: 15px;
+
+		div:first-child {
+			display: flex;
+			align-items: center;
+			justify-content: start;
+			flex-flow: wrap;
+			gap: 15px;
+		}
+	}
+
+	.pluginLogo {
+		width: 55px;
+		height: 55px;
+		display: inline-block;
+		border-radius: 3px;
+	}
+
+	.pluginName {
+		font-size: 30px;
+		font-weight: 700;
+		line-height: 1.5;
+		display: inline-block;
+		color: $titleColor;
+	}
+
+	.pluginVersion {
+		font-size: 14px;
+		font-weight: bold;
+		color: #fff;
+		background-color: $primaryColor;
+		padding: 4px 12px;
+		border-radius: 5px;
+	}
+
+	.navLinks {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin: 30px auto 0 auto;
+
+		.bPlDashboardNav {
+			display: flex;
+			font-size: 16px;
+			gap: 30px;
+
+			.navLink {
+				padding-bottom: 10px;
+				text-decoration: none;
+				color: $contentColor;
+				border: none;
+				outline: none;
+				font-size: 16px;
+				font-weight: 500;
+				border-bottom: 2px solid transparent;
+
+				&:hover {
+					border-bottom: 2px solid $titleColor;
+				}
+
+				&.active {
+					border-bottom: 2px solid $titleColor;
+					color: $titleColor;
+				}
+
+				&:focus {
+					box-shadow: none;
+				}
+			}
+		}
+	}
+}

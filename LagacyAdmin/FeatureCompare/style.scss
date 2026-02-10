@@ -1,0 +1,84 @@
+$primaryColor: #146EF5;
+$secondaryColor: #FF7A00;
+$titleColor: #070127;
+$contentColor: #485781;
+
+.bPlDashboardFeatureCompare {
+	overflow-x: auto;
+
+	table {
+		width: 100%;
+		min-width: 960px;
+		text-indent: 0;
+		border-color: inherit;
+		border-collapse: collapse;
+
+		thead {
+			tr {
+				background-color: #fbf9fa;
+				background-color: #057afd1f;
+				border-bottom: 1px solid #E7E7EC;
+			}
+
+			th {
+				min-width: 168px;
+				font-size: 17px;
+				font-weight: 600;
+				text-align: left;
+				color: $titleColor;
+				padding: 16px 24px;
+
+				&:not(:first-child) {
+					text-align: center;
+				}
+			}
+		}
+
+		tbody {
+			tr {
+				border-bottom: 1px solid #E7E7EC;
+
+				&:last-child {
+					border-bottom: 0;
+				}
+			}
+
+			td {
+				font-size: 14px;
+				padding: 16px 24px;
+
+				&:first-child {
+					font-weight: 500;
+					color: $contentColor;
+				}
+
+				&:not(:first-child) {
+					text-align: center;
+				}
+
+				>* {
+					display: inline-block;
+				}
+
+				svg {
+					fill: currentColor;
+					width: 28px;
+					height: 28px;
+				}
+
+				&.icon.check {
+					color: #00c951;
+				}
+
+				&.icon.cross {
+					color: #ff6c64;
+
+					svg {
+						width: 26px;
+						height: 26px;
+					}
+				}
+			}
+		}
+	}
+}

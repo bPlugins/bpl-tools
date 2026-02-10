@@ -371,6 +371,20 @@ export const filterDemoInfo = {
   ],
 };
 
+export const dynamicPricingInfo = {
+  logo: `https://ps.w.org/${slug}/assets/icon-128x128.png`, // Optional
+  pluginId: 15342,
+  planId: 25570,
+  licenses: [1, 3, null],
+  button: {
+    label: "Buy Now ➜",
+  },
+  featured: {
+    selected: 3, // choose from licenses item
+    text: "Best Value",
+  },
+};
+
 export const pricingInfo = {
   cycles: [
     {
@@ -635,7 +649,19 @@ const App = (props) => {
             <Route
               path="pricing"
               element={
-                <Pricing pricingInfo={pricingInfo} options={{}} {...props} />
+                <DynamicPricing
+                  pricingInfo={pricingInfo}
+                  options={{}}
+                  {...props}
+                />
+              }
+            />
+          )}
+          {!isPremium && (
+            <Route
+              path="pricing"
+              element={
+                <DynamicPricing pricingInfo={dynamicPricingInfo} options={{}} />
               }
             />
           )}
