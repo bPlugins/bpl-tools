@@ -32,7 +32,7 @@ const Overview = (props) => {
 		},
 		{
 			title: 'Liked This Plugin?',
-			description: 'Glad to know that, you can support us by leaving a 5 ⭐ rating.',
+			description: 'Glad to know that, you can support us by leaving a feedback.',
 			link: `https://wordpress.org/support/plugin/${slug}/reviews#new-post`,
 			linkText: 'Rate the Plugin'
 		},

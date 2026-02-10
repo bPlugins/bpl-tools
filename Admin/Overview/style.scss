@@ -5,7 +5,7 @@
 	max-width: 1440px;
 	display: flex;
 	flex-wrap: wrap;
-	gap: 24px;
+	gap: 32px;
 	margin: 0 auto;
 
 	.overviewLeft {
@@ -14,7 +14,7 @@
 		max-width: 100%;
 		display: flex;
 		flex-direction: column;
-		gap: 24px;
+		gap: 32px;
 
 		.overviewLeftTop {
 			display: flex;
@@ -49,7 +49,7 @@
 
 				.bPlButton {
 					color: #fff;
-					padding: 10px 21px;
+					padding: 8px 20px;
 					background: $primaryColor;
 					border-radius: 5px;
 
@@ -76,7 +76,7 @@
 				max-width: 100%;
 				position: relative;
 				background: $primaryColor;
-				padding: 32px 38px;
+				padding: 32px;
 				border-radius: 15px;
 				overflow: hidden;
 
@@ -101,13 +101,13 @@
 	}
 
 	.overviewRight {
-		width: 372px;
+		width: 370px;
 		display: flex;
 		flex-direction: column;
-		gap: 40px;
+		gap: 32px;
 
 		.helpInfoItem {
-			padding: 32px;
+			padding: 24px;
 
 			figure {
 				width: 100%;
@@ -115,9 +115,9 @@
 				align-items: center;
 				justify-content: center;
 				background: #FAF1FF;
-				padding: 22px 22px 15px 22px;
-				border-radius: 10px;
-				margin-bottom: 31px;
+				padding: 20px;
+				border-radius: 8px;
+				margin-bottom: 17px;
 
 				img {
 					width: 150px;
@@ -128,20 +128,21 @@
 				font-size: 18px;
 				font-weight: 500;
 				color: $contentColor;
-				margin-bottom: 13px;
+				margin-bottom: 8px;
 			}
 
 			p {
 				font-size: 14px;
 				font-weight: 400;
 				color: rgba($contentColor, 0.7);
-				margin-bottom: 21px;
+				margin-bottom: 20px;
 			}
 
 			.bPlButton {
-				padding: 10px 21px;
+				padding: 8px 16px;
 				color: #fff;
 				background: $secondaryColor;
+				border-radius: 5px;
 
 				&::before {
 					display: none;

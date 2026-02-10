@@ -28,11 +28,11 @@ const getPluginDisplayName = (name) => {
 	if (!name) return '';
 	// Replace HTML entities with their character equivalents
 	let decodedName = name
-		.replace(/&#8211;/g, '–')  // en-dash entity
-		.replace(/&#8212;/g, '—')  // em-dash entity
-		.replace(/&ndash;/g, '–')  // en-dash named entity
-		.replace(/&mdash;/g, '—')  // em-dash named entity
-		.replace(/&#45;/g, '-');   // hyphen entity
+		.replace(/&#8211;/g, '–')	// en-dash entity
+		.replace(/&#8212;/g, '—')	// em-dash entity
+		.replace(/&ndash;/g, '–')	// en-dash named entity
+		.replace(/&mdash;/g, '—')	// em-dash named entity
+		.replace(/&#45;/g, '-');	// hyphen entity
 
 	return decodedName.split(/\s*[–\-—]\s*/)[0].trim();
 };

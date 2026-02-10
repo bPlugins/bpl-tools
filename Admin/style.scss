@@ -1,9 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Lato:wght@900&family=Rubik:wght@300..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@700;900&family=Roboto:wght@100..900&display=swap');
 
 @import '__variables.scss';
 
 .bPlDashboard {
-	font-family: "Rubik", sans-serif;
+	font-family: "Roboto", sans-serif;
 	width: calc(100% + 20px);
 	max-width: calc(100% + 20px);
 	min-height: 100vh;
@@ -11,7 +11,7 @@
 	margin: 0 -20px 0 -20px;
 
 	* {
-		font-family: "Rubik", sans-serif;
+		font-family: "Roboto", sans-serif;
 		padding: 0;
 		margin: 0;
 		box-sizing: border-box;

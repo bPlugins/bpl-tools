@@ -1,11 +1,14 @@
 @import '../_variables';
 
 .bPlDashboardPricing {
+	width: 100%;
+	max-width: 1440px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	padding: 56px 36px !important;
+	padding: 56px 32px !important;
+	margin: 0 auto;
 
 	.cycles {
 		display: inline-flex;
@@ -16,7 +19,7 @@
 		border: 1px solid #e4e4e4;
 		border-radius: 10px;
 		overflow: hidden;
-		margin-bottom: 22px;
+		margin-bottom: 21px;
 
 		button {
 			font-size: 18px;
@@ -47,7 +50,7 @@
 		padding: 10px 20px;
 		border-radius: 10px;
 		box-shadow: inset 0 0 0 1px #ffffff42, 0 0 0 1.5px #000, 0 0 0 5px #0000000a;
-		margin-bottom: 22px;
+		margin-bottom: 21px;
 	}
 
 	.plans {
@@ -56,7 +59,7 @@
 		display: grid;
 		grid-template-columns: repeat(auto-fill, minmax(min(390px, 100%), 1fr));
 		container-type: inline-size;
-		gap: 22px;
+		gap: 21px;
 		padding: 0;
 
 		.plan {
@@ -70,25 +73,26 @@
 			margin: 0;
 
 			.planName {
-				font-size: 22px;
-				color: #1B2E4B;
+				font-size: 18px;
+				font-weight: 500;
+				color: $contentColor;
 				margin-bottom: 8px;
 			}
 
 			.price {
-				font-size: 38px;
+				font-size: 36px;
 				font-weight: 500;
-				color: #001737;
+				color: $titleColor;
 			}
 
 			.note {
 				font-size: 16px;
-				color: #1B2E4B;
+				color: $contentColor;
 				margin-bottom: 32px;
 			}
 
 			.features {
-				font-size: 18px;
+				font-size: 16px;
 				color: $contentColor;
 				margin-bottom: 24px;
 
@@ -113,7 +117,7 @@
 						background: #DFDCFF;
 						position: absolute;
 						left: 0;
-						top: 0;
+						top: -1px;
 						border-radius: 4.3px;
 					}
 				}

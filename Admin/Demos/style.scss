@@ -1,7 +1,8 @@
 @import '../__variables';
 
 .bPlDashboardDemos {
-	max-width: 100%;
+	width: 100%;
+	max-width: 1440px;
 	min-height: 600px;
 	height: calc(100dvh - 127px - var(--wp-admin--admin-bar--height, 32px));
 	background: #fff;
@@ -9,16 +10,17 @@
 	border-radius: 10px;
 	overflow: hidden;
 	padding: 0 !important;
+	margin: 0 auto;
 
 	.bPlDashboardButtons {
 		gap: 13px;
 		flex-wrap: wrap;
 
 		.bPlButton {
-			font-size: 16px;
+			font-size: 14px;
 			font-weight: 500;
 			color: #fff;
-			padding: 10px 21px;
+			padding: 8px 20px;
 			border-radius: 5px;
 
 			&::before {
@@ -44,7 +46,7 @@
 	}
 
 	.sidebar {
-		min-width: 355px;
+		min-width: 350px;
 		background: #fafbfc;
 		display: flex;
 		flex-direction: column;
@@ -61,7 +63,7 @@
 			}
 
 			.search {
-				border-radius: 6px;
+				border-radius: 5px;
 				position: relative;
 				max-width: 100%;
 
@@ -82,7 +84,7 @@
 					background: #fff;
 					padding-left: 48px;
 					border: 1px solid #C0CCDA88;
-					border-radius: 6px;
+					border-radius: 5px;
 					outline: 0;
 					box-shadow: none;
 
@@ -166,7 +168,7 @@
 						margin: 10px 0 16px 16px;
 
 						li {
-							font-size: 16px;
+							font-size: 14px;
 							position: relative;
 							color: #8392A5;
 							background: transparent;
