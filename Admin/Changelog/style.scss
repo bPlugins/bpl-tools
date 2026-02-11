@@ -7,7 +7,7 @@
 	h3 {
 		font-size: 18px;
 		font-weight: 600;
-		color: $contentColor;
+		color: var(--bpl-dashboard-title-color, $titleColor);
 		margin: 0 0 15px 0;
 	}
 
@@ -19,7 +19,7 @@
 			content: '';
 			width: 5px;
 			height: calc(100% - 10px);
-			background: $primaryColor;
+			background: var(--bpl-dashboard-primary-color, $primaryColor);
 			position: absolute;
 			top: 50%;
 			left: 0;
@@ -50,13 +50,13 @@
 			font-size: 14px;
 			font-weight: 600;
 			list-style-type: none;
-			color: $contentColor;
+			color: var(--bpl-dashboard-content-color, $contentColor);
 			margin-bottom: 5px;
 		}
 
 		.time {
 			font-size: 14px;
-			color: #5F6D81;
+			color: rgba(var(--bpl-dashboard-content-color-rgb, $contentColor), .75);
 			margin: 0;
 		}
 	}

@@ -5,6 +5,15 @@ import Button from '../../Components/Button/Button';
 import './style.scss';
 import '../lib/fs';
 
+/**
+ * Pricing Component
+ * Renders product pricing plans with billing cycle toggles and Freemius checkout integration.
+ *
+ * @param {object} props - Component props
+ * @param {object} props.pricingInfo - Pricing data {cycles, plans}
+ * @param {object} props.freemius - Freemius configuration
+ * @returns {JSX.Element}
+ */
 const Pricing = (props) => {
 	const { pricingInfo, children } = props;
 	const { cycles, plans } = pricingInfo;

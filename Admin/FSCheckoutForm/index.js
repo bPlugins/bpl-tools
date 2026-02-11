@@ -2,12 +2,10 @@
  * FSCheckoutForm Component
  * Renders a Freemius checkout iframe for purchasing plugin plans.
  *
- * Props:
- * - freemius: object (contains product_id and plan_id)
- * - options: object (additional checkout options)
- *
- * For more information, see:
- * https://freemius.com/help/documentation/checkout/freemius-checkout-buy-button/
+ * @param {object} props - Component props
+ * @param {object} props.freemius - Freemius configuration {product_id, plan_id}
+ * @param {object} props.options - Additional checkout options
+ * @returns {JSX.Element}
  */
 import { useState } from 'react';
 import './style.scss';

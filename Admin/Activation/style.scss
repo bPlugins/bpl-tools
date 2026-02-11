@@ -31,14 +31,14 @@
 				h1 {
 					font-size: 24px;
 					font-weight: 700;
-					color: $titleColor;
+					color: var(--bpl-dashboard-title-color, $titleColor);
 					margin: 0 0 3px 0;
 				}
 
 				.version {
 					font-size: 14px;
 					font-weight: 500;
-					color: $contentColor;
+					color: var(--bpl-dashboard-content-color, $contentColor);
 					margin: 0;
 				}
 			}
@@ -51,12 +51,12 @@
 			border-radius: 8px;
 
 			&.active {
-				color: #fff;
+				color: $whiteColor;
 				background: #34C759;
 			}
 
 			&.inactive {
-				color: #fff;
+				color: $whiteColor;
 				background: #FF383C;
 			}
 		}
@@ -76,7 +76,7 @@
 
 		p {
 			font-size: 16px;
-			color: $contentColor;
+			color: var(--bpl-dashboard-content-color, $contentColor);
 			margin: 0;
 		}
 	}
@@ -108,13 +108,13 @@
 		h2 {
 			font-size: 48px;
 			font-weight: 700;
-			color: $titleColor;
+			color: var(--bpl-dashboard-title-color, $titleColor);
 			margin: 0 0 10px 0;
 		}
 
 		.successMessage {
 			font-size: 16px;
-			color: rgba($contentColor, 0.7);
+			color: rgba(var(--bpl-dashboard-content-color-rgb, $contentColor), 0.7);
 			margin: 0 0 42px 0;
 		}
 
@@ -126,15 +126,15 @@
 			.licenseInput {
 				width: 100%;
 				font-size: 16px;
-				color: $contentColor;
-				background: #fff;
+				color: var(--bpl-dashboard-content-color, $contentColor);
+				background: $whiteColor;
 				padding: 14px 76px 14px 33px;
 				border: 1px solid #485E9088;
 				border-radius: 10px;
 
 				&:focus {
 					outline: none;
-					border-color: $primaryColor;
+					border-color: var(--bpl-dashboard-primary-color, $primaryColor);
 				}
 			}
 
@@ -151,7 +151,7 @@
 				transition: color 0.2s;
 
 				&:hover {
-					color: $primaryColor;
+					color: var(--bpl-dashboard-primary-color, $primaryColor);
 				}
 
 				svg {
@@ -171,8 +171,8 @@
 			.linkButton {
 				padding: 8px 18px;
 				border: 1px solid #D1D5DB;
-				background: #fff;
-				color: $primaryColor;
+				background: $whiteColor;
+				color: var(--bpl-dashboard-primary-color, $primaryColor);
 				border-radius: 6px;
 				font-size: 14px;
 				font-weight: 500;
@@ -180,7 +180,7 @@
 				transition: all 0.2s;
 
 				&:hover {
-					border-color: $primaryColor;
+					border-color: var(--bpl-dashboard-primary-color, $primaryColor);
 					background: #F0F4FF;
 				}
 
@@ -203,7 +203,7 @@
 		h2 {
 			font-size: 28px;
 			font-weight: 700;
-			color: $titleColor;
+			color: var(--bpl-dashboard-title-color, $titleColor);
 			margin: 0 0 15px 0;
 		}
 
@@ -213,20 +213,20 @@
 			.licenseInput {
 				width: 100%;
 				font-size: 15px;
-				color: $contentColor;
+				color: var(--bpl-dashboard-content-color, $contentColor);
 				padding: 16px 25px;
 				border: 1px solid #485E9088;
 				border-radius: 4px;
 				transition: all .3s ease;
 
 				&::placeholder {
-					color: $contentColor;
+					color: var(--bpl-dashboard-content-color, $contentColor);
 				}
 
 				&:focus {
 					outline: none;
-					border-color: $primaryColor;
-					box-shadow: 0 0 0 3px rgba($primaryColor, 0.1);
+					border-color: var(--bpl-dashboard-primary-color, $primaryColor);
+					box-shadow: 0 0 0 3px rgba(var(--bpl-dashboard-primary-color-rgb, $primaryColor), 0.1);
 				}
 
 				&:disabled {
@@ -238,12 +238,12 @@
 
 		.formDescription {
 			font-size: 14px;
-			color: $contentColor;
+			color: var(--bpl-dashboard-content-color, $contentColor);
 			margin: 0 0 12px 0;
 
 			a {
 				font-weight: 500;
-				color: $primaryColor;
+				color: var(--bpl-dashboard-primary-color, $primaryColor);
 				text-decoration: none;
 				transition: all 0.2s ease-in-out;
 
@@ -262,7 +262,6 @@
 				align-items: center;
 				gap: 12px;
 				font-size: 16px;
-				color: $contentColor;
 
 				&:not(:last-child) {
 					margin-bottom: 18px;
@@ -271,7 +270,7 @@
 				svg {
 					width: 30px;
 					height: 30px;
-					fill: currentColor;
+					fill: var(--bpl-dashboard-title-color, $titleColor);
 				}
 
 				h4 {
@@ -279,7 +278,7 @@
 					display: flex;
 					align-items: center;
 					gap: 3px;
-					color: $titleColor;
+					color: var(--bpl-dashboard-title-color, $titleColor);
 					margin: 0 0 5px 0;
 
 					svg {
@@ -290,7 +289,7 @@
 
 				p {
 					font-size: 12px;
-					color: rgba($contentColor, 0.8);
+					color: rgba(var(--bpl-dashboard-content-color-rgb, $contentColor), 0.8);
 					margin: 0;
 				}
 			}
@@ -306,7 +305,7 @@
 				font-size: 12px;
 				font-weight: 600;
 				text-decoration: none;
-				color: $primaryColor;
+				color: var(--bpl-dashboard-primary-color, $primaryColor);
 				transition: all 0.2s ease-in-out;
 
 				&:hover {
@@ -329,17 +328,13 @@
 		.cancelButton {
 			width: auto;
 			font-size: 16px;
-			background: $primaryColor;
+			background: var(--bpl-dashboard-primary-color, $primaryColor);
 			padding: 12px 16px;
 			border-radius: 4px;
 			margin-bottom: 28px;
 
 			&::before {
-				display: none;
-			}
-
-			&:hover {
-				background: $secondaryColor;
+				background: var(--bpl-dashboard-secondary-color, $secondaryColor);
 			}
 
 			&:disabled {

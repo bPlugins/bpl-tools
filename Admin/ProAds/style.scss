@@ -15,7 +15,7 @@
 	h3 {
 		font-size: 16px;
 		font-weight: 600;
-		color: $contentColor;
+		color: var(--bpl-dashboard-content-color, $contentColor);
 		margin-bottom: 21px;
 	}
 
@@ -27,7 +27,7 @@
 		li {
 			font-size: 14px;
 			font-weight: 400;
-			color: #5F6D81;
+			color: rgba(var(--bpl-dashboard-content-color-rgb, $contentColor), .75);
 			margin-bottom: 0;
 			display: flex;
 			align-items: start;
@@ -44,12 +44,12 @@
 				display: inline-flex;
 				align-items: center;
 				justify-content: center;
-				background: linear-gradient(to top right, #0B81EE, #8C74FD);
+				background: linear-gradient(to top right, var(--bpl-dashboard-primary-color, $primaryColor), var(--bpl-dashboard-secondary-color, $secondaryColor));
 				border-radius: 50%;
 				margin-top: 1px;
 
 				svg {
-					fill: #fff;
+					fill: $whiteColor;
 					width: 15px;
 					height: 15px;
 				}
@@ -59,16 +59,12 @@
 
 	.bPlButton {
 		font-size: 16px;
-		color: #fff;
-		background: $secondaryColor;
+		color: $whiteColor;
+		background: var(--bpl-dashboard-secondary-color, $secondaryColor);
 		padding: 10px 21px;
 
-		&:hover {
-			background: $primaryColor;
-		}
-
 		&::before {
-			display: none;
+			background: var(--bpl-dashboard-primary-color, $primaryColor);
 		}
 	}
 

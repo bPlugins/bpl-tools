@@ -15,10 +15,10 @@
 		display: flex;
 		flex-direction: column;
 		position: relative;
-		background: #fff;
+		background: $whiteColor;
 		padding: 27px;
 		overflow: hidden;
-		border: 1px solid #fff;
+		border: 1px solid $whiteColor;
 		border-radius: 10px;
 
 		&::after {
@@ -49,7 +49,7 @@
 			h3 {
 				font-size: 21px;
 				font-weight: 500;
-				color: $titleColor;
+				color: var(--bpl-dashboard-title-color, $titleColor);
 				margin: 0;
 			}
 		}
@@ -57,7 +57,7 @@
 		.description {
 			font-size: 17px;
 			text-align: left;
-			color: rgba($contentColor, .7);
+			color: rgba(var(--bpl-dashboard-content-color-rgb, $contentColor), .7);
 			margin: 0 0 21px 0;
 			display: -webkit-box;
 			-webkit-line-clamp: 2;
@@ -71,7 +71,7 @@
 			display: flex;
 			justify-content: space-between;
 			gap: 12px;
-			color: rgba($contentColor, .7);
+			color: rgba(var(--bpl-dashboard-content-color-rgb, $contentColor), .7);
 			margin: auto 0 21px 0;
 
 			.downloads,
@@ -93,28 +93,24 @@
 			font-size: 16px;
 			font-weight: 500;
 			justify-content: center;
-			background: $primaryColor;
+			background: var(--bpl-dashboard-primary-color, $primaryColor);
 
 			&::before {
-				display: none;
-			}
-
-			&:hover {
-				background: $secondaryColor;
+				background: var(--bpl-dashboard-secondary-color, $secondaryColor);
 			}
 
 			&.installed {
-				background: $secondaryColor;
+				background: var(--bpl-dashboard-secondary-color, $secondaryColor);
 
-				&:hover {
-					background: $primaryColor;
+				&::before {
+					background: var(--bpl-dashboard-primary-color, $primaryColor);
 				}
 			}
 
 			&.success {
 				background: #038122;
 
-				&:hover {
+				&::before {
 					background: #025617;
 				}
 			}
@@ -122,7 +118,7 @@
 			&.error {
 				background: #d61e21;
 
-				&:hover {
+				&::before {
 					background: #a61315;
 				}
 			}

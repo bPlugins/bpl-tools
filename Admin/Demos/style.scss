@@ -5,7 +5,7 @@
 	max-width: 1440px;
 	min-height: 600px;
 	height: calc(100dvh - 127px - var(--wp-admin--admin-bar--height, 32px));
-	background: #fff;
+	background: $whiteColor;
 	display: flex;
 	border-radius: 10px;
 	overflow: hidden;
@@ -19,27 +19,23 @@
 		.bPlButton {
 			font-size: 14px;
 			font-weight: 500;
-			color: #fff;
+			color: $whiteColor;
 			padding: 8px 20px;
 			border-radius: 5px;
 
-			&::before {
-				display: none;
-			}
-
 			&:first-child {
-				background: $primaryColor;
+				background: var(--bpl-dashboard-primary-color, $primaryColor);
 
-				&:hover {
-					background: $secondaryColor;
+				&::before {
+					background: var(--bpl-dashboard-secondary-color, $secondaryColor);
 				}
 			}
 
 			&:last-child {
-				background: $secondaryColor;
+				background: var(--bpl-dashboard-secondary-color, $secondaryColor);
 
-				&:hover {
-					background: $primaryColor;
+				&::before {
+					background: var(--bpl-dashboard-primary-color, $primaryColor);
 				}
 			}
 		}
@@ -58,7 +54,7 @@
 
 			p {
 				font-size: 16px;
-				color: rgba($contentColor, .9);
+				color: rgba(var(--bpl-dashboard-content-color-rgb, $contentColor), .9);
 				margin: 0 0 4px 0;
 			}
 
@@ -73,17 +69,17 @@
 					position: absolute;
 					top: 50%;
 					left: 16px;
-					fill: #8392A5;
+					fill: rgba(var(--bpl-dashboard-title-color-rgb, $titleColor), .75);
 					transform: translateY(-50%);
 				}
 
 				input {
 					height: 45px;
 					width: 100%;
-					color: #C0CCDA;
-					background: #fff;
+					color: rgba(var(--bpl-dashboard-content-color-rgb, $contentColor), .75);
+					background: $whiteColor;
 					padding-left: 48px;
-					border: 1px solid #C0CCDA88;
+					border: 1px solid rgba(var(--bpl-dashboard-content-color-rgb, $contentColor), .2);
 					border-radius: 5px;
 					outline: 0;
 					box-shadow: none;
@@ -91,14 +87,14 @@
 					&:hover,
 					&:focus,
 					&:active {
-						border: 1px solid #C0CCDA88;
+						border: 1px solid rgba(var(--bpl-dashboard-content-color-rgb, $contentColor), .2);
 						outline: 0;
 						box-shadow: none;
 					}
 				}
 
 				input::placeholder {
-					color: #C0CCDA;
+					color: rgba(var(--bpl-dashboard-content-color-rgb, $contentColor), .75);
 				}
 			}
 
@@ -115,8 +111,8 @@
 
 			.parentDemo {
 				width: 100%;
-				color: $contentColor !important;
-				background: #fff !important;
+				color: var(--bpl-dashboard-title-color, $titleColor) !important;
+				background: $whiteColor !important;
 				padding: 16px;
 				display: flex;
 				align-items: center;
@@ -127,7 +123,7 @@
 				cursor: pointer;
 
 				svg {
-					fill: #8392A5;
+					fill: rgba(var(--bpl-dashboard-title-color-rgb, $titleColor), .75);
 
 					&:last-child {
 						width: 26px;
@@ -142,10 +138,10 @@
 				}
 
 				&.active {
-					color: $primaryColor !important;
+					color: var(--bpl-dashboard-primary-color, $primaryColor) !important;
 
 					svg {
-						fill: $primaryColor;
+						fill: var(--bpl-dashboard-primary-color, $primaryColor);
 
 						&:last-child {
 							transform: rotate(180deg);
@@ -163,14 +159,14 @@
 						list-style: none;
 						transition: all 300ms ease-in-out;
 						padding: 0 0 0 20px;
-						border-left: 1px solid #8392A5;
+						border-left: 1px solid rgba(var(--bpl-dashboard-title-color-rgb, $titleColor), .75);
 						margin: 0 0 0 16px;
 						margin: 10px 0 16px 16px;
 
 						li {
 							font-size: 14px;
 							position: relative;
-							color: #8392A5;
+							color: rgba(var(--bpl-dashboard-title-color-rgb, $titleColor), .75);
 							background: transparent;
 							border-radius: 5px;
 							transition: all 300ms ease-in-out;
@@ -194,8 +190,8 @@
 							}
 
 							&.active {
-								color: $contentColor;
-								background: #fff;
+								color: var(--bpl-dashboard-primary-color, $primaryColor);
+								background: $whiteColor;
 								padding: 8px 0 8px 22px;
 							}
 						}
@@ -246,7 +242,7 @@
 		display: flex;
 		flex-direction: column;
 		overflow: hidden;
-		background: #fff;
+		background: $whiteColor;
 
 		.mainHeader {
 			display: flex;
@@ -259,7 +255,7 @@
 				h3 {
 					font-size: 20px;
 					font-weight: 600;
-					color: $contentColor;
+					color: var(--bpl-dashboard-title-color, $titleColor);
 					margin: 0;
 				}
 			}
@@ -267,7 +263,7 @@
 
 		.canvas {
 			flex: 1 1 0%;
-			background: #fff;
+			background: $whiteColor;
 			display: flex;
 			flex-direction: column;
 			position: relative;

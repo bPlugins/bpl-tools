@@ -1,27 +1,26 @@
+import { useState } from 'react';
 import Button from '../../Components/Button/Button';
+import { closeIcon, playIcon } from '../../utils/icons';
+import VideoPlayer from './VideoPlayer';
 
 import './style.scss';
 
 /**
- * Renders the overview section of the plugin dashboard.
+ * Overview Component
+ * Renders the welcome section of the plugin dashboard with banners and quick links.
  *
- * @param {object} props - The component props.
- * @param {string} [props.name] - The name of the plugin, used in the welcome title.
- * @param {string} [props.displayName] - The display name of the plugin.
- * @param {string} [props.description] - A short description of the plugin.
- * @param {string} props.slug - The WordPress.org plugin slug for generating the review link.
- * @param {string} [props.media.thumbnail] - URL for the plugin's feature image.
- * @param {string} [props.video] - URL for a promotional video.
- * @param {boolean} [props.isYoutube] - Indicates if the video is a YouTube video.
- * @param {object} [props.pages] - An object containing links to various pages.
- * @param {string} [props.pages.docs] - Link to the documentation page.
- * @param {string} [props.pages.landing] - Link to the plugin's landing page.
- * @param {React.ReactNode} [props.children] - Custom elements to be rendered in the button area.
- * @returns {JSX.Element} The rendered overview component.
+ * @param {object} props - Component props
+ * @param {string} [props.name] - Plugin name
+ * @param {string} props.slug - WordPress.org plugin slug
+ * @param {object} [props.media] - Media configuration {thumbnail}
+ * @param {object} [props.pages] - Link configuration {docs, landing}
+ * @returns {JSX.Element}
  */
 const Overview = (props) => {
-	const { name, displayName, description, slug, media, video, isYoutube, isPremium, pages, children } = props;
-	const { thumbnail } = media || {};
+	const { name, description, slug, media, isPremium, pages, children } = props;
+	const { thumbnail, video, isYoutube } = media || {};
+
+	const [showVideo, setShowVideo] = useState(false);
 
 	const helpInfo = [
 		{
@@ -62,11 +61,31 @@ const Overview = (props) => {
 
 				{thumbnail && <div className='overviewBanner'>
 					<img src={thumbnail} alt={name} />
+
+					{video && <button className='playButton' onClick={() => setShowVideo(true)}>
+						{playIcon}
+					</button>}
 				</div>}
 			</div>
 
 			{children}
 		</div>
+
+		{showVideo && video && <div className='bPlVideoModal'>
+			<div className='bPlVideoModalContent'>
+				<button className='closeModal' onClick={() => setShowVideo(false)}>
+					{closeIcon}
+				</button>
+
+				<VideoPlayer
+					src={video}
+					isYoutube={isYoutube}
+					autoPlay={true}
+				/>
+			</div>
+
+			<div className='bPlVideoModalOverlay' onClick={() => setShowVideo(false)} />
+		</div>}
 
 		<div className='overviewRight'>
 			{helpInfo?.map((item, index) => {

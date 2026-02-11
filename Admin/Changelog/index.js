@@ -1,5 +1,13 @@
 import './style.scss';
 
+/**
+ * Changelog Component
+ * Renders the release notes/changelog section from a provided array.
+ *
+ * @param {object} props - Component props
+ * @param {Array} props.changelogs - Array of changelog objects {type, version, list}
+ * @returns {JSX.Element}
+ */
 const Changelog = (props) => {
 	const { changelogs } = props;
 

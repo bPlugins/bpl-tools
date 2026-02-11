@@ -1,0 +1,37 @@
+@import '../__variables';
+
+.bPlDashboardBlocksCard {
+	width: 100%;
+	padding: 25px !important;
+
+	.blocksCardHeader {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		flex-wrap: wrap;
+		gap: 15px;
+		margin-bottom: 23px;
+
+		h3 {
+			color: var(--bpl-dashboard-title-color, $titleColor);
+			font-size: 18px;
+			font-weight: 600;
+		}
+
+		a {
+			font-size: 14px;
+			color: var(--bpl-dashboard-primary-color, $primaryColor);
+			text-decoration: none;
+			transition: all 0.3s ease;
+
+			&:hover {
+				text-decoration: underline;
+			}
+		}
+	}
+
+	.dashboardBlocks {
+		grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+		gap: 10px;
+	}
+}

@@ -1,5 +1,6 @@
 export { default as Activation } from './Activation';
 export { default as Blocks } from './Blocks';
+export { default as BlocksCard } from './Blocks/Card';
 export { default as Changelog } from './Changelog';
 export { default as Demos } from './Demos';
 export { default as FeatureCompare } from './FeatureCompare';

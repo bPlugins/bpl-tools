@@ -6,6 +6,15 @@ import '../lib/fs';
 import Button from '../../Components/Button/Button';
 import { checkIcon, closeIcon } from '../../utils/icons';
 
+/**
+ * FeatureCompare Component
+ * Renders a side-by-side comparison table of free vs pro features, fetching data from bPlugins API.
+ *
+ * @param {object} props - Component props
+ * @param {Array} [props.plans=['free', 'pro']] - Plan names to compare
+ * @param {object} props.freemius - Freemius configuration {product_id, public_key}
+ * @returns {JSX.Element}
+ */
 const FeatureCompare = ({ plans: dp = ['free', 'pro'], freemius }) => {
 	const { product_id, public_key } = freemius || {};
 

@@ -6,12 +6,11 @@ import '../lib/fs';
  * FSCheckoutButton Component
  * Renders a Freemius checkout button for purchasing plugin plans.
  *
- * Props:
- * - freemius: object (contains product_id, plan_id, and public_key)
- * - options: object (additional checkout options)
- *
- * For more information, see:
- * https://freemius.com/help/documentation/checkout/freemius-checkout-buy-button/
+ * @param {object} props - Component props
+ * @param {object} props.freemius - Freemius configuration {product_id, plan_id, public_key}
+ * @param {object} props.options - Additional checkout options
+ * @param {object} [props.buttonProps] - Props to pass to the underlying Button component
+ * @returns {JSX.Element}
  */
 const FSCheckoutButton = ({ freemius, options, buttonProps, children }) => {
 	const onUpgrade = (e) => {

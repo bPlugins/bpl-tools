@@ -4,54 +4,25 @@ import { useState, useEffect } from 'react';
 import './style.scss';
 
 import Button from '../../Components/Button/Button';
-import { closeIcon, demoIcon, docsIcon, searchIcon } from '../../utils/icons';
+import { closeIcon, searchIcon } from '../../utils/icons';
 
-const Toast = ({ message, type }) => {
-	return <div className={`dashboardBlocksToast dashboardBlocksToast-${type}`}>
-		{type === 'loading' && <span className='spinner'></span>}
-		{type === 'success' && <span className='checkmark'>✓</span>}
-		{type === 'error' && <span className='error-icon'>✕</span>}
-		<span className='message'>{message}</span>
-	</div>;
-};
+import Block from './Block';
+import Toast from './Toast';
 
-const BlockCard = ({ block, isPremium, disableBlockName, handleCheckboxChange, isSaving }) => {
-	const { name, title, icon, demo, docs, badge = '', required = false } = block;
-	const isBlockPremium = !isPremium && block.isPremium;
-	const disabledBlock = isBlockPremium ? false : !disableBlockName.includes(name);
-	const isRequired = required === true;
-
-	return <div className={`block ${!disabledBlock ? 'disabled' : ''}`}>
-		<div className='icon'>{icon}</div>
-
-		<div className='name'><p className='blockTitle'>{title}</p>{isBlockPremium && <a href='#pricing' target='_blank' rel='noopener noreferrer'>Get Pro</a>} </div>
-
-		{demo && <a className='actionBtn' href={demo} target='_blank' rel='noopener noreferrer'>
-			{demoIcon}
-		</a>}
-
-		{docs && <a className='actionBtn' href={docs} target='_blank' rel='noopener noreferrer'>
-			{docsIcon}
-		</a>}
-
-		{badge && <p className='blockBadge'>{badge}</p>}
-
-		{isBlockPremium && <p className='blockBadge blockProBadge'>Pro</p>}
-
-		{isRequired && <p className='blockBadge blockRequiredBadge'>Required</p>}
-
-		<label className='toggleSwitch' {...((isBlockPremium || isRequired) ? { htmlFor: 'b-blocks-admin-pro-modal-toggle' } : {})}>
-			<input
-				type='checkbox'
-				checked={disabledBlock}
-				{...(isBlockPremium || isRequired ? {} : { onChange: (e) => handleCheckboxChange(name, e.target.checked) })}
-				disabled={isSaving || isBlockPremium || isRequired}
-			/>
-			<span className='slider'></span>
-		</label>
-	</div>;
-};
-
+/**
+ * Blocks Component
+ * Renders a management interface for enabling/disabling plugin features/blocks.
+ * Includes search, categorization, and "Activate/Deactivate All" functionality.
+ *
+ * @param {object} props - Component props
+ * @param {boolean} props.isPremium - Whether the current user is premium
+ * @param {Array} props.disabledBlocks - List of currently disabled block names
+ * @param {Function} props.onChange - Callback when block status changes
+ * @param {Array} props.allBlocks - Array of block definitions
+ * @param {string} props.status - Saving status ('loading', 'success', 'error')
+ * @param {React.Component} [props.ProModal] - Modal component for Pro upsells
+ * @returns {JSX.Element}
+ */
 const Blocks = (props) => {
 	const { isPremium, disabledBlocks, onChange, allBlocks, status, ProModal = null } = props;
 	const publishedBlocks = allBlocks.filter(b => 'published' === b.status || !b.status);
@@ -188,11 +159,11 @@ const Blocks = (props) => {
 				{filteredGroupedBlocks.map(group => (
 					<div key={group.title} className='blocksGroup'>
 						<h3 className='groupTitle'>{group.title}</h3>
-						<div className='blocks'>
+						<div className='dashboardBlocks'>
 							{group.children
 								.filter(child => child.status === 'published' || !child.status)
 								.map(childBlock => (
-									<BlockCard
+									<Block
 										key={childBlock.name}
 										block={childBlock}
 										isPremium={isPremium}
@@ -207,9 +178,9 @@ const Blocks = (props) => {
 
 				{/* Render individual blocks */}
 				{filteredIndividualBlocks.length > 0 && (
-					<div className='blocks'>
+					<div className='dashboardBlocks'>
 						{filteredIndividualBlocks.map(block => (
-							<BlockCard
+							<Block
 								key={block.name}
 								block={block}
 								isPremium={isPremium}

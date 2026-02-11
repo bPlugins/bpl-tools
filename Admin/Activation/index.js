@@ -60,11 +60,6 @@ const Activation = (props) => {
 		}
 	};
 
-	// Handle change license
-	const handleChangeLicense = () => {
-		setShowActivationForm(true);
-	};
-
 	// Mask license key for display
 	const getMaskedLicense = (license) => {
 		if (!license) return '';
@@ -74,6 +69,8 @@ const Activation = (props) => {
 		const middle = 'x'.repeat(Math.max(0, license.length - 8));
 		return `${start}${middle}${end}`;
 	};
+
+	const isChangeLicense = showActivationForm && isActivated;
 
 	return <div className='bPlDashboardActivation bPlDashboardCard'>
 		<div className='activationHeader'>
@@ -130,7 +127,7 @@ const Activation = (props) => {
 					</div>
 
 					<div className='licenseActions'>
-						<button className='linkButton' onClick={handleChangeLicense}>
+						<button className='linkButton' onClick={() => setShowActivationForm(true)}>
 							Change License
 						</button>
 						<button className='linkButton danger' onClick={handleDeactivateLicense}>
@@ -139,35 +136,23 @@ const Activation = (props) => {
 					</div>
 				</div> :
 					<div className='activationForm'>
-						<h2>{showActivationForm && isActivated ? 'Change License' : 'Activate License'}</h2>
+						<h2>{isChangeLicense ? 'Change License' : 'Activate License'}</h2>
 
 						<p className='formDescription'>
-							Enter Your license key below. {!showActivationForm && !isActivated && <><a href={`https://dashboard.freemius.com/license-recovery/${product_id}/${slug}/`} target='_blank' rel='noopener noreferrer'>Can&apos;t find license key?</a> or <a href={`https://freemius.com/help/documentation/wordpress-sdk/license-activation-issues/`} target='_blank' rel='noopener noreferrer'>License issues?</a></>}
+							Enter Your license key below. {!isChangeLicense && <><a href={`https://dashboard.freemius.com/license-recovery/${product_id}/${slug}/`} target='_blank' rel='noopener noreferrer'>Can&apos;t find license key?</a> or <a href={`https://freemius.com/help/documentation/wordpress-sdk/license-activation-issues/`} target='_blank' rel='noopener noreferrer'>License issues?</a></>}
 						</p>
 
 						<div className='formGroup'>
-							<input
-								type='text'
-								className='licenseInput'
-								placeholder='Enter your purchase code here.'
-								value={licenseKey}
-								onChange={(e) => setLicenseKey(e.target.value)}
-								disabled={isLoading}
-							/>
+							<input type='text' className='licenseInput' placeholder='Enter your purchase code here.' value={licenseKey} onChange={(e) => setLicenseKey(e.target.value)} disabled={isLoading} />
 						</div>
 
 						{error && <div className='errorMessage'>{error}</div>}
 
-						<Button
-							variant='primary'
-							onClick={handleActivation}
-							disabled={isLoading}
-							className='activateButton'
-						>
+						<Button variant='primary' onClick={handleActivation} disabled={isLoading} className='activateButton'>
 							{isLoading ? 'Activating...' : 'Activate your License'}
 						</Button>
 
-						{!showActivationForm && !isActivated && <>
+						{!isChangeLicense && <>
 							<p className='formDescription'>
 								For delivery of security &amp; feature updates, and license management, <strong>{name}</strong> needs to ↓
 							</p>
@@ -207,7 +192,7 @@ const Activation = (props) => {
 							</div>
 						</>}
 
-						{showActivationForm && isActivated && <Button
+						{isChangeLicense && <Button
 							variant='secondary'
 							onClick={() => setShowActivationForm(false)}
 							className='cancelButton'
