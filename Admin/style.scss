@@ -2,6 +2,22 @@
 
 @import '__variables.scss';
 
+.notice,
+.fs-notice,
+.fs-has-title,
+.fs_notice_board {
+	width: 0;
+	height: 0;
+	position: absolute;
+	top: -9999px;
+	left: -9999px;
+	opacity: 0;
+	visibility: hidden;
+	display: none !important;
+	padding: 0 !important;
+	margin: 0 !important;
+}
+
 .bPlDashboard {
 	font-family: "Roboto", sans-serif;
 	width: calc(100% + 20px);

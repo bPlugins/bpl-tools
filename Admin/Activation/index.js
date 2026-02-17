@@ -44,6 +44,7 @@ const Activation = (props) => {
 		if (success) {
 			setLicenseKey('');
 			setShowActivationForm(false); // Hide form after successful activation
+			window.location.reload();
 		}
 	};
 
@@ -57,6 +58,7 @@ const Activation = (props) => {
 		if (success) {
 			setShowActivationForm(true);
 			setLicenseKey('');
+			window.location.reload();
 		}
 	};
 

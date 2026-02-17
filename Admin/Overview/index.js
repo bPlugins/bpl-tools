@@ -17,7 +17,7 @@ import './style.scss';
  * @returns {JSX.Element}
  */
 const Overview = (props) => {
-	const { name, description, slug, media, isPremium, pages, children } = props;
+	const { name, description, slug, media, isPremium, pages, startCreate, children } = props;
 	const { thumbnail, video, isYoutube } = media || {};
 
 	const [showVideo, setShowVideo] = useState(false);
@@ -52,11 +52,13 @@ const Overview = (props) => {
 
 					{description && <p>{description}</p>}
 
-					{(children || pages?.landing) && <div className='buttons'>
+					<div className='buttons'>
 						{!isPremium && <Button href='#pricing'>Buy Now</Button>}
 
+						{startCreate?.content && <Button href={`https://plugins.local/wp-admin/post-new.php?post_type=page&title=${startCreate?.title}&content=${startCreate?.content}`} target='_blank' rel='noopener noreferrer'>Start Now</Button>}
+
 						{pages?.landing && <Button href={pages.landing} target='_blank' rel='noopener noreferrer'>Learn More</Button>}
-					</div>}
+					</div>
 				</div>
 
 				{thumbnail && <div className='overviewBanner'>
