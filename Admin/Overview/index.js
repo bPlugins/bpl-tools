@@ -1,9 +1,11 @@
 import { useState } from 'react';
-import Button from '../../Components/Button/Button';
-import { closeIcon, playIcon } from '../../utils/icons';
-import VideoPlayer from './VideoPlayer';
+import { withSelect } from '@wordpress/data';
 
 import './style.scss';
+
+import Button from '../../Components/Button/Button';
+import VideoPlayer from './VideoPlayer';
+import { closeIcon, playIcon } from '../../utils/icons';
 
 /**
  * Overview Component
@@ -17,7 +19,7 @@ import './style.scss';
  * @returns {JSX.Element}
  */
 const Overview = (props) => {
-	const { name, description, slug, media, isPremium, pages, startCreate, children } = props;
+	const { name, description, slug, media, isPremium, pages, startCreate, site, children } = props;
 	const { thumbnail, video, isYoutube } = media || {};
 
 	const [showVideo, setShowVideo] = useState(false);
@@ -55,7 +57,7 @@ const Overview = (props) => {
 					<div className='buttons'>
 						{!isPremium && <Button href='#pricing'>Buy Now</Button>}
 
-						{startCreate?.content && <Button href={`https://plugins.local/wp-admin/post-new.php?post_type=page&title=${startCreate?.title}&content=${startCreate?.content}`} target='_blank' rel='noopener noreferrer'>Start Now</Button>}
+						{startCreate?.content && site?.url && <Button href={`${site?.url}/wp-admin/post-new.php?post_type=page&title=${startCreate?.title}&content=${startCreate?.content}`} target='_blank' rel='noopener noreferrer'>Start Now</Button>}
 
 						{pages?.landing && <Button href={pages.landing} target='_blank' rel='noopener noreferrer'>Learn More</Button>}
 					</div>
@@ -108,4 +110,10 @@ const Overview = (props) => {
 		</div>
 	</div>
 }
-export default Overview;
+export default withSelect((select) => {
+	const { getSite } = select('core');
+
+	return {
+		site: getSite?.()
+	}
+})(Overview);

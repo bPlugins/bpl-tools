@@ -340,6 +340,10 @@ svg.bPlBlockIcon {
 		font-size: 13px !important;
 		font-weight: 400 !important;
 		text-transform: unset !important;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 4px;
 	}
 
 	.components-notice {
@@ -429,6 +433,10 @@ svg.bPlBlockIcon {
 	// Toggle Control
 	.components-toggle-control {
 		label {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 4px;
 			margin-bottom: 3px;
 		}
 	}
@@ -655,6 +663,7 @@ svg.bPlBlockIcon {
 		// font-weight: 500;
 		display: flex;
 		align-items: center;
+		justify-content: space-between;
 		gap: 8px;
 		padding-bottom: 0 !important;
 		margin-right: auto;

@@ -1,90 +1,167 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Button from '../../Components/Button/Button';
-
-import './style.scss';
 import '../lib/fs';
+import './style.scss';
 
-/**
- * Pricing Component
- * Renders product pricing plans with billing cycle toggles and Freemius checkout integration.
- *
- * @param {object} props - Component props
- * @param {object} props.pricingInfo - Pricing data {cycles, plans}
- * @param {object} props.freemius - Freemius configuration
- * @returns {JSX.Element}
- */
-const Pricing = (props) => {
-	const { pricingInfo, children } = props;
-	const { cycles, plans } = pricingInfo;
+export const getFeatures = (plans, planId) => {
+	const freeFeatures = plans.find(p => p.name === 'free')?.features?.map(f => f.title);
+	const proFeatures = plans.find(p => p.name === 'pro')?.features?.filter(f => !freeFeatures.includes(f.title)).map(f => f.title);
 
-	const [cycle, setCycle] = useState(cycles?.find(c => c.isDefault)?.cycle || cycles[0]?.cycle);
+	const features = {
+		'free': freeFeatures,
+		'pro': proFeatures
+	}
 
-	const calculateMaxAnnualDiscount = () => {
-		const discounts = plans.map(plan => {
-			const monthlyForYear = parseFloat(plan.prices.monthly) * 12;
-			const annualPrice = parseFloat(plan.prices.annual);
-			return ((monthlyForYear - annualPrice) / monthlyForYear) * 100;
-		});
-		return Math.max(...discounts).toFixed(0);
-	};
+	const planName = plans.find(p => parseInt(p.id) === parseInt(planId))?.name;
+	const planFeatures = features[planName] || plans.find(p => parseInt(p.id) === parseInt(planId))?.features?.map(f => f.title);
+
+	return planFeatures || [];
+}
+
+const Pricing = ({ pricingInfo, options }) => {
+	const { pluginId, planId, licenses } = pricingInfo;
+
+	// new state for fetched single product
+	const [product, setProduct] = useState({});
+	const [isProductLoading, setIsProductLoading] = useState(false);
+	useEffect(() => {
+		if (pluginId) {
+			let mounted = true;
+			const url = `https://api.bplugins.com/wp-json/bpl/v1/products/${pluginId}`;
+			setIsProductLoading(true);
+			fetch(url)
+				.then(response => {
+					if (!response.ok) throw new Error(`${response.status} ${response.statusText}`);
+					return response.json();
+				})
+				.then(data => {
+					if (!mounted) return;
+					setProduct(data);
+				})
+				.catch(err => {
+					if (!mounted) return;
+					// eslint-disable-next-line no-console
+					console.error(err.message || 'Fetch error');
+					setProduct({});
+				})
+				.finally(() => {
+					if (mounted) setIsProductLoading(false);
+				});
+			return () => {
+				mounted = false;
+			};
+		}
+	}, [pluginId]);
+
+
+	const [cycles, setCycles] = useState([]);
+	const [cycle, setCycle] = useState(cycles?.find(c => c.isDefault)?.name || cycles[0]?.name);
+
+	useEffect(() => {
+		if (product?.id && planId) {
+			const { plans } = product || {};
+			const plan = plans?.find(p => parseInt(p.id) === parseInt(planId)) || plans?.[0] || {};
+
+			const singlePrices = plan?.pricing?.[0];
+
+			if (singlePrices && typeof singlePrices === 'object') {
+				let c = []
+				// eslint-disable-next-line no-prototype-builtins
+				if (singlePrices.hasOwnProperty('monthly')) {
+					c.push({ name: 'monthly', label: 'Billed Monthly' });
+				}
+				// eslint-disable-next-line no-prototype-builtins
+				if (singlePrices.hasOwnProperty('annual')) {
+					c.push({ name: 'annual', label: 'Billed Yearly', isDefault: true });
+				}
+				// eslint-disable-next-line no-prototype-builtins
+				if (singlePrices.hasOwnProperty('lifetime')) {
+					c.push({ name: 'lifetime', label: 'Lifetime' });
+				}
+				setCycles(c);
+				setCycle(c?.find(cc => cc.isDefault)?.name || c[0]?.name)
+			} else {
+				setCycles([]);
+				setCycle('');
+			}
+		}
+	}, [product, isProductLoading, planId]);
+
+	if (isProductLoading) {
+		return <div className='bPlDashboardPricing bPlDashboardBox'>
+			<h2>Loading...</h2>
+		</div>;
+	}
+
+	if (!product || !product?.id) {
+		return null;
+	}
+
+	const { plans } = product || {};
+	const plan = plans?.find(p => parseInt(p.id) === parseInt(planId)) || plans?.[0] || {};
+	const { pricing = [] } = plan || {};
 
 	return <div className='bPlDashboardPricing bPlDashboardCard'>
-		{children}
 		{cycles?.length > 1 && <div className='cycles'>
 			{cycles.map(c => {
-				return <button key={c.cycle} className={c.cycle === cycle ? 'active' : ''} onClick={() => setCycle(c.cycle)}>
-					{c.label} {'annual' === c.cycle && <span>{`upto ${calculateMaxAnnualDiscount()}% off`}</span>}
+				return <button key={c.name} className={c.name === cycle ? 'active' : ''} onClick={() => setCycle(c.name)}>
+					{c.label}
 				</button>;
 			})}
 		</div>}
 
-		{cycles?.length === 1 && cycles[0]?.cycle === 'lifetime' && <h2 className='pricingTitle'>One-time payment, lifetime access</h2>}
+		{cycles?.length === 1 && cycles[0]?.name === 'lifetime' && <h2 className='pricingTitle'>One-time payment, lifetime access</h2>}
 
 		<div className='plans'>
-			{plans.map((plan, index) => <Plan key={index} {...props} plan={plan} cycle={cycle} />)}
+			{pricing?.length ?
+				pricing?.map((price, index) => licenses.includes(price?.licenses) && <Plan key={index} {...{ pricingInfo, product, price, cycle, options }} />) :
+
+				<h3 style={{ gridColumn: `1 / -1`, textAlign: 'center' }}>Select a plan</h3>
+			}
 		</div>
 	</div>
 };
 export default Pricing;
 
-const Plan = (props) => {
-	const { pricingInfo, options, freemius, plan, cycle } = props;
-	const { features, button, featured } = pricingInfo;
-	const { name, quantity = 1, prices, pricePrefix, priceSuffix, isFeatured, note } = plan;
+const Plan = ({ pricingInfo, product, price, cycle, options }) => {
+	const { logo, planId, button, featured } = pricingInfo;
+	const { title, id, public_key, icon } = product || {};
+	const { licenses } = price || {};
 
-	const price = prices[cycle];
+	const amount = price?.[cycle] + '';
 
-	const [solidPrice, cents] = price?.split('.') || [];
+	const name = !licenses ? 'Unlimited Sites' : (licenses === 1 ? 'Single Site' : `${licenses} Sites`);
+	const isFeatured = featured?.selected === (licenses || 'null');
 
 	return <div className={`plan ${isFeatured ? 'bestValue' : ''}`} data-best-text={featured?.text}>
-		{name && <h3 className='planName wp-block-heading'>{name}</h3>}
+		<h3 className='planName wp-block-heading'>{name}</h3>
 
-		<div className='priceWrap'>
-			{pricePrefix && <p className='prefix'>{pricePrefix}</p>}
-
-			<p className='price'>${solidPrice}{cents && <small>.{cents}</small>}</p>
-
-			{priceSuffix && <p className='suffix'>{priceSuffix}</p>}
+		<div className='price'>
+			${amount}
 		</div>
 
-		{note && <p className='note'>{note}</p>}
+		<p className='note'>{!licenses ? 'Unlimited site' : (licenses === 1 ? '1 site' : `${licenses} sites`)} license for {'monthly' === cycle ? '1 month' : ('annual' === cycle ? '1 year' : cycle)}</p>
 
-		<Button className={`outline ${isFeatured ? 'white' : ''}`} onClick={e => {
+		<ul className={`wp-block-list features checkList ${isFeatured ? 'whiteCheck' : 'themeCheck'}`}>
+			{getFeatures(product.plans, planId).map((f, i) => <li key={i}>{f}</li>)}
+		</ul>
+
+		<Button className={`${isFeatured ? 'white' : ''}`} onClick={e => {
 			e.preventDefault();
 
 			// eslint-disable-next-line no-undef
 			new FS.Checkout({
-				...freemius
+				plugin_id: id,
+				plan_id: planId,
+				public_key
 			}).open({
-				licenses: 'null' === quantity ? null : parseInt(quantity),
+				image: logo || icon,
+				title,
+				licenses,
 				billing_cycle: cycle,
 				...options
 			});
 		}}>{button.label}</Button>
-
-		<ul className={`wp-block-list features checkList ${isFeatured ? 'whiteCheck' : 'themeCheck'}`}>
-			{features.map((f, i) => <li key={i}>{f}</li>)}
-		</ul>
 	</div>
 }

@@ -35,11 +35,12 @@ import App from './Components/App';
 import { dashboardInfo } from './utils/data';
 
 document.addEventListener('DOMContentLoaded', () => {
-    const dashboardEl = document.getElementById('bplDashboard');
-    if (dashboardEl) {
-        const info = JSON.parse(dashboardEl.dataset.info);
-        createRoot(dashboardEl).render(<App {...dashboardInfo(info)} />);
-    }
+	const dashboardEl = document.getElementById('apbDashboard');
+	const info = JSON.parse(dashboardEl.dataset.info);
+
+	createRoot(dashboardEl).render(<App {...dashboardInfo(info)} />);
+
+	dashboardEl.removeAttribute('data-info');
 });
 ```
 
@@ -85,7 +86,14 @@ export const dashboardInfo = (info) => {
 			plan_id: 23856,
 			public_key: 'pk_87f141adce326dfb96ba4e12d8a36'
 		},
-		changelogs: [ 
+		changelogs: [
+			{
+				version: '2.0.5 - 11 Feb 2026',
+				type: 'update',
+				list: [
+					'Update Admin Dashboard'
+				]
+			},
 			{
 				version: '2.0.4 - 22 Jan 2026',
 				type: 'new',
@@ -93,6 +101,29 @@ export const dashboardInfo = (info) => {
 					'Add Infinite Scroll (alternative of Pagination)',
 					'Add Navigation (alternative of Pagination)',
 					'Add Load More Button (alternative of Pagination)'
+				]
+			},
+			{
+				version: '2.0.3 - 11 Dec 2025',
+				type: 'update',
+				list: [
+					'Remove unwanted data from posts query'
+				]
+			},
+			{
+				version: '2.0.2 - 03 Dec 2025',
+				type: 'new',
+				list: [
+					'Fix offset query issue',
+					'Add more options in Order by Query.'
+				]
+			},
+			{
+				version: '2.0.1 - 01 Sep 2025',
+				type: 'update',
+				list: [
+					'Update Custom Post type label',
+					'Add additional class for pagination page numbers'
 				]
 			},
 			{
@@ -104,6 +135,22 @@ export const dashboardInfo = (info) => {
 					'Change UI',
 					'Admin Dashboard'
 				]
+			},
+			{
+				version: '1.16.1 - 3 Jul 2025',
+				type: 'fix',
+				list: [
+					'Fix Pagination issue'
+				]
+			},
+			{
+				version: '1.16.0 - 18 Jun 2025',
+				type: 'fix',
+				list: [
+					'Update Upgrade Page',
+					'Fix other users premium unlock issue',
+					'Update SDK'
+				]
 			}
 		],
 		proFeatures: [
@@ -112,7 +159,11 @@ export const dashboardInfo = (info) => {
 			'Flexible pagination and infinity loading.',
 			'Display reading time and custom metadata.',
 			'Shortcode support to display posts anywhere.'
-		]
+		],
+		startCreate: {
+			title: 'Advanced Post Block',
+			content: '<!-- wp:ap-block/posts /-->'
+		}
 	}
 }
 
@@ -129,13 +180,135 @@ export const demoInfo = {
 					type: 'iframe',
 					url: 'https://apb.bplugins.com/demo/grid-default-layout/',
 				}, {
+					title: 'Title Meta',
+					type: 'iframe',
+					url: 'https://apb.bplugins.com/demo/grid-title-meta-layout/'
+				},
+				{
+					title: 'Side Image',
+					type: 'iframe',
+					url: 'https://apb.bplugins.com/demo/grid-side-image-layout/'
+				},
+				{
 					title: 'Overlay',
 					type: 'iframe',
 					url: 'https://apb.bplugins.com/demo/grid-overlay-layout/'
 				}
 			]
+		},
+		{
+			icon: masonryIcon,
+			title: 'Masonry Layout',
+			children: [
+				{
+					title: 'Default',
+					type: 'iframe',
+					url: 'https://apb.bplugins.com/demo/masonry-default-layout/'
+				},
+				{
+					title: 'Title Meta',
+					type: 'iframe',
+					url: 'https://apb.bplugins.com/demo/masonry-title-meta-layout/'
+				},
+				{
+					title: 'Side Image',
+					type: 'iframe',
+					url: 'https://apb.bplugins.com/demo/masonry-side-image-layout/'
+				},
+				{
+					title: 'Overlay',
+					type: 'iframe',
+					url: 'https://apb.bplugins.com/demo/masonry-overlay-layout/'
+				}
+			]
+		},
+		{
+			icon: sliderIcon,
+			title: 'Slider Layout',
+			children: [{
+				title: 'Side Image',
+				type: 'iframe',
+				url: 'https://apb.bplugins.com/demo/slider-side-image-layout/'
+			},
+			{
+				title: 'Overlay',
+				type: 'iframe',
+				url: 'https://apb.bplugins.com/demo/slider-overlay-layout/'
+			}
+			]
+		},
+		{
+			icon: tickerIcon,
+			title: 'Ticker Layout',
+			children: [
+				{
+					title: 'Side Image',
+					type: 'iframe',
+					url: 'https://apb.bplugins.com/demo/ticker-side-image-layout/'
+				},
+				{
+					title: 'Overlay',
+					type: 'iframe',
+					url: 'https://apb.bplugins.com/demo/ticker-overlay-layout/'
+				}
+			]
+		},
+		{
+			icon: '',
+			title: 'Post Section',
+			children: [
+				{
+					title: 'Post Section (Design 1)',
+					type: 'iframe',
+					url: 'https://apb.bplugins.com/demo/design-1/'
+				},
+				{
+					title: 'Post Section (Design 2)',
+					type: 'iframe',
+					url: 'https://apb.bplugins.com/demo/post-section-design-2/'
+				},
+				{
+					title: 'Post Section (Design 3)',
+					type: 'iframe',
+					url: 'https://apb.bplugins.com/demo/post-section-design-3/'
+				},
+				{
+					title: 'Post Section (Design 4)',
+					type: 'iframe',
+					url: 'https://apb.bplugins.com/demo/post-section-design-4/'
+				},
+				{
+					title: 'Post Section (Design 5)',
+					type: 'iframe',
+					url: 'https://apb.bplugins.com/demo/post-section-design-5/'
+				}
+			]
+		},
+		{
+			icon: '',
+			title: 'All Posts',
+			type: 'iframe',
+			url: 'https://apb.bplugins.com/demo/all-posts/'
 		}
 	]
+}
+
+export const pricingInfo = {
+	logo: `https://ps.w.org/${slug}/assets/icon-128x128.png`, // Optional
+	pluginId: 14262,
+	planId: 23856,
+	licenses: [
+		1,
+		3,
+		null
+	],
+	button: {
+		label: 'Buy Now ➜'
+	},
+	featured: {
+		selected: 3, // choose from licenses item
+		text: 'Best Value'
+	}
 }
 ```
 
@@ -145,28 +318,45 @@ Manage routing using `react-router-dom`. Import standard components from `bpl-to
 
 ```js
 import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { Activation, Blocks, Demos, FeatureCompare, OurPlugins } from 'bpl-tools/Admin';
+
+import Blocks from '../../../../bpl-tools/Admin/Blocks';
+import Demos from '../../../../bpl-tools/Admin/Demos';
+import Pricing from '../../../../bpl-tools/Admin/Pricing';
+import FeatureCompare from '../../../../bpl-tools/Admin/FeatureCompare';
+import Activation from '../../../../bpl-tools/Admin/Activation';
+import OurPlugins from '../../../../bpl-tools/Admin/OurPlugins';
 
 import Layout from './Layout';
 import Welcome from './Welcome';
-import { demoInfo } from '../utils/data';
+import blocks from '../utils/blocks';
+import { demoInfo, pricingInfo } from '../utils/data';
 
 const App = (props) => {
-    const { isPremium, hasPro } = props;
+	const { isPremium, hasPro } = props;
 
-    return <Router>
-        <Routes>
-            <Route path='/' element={<Layout {...props} />}>
-                <Route index element={<Welcome {...props} />} />
-                <Route path='welcome' element={<Welcome {...props} />} />
-                <Route path='demos' element={<Demos demoInfo={demoInfo} {...props} />} />
-                {!isPremium && <Route path='feature-comparison' element={<FeatureCompare plans={['free', 'pro']} {...props} />} />}
-                {hasPro && <Route path='activation' element={<Activation {...props} />} />}
-                <Route path='our-plugins' element={<OurPlugins {...props} />} />
-                <Route path='*' element={<Navigate to='/welcome' replace />} />
-            </Route>
-        </Routes>
-    </Router>
+	return <Router>
+		<Routes>
+			<Route path='/' element={<Layout {...props} />}>
+				<Route index element={<Welcome {...props} />} />
+
+				<Route path='welcome' element={<Welcome {...props} />} />
+
+				<Route path='blocks' element={<Blocks {...props} allBlocks={blocks} />} />
+
+				<Route path='demos' element={<Demos demoInfo={demoInfo} {...props} />} />
+
+				{!isPremium && <Route path='pricing' element={<Pricing pricingInfo={pricingInfo} options={{}} {...props} />} />}
+
+				{!isPremium && <Route path='feature-comparison' element={<FeatureCompare plans={['free', 'pro']} {...props} />} />}
+
+				{hasPro && <Route path='activation' element={<Activation {...props} />} />}
+
+				<Route path='our-plugins' element={<OurPlugins {...props} />} />
+
+				<Route path='*' element={<Navigate to='/welcome' replace />} />
+			</Route>
+		</Routes>
+	</Router>
 }
 export default App;
 ```
@@ -177,39 +367,43 @@ Standardizes the dashboard header and side navigation.
 
 ```js
 import { Outlet, Link, useLocation } from 'react-router-dom';
-import { Header } from 'bpl-tools/Admin';
+
+import Header from '../../../../bpl-tools/Admin/Header';
 
 const navigation = [
-    { name: 'Welcome', href: '/welcome' },
-    { name: 'Demos', href: '/demos' },
-    { name: 'Feature Comparison', href: '/feature-comparison' },
-    { name: 'Activation', href: '/activation' }
+	{ name: 'Welcome', href: '/welcome' },
+	{ name: 'Blocks', href: '/blocks' },
+	{ name: 'Demos', href: '/demos' },
+	{ name: 'Pricing', href: '/pricing' },
+	{ name: 'Feature Comparison', href: '/feature-comparison' },
+	{ name: 'Activation', href: '/activation' }
 ];
 
 const Layout = (props) => {
-    const { isPremium, hasPro } = props;
-    const location = useLocation();
+	const { isPremium, hasPro } = props;
 
-    return <div className='bPlDashboard'>
-        <Header {...props}>
-            <nav className='bPlDashboardNav'>
-                {navigation
-                    ?.filter(item => item.href !== '/activation' || hasPro)
-                    ?.filter(item => !isPremium || !['/pricing', '/feature-comparison'].includes(item.href))
-                    ?.map((item, index) => <Link
-                        key={index}
-                        to={item.href}
-                        className={`navLink ${location.pathname === item.href ? 'active' : ''}`}
-                    >
-                        {item.name}
-                    </Link>)}
-            </nav>
-        </Header>
+	const location = useLocation();
 
-        <main className='bPlDashboardMain'>
-            <Outlet />
-        </main>
-    </div>
+	return <div className='bPlDashboard'>
+		<Header {...props}>
+			<nav className='bPlDashboardNav'>
+				{navigation
+					?.filter(item => item.href !== '/activation' || hasPro) // Hide activation link for non-pro users
+					?.filter(item => !isPremium || !['/purchase', '/pricing', '/feature-comparison'].includes(item.href)) // Hide link for premium users
+					?.map((item, index) => <Link
+						key={index}
+						to={item.href}
+						className={`navLink ${location.pathname === item.href ? 'active' : ''}`}
+					>
+						{item.name}
+					</Link>)}
+			</nav>
+		</Header>
+
+		<main className='bPlDashboardMain'>
+			<Outlet />
+		</main>
+	</div>
 }
 export default Layout;
 ```
@@ -219,31 +413,238 @@ export default Layout;
 Build your default landing page with banners, blocks management, and changelogs.
 
 ```js
-import { Overview, Changelog, ProAds } from 'bpl-tools/Admin';
-import { BlocksCard } from 'bpl-tools/Admin/Blocks';
+import Overview from '../../../../bpl-tools/Admin/Overview';
+import Changelog from '../../../../bpl-tools/Admin/Changelog';
+import ProAds from '../../../../bpl-tools/Admin/ProAds';
+import Card from '../../../../bpl-tools/Admin/Blocks/Card';
+import blocks from '../utils/blocks';
 
 const Welcome = (props) => {
-    const { isPremium } = props;
+	const { isPremium } = props;
 
-    return <Overview {...props}>
-        <BlocksCard {...props} />
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(480px, 1fr))', gap: '32px' }}>
-            <Changelog {...props} />
-            {!isPremium && <ProAds {...props} />}
-        </div>
-    </Overview>
+	return <Overview {...props}>
+		<Card {...props} allBlocks={blocks} />
+
+		<div style={{
+			display: 'grid',
+			gridTemplateColumns: isPremium ? '1fr' : 'repeat(auto-fill, minmax(min(480px, 100%), 1fr))',
+			gap: '32px'
+		}}>
+			<Changelog {...props} />
+
+			{!isPremium && <ProAds {...props} />}
+		</div>
+	</Overview>
 }
 export default Welcome;
 ```
 
 ### 7. Dashboard Styles (`dashboard.scss`)
 
-Import core dashboard styles and customize your theme.
+Import core dashboard styles and customize your theme. And change your color variables to set your own brand colors. You can get the colors from the ***Abu Hayat*** Vai.
 
 ```scss
-@import "bpl-tools/Admin/style.scss";
+:root {
+	// --bpl-dashboard-primary-color: #EC1C24;
+	// --bpl-dashboard-primary-color-rgb: 236, 28, 36;
+	// --bpl-dashboard-secondary-color: #F16522;
+	// --bpl-dashboard-secondary-color-rgb: 241, 101, 34;
+	--bpl-dashboard-primary-color: #0B81EE;
+	--bpl-dashboard-primary-color-rgb: 11, 129, 238;
+	--bpl-dashboard-secondary-color: #8C74FD;
+	--bpl-dashboard-secondary-color-rgb: 140, 116, 253;
+	--bpl-dashboard-title-color: #070127;
+	--bpl-dashboard-title-color-rgb: 7, 1, 39;
+	--bpl-dashboard-content-color: #1b2e4b;
+	--bpl-dashboard-content-color-rgb: 27, 46, 75;
+}
+
+@import '../../../bpl-tools/Admin/style.scss';
 
 // Your custom dashboard styles here
+```
+
+### 8. All Blocks props (`blocks.js`)
+
+Import core allBlocks.
+
+```js
+import { alertIcon, animationIcon, buttonGroupIcon, buttonIcon, cardIcon, chartIcon, containerIcon, contentTickerIcon, countdownIcon, countersIcon, dataTableIcon, dualColorHeadingIcon, emojiStack, facebookEmbedIcon, facebookPageIcon, featureBoxIcon, flipBoxIcon, formBuilderIcon, galleryIcon, gifIcon, htmlIcon, iconBoxIcon, imageCompareIcon, imageHotspotIcon, imageIcon, imageScrollerIcon, infoBoxIcon, listIcon, logoSliderIcon, lottieIcon, mailIcon, navigationIcon, newsTicker, postsIcon, priceListIcon, pricingTableIcon, qrCodeIcon, rowIcon, scrollToTopIcon, sectionHeadingIcon, servicesIcon, shapeDividerIcon, skillBarIcon, sliderIcon, socialShareIcon, starRatingIcon, svgDrawIcon, tableOfContentIcon, tDViewerIcon, teamMembersIcon, telexAccordionIcon, testimonialsIcon, textPathIcon, toggleContentIcon, videoIcon } from './blocksIcon';
+
+const pluginSlug = 'b-blocks';
+
+const siteURL = 'https://bblockswp.com';
+const demoLink = `${siteURL}/demo`;
+const docsURL = `${siteURL}/docs`;
+
+export default [
+    {
+        title: 'Grid',
+        children: [
+            {
+                name: `${pluginSlug}/container`,
+                title: 'Container',
+                icon: containerIcon,
+                demo: ``,
+                docs: ``,
+                status: 'published',
+                required: true
+            },
+            {
+                name: `${pluginSlug}/row`,
+                title: 'Row',
+                icon: rowIcon,
+                demo: `${demoLink}/row/`,
+                docs: `${docsURL}/row-block/`,
+                status: 'published',
+                required: true
+            },
+            {
+                name: `${pluginSlug}/team-members`,
+                title: 'Team Members',
+                icon: teamMembersIcon,
+                demo: `${demoLink}/team-members/`,
+                docs: `${docsURL}/team-block/`,
+                status: 'published'
+            }
+        ]
+    },
+    {
+        name: `${pluginSlug}/td-viewer`,
+        title: '3D Viewer',
+        icon: tDViewerIcon,
+        demo: `${demoLink}/3d-viewer/`,
+        docs: `${docsURL}/3d-viewer-block/`,
+        status: 'published'
+    },
+    {
+        name: `${pluginSlug}/advanced-image`,
+        title: 'Advanced Image',
+        icon: imageIcon,
+        demo: ``,
+        docs: ``,
+        status: 'published'
+    },
+    {
+        name: `${pluginSlug}/alert`,
+        title: 'Alert',
+        icon: alertIcon,
+        demo: `${demoLink}/alert/`,
+        docs: `${docsURL}/alert-block/`,
+        status: 'published'
+    },
+    {
+        name: `${pluginSlug}/animated-text`,
+        title: 'Animated Text',
+        icon: animationIcon,
+        demo: `${demoLink}/animated-text/`,
+        docs: `${docsURL}/animated-text-block/`,
+        status: 'published'
+    },
+    {
+        name: `${pluginSlug}/accordion-block`,
+        title: 'Accordion Block',
+        icon: telexAccordionIcon,
+        // demo: `${demoLink}/animated-text/`,
+        // docs: `${docsURL}/animated-text-block/`,
+        status: 'published'
+    },
+    {
+        name: `${pluginSlug}/button`,
+        title: 'Button',
+        icon: buttonIcon,
+        demo: `${demoLink}/button/`,
+        docs: ``,
+        status: 'published'
+    },
+    {
+        name: `${pluginSlug}/button-group`,
+        title: 'Button Group',
+        icon: buttonGroupIcon,
+        demo: `${demoLink}/button-group/`,
+        docs: ``,
+        status: 'published'
+    },
+    {
+        name: `${pluginSlug}/cards`,
+        title: 'Cards',
+        icon: cardIcon,
+        demo: `${demoLink}/cards/`,
+        docs: ``,
+        status: 'published',
+		badge: 'New'
+    },
+    {
+        name: `${pluginSlug}/chart`,
+        title: 'Chart',
+        icon: chartIcon,
+        demo: `${demoLink}/chart/`,
+        docs: `${docsURL}/chart-block/`,
+        status: 'published'
+    },
+    {
+        title: 'Sections',
+        children: [
+            {
+                name: `${pluginSlug}/feature-boxes`,
+                title: 'Feature Boxes',
+                icon: featureBoxIcon,
+                demo: `${demoLink}/feature-boxes/`,
+                docs: ``,
+                status: 'published'
+            },
+            {
+                name: `${pluginSlug}/flip-boxes`,
+                title: 'Flip Boxes',
+                icon: flipBoxIcon,
+                demo: `${demoLink}/flip-boxes/`,
+                docs: ``,
+                status: 'published'
+            },
+            {
+                name: `${pluginSlug}/testimonials`,
+                title: 'Testimonials',
+                icon: testimonialsIcon,
+                // demo: `${demoLink}/testimonials/`,
+                // docs: `${docsURL}/testimonials-block/`,
+                status: 'published'
+            }
+        ]
+    },
+    {
+        name: `${pluginSlug}/content-ticker`,
+        title: 'Content Ticker',
+        icon: contentTickerIcon,
+        demo: ``,
+        docs: ``,
+        status: 'published',
+        isPremium: true
+    },
+    {
+        name: `${pluginSlug}/countdown`,
+        title: 'Countdown Timer',
+        icon: countdownIcon,
+        demo: `${demoLink}/countdown/`,
+        docs: `${docsURL}/countdown-block/`,
+        status: 'published'
+    },
+    {
+        name: `${pluginSlug}/counters`,
+        title: 'Counters',
+        icon: countersIcon,
+        demo: `${demoLink}/counters/`,
+        docs: `${docsURL}/counters-block/`,
+        status: 'published'
+    },
+    {
+        name: `${pluginSlug}/data-table`,
+        title: 'Data Table',
+        icon: dataTableIcon,
+        demo: ``,
+        docs: ``,
+        status: 'inDev'
+    }
+];
 ```
 
 ## Component Library Overview

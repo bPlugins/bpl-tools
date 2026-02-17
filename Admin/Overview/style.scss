@@ -126,6 +126,17 @@
 					}
 				}
 			}
+
+			@media screen and (max-width: 1600px) {
+				>div:first-child {
+					width: 515px;
+				}
+
+				.overviewBanner {
+					width: 300px;
+					padding: 16px;
+				}
+			}
 		}
 	}
 

@@ -19,13 +19,9 @@
 		background-color: #e3f2fd;
 		color: var(--bpl-dashboard-primary-color, $primaryColor);
 
-		.spinner {
-			display: inline-block;
-			width: 16px;
-			height: 16px;
-			border: 2px solid var(--bpl-dashboard-primary-color, $primaryColor);
-			border-top: 2px solid transparent;
-			border-radius: 50%;
+		.components-spinner {
+			color: var(--bpl-dashboard-primary-color, $primaryColor);
+			margin: 0;
 		}
 	}
 
