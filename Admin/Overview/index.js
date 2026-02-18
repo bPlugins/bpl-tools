@@ -57,7 +57,7 @@ const Overview = (props) => {
 					<div className='buttons'>
 						{!isPremium && <Button href='#pricing'>Buy Now</Button>}
 
-						{startCreate?.content && site?.url && <Button href={`${site?.url}/wp-admin/post-new.php?post_type=page&title=${startCreate?.title}&content=${startCreate?.content}`} target='_blank' rel='noopener noreferrer'>Start Now</Button>}
+						{startCreate?.content && site?.url && <Button href={`${site?.url}/wp-admin/post-new.php?post_type=page&title=${startCreate?.title}&content=${startCreate?.content}&nonce=${startCreate?.nonce}`} target='_blank' rel='noopener noreferrer'>Start Now</Button>}
 
 						{pages?.landing && <Button href={pages.landing} target='_blank' rel='noopener noreferrer'>Learn More</Button>}
 					</div>

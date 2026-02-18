@@ -58,7 +58,7 @@
 						background: var(--bpl-dashboard-secondary-color, $secondaryColor);
 					}
 
-					&:last-child {
+					&:nth-child(2) {
 						background: var(--bpl-dashboard-secondary-color, $secondaryColor);
 
 						&::before {
