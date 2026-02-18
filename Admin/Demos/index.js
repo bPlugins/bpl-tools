@@ -71,7 +71,7 @@ const warningIcon = <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 640
  * @returns {JSX.Element}
  */
 const Demos = (props) => {
-	const { demoInfo } = props;
+	const { isPremium, demoInfo } = props;
 	const { allInOneLabel, allInOneLink, demos } = demoInfo;
 
 	const [activeDemo, setActiveDemo] = useState(demos[0]);
@@ -162,7 +162,7 @@ const Demos = (props) => {
 				</div>
 
 				<div className='bPlDashboardButtons'>
-					<Button href='#pricing'>Buy Now</Button>
+					{!isPremium && <Button href='#pricing'>Buy Now</Button>}
 
 					{allInOneLabel && <Button href={allInOneLink} target='_blank' variant='secondary'>{allInOneLabel}</Button>}
 				</div>
@@ -237,7 +237,7 @@ const Demos = (props) => {
 				</div>
 
 				<div className='bPlDashboardButtons'>
-					<Button href='#pricing'>Buy Now</Button>
+					{!isPremium && <Button href='#pricing'>Buy Now</Button>}
 
 					{allInOneLabel && <Button href={allInOneLink} target='_blank' variant='secondary'>{allInOneLabel}</Button>}
 				</div>
