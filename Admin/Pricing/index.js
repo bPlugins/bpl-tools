@@ -144,7 +144,7 @@ const Plan = ({ pricingInfo, product, price, cycle, options }) => {
 		<p className='note'>{!licenses ? 'Unlimited site' : (licenses === 1 ? '1 site' : `${licenses} sites`)} license for {'monthly' === cycle ? '1 month' : ('annual' === cycle ? '1 year' : cycle)}</p>
 
 		<ul className={`wp-block-list features checkList ${isFeatured ? 'whiteCheck' : 'themeCheck'}`}>
-			{getFeatures(product.plans, planId).map((f, i) => <li key={i}>{f}</li>)}
+			{getFeatures(product.plans, planId).map((f, i) => <li key={i} dangerouslySetInnerHTML={{ __html: f }} />)}
 		</ul>
 
 		<Button className={`${isFeatured ? 'white' : ''}`} onClick={e => {

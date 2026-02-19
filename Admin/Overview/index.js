@@ -19,7 +19,7 @@ import { closeIcon, playIcon } from '../../utils/icons';
  * @returns {JSX.Element}
  */
 const Overview = (props) => {
-	const { name, description, slug, media, isPremium, pages, startCreate, site, children } = props;
+	const { name, description, slug, media, isPremium, pages, startButton, site, children } = props;
 	const { thumbnail, video, isYoutube } = media || {};
 
 	const [showVideo, setShowVideo] = useState(false);
@@ -57,7 +57,7 @@ const Overview = (props) => {
 					<div className='buttons'>
 						{!isPremium && <Button href='#pricing'>Buy Now</Button>}
 
-						{startCreate?.content && site?.url && <Button href={`${site?.url}/wp-admin/post-new.php?post_type=page&title=${startCreate?.title}&content=${startCreate?.content}&nonce=${startCreate?.nonce}`} target='_blank' rel='noopener noreferrer'>Start Now</Button>}
+						{startButton?.url && startButton?.label && <Button href={`${site?.url}/${startButton.url}`} target='_blank' rel='noopener noreferrer'>{startButton.label}</Button>}
 
 						{pages?.landing && <Button href={pages.landing} target='_blank' rel='noopener noreferrer'>Learn More</Button>}
 					</div>

@@ -19,7 +19,7 @@ import useLicense from './useLicense';
  * @param {boolean} props.isPremium - Whether premium is active
  */
 const Activation = (props) => {
-	const { name, slug, version, media, freemius } = props;
+	const { name, slug, version, media, freemius, licenseActiveNonce } = props;
 	const { product_id, public_key } = freemius || {};
 	const { logo } = media || {};
 
@@ -31,7 +31,7 @@ const Activation = (props) => {
 		activatedLicense,
 		activateLicense,
 		deactivateLicense
-	} = useLicense({ product_id, public_key });
+	} = useLicense({ product_id, public_key, licenseActiveNonce });
 
 	// Local state management
 	const [licenseKey, setLicenseKey] = useState('');

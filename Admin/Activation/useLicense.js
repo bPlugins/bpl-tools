@@ -20,7 +20,7 @@ const useLicense = (params = {}) => {
 		refetch: refetchStatus,
 		setIsActivated,
 		setActivatedLicense
-	} = useLicenseStatus();
+	} = useLicenseStatus(params);
 
 	const {
 		activateLicense: performActivation,
@@ -32,7 +32,7 @@ const useLicense = (params = {}) => {
 		deactivateLicense: performDeactivation,
 		isLoading: isDeactivating,
 		error: deactivationError
-	} = useDeactivateLicense();
+	} = useDeactivateLicense(params);
 
 	const [isLoading, setIsLoading] = useState(true);
 	const [error, setError] = useState('');

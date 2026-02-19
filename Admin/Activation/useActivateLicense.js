@@ -8,11 +8,9 @@ import { useState } from 'react';
  * @param {string} params.public_key - Freemius public key
  * @returns {object} Activation methods and state
  */
-const useActivateLicense = ({ product_id, public_key } = {}) => {
+const useActivateLicense = ({ product_id, public_key, licenseActiveNonce } = {}) => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState(null);
-
-	const nonce = window.apbAdmin?.nonce || '';
 
 	const activateLicense = (licenseKey) => {
 		if (!licenseKey.trim()) {
@@ -27,7 +25,7 @@ const useActivateLicense = ({ product_id, public_key } = {}) => {
 				license_key: licenseKey,
 				product_id: product_id || '',
 				public_key: public_key || '',
-				nonce
+				nonce: licenseActiveNonce
 			})
 				.done((res) => {
 					setIsLoading(false);

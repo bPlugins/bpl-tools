@@ -6,24 +6,40 @@ Standardized components for building WordPress admin dashboards within the bPlug
 
 Follow these steps to set up your admin dashboard. Use the file names and structures below as a template.
 
-### 1. Admin Menu & Enqueue Scripts (PHP)
+
+### Admin Menu & Enqueue Scripts (PHP)
 
 Create an admin menu in your plugin's main PHP file and return a DOM element with a unique ID and your plugin's data.
 
 ```php
 <div
-	id='bplDashboard'
+	id='apbDashboard'
 	data-info='<?php echo esc_attr( wp_json_encode( [
-		'version' => YOUR_PLUGIN_VERSION,
-		'isPremium' => your_plugin_is_premium(),
-		'hasPro' => YOUR_PLUGIN_HAS_PRO
+		'version' => APB_VERSION,
+		'isPremium' => apbIsPremium(),
+		'hasPro' => APB_HAS_PRO,
+		'nonce' => wp_create_nonce( 'apbCreatePage' ),
+		'licenseActiveNonce' => wp_create_nonce( 'bPlLicenseActivation' )
 	] ) ); ?>'
 ></div>
 ```
 
 Only enqueue your scripts and styles on the specific admin page path.
 
-### 2. Dashboard Entry Point (`dashboard.js`)
+```php
+function adminEnqueueScripts( $hook ) {
+	if( strpos( $hook, 'advanced-post-block' ) ){
+		wp_enqueue_style( 'apb-admin-dashboard', APB_DIR_URL . 'build/admin/dashboard.css', [], APB_VERSION );
+
+		$asset_file = include APB_DIR_PATH . 'build/admin/dashboard.asset.php';
+		wp_enqueue_script( 'apb-admin-dashboard', APB_DIR_URL . 'build/admin/dashboard.js', array_merge( $asset_file['dependencies'], [ 'wp-util' ] ), APB_VERSION, true );
+		wp_set_script_translations( 'apb-admin-dashboard', 'advanced-post-block', APB_DIR_PATH . 'languages' );
+	}
+}
+```
+
+
+### Dashboard Entry Point (`dashboard.js`)
 
 This file initializes the React application and passes the localized data from the DOM to your App component.
 
@@ -44,7 +60,8 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 ```
 
-### 3. Configuration (`utils/data.js`)
+
+### Configuration (`utils/data.js`)
 
 Define your plugin's configuration, including license info, changelogs, and demo items.
 
@@ -54,7 +71,7 @@ import { gridIcon, masonryIcon, sliderIcon, tickerIcon } from '../../utils/icons
 const slug = 'advanced-post-block';
 
 export const dashboardInfo = (info) => {
-	const { version, isPremium, hasPro } = info;
+	const { version, isPremium, hasPro, nonce, licenseActiveNonce } = info;
 
 	const proSuffix = isPremium ? ' Pro' : '';
 
@@ -77,7 +94,7 @@ export const dashboardInfo = (info) => {
 		},
 		pages: {
 			org: `https://wordpress.org/plugins/${slug}/`,
-			landing: `https://bplugins.com/products/${slug}/`,
+			// landing: `https://bplugins.com/products/${slug}/`,
 			docs: `https://bplugins.com/docs/${slug}/`,
 			pricing: `https://bplugins.com/products/${slug}/pricing`,
 		},
@@ -86,12 +103,14 @@ export const dashboardInfo = (info) => {
 			plan_id: 23856,
 			public_key: 'pk_87f141adce326dfb96ba4e12d8a36'
 		},
+		licenseActiveNonce,
 		changelogs: [
 			{
-				version: '2.0.5 - 11 Feb 2026',
+				version: '2.0.5 - 19 Feb 2026',
 				type: 'update',
 				list: [
-					'Update Admin Dashboard'
+					'Update Admin Dashboard',
+					'Fix Issues'
 				]
 			},
 			{
@@ -160,9 +179,9 @@ export const dashboardInfo = (info) => {
 			'Display reading time and custom metadata.',
 			'Shortcode support to display posts anywhere.'
 		],
-		startCreate: {
-			title: 'Advanced Post Block',
-			content: '<!-- wp:ap-block/posts /-->'
+		startButton: {
+			label: 'Start Now',
+			url: `wp-admin/post-new.php?post_type=page&title=Advanced Post Block&content=<!-- wp:ap-block/posts /-->&nonce=${nonce}`
 		}
 	}
 }
@@ -179,7 +198,8 @@ export const demoInfo = {
 					title: 'Default',
 					type: 'iframe',
 					url: 'https://apb.bplugins.com/demo/grid-default-layout/',
-				}, {
+				},
+				{
 					title: 'Title Meta',
 					type: 'iframe',
 					url: 'https://apb.bplugins.com/demo/grid-title-meta-layout/'
@@ -307,12 +327,12 @@ export const pricingInfo = {
 	},
 	featured: {
 		selected: 3, // choose from licenses item
-		text: 'Best Value'
 	}
 }
 ```
 
-### 4. Root Component (`Components/App.js`)
+
+### Root Component (`Components/App.js`)
 
 Manage routing using `react-router-dom`. Import standard components from `bpl-tools`.
 
@@ -361,7 +381,7 @@ const App = (props) => {
 export default App;
 ```
 
-### 5. Layout Wrapper (`Components/Layout.js`)
+### Layout Wrapper (`Components/Layout.js`)
 
 Standardizes the dashboard header and side navigation.
 
@@ -408,7 +428,7 @@ const Layout = (props) => {
 export default Layout;
 ```
 
-### 6. Home Page (`Components/Welcome.js`)
+### Home Page (`Components/Welcome.js`)
 
 Build your default landing page with banners, blocks management, and changelogs.
 
@@ -439,20 +459,17 @@ const Welcome = (props) => {
 export default Welcome;
 ```
 
-### 7. Dashboard Styles (`dashboard.scss`)
+
+### Dashboard Styles (`dashboard.scss`)
 
 Import core dashboard styles and customize your theme. And change your color variables to set your own brand colors. You can get the colors from the ***Abu Hayat*** Vai.
 
 ```scss
 :root {
-	// --bpl-dashboard-primary-color: #EC1C24;
-	// --bpl-dashboard-primary-color-rgb: 236, 28, 36;
-	// --bpl-dashboard-secondary-color: #F16522;
-	// --bpl-dashboard-secondary-color-rgb: 241, 101, 34;
-	--bpl-dashboard-primary-color: #0B81EE;
-	--bpl-dashboard-primary-color-rgb: 11, 129, 238;
-	--bpl-dashboard-secondary-color: #8C74FD;
-	--bpl-dashboard-secondary-color-rgb: 140, 116, 253;
+	--bpl-dashboard-primary-color: #146ef5;
+	--bpl-dashboard-primary-color-rgb: 20, 110, 245;
+	--bpl-dashboard-secondary-color: #ff7a00;
+	--bpl-dashboard-secondary-color-rgb: 255, 122, 0;
 	--bpl-dashboard-title-color: #070127;
 	--bpl-dashboard-title-color-rgb: 7, 1, 39;
 	--bpl-dashboard-content-color: #1b2e4b;
@@ -464,7 +481,8 @@ Import core dashboard styles and customize your theme. And change your color var
 // Your custom dashboard styles here
 ```
 
-### 8. All Blocks props (`blocks.js`)
+
+### All Blocks props (`blocks.js`)
 
 Import core allBlocks.
 
@@ -647,16 +665,50 @@ export default [
 ];
 ```
 
-## Component Library Overview
 
-| Component | Description | Key Props |
-| :--- | :--- | :--- |
-| `Activation` | Freemius license management | `product_id`, `public_key`, `slug` |
-| `Blocks` | Toggle plugin features/blocks | `allBlocks`, `disabledBlocks`, `onChange` |
-| `Overview` | Main banner and quick links | `name`, `media`, `pages` |
-| `Changelog` | Formatted release notes | `changelogs` |
-| `Demos` | Live feature previews | `demoInfo` |
-| `OurPlugins` | Cross-promotion section | `slug`, `slugs` |
+### Start Button
+To create start button you have to give a `startButton` property in your data.js
+```js
+return {
+	...otherprops,
+	startButton: {
+		label: 'Start Now',
+		url: `wp-admin/post-new.php?post_type=page&title=Advanced Post Block&content=<!-- wp:ap-block/posts /-->&nonce=${nonce}`
+	}
+}
+```
+Here in the url you will see a **title** and **content** given in the url of page creation to receive and apply that title and content you have to add 2 filter hook for that
+
+```php
+add_filter( 'default_title', function defaultTitle( $title, $post ) {
+	if ( 'page' === $post->post_type && isset( $_GET['title'] ) ) {
+		$nonce = isset( $_GET['nonce'] ) ? sanitize_text_field( wp_unslash( $_GET['nonce'] ) ) : '';
+
+		if ( wp_verify_nonce( $nonce, 'apbCreatePage' ) ) {
+			return sanitize_text_field( wp_unslash( $_GET['title'] ) );
+		}
+	}
+	return $title;
+}, 10, 2 );
+
+add_filter( 'default_content', function defaultContent( $content, $post ) {
+	if ( 'page' === $post->post_type && isset( $_GET['content'] ) ) {
+		$nonce = isset( $_GET['nonce'] ) ? sanitize_text_field( wp_unslash( $_GET['nonce'] ) ) : '';
+
+		if ( wp_verify_nonce( $nonce, 'apbCreatePage' ) ) {
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Content is secured by nonce verification and unslashed to preserve Gutenberg block markup.
+			return wp_unslash( $_GET['content'] );
+		}
+	}
+	return $content;
+}, 10, 2 );
+```
+This hook will apply default title and content on create page
+
+
+### License Activation
+For the license activation you have to require [`LicenseActivation.php`](https://github.com/bPlugins/advanced-post-block-pro/blob/main/includes/LicenseActivation.php) file. Make sure the `freemius` sdk is present while requiring this file
+
 
 ## Best Practices
 
