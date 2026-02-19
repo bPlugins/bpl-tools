@@ -6,12 +6,12 @@ $primaryColor400: #5495f8;
 	font-weight: 500;
 	width: 100%;
 	min-height: 44px;
-	background-color: #4427a425;
+	background-color: rgba($primaryColor, 0.145);
 	position: relative;
 	padding: 5px 10px;
-	border: 1px solid #4427a550;
+	border: 1px solid rgba($primaryColor, 0.314);
 	border-radius: 4px;
-	box-shadow: 0 2px 4px #4427a525;
+	box-shadow: 0 2px 4px rgba($primaryColor, 0.145);
 	cursor: pointer;
 	transition: 0.3s;
 

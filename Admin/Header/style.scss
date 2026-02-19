@@ -102,7 +102,7 @@
 		flex-wrap: wrap;
 		padding: 0 25px 0 0;
 
-		a:first-child {
+		.linkButton {
 			font-size: 16px;
 			font-weight: 500;
 			text-decoration: none;
@@ -125,12 +125,15 @@
 			background: linear-gradient(to top right, var(--bpl-dashboard-primary-color, $primaryColor), var(--bpl-dashboard-secondary-color, $secondaryColor));
 			padding: 10px 20px;
 
-			svg {
-				fill: none;
-			}
-
 			&:before {
 				display: none;
+			}
+
+			&.upgrade {
+
+				svg {
+					fill: none;
+				}
 			}
 		}
 	}

@@ -16,13 +16,15 @@ const SelectPureControl = props => {
 	const { className = '', label = '', value, onChange, options = [] } = props;
 
 	const selectPureEl = useRef(null);
+	const onChangeRef = useRef(onChange);
+	onChangeRef.current = onChange;
 
 	useEffect(() => {
 		if (selectPureEl.current) {
 			selectPureEl.current.innerHTML = '';
 			new SelectPure(selectPureEl.current, {
 				value,
-				onChange: val => onChange(val),
+				onChange: val => onChangeRef.current(val),
 				options,
 				multiple: true,
 				autocomplete: true,
@@ -44,7 +46,7 @@ const SelectPureControl = props => {
 				}
 			});
 		}
-	}, [selectPureEl]);
+	}, [JSON.stringify(value), JSON.stringify(options)]);
 
 	return label ? <div className={className}>
 		<Label className='mb5'>{label}</Label>
