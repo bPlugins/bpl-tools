@@ -14,7 +14,7 @@ const useDeactivateLicense = ({ licenseActiveNonce }) => {
 		setError(null);
 
 		return new Promise((resolve, reject) => {
-			wp.ajax.post('deactivate_freemius_license', { nonce: licenseActiveNonce })
+			wp.ajax.post('bpl_deactivate_freemius_license', { nonce: licenseActiveNonce })
 				.done((res) => {
 					setIsLoading(false);
 					resolve(res);

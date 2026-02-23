@@ -139,9 +139,7 @@ const FeatureCompare = ({ plans: dp = ['free', 'pro'], freemius }) => {
 				const price = Array.isArray(pricing) ? pricing?.find(p => parseInt(p?.licenses) === 1)?.[cycle] : '0.00';
 
 				return <div key={id} className={`plan ${'free' === name ? 'free' : 'premium'}`}>
-					<h3>{title}</h3>
-
-					<div className='price'>${price}</div>
+					<div className='price'><h3>{title}</h3> ${price}</div>
 
 					<p className='note'>{'free' === name ? 'Free forever' : `1 site license for ${'monthly' === cycle ? '1 month' : ('annual' === cycle ? '1 year' : cycle)}`}</p>
 

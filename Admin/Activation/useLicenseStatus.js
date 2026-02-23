@@ -10,7 +10,7 @@ const useLicenseStatus = ({ licenseActiveNonce }) => {
 	const [isActivated, setIsActivated] = useState(false);
 	const [activatedLicense, setActivatedLicense] = useState('');
 
-	const { data, isLoading, refetch, error } = useWPAjax('get_license_status', { nonce: licenseActiveNonce });
+	const { data, isLoading, refetch, error } = useWPAjax('bpl_get_license_status', { nonce: licenseActiveNonce });
 
 	useEffect(() => {
 		if (data) {

@@ -12,16 +12,16 @@
 		display: flex;
 		align-items: center;
 		gap: 26px;
-		padding-bottom: 48px;
+		padding-bottom: 32px;
 		border-bottom: 1px solid #E4E4E4;
-		margin-bottom: 48px;
+		margin-bottom: 32px;
 		flex-wrap: wrap;
 
 		.cyclesSelector {
 			margin-right: auto;
 
 			h2 {
-				font-size: 20px;
+				font-size: 18px;
 				font-weight: 400;
 				color: var(--bpl-dashboard-title-color, $titleColor);
 				margin: 0 0 21px 0;
@@ -32,17 +32,17 @@
 				align-items: center;
 				justify-content: center;
 				background: $whiteColor;
-				padding: 10px;
+				padding: 6px;
 				border: 1px solid #e4e4e4;
 				border-radius: 10px;
 				overflow: hidden;
 
 				button {
-					font-size: 18px;
+					font-size: 16px;
 					font-weight: 500;
 					color: var(--bpl-dashboard-title-color, $titleColor);
 					background-color: #0000;
-					padding: 10px 16px;
+					padding: 8px 15px;
 					border-radius: 5px;
 					border: 0;
 					cursor: pointer;
@@ -56,7 +56,7 @@
 			}
 
 			h2.pricingTitle {
-				font-size: 18px;
+				font-size: 16px;
 				font-weight: 500;
 				display: inline-flex;
 				align-items: center;
@@ -72,14 +72,8 @@
 		.plan {
 			min-width: 310px;
 			max-width: 100%;
-			padding: 24px;
+			padding: 18px 24px;
 			border-radius: 10px;
-
-			h3 {
-				font-size: 16px;
-				font-weight: 500;
-				margin-bottom: 6px;
-			}
 
 			.note {
 				font-size: 14px;
@@ -87,18 +81,27 @@
 			}
 
 			.price {
-				font-size: 36px;
+				font-size: 28px;
 				font-weight: 500;
 				margin-bottom: 6px;
+				display: flex;
+				align-items: baseline;
+				gap: 10px;
+
+				h3 {
+					font-size: 16px;
+					font-weight: 500;
+					margin: 0;
+				}
 			}
 
 			.bPlButton {
 				width: 100%;
-				font-size: 16px;
+				font-size: 14px;
 				font-weight: 500;
 				justify-content: center;
-				padding: 14px 28px;
-				margin-top: 32px;
+				padding: 10px 20px;
+				margin-top: 14px;
 
 				&:hover {
 					color: #fff !important;
