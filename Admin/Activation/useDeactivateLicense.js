@@ -5,7 +5,7 @@ import { useState } from 'react';
  * 
  * @returns {object} Deactivation methods and state
  */
-const useDeactivateLicense = ({ licenseActiveNonce }) => {
+const useDeactivateLicense = ({ product_id, licenseActiveNonce }) => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState(null);
 
@@ -14,7 +14,7 @@ const useDeactivateLicense = ({ licenseActiveNonce }) => {
 		setError(null);
 
 		return new Promise((resolve, reject) => {
-			wp.ajax.post('bpl_deactivate_freemius_license', { nonce: licenseActiveNonce })
+			wp.ajax.post(`bpl_${product_id}_deactivate_license`, { nonce: licenseActiveNonce })
 				.done((res) => {
 					setIsLoading(false);
 					resolve(res);

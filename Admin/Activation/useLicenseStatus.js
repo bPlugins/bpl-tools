@@ -6,11 +6,11 @@ import useWPAjax from '../../hooks/useWPAjax';
  * 
  * @returns {object} Status state and refetch method
  */
-const useLicenseStatus = ({ licenseActiveNonce }) => {
+const useLicenseStatus = ({ product_id, licenseActiveNonce }) => {
 	const [isActivated, setIsActivated] = useState(false);
 	const [activatedLicense, setActivatedLicense] = useState('');
 
-	const { data, isLoading, refetch, error } = useWPAjax('bpl_get_license_status', { nonce: licenseActiveNonce });
+	const { data, isLoading, refetch, error } = useWPAjax(`bpl_${product_id}_get_license_status`, { nonce: licenseActiveNonce });
 
 	useEffect(() => {
 		if (data) {

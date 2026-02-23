@@ -21,7 +21,7 @@ const useActivateLicense = ({ product_id, public_key, licenseActiveNonce } = {})
 		setError(null);
 
 		return new Promise((resolve, reject) => {
-			wp.ajax.post('bpl_activate_freemius_license', {
+			wp.ajax.post(`bpl_${product_id}_activate_license`, {
 				license_key: licenseKey,
 				product_id: product_id || '',
 				public_key: public_key || '',
