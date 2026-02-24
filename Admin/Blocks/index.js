@@ -136,7 +136,7 @@ const Blocks = (props) => {
 			<div className='blocksSearch'>
 				{searchIcon}
 
-				<input type='text' placeholder='Search blocks...' value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className='search-input' />
+				<input type='text' placeholder='Search...' value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className='search-input' />
 
 				{searchTerm && <span onClick={() => setSearchTerm('')}>{closeIcon}</span>}
 			</div>
