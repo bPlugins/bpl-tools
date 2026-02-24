@@ -14,6 +14,7 @@ import Device from './Device/Device';
 import DynamicTag from './DynamicTag/DynamicTag';
 import Gradient from './Gradient/Gradient';
 import HelpPanel from './HelpPanel/HelpPanel';
+import HelpTooltip from './HelpTooltip/HelpTooltip';
 import IconControl from './IconControl/IconControl';
 import IconLibrary from './IconLibrary/IconLibrary';
 import ItemsPanel from './ItemsPanel/ItemsPanel';
@@ -33,5 +34,5 @@ import TinyEditor from './TinyEditor/TinyEditor';
 import Typography from './Typography/Typography';
 import BBlocksAds from './Utility/BBlocksAds';
 
-export { AdvBackground, Background, BBlocksAds, BButtonGroup, BoxControl, BplBlockPreview, BtnGroup, Button, ColorControl, ColorsControl, CustomCodeEditor, Device, DynamicTag, Gradient, HelpPanel, HexColorControl, IconControl, IconLibrary, Loading, InlineDetailMediaUpload, InlineMediaUpload, ItemsPanel, Label, MediaArea, MediaEditControl, MediaPlaceholder, MultiSelectControl, OverlayControl, PanelSelectControl, SelectPureControl, SelectTokenField, SeparatorControl, ShadowControl, SolidBackground, SortableControl, TinyEditor, Typography };
+export { AdvBackground, Background, BBlocksAds, BButtonGroup, BoxControl, BplBlockPreview, BtnGroup, Button, ColorControl, ColorsControl, CustomCodeEditor, Device, DynamicTag, Gradient, HelpPanel, HelpTooltip, HexColorControl, IconControl, IconLibrary, Loading, InlineDetailMediaUpload, InlineMediaUpload, ItemsPanel, Label, MediaArea, MediaEditControl, MediaPlaceholder, MultiSelectControl, OverlayControl, PanelSelectControl, SelectPureControl, SelectTokenField, SeparatorControl, ShadowControl, SolidBackground, SortableControl, TinyEditor, Typography };
 

@@ -342,8 +342,19 @@ svg.bPlBlockIcon {
 		text-transform: unset !important;
 		display: flex;
 		align-items: center;
-		justify-content: space-between;
-		gap: 4px;
+		gap: 6px;
+
+		.labelPro {
+			margin-left: auto;
+		}
+	}
+
+	.helpTooltip {
+		width: 1.5em;
+		max-width: 20px;
+		height: 1.5em;
+		max-height: 20px;
+		cursor: help;
 	}
 
 	.components-notice {
@@ -661,13 +672,16 @@ svg.bPlBlockIcon {
 		// font-size: 14px;
 		// font-style: italic;
 		// font-weight: 500;
-		display: flex;
+		display: flex !important;
 		align-items: center;
-		justify-content: space-between;
-		gap: 8px;
+		gap: 6px;
 		padding-bottom: 0 !important;
 		margin-right: auto;
 		margin-bottom: 0;
+
+		.labelPro {
+			margin-left: auto;
+		}
 	}
 
 	// Reset Value
