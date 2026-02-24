@@ -24,7 +24,7 @@ import Toast from './Toast';
  * @returns {JSX.Element}
  */
 const Blocks = (props) => {
-	const { isPremium, disabledBlocks, onChange, allBlocks, status, ProModal = null } = props;
+	const { isPremium, disabledBlocks, onChange, allBlocks, status, ProModal = null, pageTitle = 'All Blocks' } = props;
 	const publishedBlocks = allBlocks.filter(b => 'published' === b.status || !b.status);
 
 	const [isSaving, setIsSaving] = useState(false);
@@ -131,7 +131,7 @@ const Blocks = (props) => {
 		{toast && <Toast message={toast.message} type={toast.type} />}
 
 		<div className='blocksTop'>
-			<h2>All Blocks</h2>
+			<h2>{pageTitle}</h2>
 
 			<div className='blocksSearch'>
 				{searchIcon}
