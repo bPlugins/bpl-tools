@@ -1,3 +1,8 @@
+import { useState } from 'react';
+
+import Loading from '../../Components/Loading/Loading';
+
+import './style.scss';
 /**
  * FSCheckoutForm Component
  * Renders a Freemius checkout iframe for purchasing plugin plans.
@@ -7,9 +12,6 @@
  * @param {object} props.options - Additional checkout options
  * @returns {JSX.Element}
  */
-import { useState } from 'react';
-import './style.scss';
-import Loading from '../../Components/Loading/Loading';
 
 const FSCheckoutForm = ({ freemius, options }) => {
 	const { product_id, plan_id } = freemius;

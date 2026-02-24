@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react';
+
 import './VideoPlayer.scss'
 
 const VideoPlayer = ({ src, width = '100%', height = 'auto', autoPlay = false, muted = false, loop = false, poster = null, isYoutube = false, }) => {

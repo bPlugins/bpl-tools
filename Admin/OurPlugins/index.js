@@ -2,8 +2,9 @@ import { useEffect, useState } from 'react';
 import { withSelect } from '@wordpress/data';
 import apiFetch from '@wordpress/api-fetch';
 
+import Button from '../../Components/Button/Button';
+
 import './style.scss';
-import { Button } from '../../Components';
 
 // Format download count with appropriate suffix
 const formatDownloadCount = (num) => {

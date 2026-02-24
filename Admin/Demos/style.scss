@@ -122,7 +122,15 @@
 				margin: 0;
 				cursor: pointer;
 
+				.icon {
+					display: inline-flex;
+					align-items: center;
+					justify-content: center;
+				}
+
 				svg {
+					width: 24px;
+					height: 24px;
 					fill: rgba(var(--bpl-dashboard-title-color-rgb, $titleColor), .75);
 
 					&:last-child {
@@ -143,7 +151,7 @@
 					svg {
 						fill: var(--bpl-dashboard-primary-color, $primaryColor);
 
-						&:last-child {
+						&.angelDown {
 							transform: rotate(180deg);
 						}
 					}

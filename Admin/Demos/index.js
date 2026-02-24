@@ -54,7 +54,7 @@ const searchIcon = <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 640'
 	<path d='M480 272C480 317.9 465.1 360.3 440 394.7L566.6 521.4C579.1 533.9 579.1 554.2 566.6 566.7C554.1 579.2 533.8 579.2 521.3 566.7L394.7 440C360.3 465.1 317.9 480 272 480C157.1 480 64 386.9 64 272C64 157.1 157.1 64 272 64C386.9 64 480 157.1 480 272zM272 416C351.5 416 416 351.5 416 272C416 192.5 351.5 128 272 128C192.5 128 128 192.5 128 272C128 351.5 192.5 416 272 416z' />
 </svg>;
 
-const angelDownIcon = <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 640'>
+const angelDownIcon = <svg className='angelDown' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 640'>
 	<path d='M297.4 470.6C309.9 483.1 330.2 483.1 342.7 470.6L534.7 278.6C547.2 266.1 547.2 245.8 534.7 233.3C522.2 220.8 501.9 220.8 489.4 233.3L320 402.7L150.6 233.4C138.1 220.9 117.8 220.9 105.3 233.4C92.8 245.9 92.8 266.2 105.3 278.7L297.3 470.7z' />
 </svg>
 
@@ -171,16 +171,22 @@ const Demos = (props) => {
 			<div className='sidebarList'>
 				{filteredData.length > 0 ?
 					filteredData.map((item, index) => {
-						const hasChildren = item.children && item.children.length > 0;
-						const isExpanded = expandedId === item.title;
+						const { icon, title, url, children } = item;
+						const hasChildren = children && children.length > 0;
+						const isExpanded = expandedId === title;
+
+						console.log(typeof icon);
+
 
 						return <div key={index} className='demoItem'>
 							{hasChildren ?
 								<div className={`accordion ${isExpanded ? 'expanded' : ''}`}>
 									<button onClick={() => onAccordionChange(index)} className={`parentDemo ${isExpanded ? 'active' : ''}`}>
-										{item.icon ? item.icon : null}
+										{'string' === typeof icon ?
+											<span className='icon' dangerouslySetInnerHTML={{ __html: icon }} /> :
+											(icon ? icon : null)}
 
-										<span className='text-sm font-semibold'>{item.title}</span>
+										<span className='text-sm font-semibold'>{title}</span>
 
 										{angelDownIcon}
 									</button>
@@ -196,7 +202,7 @@ const Demos = (props) => {
 											}
 										}
 									}}>
-										{item.children.map((child, cIdx) => <li key={cIdx} className={activeItem.url === child.url ? 'active' : ''} onClick={(e) => {
+										{children.map((child, cIdx) => <li key={cIdx} className={activeItem.url === child.url ? 'active' : ''} onClick={(e) => {
 											e.preventDefault();
 											e.stopPropagation();
 
@@ -206,16 +212,18 @@ const Demos = (props) => {
 										</li>)}
 									</ul>
 								</div> :
-								<button className={`parentDemo ${activeItem.url === item.url ? 'active' : ''}`} onClick={(e) => {
+								<button className={`parentDemo ${activeItem.url === url ? 'active' : ''}`} onClick={(e) => {
 									e.preventDefault();
 									e.stopPropagation();
 
 									onItemChange(item);
 									setExpandedId(null);
 								}}>
-									{item.icon ? item.icon : ''}
+									{'string' === typeof icon ?
+										<span className='icon' dangerouslySetInnerHTML={{ __html: icon }} /> :
+										(icon ? icon : null)}
 
-									<span>{item.title}</span>
+									<span>{title}</span>
 								</button>
 							}
 						</div>

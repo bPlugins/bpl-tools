@@ -6,12 +6,19 @@ import Block from './Block';
 import Toast from './Toast';
 
 const BlocksCard = (props) => {
-	const { isPremium, disabledBlocks, onChange, allBlocks, status, ProModal = null } = props;
+	const { isPremium, disabledBlocks, onChange, allBlocks, status, ProModal = null, cardTitle = 'Blocks', seeAllLink = '#blocks' } = props;
 	const publishedBlocks = allBlocks.filter(b => 'published' === b.status || !b.status);
 
 	const [isSaving, setIsSaving] = useState(false);
 	const [disableBlockName, setDisableBlockName] = useState(disabledBlocks || []);
 	const [toast, setToast] = useState(null);
+
+	// Update disabled blocks when disabledBlocks prop changes
+	useEffect(() => {
+		if (disabledBlocks) {
+			setDisableBlockName(disabledBlocks);
+		}
+	}, [JSON.stringify(disabledBlocks)]);
 
 	// Update toast based on status prop
 	useEffect(() => {
@@ -46,9 +53,9 @@ const BlocksCard = (props) => {
 		{toast && <Toast message={toast.message} type={toast.type} />}
 
 		<div className='blocksCardHeader'>
-			<h3>Blocks</h3>
+			<h3>{cardTitle}</h3>
 
-			<a href="#blocks">View All</a>
+			<a href={seeAllLink}>View All</a>
 		</div>
 
 		{publishedBlocks.length > 0 && (

@@ -1,5 +1,7 @@
 import Button from '../../Components/Button/Button';
+
 import { checkIcon } from '../../utils/icons';
+
 import './style.scss';
 
 /**

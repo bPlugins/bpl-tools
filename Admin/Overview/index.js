@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { withSelect } from '@wordpress/data';
 
-import './style.scss';
-
 import Button from '../../Components/Button/Button';
-import VideoPlayer from './VideoPlayer';
 import { closeIcon, playIcon } from '../../utils/icons';
+
+import './style.scss';
+import VideoPlayer from './VideoPlayer';
 
 /**
  * Overview Component
