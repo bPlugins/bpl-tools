@@ -10,7 +10,7 @@ const Block = ({ block, isPremium, disableBlockName, handleCheckboxChange, isSav
 		<div className='icon'>{icon}</div>
 
 		<div className='name'>
-			<p className='blockTitle'>{title}</p>{isBlockPremium && <a href='#pricing' target='_blank' rel='noopener noreferrer'>Get Pro</a>}
+			<p className='blockTitle'>{title}</p>{isBlockPremium && <a href='#pricing'>Get Pro</a>}
 		</div>
 
 		{isLinks && <>

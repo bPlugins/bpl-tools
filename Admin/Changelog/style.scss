@@ -51,7 +51,11 @@
 			font-weight: 500;
 			list-style-type: none;
 			color: var(--bpl-dashboard-content-color, $contentColor);
-			margin-bottom: 5px;
+			margin-bottom: 8px;
+
+			li {
+				margin-bottom: 5px;
+			}
 		}
 
 		.time {

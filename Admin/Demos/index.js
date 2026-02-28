@@ -76,7 +76,7 @@ const Demos = (props) => {
 
 	const [activeDemo, setActiveDemo] = useState(demos[0]);
 	const [activeIndex, setActiveIndex] = useState(0);
-	const [isLoading, setIsLoading] = useState(false);
+	const [isLoading, setIsLoading] = useState(true);
 	const [activeItem, setActiveItem] = useState(demoInfo.demos[0].children?.[0] || demoInfo.demos[0]);
 	const [expandedId, setExpandedId] = useState(demoInfo.demos[0].title);
 	const [searchQuery, setSearchQuery] = useState('');
@@ -175,9 +175,6 @@ const Demos = (props) => {
 						const hasChildren = children && children.length > 0;
 						const isExpanded = expandedId === title;
 
-						console.log(typeof icon);
-
-
 						return <div key={index} className='demoItem'>
 							{hasChildren ?
 								<div className={`accordion ${isExpanded ? 'expanded' : ''}`}>
@@ -259,7 +256,6 @@ const Demos = (props) => {
 					<iframe
 						src={activeItem.url}
 						title={`${activeItem.title} Demo`}
-						loading={isLoading}
 						onLoad={() => setIsLoading(false)}
 						sandbox='allow-scripts allow-same-origin allow-popups allow-forms'
 					/> :

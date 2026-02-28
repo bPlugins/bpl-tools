@@ -23,14 +23,14 @@ const BlocksCard = (props) => {
 	// Update toast based on status prop
 	useEffect(() => {
 		if (status === 'loading') {
-			setToast({ message: 'Loading blocks...', type: 'loading' });
+			setToast({ message: 'Loading...', type: 'loading' });
 			setIsSaving(true);
 		} else if (status === 'success') {
-			setToast({ message: 'Blocks saved successfully!', type: 'success' });
+			setToast({ message: 'Saved successfully!', type: 'success' });
 			setIsSaving(false);
 			setTimeout(() => setToast(null), 3000);
 		} else if (status === 'error') {
-			setToast({ message: 'Failed to save blocks', type: 'error' });
+			setToast({ message: 'Failed to save', type: 'error' });
 			setIsSaving(false);
 			setTimeout(() => setToast(null), 3000);
 		}
