@@ -668,7 +668,8 @@ svg.bPlBlockIcon {
 	.bPlLabel,
 	.components-unit-control-wrapper label,
 	.components-input-control__label,
-	.components-number-control label {
+	.components-number-control label,
+	.components-form-token-field__label {
 		// font-size: 14px;
 		// font-style: italic;
 		// font-weight: 500;
@@ -682,6 +683,10 @@ svg.bPlBlockIcon {
 		.labelPro {
 			margin-left: auto;
 		}
+	}
+
+	.components-form-token-field__label {
+		margin-bottom: 8px !important;
 	}
 
 	// Reset Value
