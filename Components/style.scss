@@ -382,13 +382,6 @@ svg.bPlBlockIcon {
 		margin: 20px 0;
 	}
 
-	// Panel Title
-	// .components-panel__body-title {
-	// 	button {
-	// 		font-size: 16px;
-	// 	}
-	// }
-
 	&.components-panel__body .components-base-control__field {
 		padding: 0;
 
@@ -661,6 +654,17 @@ svg.bPlBlockIcon {
 	// Others
 	.components-base-control {
 		margin-bottom: 0 !important;
+
+		.components-base-control__field {
+			.components-toggle-group-control {
+				border-width: 1px !important;
+				border-color: $primaryColor !important;
+
+				&::before {
+					background: $primaryColor;
+				}
+			}
+		}
 	}
 
 	// Custom Components
@@ -885,21 +889,44 @@ svg.bPlBlockIcon {
 }
 
 .bPlPanelBody {
-	.components-base-control {
-		.components-base-control__field {
-			.components-toggle-group-control {
-				border-width: 1px !important;
-				border-color: $primaryColor !important;
+	margin-top: 0 !important;
 
-				&::before {
-					background: $primaryColor;
-				}
+	.components-panel__body-title {
+		transition: color .3s ease-in-out, background .3s ease-in-out;
+
+		&:hover {
+			color: $primaryColor;
+			background: rgba($primaryColor, 0.1);
+		}
+
+		button {
+			color: inherit;
+
+			&:focus,
+			&:hover,
+			&:active {
+				color: inherit;
+				border: none;
+				outline: 0;
+				box-shadow: none;
 			}
 		}
 	}
-}
 
-.bPlPanelBody {
+	&.is-opened {
+		border: 1px solid $primaryColor;
+
+		.components-panel__body-title {
+			color: $primaryColor;
+			background: rgba($primaryColor, 0.15);
+			border-bottom: 1px solid rgba($primaryColor, 0.5);
+
+			&:hover {
+				background: rgba($primaryColor, 0.1);
+			}
+		}
+	}
+
 	.flex1 {
 		flex: 1;
 	}

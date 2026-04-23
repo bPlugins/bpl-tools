@@ -1,0 +1,67 @@
+$primaryColor: #146EF5;
+$titleColor: #070127;
+
+.bPlAdvertiseCard {
+	background: #eff6ff;
+	border: 1px solid #e5e7eb;
+	padding: 24px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
+	transition: all 0.2s ease-in-out;
+	position: relative;
+
+	* {
+		transition: all 0.2s ease-in-out;
+	}
+
+	&:hover {
+		border-color: #d1d5db;
+		background-color: #fdfdfd;
+	}
+
+	.badge {
+		font-size: 9px;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+		color: #fff;
+		background: $primaryColor;
+		padding: 2px 8px;
+		border-radius: 2px;
+		margin: 0 0 12px 0;
+	}
+
+	h4 {
+		font-size: 18px;
+		line-height: 1.75;
+		font-weight: 700;
+		color: $titleColor;
+		margin: 0 0 8px 0 !important;
+	}
+
+	p {
+		font-size: 12px;
+		line-height: 1.5;
+		font-weight: 500;
+		color: $primaryColor;
+		margin: 0 0 20px 0 !important;
+	}
+
+	.bPlButton {
+		width: 100%;
+		font-size: 14px;
+		font-weight: 600;
+		justify-content: center;
+		padding: 10px 20px;
+		border-radius: 6px;
+		transition: transform 0.15s ease, filter 0.15s ease;
+		box-shadow: 0 4px 6px -1px #0000001a, 0 2px 4px -1px #0000000f;
+
+		&:hover {
+			transform: translateY(-1px);
+			filter: brightness(110%);
+		}
+	}
+}

@@ -22,4 +22,8 @@ $primaryColor: #146EF5;
 	margin: 0;
 	box-sizing: border-box;
 	cursor: grab;
+
+	&.hide {
+		opacity: 0.5;
+	}
 }

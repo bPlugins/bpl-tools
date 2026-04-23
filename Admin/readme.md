@@ -496,172 +496,172 @@ const demoLink = `${siteURL}/demo`;
 const docsURL = `${siteURL}/docs`;
 
 export default [
-    {
-        title: 'Grid',
-        children: [
-            {
-                name: `${pluginSlug}/container`,
-                title: 'Container',
-                icon: containerIcon,
-                demo: ``,
-                docs: ``,
-                status: 'published',
-                required: true
-            },
-            {
-                name: `${pluginSlug}/row`,
-                title: 'Row',
-                icon: rowIcon,
-                demo: `${demoLink}/row/`,
-                docs: `${docsURL}/row-block/`,
-                status: 'published',
-                required: true
-            },
-            {
-                name: `${pluginSlug}/team-members`,
-                title: 'Team Members',
-                icon: teamMembersIcon,
-                demo: `${demoLink}/team-members/`,
-                docs: `${docsURL}/team-block/`,
-                status: 'published'
-            }
-        ]
-    },
-    {
-        name: `${pluginSlug}/td-viewer`,
-        title: '3D Viewer',
-        icon: tDViewerIcon,
-        demo: `${demoLink}/3d-viewer/`,
-        docs: `${docsURL}/3d-viewer-block/`,
-        status: 'published'
-    },
-    {
-        name: `${pluginSlug}/advanced-image`,
-        title: 'Advanced Image',
-        icon: imageIcon,
-        demo: ``,
-        docs: ``,
-        status: 'published'
-    },
-    {
-        name: `${pluginSlug}/alert`,
-        title: 'Alert',
-        icon: alertIcon,
-        demo: `${demoLink}/alert/`,
-        docs: `${docsURL}/alert-block/`,
-        status: 'published'
-    },
-    {
-        name: `${pluginSlug}/animated-text`,
-        title: 'Animated Text',
-        icon: animationIcon,
-        demo: `${demoLink}/animated-text/`,
-        docs: `${docsURL}/animated-text-block/`,
-        status: 'published'
-    },
-    {
-        name: `${pluginSlug}/accordion-block`,
-        title: 'Accordion Block',
-        icon: telexAccordionIcon,
-        // demo: `${demoLink}/animated-text/`,
-        // docs: `${docsURL}/animated-text-block/`,
-        status: 'published'
-    },
-    {
-        name: `${pluginSlug}/button`,
-        title: 'Button',
-        icon: buttonIcon,
-        demo: `${demoLink}/button/`,
-        docs: ``,
-        status: 'published'
-    },
-    {
-        name: `${pluginSlug}/button-group`,
-        title: 'Button Group',
-        icon: buttonGroupIcon,
-        demo: `${demoLink}/button-group/`,
-        docs: ``,
-        status: 'published'
-    },
-    {
-        name: `${pluginSlug}/cards`,
-        title: 'Cards',
-        icon: cardIcon,
-        demo: `${demoLink}/cards/`,
-        docs: ``,
-        status: 'published',
+	{
+		title: 'Grid',
+		children: [
+			{
+				name: `${pluginSlug}/container`,
+				title: 'Container',
+				icon: containerIcon,
+				demo: ``,
+				docs: ``,
+				status: 'published',
+				required: true
+			},
+			{
+				name: `${pluginSlug}/row`,
+				title: 'Row',
+				icon: rowIcon,
+				demo: `${demoLink}/row/`,
+				docs: `${docsURL}/row-block/`,
+				status: 'published',
+				required: true
+			},
+			{
+				name: `${pluginSlug}/team-members`,
+				title: 'Team Members',
+				icon: teamMembersIcon,
+				demo: `${demoLink}/team-members/`,
+				docs: `${docsURL}/team-block/`,
+				status: 'published'
+			}
+		]
+	},
+	{
+		name: `${pluginSlug}/td-viewer`,
+		title: '3D Viewer',
+		icon: tDViewerIcon,
+		demo: `${demoLink}/3d-viewer/`,
+		docs: `${docsURL}/3d-viewer-block/`,
+		status: 'published'
+	},
+	{
+		name: `${pluginSlug}/advanced-image`,
+		title: 'Advanced Image',
+		icon: imageIcon,
+		demo: ``,
+		docs: ``,
+		status: 'published'
+	},
+	{
+		name: `${pluginSlug}/alert`,
+		title: 'Alert',
+		icon: alertIcon,
+		demo: `${demoLink}/alert/`,
+		docs: `${docsURL}/alert-block/`,
+		status: 'published'
+	},
+	{
+		name: `${pluginSlug}/animated-text`,
+		title: 'Animated Text',
+		icon: animationIcon,
+		demo: `${demoLink}/animated-text/`,
+		docs: `${docsURL}/animated-text-block/`,
+		status: 'published'
+	},
+	{
+		name: `${pluginSlug}/accordion-block`,
+		title: 'Accordion Block',
+		icon: telexAccordionIcon,
+		// demo: `${demoLink}/animated-text/`,
+		// docs: `${docsURL}/animated-text-block/`,
+		status: 'published'
+	},
+	{
+		name: `${pluginSlug}/button`,
+		title: 'Button',
+		icon: buttonIcon,
+		demo: `${demoLink}/button/`,
+		docs: ``,
+		status: 'published'
+	},
+	{
+		name: `${pluginSlug}/button-group`,
+		title: 'Button Group',
+		icon: buttonGroupIcon,
+		demo: `${demoLink}/button-group/`,
+		docs: ``,
+		status: 'published'
+	},
+	{
+		name: `${pluginSlug}/cards`,
+		title: 'Cards',
+		icon: cardIcon,
+		demo: `${demoLink}/cards/`,
+		docs: ``,
+		status: 'published',
 		badge: 'New'
-    },
-    {
-        name: `${pluginSlug}/chart`,
-        title: 'Chart',
-        icon: chartIcon,
-        demo: `${demoLink}/chart/`,
-        docs: `${docsURL}/chart-block/`,
-        status: 'published'
-    },
-    {
-        title: 'Sections',
-        children: [
-            {
-                name: `${pluginSlug}/feature-boxes`,
-                title: 'Feature Boxes',
-                icon: featureBoxIcon,
-                demo: `${demoLink}/feature-boxes/`,
-                docs: ``,
-                status: 'published'
-            },
-            {
-                name: `${pluginSlug}/flip-boxes`,
-                title: 'Flip Boxes',
-                icon: flipBoxIcon,
-                demo: `${demoLink}/flip-boxes/`,
-                docs: ``,
-                status: 'published'
-            },
-            {
-                name: `${pluginSlug}/testimonials`,
-                title: 'Testimonials',
-                icon: testimonialsIcon,
-                // demo: `${demoLink}/testimonials/`,
-                // docs: `${docsURL}/testimonials-block/`,
-                status: 'published'
-            }
-        ]
-    },
-    {
-        name: `${pluginSlug}/content-ticker`,
-        title: 'Content Ticker',
-        icon: contentTickerIcon,
-        demo: ``,
-        docs: ``,
-        status: 'published',
-        isPremium: true
-    },
-    {
-        name: `${pluginSlug}/countdown`,
-        title: 'Countdown Timer',
-        icon: countdownIcon,
-        demo: `${demoLink}/countdown/`,
-        docs: `${docsURL}/countdown-block/`,
-        status: 'published'
-    },
-    {
-        name: `${pluginSlug}/counters`,
-        title: 'Counters',
-        icon: countersIcon,
-        demo: `${demoLink}/counters/`,
-        docs: `${docsURL}/counters-block/`,
-        status: 'published'
-    },
-    {
-        name: `${pluginSlug}/data-table`,
-        title: 'Data Table',
-        icon: dataTableIcon,
-        demo: ``,
-        docs: ``,
-        status: 'inDev'
-    }
+	},
+	{
+		name: `${pluginSlug}/chart`,
+		title: 'Chart',
+		icon: chartIcon,
+		demo: `${demoLink}/chart/`,
+		docs: `${docsURL}/chart-block/`,
+		status: 'published'
+	},
+	{
+		title: 'Sections',
+		children: [
+			{
+				name: `${pluginSlug}/feature-boxes`,
+				title: 'Feature Boxes',
+				icon: featureBoxIcon,
+				demo: `${demoLink}/feature-boxes/`,
+				docs: ``,
+				status: 'published'
+			},
+			{
+				name: `${pluginSlug}/flip-boxes`,
+				title: 'Flip Boxes',
+				icon: flipBoxIcon,
+				demo: `${demoLink}/flip-boxes/`,
+				docs: ``,
+				status: 'published'
+			},
+			{
+				name: `${pluginSlug}/testimonials`,
+				title: 'Testimonials',
+				icon: testimonialsIcon,
+				// demo: `${demoLink}/testimonials/`,
+				// docs: `${docsURL}/testimonials-block/`,
+				status: 'published'
+			}
+		]
+	},
+	{
+		name: `${pluginSlug}/content-ticker`,
+		title: 'Content Ticker',
+		icon: contentTickerIcon,
+		demo: ``,
+		docs: ``,
+		status: 'published',
+		isPremium: true
+	},
+	{
+		name: `${pluginSlug}/countdown`,
+		title: 'Countdown Timer',
+		icon: countdownIcon,
+		demo: `${demoLink}/countdown/`,
+		docs: `${docsURL}/countdown-block/`,
+		status: 'published'
+	},
+	{
+		name: `${pluginSlug}/counters`,
+		title: 'Counters',
+		icon: countersIcon,
+		demo: `${demoLink}/counters/`,
+		docs: `${docsURL}/counters-block/`,
+		status: 'published'
+	},
+	{
+		name: `${pluginSlug}/data-table`,
+		title: 'Data Table',
+		icon: dataTableIcon,
+		demo: ``,
+		docs: ``,
+		status: 'inDev'
+	}
 ];
 ```
 
