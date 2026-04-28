@@ -1,0 +1,50 @@
+.bPlNotice {
+	font-size: 12px;
+	line-height: 1.4;
+	font-weight: 400;
+	display: flex;
+	gap: 8px;
+	box-sizing: border-box;
+	padding: 8px 12px 8px 15px;
+	border-left: 3px solid transparent;
+	border-radius: 6px;
+
+	.icon {
+		flex-shrink: 0;
+		align-self: start;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		opacity: 0.9;
+		margin-top: 2px;
+
+		svg {
+			width: 15px;
+			height: 15px;
+		}
+	}
+
+	&.info {
+		background-color: rgba(20, 110, 245, 0.04); // Brand Blue Soft
+		border-left-color: #146ef5;
+		color: #146ef5;
+	}
+
+	&.success {
+		background-color: rgba(16, 185, 129, 0.05);
+		border-left-color: #10b981;
+		color: #047857;
+	}
+
+	&.warning {
+		background-color: rgba(245, 158, 11, 0.05);
+		border-left-color: #f59e0b;
+		color: #92400e;
+	}
+
+	&.danger {
+		background-color: rgba(244, 63, 94, 0.05);
+		border-left-color: #f43f5e;
+		color: #be123c;
+	}
+}

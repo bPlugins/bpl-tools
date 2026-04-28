@@ -901,6 +901,9 @@ svg.bPlBlockIcon {
 
 		button {
 			color: inherit;
+			display: inline-flex;
+			align-items: center;
+			gap: 5px;
 
 			&:focus,
 			&:hover,
@@ -910,13 +913,17 @@ svg.bPlBlockIcon {
 				outline: 0;
 				box-shadow: none;
 			}
+
+			*:last-child:not(:first-child) {
+				margin-left: auto;
+			}
 		}
 	}
 
 	&.is-opened {
 		border: 1px solid $primaryColor;
 
-		.components-panel__body-title {
+		>.components-panel__body-title {
 			color: $primaryColor;
 			background: rgba($primaryColor, 0.15);
 			border-bottom: 1px solid rgba($primaryColor, 0.5);

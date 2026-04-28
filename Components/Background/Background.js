@@ -1,9 +1,15 @@
 /**
- * @props className (optional): 'mt20' (String)
- * @props label (optional): 'Background' (String)
- * @props background (required): { type, color, gradient, image, position, attachment, repeat, size, overlayColor } (Object)
+ * Background Component
+ * 
+ * @props className (optional): '' (String)
+ * @props label (optional): __('Background') (String|Node)
+ * @props value (required): { type, color, gradient, image, position, attachment, repeat, size, overlayColor } (Object)
  * @props onChange (required): (Function)
  * @props defaults (optional): { type, color, gradient, image, position, attachment, repeat, size, overlayColor } (Object)
+ * @props isSolid (optional): true (Boolean)
+ * @props isGradient (optional): true (Boolean)
+ * @props isImage (optional): true (Boolean)
+ * @props gradients (optional): Array of gradients (Array)
  */
 
 import { __ } from '@wordpress/i18n';

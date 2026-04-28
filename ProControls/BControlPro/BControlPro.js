@@ -1,5 +1,16 @@
 import { __ } from '@wordpress/i18n';
 
+/**
+ * BControlPro Component
+ * 
+ * @props label (required): (String|Node)
+ * @props className (optional): '' (String)
+ * @props onChange (required): (Function)
+ * @props isPremium (optional): false (Boolean)
+ * @props Component (required): (Component)
+ * @props setIsProModalOpen (optional): (Function)
+ */
+
 import './BControlPro.scss';
 
 const BControlPro = ({ label, className, onChange, isPremium = false, Component, setIsProModalOpen = () => { }, ...restProps }) => {

@@ -2,6 +2,7 @@ import './style.scss';
 
 import AdvBackground from './AdvBackground/AdvBackground';
 import Background from './Background/Background';
+import Badge from './Badge';
 import BButtonGroup from './BButtonGroup/BButtonGroup';
 import BoxControl from './BoxControl/BoxControl';
 import BplBlockPreview from './BplBlockPreview/BplBlockPreview';
@@ -22,6 +23,7 @@ import Label from './Label/Label';
 import Loading from './Loading/Loading';
 import { InlineDetailMediaUpload, InlineMediaUpload, MediaArea, MediaEditControl, MediaPlaceholder } from './MediaControl/MediaControl';
 import MultiSelectControl from './MultiSelectControl/MultiSelectControl';
+import Notice from './Notice';
 import OverlayControl from './OverlayControl/OverlayControl';
 import PanelSelectControl from './PanelSelectControl/PanelSelectControl';
 import SelectPureControl from './SelectPureControl/SelectPureControl';
@@ -34,5 +36,5 @@ import TinyEditor from './TinyEditor/TinyEditor';
 import Typography from './Typography/Typography';
 import BBlocksAds from './Utility/BBlocksAds';
 
-export { AdvBackground, Background, BBlocksAds, BButtonGroup, BoxControl, BplBlockPreview, BtnGroup, Button, ColorControl, ColorsControl, CustomCodeEditor, Device, DynamicTag, Gradient, HelpPanel, HelpTooltip, HexColorControl, IconControl, IconLibrary, Loading, InlineDetailMediaUpload, InlineMediaUpload, ItemsPanel, Label, MediaArea, MediaEditControl, MediaPlaceholder, MultiSelectControl, OverlayControl, PanelSelectControl, SelectPureControl, SelectTokenField, SeparatorControl, ShadowControl, SolidBackground, SortableControl, TinyEditor, Typography };
+export { AdvBackground, Background, Badge, BBlocksAds, BButtonGroup, BoxControl, BplBlockPreview, BtnGroup, Button, ColorControl, ColorsControl, CustomCodeEditor, Device, DynamicTag, Gradient, HelpPanel, HelpTooltip, HexColorControl, IconControl, IconLibrary, Loading, InlineDetailMediaUpload, InlineMediaUpload, ItemsPanel, Label, MediaArea, MediaEditControl, MediaPlaceholder, MultiSelectControl, Notice, OverlayControl, PanelSelectControl, SelectPureControl, SelectTokenField, SeparatorControl, ShadowControl, SolidBackground, SortableControl, TinyEditor, Typography };
 

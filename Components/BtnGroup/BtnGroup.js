@@ -3,6 +3,7 @@
  * @param {Object} props
  * @param {string} [props.className] - Additional CSS class for styling (e.g. 'mt20')
  * @param {string} [props.label=''] - Label text to display above the button group
+ * @param {string} [props.labelPosition='left'] - Layout position of the label
  * @param {string} props.value - Currently selected button value
  * @param {Function} props.onChange - Callback function when button selection changes
  * Receives (value, default) as parameters
@@ -22,10 +23,11 @@ import { Button, ButtonGroup, PanelRow } from '@wordpress/components';
 import { Label } from '../index';
 
 const BtnGroup = props => {
-	const { className, label = '', value, onChange, options, isIcon = false, isTextIcon = false, size = 'compact' } = props;
+	const { className, label = '', labelPosition = 'left', value, onChange, options, isIcon = false, isTextIcon = false, size = 'compact' } = props;
 
 	const Buttons = ({ className = '' }) => <ButtonGroup className={`bPlBtnGroup ${className || null}`}>
 		{Object.values(options).map(obj => {
+			``
 			const { value: val, icon = '', label = '', def = '' } = obj;
 			const isActive = value === val;
 
@@ -40,11 +42,15 @@ const BtnGroup = props => {
 	</ButtonGroup>
 
 	return label ?
-		<PanelRow className={className}>
+		('left' === labelPosition ? <PanelRow className={className}>
 			<Label className=''>{label}</Label>
 
 			<Buttons />
-		</PanelRow> :
+		</PanelRow> : <>
+			<Label>{label}</Label>
+
+			<Buttons className={className} />
+		</>) :
 		<Buttons className={className} />
 }
 export default BtnGroup;
