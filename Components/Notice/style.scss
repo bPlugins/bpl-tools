@@ -25,26 +25,43 @@
 	}
 
 	&.info {
-		background-color: rgba(20, 110, 245, 0.04); // Brand Blue Soft
-		border-left-color: #146ef5;
 		color: #146ef5;
+		background-color: #146ef50a;
+		border-left-color: #146ef5;
 	}
 
 	&.success {
-		background-color: rgba(16, 185, 129, 0.05);
-		border-left-color: #10b981;
 		color: #047857;
+		background-color: #10b9810d;
+		border-left-color: #10b981;
 	}
 
 	&.warning {
-		background-color: rgba(245, 158, 11, 0.05);
-		border-left-color: #f59e0b;
 		color: #92400e;
+		background-color: #f59e0b0d;
+		border-left-color: #f59e0b;
 	}
 
 	&.danger {
-		background-color: rgba(244, 63, 94, 0.05);
-		border-left-color: #f43f5e;
 		color: #be123c;
+		background-color: #f43f5e0d;
+		border-left-color: #f43f5e;
+	}
+
+	&.premium {
+		font-size: 13px;
+		line-height: 1.625;
+		font-weight: 500;
+		color: #9a3412;
+		background-color: #ff7a000d;
+		border-left-color: #ff7a00;
+
+		.icon {
+			svg {
+				width: 18px;
+				height: 18px;
+				fill: #ff7a00;
+			}
+		}
 	}
 }

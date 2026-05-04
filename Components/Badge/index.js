@@ -10,7 +10,7 @@
 
 import './style.scss';
 
-export const Badge = ({ className = '', label = 'NEW', color = '#ff7a00', background = '#ff7a0020', borderColor = '#ff7a0030' }) => {
-    return <span className={`bPlBadge ${className}`} style={{ color, background, borderColor }}>{label}</span>
+export const Badge = ({ className = '', label = 'NEW', icon = null, size = 'small', color = '#ff7a00', background = '#ff7a0020', borderColor = '#ff7a0030' }) => {
+	return <span className={`bPlBadge ${className} ${size}`} style={{ color, background, borderColor }}>{icon} {label}</span>
 };
 export default Badge;

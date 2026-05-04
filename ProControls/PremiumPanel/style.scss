@@ -1,0 +1,67 @@
+$primaryColor: #146EF5;
+$secondaryColor: #FF7A00;
+$titleColor: #070127;
+$contentColor: #485781;
+
+.bPlPremiumPanel {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: 15px 4px 4px 4px;
+
+	.icon {
+		width: 48px;
+		height: 48px;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		border: 2px solid $secondaryColor;
+		border-radius: 7px;
+		margin-bottom: 16px;
+
+		svg {
+			width: 28px;
+			fill: $secondaryColor;
+		}
+	}
+
+	h3 {
+		font-size: 18px;
+		line-height: 1.75;
+		font-weight: 700;
+		text-align: center;
+		text-transform: none;
+		color: $titleColor;
+		margin-bottom: 8px;
+
+		&.hasDemo {
+			a {
+				color: inherit;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				gap: 5px;
+				text-decoration: none;
+				transition: all .3s ease-in-out;
+
+				&:hover {
+					gap: 10px;
+				}
+
+				svg {
+					width: .85em;
+					height: .85em;
+				}
+			}
+		}
+	}
+
+	p {
+		font-size: 14px;
+		line-height: 1.6;
+		text-align: center;
+		color: $contentColor;
+		margin-bottom: 24px;
+	}
+}
