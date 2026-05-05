@@ -3,6 +3,7 @@ import { PanelBody, TabPanel, RangeControl } from '@wordpress/components';
 
 import { AdvBackground, OverlayControl } from '../Components';
 import { updateData } from '../utils/functions';
+import { sizeAndMarginProps } from '../utils/defaultProps';
 
 const Background = ({ background, onChange, enabled, isPremium }) => {
 	const tabs = enabled?.filter(e => 'overlay' !== e)?.map(e => ({ title: e, name: e }));
@@ -18,7 +19,7 @@ const Background = ({ background, onChange, enabled, isPremium }) => {
 			</>}
 
 			{'hover' === tab.name && <>
-				<RangeControl className='mt10 mb10' label='Hover Transition' value={background?.transition || 0.4} onChange={val => onChange(updateData(background, val, 'transition'))} min={0} max={10} step={0.05} />
+				<RangeControl className='mt10 mb10' label='Hover Transition' value={background?.transition || 0.4} onChange={val => onChange(updateData(background, val, 'transition'))} min={0} max={10} step={0.05} {...sizeAndMarginProps} />
 
 				<AdvBackground name={'Hover Background Type'} value={background?.[tab.name]} onChange={(val) => onChange(updateData(background, val, tab.name))} isVideo={false} isHover={true} />
 

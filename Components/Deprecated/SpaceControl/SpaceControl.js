@@ -98,19 +98,19 @@ const SpaceControl = props => {
 		</PanelRow>
 
 		{2 === getValue('side') && <PanelRow className='twoColumn'>
-			<UnitControl label={__('Top Bottom:')} labelPosition='top' value={getValue('vertical')} onChange={val => setValue('vertical', val)} units={[pxUnit(), perUnit(), emUnit(), remUnit()]} />
+			<UnitControl label={__('Top Bottom:')} labelPosition='top' value={getValue('vertical')} onChange={val => setValue('vertical', val)} units={[pxUnit(), perUnit(), emUnit(), remUnit()]} __next40pxDefaultSize />
 
-			<UnitControl label={__('Left Right:')} labelPosition='top' value={getValue('horizontal')} onChange={val => setValue('horizontal', val)} units={[pxUnit(), perUnit(), emUnit(), remUnit()]} />
+			<UnitControl label={__('Left Right:')} labelPosition='top' value={getValue('horizontal')} onChange={val => setValue('horizontal', val)} units={[pxUnit(), perUnit(), emUnit(), remUnit()]} __next40pxDefaultSize />
 		</PanelRow>}
 
 		{4 === getValue('side') && <PanelRow className='fourColumn'>
-			<UnitControl label={__('Top:')} labelPosition='top' value={getValue('top')} onChange={val => setValue('top', val)} units={[pxUnit(), perUnit(), emUnit(), remUnit()]} />
+			<UnitControl label={__('Top:')} labelPosition='top' value={getValue('top')} onChange={val => setValue('top', val)} units={[pxUnit(), perUnit(), emUnit(), remUnit()]} __next40pxDefaultSize />
 
-			<UnitControl label={__('Right:')} labelPosition='top' value={getValue('right')} onChange={val => setValue('right', val)} units={[pxUnit(), perUnit(), emUnit(), remUnit()]} />
+			<UnitControl label={__('Right:')} labelPosition='top' value={getValue('right')} onChange={val => setValue('right', val)} units={[pxUnit(), perUnit(), emUnit(), remUnit()]} __next40pxDefaultSize />
 
-			<UnitControl label={__('Bottom:')} labelPosition='top' value={getValue('bottom')} onChange={val => setValue('bottom', val)} units={[pxUnit(), perUnit(), emUnit(), remUnit()]} />
+			<UnitControl label={__('Bottom:')} labelPosition='top' value={getValue('bottom')} onChange={val => setValue('bottom', val)} units={[pxUnit(), perUnit(), emUnit(), remUnit()]} __next40pxDefaultSize />
 
-			<UnitControl label={__('Left:')} labelPosition='top' value={getValue('left')} onChange={val => setValue('left', val)} units={[pxUnit(), perUnit(), emUnit(), remUnit()]} />
+			<UnitControl label={__('Left:')} labelPosition='top' value={getValue('left')} onChange={val => setValue('left', val)} units={[pxUnit(), perUnit(), emUnit(), remUnit()]} __next40pxDefaultSize />
 		</PanelRow>}
 	</div>
 };

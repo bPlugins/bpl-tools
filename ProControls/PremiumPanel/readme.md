@@ -13,10 +13,10 @@ import { PremiumPanel } from '../../bpl-tools/ProControls';
 
 // Inside your component
 <PremiumPanel 
-    title={__('Premium Feature', 'text-domain')} 
-    description={__('This feature is only available in the Pro version.', 'text-domain')} 
-    pricingUrl="https://bplugins.com/products/..."
-    demoUrl="https://demo.bplugins.com/..." // Optional
+	title={__('Premium Feature', 'text-domain')} 
+	description={__('This feature is only available in the Pro version.', 'text-domain')} 
+	pricingUrl="https://bplugins.com/products/..."
+	demoUrl="https://demo.bplugins.com/..." // Optional
 />
 ```
 
@@ -38,10 +38,10 @@ import { PremiumBadge } from '../../bpl-tools/ProControls';
 
 // Inside a PanelBody title
 <PanelBody title={<>
-    {__('Advanced Settings', 'text-domain')}
-    <PremiumBadge />
+	{__('Advanced Settings', 'text-domain')}
+	<PremiumBadge />
 </>}>
-    ...
+	...
 </PanelBody>
 ```
 

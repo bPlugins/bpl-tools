@@ -16,11 +16,11 @@ import { Notice } from '../Components';
 
 // Info Notice with icon
 <Notice status="info" isIcon={true}>
-    This is an informational message.
+	This is an informational message.
 </Notice>
 
 // Danger Notice
 <Notice status="danger" isIcon={true}>
-    An error occurred while saving.
+	An error occurred while saving.
 </Notice>
 ```

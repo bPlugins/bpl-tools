@@ -3,9 +3,9 @@ import { Button, PanelRow, Placeholder, TextControl, ToolbarButton, ToolbarGroup
 import { __ } from '@wordpress/i18n';
 import { useState } from 'react';
 
-// import { MimeTypeChecker } from '../../utils/functions';
-import { Label } from '../index';
 import './MediaControl.scss';
+import { Label } from '../index';
+import { sizeAndMarginProps } from '../../utils/defaultProps';
 
 /**
  * MediaControl component
@@ -24,7 +24,7 @@ export const InlineMediaUpload = props => {
 		{label && <Label className='mb5'>{label}</Label>}
 
 		<PanelRow className={`bPlInlineMediaUpload`}>
-			<TextControl value={value} onChange={val => onChange(val)} placeholder={placeholder} />
+			<TextControl value={value} onChange={val => onChange(val)} placeholder={placeholder} {...sizeAndMarginProps} />
 
 			{/* <MediaUploadCheck> */}
 			<MediaUpload
@@ -58,7 +58,7 @@ export const InlineDetailMediaUpload = props => {
 		{label && <Label className='mb5'>{label}</Label>}
 
 		<PanelRow className={`bPlInlineMediaUpload`}>
-			<TextControl value={value?.url} onChange={url => onChange({ id: null, url, alt: '', title: '', caption: '' })} placeholder={placeholder} />
+			<TextControl value={value?.url} onChange={url => onChange({ id: null, url, alt: '', title: '', caption: '' })} placeholder={placeholder} {...sizeAndMarginProps} />
 
 			<MediaUploadCheck>
 				<MediaUpload

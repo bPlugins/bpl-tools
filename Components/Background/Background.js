@@ -20,6 +20,7 @@ const Gradient = __experimentalGradientPicker || GradientPicker;
 import { BtnGroup, ColorControl, InlineDetailMediaUpload, Label } from '../index';
 import { attachments, bgTypes, repeats, sizes } from './options';
 import { gradient } from '../../utils/data';
+import { sizeAndMarginProps } from '../../utils/defaultProps';
 
 const Background = props => {
 	const { className = '', label = __('Background'), value = {}, onChange, defaults = {}, isSolid = true, isGradient = true, isImage = true, gradients } = props;
@@ -73,19 +74,19 @@ const Background = props => {
 
 					<PanelRow>
 						<Label className=''>{__('Attachment:')}</Label>
-						<SelectControl value={getValue('attachment')} onChange={val => setValue('attachment', val)} options={attachments} />
+						<SelectControl value={getValue('attachment')} onChange={val => setValue('attachment', val)} options={attachments} {...sizeAndMarginProps} />
 						{resetValue('attachments')}
 					</PanelRow>
 
 					<PanelRow>
 						<Label className=''>{__('Repeat:')}</Label>
-						<SelectControl value={getValue('repeat')} onChange={val => setValue('repeat', val)} options={repeats} />
+						<SelectControl value={getValue('repeat')} onChange={val => setValue('repeat', val)} options={repeats} {...sizeAndMarginProps} />
 						{resetValue('repeat')}
 					</PanelRow>
 
 					<PanelRow>
 						<Label className=''>{__('Size:')}</Label>
-						<SelectControl value={getValue('size')} onChange={val => setValue('size', val)} options={sizes} />
+						<SelectControl value={getValue('size')} onChange={val => setValue('size', val)} options={sizes} {...sizeAndMarginProps} />
 						{resetValue('size')}
 					</PanelRow>
 

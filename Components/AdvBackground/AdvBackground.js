@@ -3,6 +3,7 @@ import { TabPanel, PanelRow, __experimentalInputControl as InputControl, SelectC
 
 import { Device, Gradient, Label, SolidBackground, MediaArea } from '../index';
 import { bgTabs, imgAttachmentOptions, imgPositionOptions, imgRepeatOptions, imgSizeOptions, unitOptions } from './utils/options';
+import { sizeAndMarginProps } from '../../utils/defaultProps';
 
 /**
  * @function
@@ -37,14 +38,14 @@ const AdvBackground = ({ name = 'Background', value, onChange, isVideo = false, 
 						<Label className=''>Position</Label>
 						<Device />
 					</PanelRow>
-					<SelectControl value={position} options={imgPositionOptions} onChange={val => onChange({ ...value, img: { ...img, [device]: { ...img[device], position: val } } })} />
+					<SelectControl value={position} options={imgPositionOptions} onChange={val => onChange({ ...value, img: { ...img, [device]: { ...img[device], position: val } } })} {...sizeAndMarginProps} />
 
 					{position === 'custom' && <>
 						<PanelRow className='mt15'>
 							<Label className=''>X Position</Label>
 							<Device />
 						</PanelRow>
-						<UnitControl units={unitOptions} value={xPosition} min={-2000} max={2000} onChange={val => onChange({ ...value, img: { ...img, [device]: { ...img[device], xPosition: val } } })} />
+						<UnitControl units={unitOptions} value={xPosition} min={-2000} max={2000} onChange={val => onChange({ ...value, img: { ...img, [device]: { ...img[device], xPosition: val } } })} __next40pxDefaultSize />
 
 						<PanelRow className='mt15'>
 							<Label className=''>Y Position</Label>
@@ -56,6 +57,7 @@ const AdvBackground = ({ name = 'Background', value, onChange, isVideo = false, 
 							min={-2000}
 							max={2000}
 							onChange={val => onChange({ ...value, img: { ...img, [device]: { ...img[device], yPosition: val } } })}
+							__next40pxDefaultSize
 						/>
 					</>}
 
@@ -67,6 +69,7 @@ const AdvBackground = ({ name = 'Background', value, onChange, isVideo = false, 
 						value={attachment}
 						options={imgAttachmentOptions}
 						onChange={val => onChange({ ...value, img: { ...img, [device]: { ...img[device], attachment: val } } })}
+						{...sizeAndMarginProps}
 					/>
 
 					<PanelRow className='mt20'>
@@ -77,6 +80,7 @@ const AdvBackground = ({ name = 'Background', value, onChange, isVideo = false, 
 						value={repeat}
 						options={imgRepeatOptions}
 						onChange={val => onChange({ ...value, img: { ...img, [device]: { ...img[device], repeat: val } } })}
+						{...sizeAndMarginProps}
 					/>
 
 					<PanelRow className='mt20'>
@@ -87,6 +91,7 @@ const AdvBackground = ({ name = 'Background', value, onChange, isVideo = false, 
 						value={size}
 						options={imgSizeOptions}
 						onChange={val => onChange({ ...value, img: { ...img, [device]: { ...img[device], size: val } } })}
+						{...sizeAndMarginProps}
 					/>
 
 					{size === 'custom' && <>
@@ -100,6 +105,7 @@ const AdvBackground = ({ name = 'Background', value, onChange, isVideo = false, 
 							min={-2000}
 							max={2000}
 							onChange={val => onChange({ ...value, img: { ...img, [device]: { ...img[device], customSize: val } } })}
+							__next40pxDefaultSize
 						/>
 					</>}
 				</>}
@@ -113,7 +119,7 @@ const AdvBackground = ({ name = 'Background', value, onChange, isVideo = false, 
 
 				<InputControl style={{ marginTop: '10px' }} label='Inline Upload' labelPosition='top' type='text' value={video?.url} onChange={val => onChange({ ...value, video: { ...video, url: val } })} placeholder='Insert your video link..' />
 
-				{video?.url && <ToggleControl className='mt10' label='Loop' checked={video?.loop} value={video?.loop} onChange={val => onChange({ ...value, video: { ...video, loop: val } })} />}
+				{video?.url && <ToggleControl className='mt10' label='Loop' checked={video?.loop} value={video?.loop} onChange={val => onChange({ ...value, video: { ...video, loop: val } })} __nextHasNoMarginBottom />}
 			</>}
 		</>}
 		</TabPanel>

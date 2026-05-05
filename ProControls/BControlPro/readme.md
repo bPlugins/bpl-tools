@@ -20,11 +20,12 @@ import { BControlPro } from '../ProControls';
 
 // Usage inside block settings
 <BControlPro
-    label="Advanced Animation"
-    isPremium={ isProActive }
-    Component={ ToggleControl }
-    checked={ attributes.advancedAnimation }
-    onChange={ (val) => setAttributes({ advancedAnimation: val }) }
-    setIsProModalOpen={ setIsProModalOpen }
+	label="Advanced Animation"
+	isPremium={ isProActive }
+	Component={ ToggleControl }
+	checked={ attributes.advancedAnimation }
+	onChange={ (val) => setAttributes({ advancedAnimation: val }) }
+	setIsProModalOpen={ setIsProModalOpen }
+	__nextHasNoMarginBottom
 />
 ```

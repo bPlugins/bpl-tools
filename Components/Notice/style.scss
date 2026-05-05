@@ -24,6 +24,29 @@
 		}
 	}
 
+	ul {
+		list-style-type: none;
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+		margin: 10px 0;
+
+		li {
+			line-height: 1;
+			position: relative;
+			padding-left: 15px;
+			margin: 0;
+
+			&::before {
+				content: '✦';
+				position: absolute;
+				left: 0;
+				top: 50%;
+				transform: translateY(-50%);
+			}
+		}
+	}
+
 	&.info {
 		color: #146ef5;
 		background-color: #146ef50a;

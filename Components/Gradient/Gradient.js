@@ -6,6 +6,7 @@ import { primaryColor } from '../../utils/data';
 import { BButtonGroup, ColorControl } from '../index';
 import './Gradient.scss';
 import { getRandomColor, randomNumber } from '../../utils/functions';
+import { sizeAndMarginProps } from '../../utils/defaultProps';
 
 /**
  * BGradient Component
@@ -81,6 +82,7 @@ const Gradient = (props) => {
 					onChange={(val) => onChange({ ...value, centerPositions: { ...centerPositions, x: val } })}
 					min={0}
 					max={100}
+					{...sizeAndMarginProps}
 				/>
 
 				<RangeControl
@@ -89,9 +91,10 @@ const Gradient = (props) => {
 					onChange={(val) => onChange({ ...value, centerPositions: { ...centerPositions, y: val } })}
 					min={0}
 					max={100}
+					{...sizeAndMarginProps}
 				/>
 			</> :
-			<RangeControl label='Angle' value={angel} onChange={(val) => onChange({ ...value, angel: val })} min={0} max={360} />}
+			<RangeControl label='Angle' value={angel} onChange={(val) => onChange({ ...value, angel: val })} min={0} max={360} {...sizeAndMarginProps} />}
 	</>
 };
 export default Gradient;

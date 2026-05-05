@@ -5,10 +5,13 @@
 .notice,
 .fs-notice,
 .fs-has-title,
-.fs_notice_board {
+.fs_notice_board,
+div.fs-notice.promotion,
+div.fs-notice.success,
+div.fs-notice.updated {
 	width: 0;
 	height: 0;
-	position: absolute;
+	position: absolute !important;
 	top: -9999px;
 	left: -9999px;
 	opacity: 0;

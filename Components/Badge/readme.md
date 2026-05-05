@@ -20,9 +20,9 @@ import { Badge } from '../Components';
 
 // Custom Badge
 <Badge 
-    label="PRO" 
-    color="#fff" 
-    background="#000" 
-    borderColor="#333" 
+	label="PRO" 
+	color="#fff" 
+	background="#000" 
+	borderColor="#333" 
 />
 ```

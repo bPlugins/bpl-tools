@@ -15,23 +15,25 @@ import { crownIcon, externalIcon } from '../../utils/icons';
 
 import './style.scss';
 
-const PremiumPanel = ({ title, description, pricingUrl, demoUrl = '', buttonLabel = __('Get Pro') }) => {
-    return <div className='bPlPremiumPanel'>
-        <div className='icon'>{crownIcon}</div>
+const PremiumPanel = ({ title, description, pricingUrl, demoUrl = '', buttonLabel = __('Get Pro'), children }) => {
+	return <div className='bPlPremiumPanel'>
+		<div className='icon'>{crownIcon}</div>
 
-        {title && <h3 className={demoUrl ? 'hasDemo' : ''}>
-            {demoUrl ? <>
-                <a href={demoUrl} target='_blank' rel='noopener noreferrer'>
-                    {title}
-                    {externalIcon}
-                </a>
-            </> :
-                title}
-        </h3>}
+		{title && <h3 className={demoUrl ? 'hasDemo' : ''}>
+			{demoUrl ? <>
+				<a href={demoUrl} target='_blank' rel='noopener noreferrer'>
+					{title}
+					{externalIcon}
+				</a>
+			</> :
+				title}
+		</h3>}
 
-        {description && <p>{description}</p>}
+		{description && <p>{description}</p>}
 
-        <Button href={pricingUrl} variant='secondary' size='medium' target='_blank' rel='noopener noreferrer'>{crownIcon} {buttonLabel}</Button>
-    </div>
+		{children}
+
+		<Button href={pricingUrl} variant='secondary' size='medium' target='_blank' rel='noopener noreferrer'>{crownIcon} {buttonLabel}</Button>
+	</div>
 }
 export default PremiumPanel;

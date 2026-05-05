@@ -32,29 +32,29 @@ const ShadowControl = props => {
 			renderToggle={({ isOpen, onToggle }) => <Button icon='edit' onClick={onToggle} aria-expanded={isOpen} />}
 			renderContent={() => <>
 				<PanelRow>
-					<UnitControl label={__('Horizontal Offset:')} labelPosition='left' value={getValue('hOffset')} onChange={val => setValue('hOffset', val)} units={[pxUnit(), emUnit(), remUnit()]} />
+					<UnitControl label={__('Horizontal Offset:')} labelPosition='left' value={getValue('hOffset')} onChange={val => setValue('hOffset', val)} units={[pxUnit(), emUnit(), remUnit()]} __next40pxDefaultSize />
 					{value?.hOffset && value?.hOffset !== getDefault('hOffset') && resetValue('hOffset')}
 				</PanelRow>
 
 				<PanelRow>
-					<UnitControl label={__('Vertical Offset:')} labelPosition='left' value={getValue('vOffset')} onChange={val => setValue('vOffset', val)} units={[pxUnit(), emUnit(), remUnit()]} />
+					<UnitControl label={__('Vertical Offset:')} labelPosition='left' value={getValue('vOffset')} onChange={val => setValue('vOffset', val)} units={[pxUnit(), emUnit(), remUnit()]} __next40pxDefaultSize />
 					{value?.vOffset && value?.vOffset !== getDefault('vOffset') && resetValue('vOffset')}
 				</PanelRow>
 
 				<PanelRow>
-					<UnitControl label={__('Blur:')} labelPosition='left' value={getValue('blur')} onChange={val => setValue('blur', val)} units={[pxUnit(), emUnit(), remUnit()]} />
+					<UnitControl label={__('Blur:')} labelPosition='left' value={getValue('blur')} onChange={val => setValue('blur', val)} units={[pxUnit(), emUnit(), remUnit()]} __next40pxDefaultSize />
 					{value?.blur && value?.blur !== getDefault('blur') && resetValue('blur')}
 				</PanelRow>
 				<small>{__('Blur cannot be negative value!')}</small>
 
 				{'box' === type && <PanelRow>
-					<UnitControl label={__('Spreed:')} labelPosition='left' value={getValue('spreed')} onChange={val => setValue('spreed', val)} units={[pxUnit(), emUnit(), remUnit()]} />
+					<UnitControl label={__('Spreed:')} labelPosition='left' value={getValue('spreed')} onChange={val => setValue('spreed', val)} units={[pxUnit(), emUnit(), remUnit()]} __next40pxDefaultSize />
 					{value?.spreed && value?.spreed !== getDefault('spreed') && resetValue('spreed')}
 				</PanelRow>}
 
 				<ColorControl label={__('Color:')} value={getValue('color')} onChange={val => setValue('color', val)} defaultColor={getDefault('color')} />
 
-				{'box' === type && <ToggleControl className='mt20' label={__('Shadow Inset?')} checked={getValue('isInset')} onChange={val => setValue('isInset', val)} />}
+				{'box' === type && <ToggleControl className='mt20' label={__('Shadow Inset?')} checked={getValue('isInset')} onChange={val => setValue('isInset', val)} __nextHasNoMarginBottom />}
 			</>}
 		/>
 	</PanelRow>

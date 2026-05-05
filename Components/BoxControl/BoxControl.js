@@ -66,6 +66,7 @@ const BoxControl = (props) => {
 					value={sides ? val === 'horizontal' ? values?.right : val === 'vertical' && values?.top : values?.[val]}
 					units={units || defaultUnits}
 					disableUnits={disableUnits}
+					__next40pxDefaultSize
 				/>
 				<div className='sideLabel'>{val}</div>
 			</div>)}

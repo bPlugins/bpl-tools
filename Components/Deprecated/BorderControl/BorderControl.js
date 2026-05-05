@@ -12,6 +12,7 @@ import { Dropdown, PanelRow, SelectControl, __experimentalUnitControl as UnitCon
 
 import { Label, ColorControl } from '../../index';
 import { borderStyles, pxUnit, perUnit, emUnit, remUnit, sides } from '../../../utils/options';
+import { sizeAndMarginProps } from '../../../utils/defaultProps';
 
 const BorderControl = props => {
 	const { className = '', label = __('Border:'), value, onChange, defaults = {} } = props;
@@ -32,13 +33,13 @@ const BorderControl = props => {
 			renderToggle={({ isOpen, onToggle }) => <Button icon='edit' onClick={onToggle} aria-expanded={isOpen} />}
 			renderContent={() => <>
 				<PanelRow>
-					<UnitControl label={__('Width:')} labelPosition='left' value={getValue('width')} onChange={val => setValue('width', val)} units={[pxUnit(), emUnit()]} />
+					<UnitControl label={__('Width:')} labelPosition='left' value={getValue('width')} onChange={val => setValue('width', val)} units={[pxUnit(), emUnit()]} __next40pxDefaultSize />
 					{value?.width && value?.width !== getDefault('width') && resetValue('width')}
 				</PanelRow>
 
 				<PanelRow>
 					<Label className=''>{__('Style:')}</Label>
-					<SelectControl value={getValue('style')} onChange={val => setValue('style', val)} options={borderStyles} />
+					<SelectControl value={getValue('style')} onChange={val => setValue('style', val)} options={borderStyles} {...sizeAndMarginProps} />
 					{value?.style && value?.style !== getDefault('style') && resetValue('style')}
 				</PanelRow>
 
@@ -46,12 +47,12 @@ const BorderControl = props => {
 
 				<PanelRow>
 					<Label className=''>{__('Sides:')}</Label>
-					<SelectControl value={getValue('side')} onChange={val => setValue('side', val)} options={sides} />
+					<SelectControl value={getValue('side')} onChange={val => setValue('side', val)} options={sides} {...sizeAndMarginProps} />
 					{value?.side && value?.side !== getDefault('side') && resetValue('side')}
 				</PanelRow>
 
 				<PanelRow>
-					<UnitControl label={__('Radius:')} labelPosition='left' value={getValue('radius')} onChange={val => setValue('radius', val)} units={[pxUnit(50), perUnit(50), emUnit(3), remUnit(3)]} isResetValueOnUnitChange={true} />
+					<UnitControl label={__('Radius:')} labelPosition='left' value={getValue('radius')} onChange={val => setValue('radius', val)} units={[pxUnit(50), perUnit(50), emUnit(3), remUnit(3)]} isResetValueOnUnitChange={true} __next40pxDefaultSize />
 					{value?.radius && value?.radius !== getDefault('radius') && resetValue('radius')}
 				</PanelRow>
 			</>}

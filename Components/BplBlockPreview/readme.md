@@ -19,11 +19,11 @@ import { BplBlockPreview } from '../Components';
 
 // Usage inside InspectorControls
 <BplBlockPreview
-    clientId={ clientId }
-    value={ currentLayout }
-    blocks={ [
-        { label: 'Layout 1', value: 'layout-1', content: '<!-- wp:paragraph --><p>Layout 1</p><!-- /wp:paragraph -->' },
-        { label: 'Layout 2', value: 'layout-2', content: '<!-- wp:paragraph --><p>Layout 2</p><!-- /wp:paragraph -->' }
-    ] }
+	clientId={ clientId }
+	value={ currentLayout }
+	blocks={ [
+		{ label: 'Layout 1', value: 'layout-1', content: '<!-- wp:paragraph --><p>Layout 1</p><!-- /wp:paragraph -->' },
+		{ label: 'Layout 2', value: 'layout-2', content: '<!-- wp:paragraph --><p>Layout 2</p><!-- /wp:paragraph -->' }
+	] }
 />
 ```

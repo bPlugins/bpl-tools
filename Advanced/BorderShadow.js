@@ -3,6 +3,7 @@ import { PanelBody, TabPanel, PanelRow, RangeControl, __experimentalBorderBoxCon
 
 import { Label, ShadowControl, BoxControl } from '../Components';
 import { updateData } from '../utils/functions';
+import { sizeAndMarginProps } from '../utils/defaultProps';
 
 const BorderShadow = ({ borderShadow, onChange, enabled }) => {
 	const tabs = enabled?.filter(e => !['border', 'shadow'].includes(e))?.map(e => ({ title: e, name: e }));
@@ -25,7 +26,7 @@ const BorderShadow = ({ borderShadow, onChange, enabled }) => {
 			</>}
 
 			{'hover' === tab.name && <>
-				<RangeControl className='mt10 mb10' label='Hover Transition' value={borderShadow?.transition || 0.4} onChange={val => onChange(updateData(borderShadow, val, 'transition'))} min={0} max={10} step={0.05} />
+				<RangeControl className='mt10 mb10' label='Hover Transition' value={borderShadow?.transition || 0.4} onChange={val => onChange(updateData(borderShadow, val, 'transition'))} min={0} max={10} step={0.05} {...sizeAndMarginProps} />
 
 				{isEnabled('border') && <>
 					<BorderBoxControl className='mt20' label={__('Borders')} value={borderShadow?.[tab.name]?.border} onChange={val => onChange(updateData(borderShadow, val, tab.name, 'border'))} />

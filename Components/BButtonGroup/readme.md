@@ -28,14 +28,14 @@ A customizable button group component that supports animated sliding active stat
 import { BButtonGroup } from '../Components';
 
 <BButtonGroup
-    label="Alignment"
-    options={[
-        { label: 'Left', value: 'left' },
-        { label: 'Center', value: 'center' },
-        { label: 'Right', value: 'right' }
-    ]}
-    value={ attributes.align }
-    onChange={ (val) => setAttributes({ align: val }) }
+	label="Alignment"
+	options={[
+		{ label: 'Left', value: 'left' },
+		{ label: 'Center', value: 'center' },
+		{ label: 'Right', value: 'right' }
+	]}
+	value={ attributes.align }
+	onChange={ (val) => setAttributes({ align: val }) }
 />
 ```
 

@@ -32,7 +32,9 @@ const Notice = ({ className = 'mt10', status = 'info', isIcon = false, children 
 			{icons[status] || icons.info}
 		</div>}
 
-		{children}
+		<span>
+			{children}
+		</span>
 	</div>
 };
 export default Notice;

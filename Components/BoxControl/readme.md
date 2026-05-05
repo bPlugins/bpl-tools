@@ -20,17 +20,17 @@ A 4-way unit control component (top, right, bottom, left) typically used for pad
 import { BoxControl } from '../Components';
 
 <BoxControl
-    label="Padding"
-    values={ attributes.padding }
-    onChange={ (val) => setAttributes({ padding: val }) }
-    resetValues={ { top: '0px', right: '0px', bottom: '0px', left: '0px' } }
+	label="Padding"
+	values={ attributes.padding }
+	onChange={ (val) => setAttributes({ padding: val }) }
+	resetValues={ { top: '0px', right: '0px', bottom: '0px', left: '0px' } }
 />
 ```
 
 ## Attributes
 "padding":{
-    "top":"10px",
-    "right":"10px",
-    "bottom":"10px",
-    "left":"10px"
+	"top":"10px",
+	"right":"10px",
+	"bottom":"10px",
+	"left":"10px"
 }
