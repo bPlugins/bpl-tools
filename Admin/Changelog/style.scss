@@ -64,4 +64,15 @@
 			margin: 0;
 		}
 	}
+
+	.bPlButton {
+		font-size: 16px;
+		color: $whiteColor;
+		background: var(--bpl-dashboard-primary-color, $primaryColor);
+		padding: 10px 21px;
+
+		&::before {
+			background: var(--bpl-dashboard-secondary-color, $secondaryColor);
+		}
+	}
 }

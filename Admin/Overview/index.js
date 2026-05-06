@@ -43,6 +43,15 @@ const Overview = (props) => {
 			description: 'Our Expert Support Team is always ready to help you out promptly.',
 			link: 'https://bplugins.com/support',
 			linkText: 'Contact Support'
+		},
+		{
+			titleIcon: <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 292 512' fill='#1877F2'>
+				<path d='m66 299.3v212.7h116v-212.7h86.5l18-97.8h-104.5v-34.6c0-51.7 20.3-71.5 72.7-71.5 16.3 0 29.4 0.4 37 1.2v-88.7c-14.3-3.9-49.3-7.9-69.5-7.9-106.9 0-156.2 50.5-156.2 159.4v42.1h-66v97.8z' />
+			</svg>,
+			title: 'Join the Gutenberg Community',
+			description: 'Get tutorials, plugin updates, feature announcements, and support from other WordPress users.',
+			link: 'https://facebook.com/groups/1828495198556137',
+			linkText: 'Join the Community →'
 		}
 	];
 
@@ -93,14 +102,14 @@ const Overview = (props) => {
 
 		<div className='overviewRight'>
 			{helpInfo?.map((item, index) => {
-				const { image, title, description, link, linkText } = item;
+				const { image, titleIcon, title, description, link, linkText } = item;
 
 				return link && <div key={index} className='helpInfoItem bPlDashboardCard'>
 					{image && <figure>
 						<img src={image} alt='Support Thumb' />
 					</figure>}
 
-					<h4>{title}</h4>
+					<h4>{title} {titleIcon}</h4>
 
 					<p>{description}</p>
 

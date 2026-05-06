@@ -1,3 +1,4 @@
+import Button from '../../Components/Button/Button';
 import './style.scss';
 
 /**
@@ -9,12 +10,12 @@ import './style.scss';
  * @returns {JSX.Element}
  */
 const Changelog = (props) => {
-	const { changelogs } = props;
+	const { slug, changelogs, limit = 5, loadMoreLabel } = props;
 
 	return changelogs?.length && <div className='bPlDashboardChangelog bPlDashboardCard'>
 		<h3>Release Notes(Changelog)...</h3>
 
-		{changelogs?.slice(0, 5)?.map((changelog, index) => {
+		{changelogs?.slice(0, limit)?.map((changelog, index) => {
 			const { type, version, list } = changelog;
 
 			return <div key={index} className={`changelog ${type}`}>
@@ -25,6 +26,11 @@ const Changelog = (props) => {
 				<p className='time'>{version}</p>
 			</div>
 		})}
+
+		{loadMoreLabel && <>
+			<br />
+			<Button className='mt20' target='_blank' rel='noopener noreferrer' href={`https://wordpress.org/plugins/${slug}/#developers`}>{loadMoreLabel}</Button>
+		</>}
 	</div>
 };
 export default Changelog;
