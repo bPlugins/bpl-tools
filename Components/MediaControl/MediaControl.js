@@ -5,7 +5,6 @@ import { useState } from 'react';
 
 import './MediaControl.scss';
 import { Label } from '../index';
-import { sizeAndMarginProps } from '../../utils/defaultProps';
 
 /**
  * MediaControl component
@@ -24,7 +23,7 @@ export const InlineMediaUpload = props => {
 		{label && <Label className='mb5'>{label}</Label>}
 
 		<PanelRow className={`bPlInlineMediaUpload`}>
-			<TextControl value={value} onChange={val => onChange(val)} placeholder={placeholder} {...sizeAndMarginProps} />
+			<TextControl value={value} onChange={val => onChange(val)} placeholder={placeholder} />
 
 			{/* <MediaUploadCheck> */}
 			<MediaUpload
@@ -58,7 +57,7 @@ export const InlineDetailMediaUpload = props => {
 		{label && <Label className='mb5'>{label}</Label>}
 
 		<PanelRow className={`bPlInlineMediaUpload`}>
-			<TextControl value={value?.url} onChange={url => onChange({ id: null, url, alt: '', title: '', caption: '' })} placeholder={placeholder} {...sizeAndMarginProps} />
+			<TextControl value={value?.url} onChange={url => onChange({ id: null, url, alt: '', title: '', caption: '' })} placeholder={placeholder} />
 
 			<MediaUploadCheck>
 				<MediaUpload

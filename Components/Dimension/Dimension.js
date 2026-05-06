@@ -14,32 +14,32 @@ const Dimension = ({ dimension, onChange, title = __('Dimension'), enabled, devi
 	return <PanelBody className='bPlPanelBody' title={title}>
 		{isEnabled('width') && <Flex className='mb5' gap='20px'>
 			<Flex className='flex1' gap='2px'> <Label className=''>Width</Label> <Device /> </Flex>
-			<UnitControl className='flex1' label="" labelPosition='edge' value={width?.width?.[device]} onChange={val => onChange(updateData(dimension, val, 'width', 'width', device))} __next40pxDefaultSize />
+			<UnitControl className='flex1' label="" labelPosition='edge' value={width?.width?.[device]} onChange={val => onChange(updateData(dimension, val, 'width', 'width', device))} />
 		</Flex>}
 
 		{isEnabled('minWidth') && <Flex className='mb5' gap='20px'>
 			<Flex className='flex1'> <Label className=''>Min Width</Label> <Device style={{ marginLeft: "auto" }} /> </Flex>
-			<UnitControl className='flex1' label="" labelPosition='edge' value={width?.min?.[device]} onChange={val => onChange(updateData(dimension, val, 'width', 'min', device))} __next40pxDefaultSize />
+			<UnitControl className='flex1' label="" labelPosition='edge' value={width?.min?.[device]} onChange={val => onChange(updateData(dimension, val, 'width', 'min', device))} />
 		</Flex>}
 
 		{isEnabled('maxWidth') && <Flex className='mb15' gap='20px'>
 			<Flex className='flex1'> <Label className=''>Max Width</Label> <Device /> </Flex>
-			<UnitControl className='flex1' label="" labelPosition='edge' value={width?.max?.[device]} onChange={val => onChange(updateData(dimension, val, 'width', 'max', device))} __next40pxDefaultSize />
+			<UnitControl className='flex1' label="" labelPosition='edge' value={width?.max?.[device]} onChange={val => onChange(updateData(dimension, val, 'width', 'max', device))} />
 		</Flex>}
 
 		{isEnabled('height') && <Flex className='mb5' gap='20px'>
 			<Flex className='flex1'> <Label className=''>Height</Label> <Device /> </Flex>
-			<UnitControl className='flex1' label="" labelPosition='edge' value={height?.height?.[device]} onChange={val => onChange(updateData(dimension, val, 'height', 'height', device))} __next40pxDefaultSize />
+			<UnitControl className='flex1' label="" labelPosition='edge' value={height?.height?.[device]} onChange={val => onChange(updateData(dimension, val, 'height', 'height', device))} />
 		</Flex>}
 
 		{isEnabled('minHeight') && <Flex className='mb5' gap='20px'>
 			<Flex className='flex1'> <Label className=''>Min Height</Label> <Device /> </Flex>
-			<UnitControl className='flex1' label="" labelPosition='edge' value={height?.min?.[device]} onChange={val => onChange(updateData(dimension, val, 'height', 'min', device))} __next40pxDefaultSize />
+			<UnitControl className='flex1' label="" labelPosition='edge' value={height?.min?.[device]} onChange={val => onChange(updateData(dimension, val, 'height', 'min', device))} />
 		</Flex>}
 
 		{isEnabled('maxHeight') && <Flex gap='20px'>
 			<Flex className='flex1'> <Label className=''>Max Height</Label> <Device /> </Flex>
-			<UnitControl className='flex1' label="" labelPosition='edge' value={height?.max?.[device]} onChange={val => onChange(updateData(dimension, val, 'height', 'max', device))} __next40pxDefaultSize />
+			<UnitControl className='flex1' label="" labelPosition='edge' value={height?.max?.[device]} onChange={val => onChange(updateData(dimension, val, 'height', 'max', device))} />
 		</Flex>}
 
 		{isEnabled('padding') && <>

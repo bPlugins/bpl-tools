@@ -303,22 +303,33 @@ svg.bPlBlockIcon {
 
 	&.components-panel__body .components-base-control__field {
 		padding: 0;
+	}
 
-
+	.components-input-control__input,
+	.components-select-control__input {
+		height: 36px !important;
+		min-height: 36px !important;
 	}
 
 	// Unit Control
+	.components-unit-control-wrapper .components-input-control__input {
+		height: 32px !important;
+		min-height: 32px !important;
+	}
+
 	.components-unit-control-wrapper .components-unit-control__select,
 	.components-input-control__suffix .components-unit-control__unit-label {
-		text-align: center;
-		font-size: 11px !important;
 		width: 25px !important;
+		height: 32px !important;
+		font-size: 11px !important;
+		text-align: center;
 		color: #fff !important;
 		background-color: $primaryColor !important;
 		height: 100%;
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
+		margin: 0 !important;
 	}
 
 	// Checkbox Control

@@ -2,7 +2,6 @@ import { SelectControl } from '@wordpress/components';
 import { useEffect, useRef } from 'react';
 
 import './SelectControlPro.scss';
-import { sizeAndMarginProps } from '../../utils/defaultProps';
 
 const SelectControlPro = ({ className, onChange, isPremium = false, setIsProModalOpen = () => { }, options = [], proValues = [], ...restProps }) => {
 	const newOptions = options.map(o => ({ ...o, label: (proValues?.includes(o.value) && !isPremium) ? `${o.label} - Pro` : o.label }));
@@ -28,7 +27,6 @@ const SelectControlPro = ({ className, onChange, isPremium = false, setIsProModa
 		onChange={(val) => isPremium ? onChange(val) : (proValues?.includes(val) ? setIsProModalOpen(true) : onChange(val))}
 		options={newOptions}
 		{...restProps}
-		{...sizeAndMarginProps}
 	/>
 }
 export default SelectControlPro;

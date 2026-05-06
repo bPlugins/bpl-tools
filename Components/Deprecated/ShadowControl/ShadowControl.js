@@ -32,23 +32,23 @@ const ShadowControl = props => {
 			renderToggle={({ isOpen, onToggle }) => <Button icon='edit' onClick={onToggle} aria-expanded={isOpen} />}
 			renderContent={() => <>
 				<PanelRow>
-					<UnitControl label={__('Horizontal Offset:')} labelPosition='left' value={getValue('hOffset')} onChange={val => setValue('hOffset', val)} units={[pxUnit(), emUnit(), remUnit()]} __next40pxDefaultSize />
+					<UnitControl label={__('Horizontal Offset:')} labelPosition='left' value={getValue('hOffset')} onChange={val => setValue('hOffset', val)} units={[pxUnit(), emUnit(), remUnit()]} />
 					{value?.hOffset && value?.hOffset !== getDefault('hOffset') && resetValue('hOffset')}
 				</PanelRow>
 
 				<PanelRow>
-					<UnitControl label={__('Vertical Offset:')} labelPosition='left' value={getValue('vOffset')} onChange={val => setValue('vOffset', val)} units={[pxUnit(), emUnit(), remUnit()]} __next40pxDefaultSize />
+					<UnitControl label={__('Vertical Offset:')} labelPosition='left' value={getValue('vOffset')} onChange={val => setValue('vOffset', val)} units={[pxUnit(), emUnit(), remUnit()]} />
 					{value?.vOffset && value?.vOffset !== getDefault('vOffset') && resetValue('vOffset')}
 				</PanelRow>
 
 				<PanelRow>
-					<UnitControl label={__('Blur:')} labelPosition='left' value={getValue('blur')} onChange={val => setValue('blur', val)} units={[pxUnit(), emUnit(), remUnit()]} __next40pxDefaultSize />
+					<UnitControl label={__('Blur:')} labelPosition='left' value={getValue('blur')} onChange={val => setValue('blur', val)} units={[pxUnit(), emUnit(), remUnit()]} />
 					{value?.blur && value?.blur !== getDefault('blur') && resetValue('blur')}
 				</PanelRow>
 				<small>{__('Blur cannot be negative value!')}</small>
 
 				{'box' === type && <PanelRow>
-					<UnitControl label={__('Spreed:')} labelPosition='left' value={getValue('spreed')} onChange={val => setValue('spreed', val)} units={[pxUnit(), emUnit(), remUnit()]} __next40pxDefaultSize />
+					<UnitControl label={__('Spreed:')} labelPosition='left' value={getValue('spreed')} onChange={val => setValue('spreed', val)} units={[pxUnit(), emUnit(), remUnit()]} />
 					{value?.spreed && value?.spreed !== getDefault('spreed') && resetValue('spreed')}
 				</PanelRow>}
 

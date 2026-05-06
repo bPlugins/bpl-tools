@@ -17,7 +17,6 @@ import { BDevice } from '../Deprecated';
 import { pxUnit, perUnit, emUnit, remUnit, vwUnit } from '../../utils/options';
 import fontLists from './fontLists';
 import { fontStyles, textTransforms, textDecorations } from './options';
-import { sizeAndMarginProps } from '../../utils/defaultProps';
 
 const Typography = props => {
 	const { className = '', label = __('Typography:'), value, onChange, defaults = {}, isFamily = true } = props;
@@ -83,13 +82,13 @@ const Typography = props => {
 							</ul>}
 						</div>
 
-						<SelectControl value={getValue('fontVariant') || ''} onChange={val => { onChange({ ...value, ['fontWeight']: parseInt(val?.replace('00i', '00')), ['fontVariant']: val }) }} options={fontWeights()} {...sizeAndMarginProps} />
+						<SelectControl value={getValue('fontVariant') || ''} onChange={val => { onChange({ ...value, ['fontWeight']: parseInt(val?.replace('00i', '00')), ['fontVariant']: val }) }} options={fontWeights()} />
 					</PanelRow>
 
 					<ToggleControl className='mt10' label={__('Load Google Font')} checked={getValue('isUploadFont')} onChange={val => setValue('isUploadFont', val)} __nextHasNoMarginBottom />
 				</> : <PanelRow>
 					<Label className=''>{__('Weight:')}</Label>
-					<SelectControl value={getValue('fontWeight') || ''} onChange={val => setValue('fontWeight', val)} options={fontWeights()} {...sizeAndMarginProps} />
+					<SelectControl value={getValue('fontWeight') || ''} onChange={val => setValue('fontWeight', val)} options={fontWeights()} />
 				</PanelRow>}
 
 
@@ -99,13 +98,13 @@ const Typography = props => {
 
 					<BDevice device={device} onChange={val => setDevice(val)} />
 
-					<UnitControl value={getValue('fontSize')?.[device] || getValue('fontSize')} onChange={val => setValue('fontSize', val, device)} units={[pxUnit(16), remUnit(1), emUnit(1), vwUnit(0.85)]} style={{ width: '100px' }} __next40pxDefaultSize />
+					<UnitControl value={getValue('fontSize')?.[device] || getValue('fontSize')} onChange={val => setValue('fontSize', val, device)} units={[pxUnit(16), remUnit(1), emUnit(1), vwUnit(0.85)]} style={{ width: '100px' }} />
 				</Flex>
 
 				{/* Font Style */}
 				<PanelRow className='mt20'>
 					<Label className=''>{__('Font Style:')}</Label>
-					<SelectControl value={getValue('fontStyle') || ''} onChange={val => setValue('fontStyle', val)} options={fontStyles} {...sizeAndMarginProps} />
+					<SelectControl value={getValue('fontStyle') || ''} onChange={val => setValue('fontStyle', val)} options={fontStyles} />
 					{resetValue('fontStyle')}
 				</PanelRow>
 
@@ -118,19 +117,19 @@ const Typography = props => {
 				{/* Text Decoration */}
 				<PanelRow className='mt20'>
 					<Label className=''>{__('Text Decoration:')}</Label>
-					<SelectControl value={getValue('textDecoration') || ''} onChange={val => setValue('textDecoration', val)} options={textDecorations} {...sizeAndMarginProps} />
+					<SelectControl value={getValue('textDecoration') || ''} onChange={val => setValue('textDecoration', val)} options={textDecorations} />
 					{resetValue('textDecoration')}
 				</PanelRow>
 
 				{/* Line Height */}
 				<PanelRow className='mt20'>
-					<UnitControl label={__('Line Height:')} labelPosition='left' value={getValue('lineHeight')} onChange={val => setValue('lineHeight', val)} units={[pxUnit(24), perUnit(135), emUnit(2), remUnit(2)]} isResetValueOnUnitChange={true} __next40pxDefaultSize />
+					<UnitControl label={__('Line Height:')} labelPosition='left' value={getValue('lineHeight')} onChange={val => setValue('lineHeight', val)} units={[pxUnit(24), perUnit(135), emUnit(2), remUnit(2)]} isResetValueOnUnitChange={true} />
 					{resetValue('lineHeight')}
 				</PanelRow>
 
 				{/* Letter Spacing */}
 				<PanelRow className='mt20'>
-					<UnitControl label={__('Letter Spacing:')} labelPosition='left' value={getValue('letterSpace')} onChange={val => setValue('letterSpace', val)} units={[pxUnit(), emUnit(), remUnit()]} __next40pxDefaultSize />
+					<UnitControl label={__('Letter Spacing:')} labelPosition='left' value={getValue('letterSpace')} onChange={val => setValue('letterSpace', val)} units={[pxUnit(), emUnit(), remUnit()]} />
 					{resetValue('letterSpace')}
 				</PanelRow>
 			</>}

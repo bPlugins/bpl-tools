@@ -2,7 +2,6 @@ import { PanelBody, RangeControl, TabPanel } from '@wordpress/components';
 
 import AdvTransform from '../Components/AdvTransform/AdvTransform';
 import { normalHoverTabs } from '../utils/options';
-import { sizeAndMarginProps } from '../utils/defaultProps';
 
 const Transform = ({ transform = {}, onChange = () => { }, device }) => {
 	const { normal, hover, transition } = transform || {}
@@ -14,7 +13,7 @@ const Transform = ({ transform = {}, onChange = () => { }, device }) => {
 				{tab.name === 'hover' && <>
 					<AdvTransform value={hover} device={device} onChange={value => onChange({ ...transform, hover: value })} />
 
-					<RangeControl className='bPlPanelBody' label='Transition Duration (ms)' value={transition} max={10000} onChange={(val) => onChange({ ...transform, transition: val })} {...sizeAndMarginProps} />
+					<RangeControl className='bPlPanelBody' label='Transition Duration (ms)' value={transition} max={10000} onChange={(val) => onChange({ ...transform, transition: val })} />
 				</>
 				}
 			</>}

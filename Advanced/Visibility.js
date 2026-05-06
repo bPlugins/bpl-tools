@@ -5,7 +5,6 @@ import { PanelBody, PanelRow, SelectControl, __experimentalNumberControl as Numb
 import { Label, Device } from '../Components';
 import { updateData } from '../utils/functions';
 import { overflows } from '../utils/options';
-import { sizeAndMarginProps } from '../utils/defaultProps';
 
 const Visibility = ({ visibility, onChange, enabled, device }) => {
 	const { zIndex = {}, overflow = '' } = visibility || {};
@@ -21,7 +20,7 @@ const Visibility = ({ visibility, onChange, enabled, device }) => {
 			<NumberControl value={zIndex[device]} onChange={val => onChange(updateData(visibility, val, 'zIndex', device))} />
 		</>}
 
-		{isEnabled('overflow') && <SelectControl className='mt20' label={__('Overflow')} labelPosition='left' value={overflow} onChange={val => onChange(updateData(visibility, val, 'overflow'))} options={overflows} {...sizeAndMarginProps} />}
+		{isEnabled('overflow') && <SelectControl className='mt20' label={__('Overflow')} labelPosition='left' value={overflow} onChange={val => onChange(updateData(visibility, val, 'overflow'))} options={overflows} />}
 	</PanelBody>
 }
 export default withSelect((select) => {

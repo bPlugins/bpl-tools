@@ -19,7 +19,6 @@ import { BtnGroup, ColorControl, Label } from '../index';
 import { bgTypes } from '../../utils/options';
 import icons from './icons';
 import { gradient } from '../../utils/data';
-import { sizeAndMarginProps } from '../../utils/defaultProps';
 
 const generateName = cl => cl?.slice(cl?.indexOf(' fa-') + 4);
 const generateTitle = cl => generateName(cl)?.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
@@ -66,7 +65,7 @@ const IconControl = props => {
 
 		{isSize && <>
 			<Label>{__('Icon Size:')}</Label>
-			<RangeControl value={getValue('fontSize')} onChange={val => setValue('fontSize', val)} min={0} max={400} step={1} allowReset={true} resetFallbackValue={getDefault('fontSize')} initialPosition={getDefault('fontSize')} {...sizeAndMarginProps} />
+			<RangeControl value={getValue('fontSize')} onChange={val => setValue('fontSize', val)} min={0} max={400} step={1} allowReset={true} resetFallbackValue={getDefault('fontSize')} initialPosition={getDefault('fontSize')} />
 		</>}
 
 		{isColor && <>

@@ -42,7 +42,7 @@ return <>
 		<Label className='mb5'>{__('Columns:', 'text-domain')}</Label>
 		<BDevice device={device} onChange={val => setDevice(val)} />
 	</PanelRow>
-	<RangeControl value={columns[device]} onChange={val => setAttributes({ columns: { ...columns, [device]: val } })} min={1} max={6} step={1} beforeIcon='grid-view' {...sizeAndMarginProps} />
+	<RangeControl value={columns[device]} onChange={val => setAttributes({ columns: { ...columns, [device]: val } })} min={1} max={6} step={1} beforeIcon='grid-view' />
 </>
 ```
 

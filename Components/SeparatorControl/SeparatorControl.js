@@ -12,7 +12,6 @@ import { Dropdown, PanelRow, SelectControl, __experimentalUnitControl as UnitCon
 
 import { Label, ColorControl } from '../index';
 import { borderStyles, pxUnit, perUnit, emUnit, remUnit } from '../../utils/options';
-import { sizeAndMarginProps } from '../../utils/defaultProps';
 
 const SeparatorControl = props => {
 	const { className = '', label = __('Separator'), value, onChange, defaults = {} } = props;
@@ -33,18 +32,18 @@ const SeparatorControl = props => {
 			renderToggle={({ isOpen, onToggle }) => <Button icon='edit' onClick={onToggle} aria-expanded={isOpen} />}
 			renderContent={() => <>
 				<PanelRow>
-					<UnitControl label={__('Width:')} labelPosition='left' value={getValue('width')} onChange={val => setValue('width', val)} units={[pxUnit(50), perUnit(25), emUnit(3)]} isResetValueOnUnitChange={true} __next40pxDefaultSize />
+					<UnitControl label={__('Width:')} labelPosition='left' value={getValue('width')} onChange={val => setValue('width', val)} units={[pxUnit(50), perUnit(25), emUnit(3)]} isResetValueOnUnitChange={true} />
 					{value?.width && value?.width !== getDefault('width') && resetValue('width')}
 				</PanelRow>
 
 				<PanelRow>
-					<UnitControl label={__('Height:')} labelPosition='left' value={getValue('height')} onChange={val => setValue('height', val)} units={[pxUnit(3), emUnit(), remUnit()]} __next40pxDefaultSize />
+					<UnitControl label={__('Height:')} labelPosition='left' value={getValue('height')} onChange={val => setValue('height', val)} units={[pxUnit(3), emUnit(), remUnit()]} />
 					{value?.height && value?.height !== getDefault('height') && resetValue('height')}
 				</PanelRow>
 
 				<PanelRow>
 					<Label className=''>{__('Style:')}</Label>
-					<SelectControl value={getValue('style')} onChange={val => setValue('style', val)} options={borderStyles} {...sizeAndMarginProps} />
+					<SelectControl value={getValue('style')} onChange={val => setValue('style', val)} options={borderStyles} />
 					{value?.style && value?.style !== getDefault('style') && resetValue('style')}
 				</PanelRow>
 

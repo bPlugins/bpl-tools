@@ -12,7 +12,6 @@ import { PanelBody, RangeControl, SelectControl, ToggleControl, __experimentalNu
 import { produce } from 'immer';
 
 import { AdvBackground, BoxControl } from '../index';
-import { sizeAndMarginProps } from '../../utils/defaultProps';
 
 const blendOptions = [
 	{ label: 'Normal', value: 'normal' },
@@ -51,26 +50,26 @@ const OverlayControl = (props) => {
 
 			<BoxControl label='Overlay Position' values={position} resetValues={positionDef} onChange={(val) => updateOverlay('position', val)} />
 
-			<RangeControl className='mt20' label='Opacity' value={opacity} onChange={(val) => updateOverlay('opacity', val)} min={0} max={1} step={0.01} {...sizeAndMarginProps} />
+			<RangeControl className='mt20' label='Opacity' value={opacity} onChange={(val) => updateOverlay('opacity', val)} min={0} max={1} step={0.01} />
 
-			<SelectControl className='mt20' label='Blend Mode' labelPosition='left' value={blend} onChange={(val) => updateOverlay('blend', val)} options={blendOptions} {...sizeAndMarginProps} />
+			<SelectControl className='mt20' label='Blend Mode' labelPosition='left' value={blend} onChange={(val) => updateOverlay('blend', val)} options={blendOptions} />
 
 			<SelectControl className='mt20 mb5' label='CSS Filter' labelPosition='left' value={filter} onChange={(val) => updateOverlay('filter', val)} options={[
 				{ label: 'None', value: '' },
 				{ label: 'Filter', value: 'filter' },
 				{ label: 'Backdrop Filter', value: 'backdrop-filter' }
-			]} {...sizeAndMarginProps} />
+			]} />
 
 			{filter && <>
-				<RangeControl className='mt15' label='Blur' value={blur} onChange={(val) => updateOverlay('blur', val)} min={0} max={20} {...sizeAndMarginProps} />
+				<RangeControl className='mt15' label='Blur' value={blur} onChange={(val) => updateOverlay('blur', val)} min={0} max={20} />
 
-				<RangeControl className='mt15' label='Brightness' value={brightness} onChange={(val) => updateOverlay('brightness', val)} min={0} max={200} {...sizeAndMarginProps} />
+				<RangeControl className='mt15' label='Brightness' value={brightness} onChange={(val) => updateOverlay('brightness', val)} min={0} max={200} />
 
-				<RangeControl className='mt15' label='Contrast' value={contrast} onChange={(val) => updateOverlay('contrast', val)} min={0} max={200} {...sizeAndMarginProps} />
+				<RangeControl className='mt15' label='Contrast' value={contrast} onChange={(val) => updateOverlay('contrast', val)} min={0} max={200} />
 
-				<RangeControl className='mt15' label='Saturation' value={saturation} onChange={(val) => updateOverlay('saturation', val)} min={0} max={200} {...sizeAndMarginProps} />
+				<RangeControl className='mt15' label='Saturation' value={saturation} onChange={(val) => updateOverlay('saturation', val)} min={0} max={200} />
 
-				<RangeControl className='mt15' label='Hue' value={hue} onChange={(val) => updateOverlay('hue', val)} min={0} max={360} {...sizeAndMarginProps} />
+				<RangeControl className='mt15' label='Hue' value={hue} onChange={(val) => updateOverlay('hue', val)} min={0} max={360} />
 			</>}
 			<NumberControl label="Z Index" labelPosition='edge' value={zIndex} onChange={val => updateOverlay('zIndex', val)} />
 		</>}

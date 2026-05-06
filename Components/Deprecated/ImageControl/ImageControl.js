@@ -7,7 +7,6 @@ import { isBlobURL } from '@wordpress/blob';
 import './ImageControl.scss';
 import { Label } from '../../index';
 import { getImageSizes } from '../../../utils/functions';
-import { sizeAndMarginProps } from '../../../utils/defaultProps';
 
 
 export const ImageHolderControl = props => {
@@ -50,12 +49,12 @@ export const ChangeImageData = withSelect((select, props) => {
 	return <div className={className}>
 		{value?.url && !isBlobURL(value?.url) && <>
 			<Label className='mb5'>{__('Alt Text (Alternative Text):')}</Label>
-			<TextControl value={value?.alt} onChange={val => setValue('alt', val)} {...sizeAndMarginProps} />
+			<TextControl value={value?.alt} onChange={val => setValue('alt', val)} />
 		</>}
 
 		{value?.id && 0 !== getImageSizes(image, imageSizes)?.length && <PanelRow>
 			<Label className=''>{__('Select Size:')}</Label>
-			<SelectControl value={value?.url} onChange={val => setValue('url', val)} options={getImageSizes(image, imageSizes)} {...sizeAndMarginProps} />
+			<SelectControl value={value?.url} onChange={val => setValue('url', val)} options={getImageSizes(image, imageSizes)} />
 		</PanelRow>}
 	</div>
 });

@@ -69,23 +69,23 @@ const ShadowControl = props => {
 
 				{null !== activeIndex && <>
 					<PanelRow>
-						<UnitControl label={__('Horizontal Offset:')} labelPosition='left' value={hOffset} onChange={val => updateShadow('hOffset', val)} units={[pxUnit(), emUnit(), remUnit()]} __next40pxDefaultSize />
+						<UnitControl label={__('Horizontal Offset:')} labelPosition='left' value={hOffset} onChange={val => updateShadow('hOffset', val)} units={[pxUnit(), emUnit(), remUnit()]} />
 						{hOffset && hOffset !== getDefault('hOffset') && resetValue('hOffset')}
 					</PanelRow>
 
 					<PanelRow>
-						<UnitControl label={__('Vertical Offset:')} labelPosition='left' value={vOffset} onChange={val => updateShadow('vOffset', val)} units={[pxUnit(), emUnit(), remUnit()]} __next40pxDefaultSize />
+						<UnitControl label={__('Vertical Offset:')} labelPosition='left' value={vOffset} onChange={val => updateShadow('vOffset', val)} units={[pxUnit(), emUnit(), remUnit()]} />
 						{vOffset && vOffset !== getDefault('vOffset') && resetValue('vOffset')}
 					</PanelRow>
 
 					<PanelRow>
-						<UnitControl label={__('Blur:')} labelPosition='left' value={blur} onChange={val => updateShadow('blur', val)} units={[pxUnit(), emUnit(), remUnit()]} __next40pxDefaultSize />
+						<UnitControl label={__('Blur:')} labelPosition='left' value={blur} onChange={val => updateShadow('blur', val)} units={[pxUnit(), emUnit(), remUnit()]} />
 						{blur && blur !== getDefault('blur') && resetValue('blur')}
 					</PanelRow>
 					<small>{__('Blur cannot be negative value!')}</small>
 
 					{'box' === type && <PanelRow>
-						<UnitControl label={__('Spreed:')} labelPosition='left' value={spreed} onChange={val => updateShadow('spreed', val)} units={[pxUnit(), emUnit(), remUnit()]} __next40pxDefaultSize />
+						<UnitControl label={__('Spreed:')} labelPosition='left' value={spreed} onChange={val => updateShadow('spreed', val)} units={[pxUnit(), emUnit(), remUnit()]} />
 						{spreed && spreed !== getDefault('spreed') && resetValue('spreed')}
 					</PanelRow>}
 

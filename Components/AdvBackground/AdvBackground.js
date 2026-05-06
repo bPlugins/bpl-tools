@@ -3,7 +3,6 @@ import { TabPanel, PanelRow, __experimentalInputControl as InputControl, SelectC
 
 import { Device, Gradient, Label, SolidBackground, MediaArea } from '../index';
 import { bgTabs, imgAttachmentOptions, imgPositionOptions, imgRepeatOptions, imgSizeOptions, unitOptions } from './utils/options';
-import { sizeAndMarginProps } from '../../utils/defaultProps';
 
 /**
  * @function
@@ -38,14 +37,14 @@ const AdvBackground = ({ name = 'Background', value, onChange, isVideo = false, 
 						<Label className=''>Position</Label>
 						<Device />
 					</PanelRow>
-					<SelectControl value={position} options={imgPositionOptions} onChange={val => onChange({ ...value, img: { ...img, [device]: { ...img[device], position: val } } })} {...sizeAndMarginProps} />
+					<SelectControl value={position} options={imgPositionOptions} onChange={val => onChange({ ...value, img: { ...img, [device]: { ...img[device], position: val } } })} />
 
 					{position === 'custom' && <>
 						<PanelRow className='mt15'>
 							<Label className=''>X Position</Label>
 							<Device />
 						</PanelRow>
-						<UnitControl units={unitOptions} value={xPosition} min={-2000} max={2000} onChange={val => onChange({ ...value, img: { ...img, [device]: { ...img[device], xPosition: val } } })} __next40pxDefaultSize />
+						<UnitControl units={unitOptions} value={xPosition} min={-2000} max={2000} onChange={val => onChange({ ...value, img: { ...img, [device]: { ...img[device], xPosition: val } } })} />
 
 						<PanelRow className='mt15'>
 							<Label className=''>Y Position</Label>
@@ -57,7 +56,6 @@ const AdvBackground = ({ name = 'Background', value, onChange, isVideo = false, 
 							min={-2000}
 							max={2000}
 							onChange={val => onChange({ ...value, img: { ...img, [device]: { ...img[device], yPosition: val } } })}
-							__next40pxDefaultSize
 						/>
 					</>}
 
@@ -69,7 +67,6 @@ const AdvBackground = ({ name = 'Background', value, onChange, isVideo = false, 
 						value={attachment}
 						options={imgAttachmentOptions}
 						onChange={val => onChange({ ...value, img: { ...img, [device]: { ...img[device], attachment: val } } })}
-						{...sizeAndMarginProps}
 					/>
 
 					<PanelRow className='mt20'>
@@ -80,7 +77,6 @@ const AdvBackground = ({ name = 'Background', value, onChange, isVideo = false, 
 						value={repeat}
 						options={imgRepeatOptions}
 						onChange={val => onChange({ ...value, img: { ...img, [device]: { ...img[device], repeat: val } } })}
-						{...sizeAndMarginProps}
 					/>
 
 					<PanelRow className='mt20'>
@@ -91,7 +87,6 @@ const AdvBackground = ({ name = 'Background', value, onChange, isVideo = false, 
 						value={size}
 						options={imgSizeOptions}
 						onChange={val => onChange({ ...value, img: { ...img, [device]: { ...img[device], size: val } } })}
-						{...sizeAndMarginProps}
 					/>
 
 					{size === 'custom' && <>
@@ -105,7 +100,6 @@ const AdvBackground = ({ name = 'Background', value, onChange, isVideo = false, 
 							min={-2000}
 							max={2000}
 							onChange={val => onChange({ ...value, img: { ...img, [device]: { ...img[device], customSize: val } } })}
-							__next40pxDefaultSize
 						/>
 					</>}
 				</>}

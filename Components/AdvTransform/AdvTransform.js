@@ -5,7 +5,6 @@ import CustomPopover from '../CustomPopover/CustomPopover';
 import Device from '../Device/Device';
 import Label from '../Label/Label';
 import { offsetResetValue, rotateResetValue, scaleResetValue, skewResetValue } from './utils/options';
-import { sizeAndMarginProps } from '../../utils/defaultProps';
 
 /**
  * @function
@@ -27,7 +26,7 @@ const AdvTransform = ({ value = {}, onChange = () => { }, device }) => {
 				<Device />
 			</PanelRow>
 
-			<RangeControl className='bPlPanelBody' value={rotate?.[device]?.z} min={-360} max={360} onChange={(val) => onChange({ ...value, rotate: { ...value.rotate, [device]: { ...value.rotate[device], z: val } } })} {...sizeAndMarginProps} />
+			<RangeControl className='bPlPanelBody' value={rotate?.[device]?.z} min={-360} max={360} onChange={(val) => onChange({ ...value, rotate: { ...value.rotate, [device]: { ...value.rotate[device], z: val } } })} />
 
 			<ToggleControl className='bPlPanelBody' label='3D Rotate' defaultChecked={false} defaultValue={false} checked={rotate?.threeDRotate} value={rotate?.threeDRotate} onChange={(val) => onChange({ ...value, rotate: { ...value.rotate, threeDRotate: val } })} __nextHasNoMarginBottom />
 
@@ -37,14 +36,14 @@ const AdvTransform = ({ value = {}, onChange = () => { }, device }) => {
 					<Device />
 				</PanelRow>
 
-				<RangeControl className='bPlPanelBody' value={rotate?.[device]?.x} min={-360} max={360} onChange={(val) => onChange({ ...value, rotate: { ...value.rotate, [device]: { ...value.rotate[device], x: val } } })} {...sizeAndMarginProps} />
+				<RangeControl className='bPlPanelBody' value={rotate?.[device]?.x} min={-360} max={360} onChange={(val) => onChange({ ...value, rotate: { ...value.rotate, [device]: { ...value.rotate[device], x: val } } })} />
 
 				<PanelRow>
 					<Label className='mt0'>Rotate Y (deg)</Label>
 					<Device />
 				</PanelRow>
 
-				<RangeControl className='bPlPanelBody' value={rotate?.[device]?.y} min={-360} max={360} onChange={(val) => onChange({ ...value, rotate: { ...value.rotate, [device]: { ...value.rotate[device], y: val } } })} {...sizeAndMarginProps} />
+				<RangeControl className='bPlPanelBody' value={rotate?.[device]?.y} min={-360} max={360} onChange={(val) => onChange({ ...value, rotate: { ...value.rotate, [device]: { ...value.rotate[device], y: val } } })} />
 			</>}
 		</CustomPopover>
 
@@ -53,14 +52,14 @@ const AdvTransform = ({ value = {}, onChange = () => { }, device }) => {
 			<PanelRow> <Label className='mt0'>Offset X</Label> <Device />
 			</PanelRow>
 
-			<UnitControl value={offset?.[device]?.x} min={-1000} max={1000} onChange={(val) => onChange({ ...value, offset: { ...value.offset, [device]: { ...value.offset[device], x: val } } })} __next40pxDefaultSize />
+			<UnitControl value={offset?.[device]?.x} min={-1000} max={1000} onChange={(val) => onChange({ ...value, offset: { ...value.offset, [device]: { ...value.offset[device], x: val } } })} />
 
 			<PanelRow>
 				<Label className='mt0'>Offset Y</Label>
 				<Device />
 			</PanelRow>
 
-			<UnitControl className='bPlPanelBody' value={offset?.[device]?.y} min={-1000} max={1000} onChange={(val) => onChange({ ...value, offset: { ...value.offset, [device]: { ...value.offset[device], y: val } } })} __next40pxDefaultSize />
+			<UnitControl className='bPlPanelBody' value={offset?.[device]?.y} min={-1000} max={1000} onChange={(val) => onChange({ ...value, offset: { ...value.offset, [device]: { ...value.offset[device], y: val } } })} />
 		</CustomPopover>
 
 
@@ -73,7 +72,7 @@ const AdvTransform = ({ value = {}, onChange = () => { }, device }) => {
 					<Device />
 				</PanelRow>
 
-				<RangeControl className='bPlPanelBody' value={scale?.[device]?.scale} step={0.1} min={0} max={5} onChange={(val) => onChange({ ...value, scale: { ...value.scale, [device]: { ...value.scale[device], scale: val } } })} {...sizeAndMarginProps} />
+				<RangeControl className='bPlPanelBody' value={scale?.[device]?.scale} step={0.1} min={0} max={5} onChange={(val) => onChange({ ...value, scale: { ...value.scale, [device]: { ...value.scale[device], scale: val } } })} />
 			</> :
 				<>
 					<PanelRow>
@@ -81,14 +80,14 @@ const AdvTransform = ({ value = {}, onChange = () => { }, device }) => {
 						<Device />
 					</PanelRow>
 
-					<RangeControl className='bPlPanelBody' value={scale?.[device]?.x} step={0.1} min={0} max={5} onChange={(val) => onChange({ ...value, scale: { ...value.scale, [device]: { ...value.scale[device], x: val } } })} {...sizeAndMarginProps} />
+					<RangeControl className='bPlPanelBody' value={scale?.[device]?.x} step={0.1} min={0} max={5} onChange={(val) => onChange({ ...value, scale: { ...value.scale, [device]: { ...value.scale[device], x: val } } })} />
 
 					<PanelRow>
 						<Label className='mt0'>Scale Y</Label>
 						<Device />
 					</PanelRow>
 
-					<RangeControl className='bPlPanelBody' value={scale?.[device]?.y} step={0.1} min={0} max={5} onChange={(val) => onChange({ ...value, scale: { ...value.scale, [device]: { ...value.scale[device], y: val }, }, })} {...sizeAndMarginProps} />
+					<RangeControl className='bPlPanelBody' value={scale?.[device]?.y} step={0.1} min={0} max={5} onChange={(val) => onChange({ ...value, scale: { ...value.scale, [device]: { ...value.scale[device], y: val }, }, })} />
 				</>}
 		</CustomPopover>
 
@@ -99,14 +98,14 @@ const AdvTransform = ({ value = {}, onChange = () => { }, device }) => {
 				<Device />
 			</PanelRow>
 
-			<RangeControl className='bPlPanelBody' defaultValue={0} min={-360} max={360} value={skew?.[device]?.x} onChange={(val) => onChange({ ...value, skew: { ...value.skew, [device]: { ...value.skew[device], x: val } } })} {...sizeAndMarginProps} />
+			<RangeControl className='bPlPanelBody' defaultValue={0} min={-360} max={360} value={skew?.[device]?.x} onChange={(val) => onChange({ ...value, skew: { ...value.skew, [device]: { ...value.skew[device], x: val } } })} />
 
 			<PanelRow>
 				<Label className='mt0'>Skew Y (deg)</Label>
 				<Device />
 			</PanelRow>
 
-			<RangeControl className='bPlPanelBody' defaultValue={0} min={-360} max={360} value={skew?.[device]?.y} onChange={(val) => onChange({ ...value, skew: { ...value.skew, [device]: { ...value.skew[device], y: val } } })} {...sizeAndMarginProps} />
+			<RangeControl className='bPlPanelBody' defaultValue={0} min={-360} max={360} value={skew?.[device]?.y} onChange={(val) => onChange({ ...value, skew: { ...value.skew, [device]: { ...value.skew[device], y: val } } })} />
 		</CustomPopover>
 
 
