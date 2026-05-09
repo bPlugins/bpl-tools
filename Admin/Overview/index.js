@@ -6,6 +6,7 @@ import { closeIcon, playIcon } from '../../utils/icons';
 
 import './style.scss';
 import VideoPlayer from './VideoPlayer';
+import supportThumbnail from '../assets/image/support.png';
 
 /**
  * Overview Component
@@ -20,7 +21,7 @@ import VideoPlayer from './VideoPlayer';
  */
 const Overview = (props) => {
 	const { name, description, slug, media, isPremium, pages, startButton, site, children } = props;
-	const { thumbnail, video, isYoutube, supportThumbnail } = media || {};
+	const { thumbnail, video, isYoutube } = media || {};
 
 	const [showVideo, setShowVideo] = useState(false);
 
