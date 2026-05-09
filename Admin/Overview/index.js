@@ -20,7 +20,7 @@ import VideoPlayer from './VideoPlayer';
  */
 const Overview = (props) => {
 	const { name, description, slug, media, isPremium, pages, startButton, site, children } = props;
-	const { thumbnail, video, isYoutube } = media || {};
+	const { thumbnail, video, isYoutube, supportThumbnail } = media || {};
 
 	const [showVideo, setShowVideo] = useState(false);
 
@@ -38,7 +38,7 @@ const Overview = (props) => {
 			linkText: 'Rate the Plugin'
 		},
 		{
-			image: 'https://bplugins.com/wp-content/themes/b-technologies/assets/images/resource/support.png',
+			image: supportThumbnail,
 			title: 'Need any Assistance?',
 			description: 'Our Expert Support Team is always ready to help you out promptly.',
 			link: 'https://bplugins.com/support',
