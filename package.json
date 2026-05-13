@@ -3,7 +3,7 @@
 	"version": "1.0.1",
 	"description": "This tools is use for Gutenberg Blocks",
 	"author": "Wasek Bellah",
-	"license": "ISC",
+	"license": "GPL-2.0-or-later",
 	"scripts": {
 		"packages-update": "wp-scripts packages-update",
 		"lint": "eslint src"

@@ -41,7 +41,7 @@ This repository is the **canonical source** for the bundled admin/editor scripts
 
 ## License
 
-This project is licensed under the **GNU General Public License v2.0 (or later)** — see the [LICENSE](./LICENSE) file for the full notice and the URL to the complete license text. GPLv2-or-later is the same license used by WordPress core, which keeps this library fully compatible with every WordPress plugin and theme.
+This project is licensed under the **GNU General Public License v2.0 (or later)** — see the [LICENSE.md](./LICENSE.md) file for the full notice and the URL to the complete license text. GPLv2-or-later is the same license used by WordPress core, which keeps this library fully compatible with every WordPress plugin and theme.
 
 You are free to:
 
@@ -88,7 +88,7 @@ bpl-tools/
 ├── includes/           # PHP helpers reserved for future shared logic
 ├── package.json
 ├── webpack.config.js
-└── LICENSE
+└── LICENSE.md
 ```
 
 Each top-level folder contains its own `readme.md` with implementation
