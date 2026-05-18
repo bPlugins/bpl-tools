@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
 ### utils/data.js
 
 ```js
-const slug = "advanced-post-block";
+const slug = "plugin-slug";
 
 export const dashboardInfo = (info) => {
 	const { version, isPremium, hasPro } = info;

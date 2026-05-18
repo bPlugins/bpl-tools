@@ -148,7 +148,7 @@ function getTypoCSS( $selector, $typo, $isFamily = true ) {
 And use in a style tag in `php`.
 ```php
 <?php
-extract( $attributes );
+extract( $attributes ?? [] );
 
 ob_start(); ?>
 <style>

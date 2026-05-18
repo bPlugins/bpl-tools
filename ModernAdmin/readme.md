@@ -28,12 +28,12 @@ Only enqueue your scripts and styles on the specific admin page path.
 
 ```php
 function adminEnqueueScripts( $hook ) {
-	if( strpos( $hook, 'advanced-post-block' ) ){
+	if( strpos( $hook, 'plugin-slug' ) ){
 		wp_enqueue_style( 'apb-admin-dashboard', APB_DIR_URL . 'build/admin/dashboard.css', [], APB_VERSION );
 
 		$asset_file = include APB_DIR_PATH . 'build/admin/dashboard.asset.php';
 		wp_enqueue_script( 'apb-admin-dashboard', APB_DIR_URL . 'build/admin/dashboard.js', array_merge( $asset_file['dependencies'], [ 'wp-util' ] ), APB_VERSION, true );
-		wp_set_script_translations( 'apb-admin-dashboard', 'advanced-post-block', APB_DIR_PATH . 'languages' );
+		wp_set_script_translations( 'apb-admin-dashboard', 'plugin-slug', APB_DIR_PATH . 'languages' );
 	}
 }
 ```
@@ -68,7 +68,7 @@ Define your plugin's configuration, including license info, changelogs, and demo
 ```js
 import { gridIcon, masonryIcon, sliderIcon, tickerIcon } from '../../utils/icons';
 
-const slug = 'advanced-post-block';
+const slug = 'plugin-slug';
 
 export const dashboardInfo = (info) => {
 	const { version, isPremium, hasPro, nonce, licenseActiveNonce } = info;
@@ -707,7 +707,7 @@ This hook will apply default title and content on create page
 
 
 ### License Activation
-For the license activation you have to require [`LicenseActivation.php`](https://github.com/bPlugins/advanced-post-block-pro/blob/main/includes/LicenseActivation.php) file. Make sure the `freemius` sdk is present while requiring this file
+For the license activation you have to require [`LicenseActivation.php`](https://github.com/bPlugins/plugin-slug-pro/blob/main/includes/LicenseActivation.php) file. Make sure the `freemius` sdk is present while requiring this file
 
 
 ## Best Practices

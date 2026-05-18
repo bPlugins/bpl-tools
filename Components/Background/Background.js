@@ -14,7 +14,7 @@
 
 import { __ } from '@wordpress/i18n';
 import { withSelect } from '@wordpress/data';
-import { __experimentalGradientPicker, __experimentalAlignmentMatrixControl as AlignmentMatrixControl, Button, Dropdown, GradientPicker, PanelRow, SelectControl } from '@wordpress/components';
+import { __experimentalGradientPicker, __experimentalAlignmentMatrixControl as AlignmentMatrixControl, Button, Dropdown, Flex, GradientPicker, PanelRow, SelectControl } from '@wordpress/components';
 const Gradient = __experimentalGradientPicker || GradientPicker;
 
 import { BtnGroup, ColorControl, InlineDetailMediaUpload, Label } from '../index';
@@ -33,6 +33,19 @@ const Background = props => {
 	const setValue = (property, val) => onChange({ ...value, [property]: val });
 
 	const resetValue = property => value?.[property] && value?.[property] !== getDefault(property) ? <Button icon='image-rotate' className='bPlResetVal' onClick={() => setDefault(property)} /> : null
+
+	const clearImageSettings = () => {
+		onChange({
+			...value,
+			type: 'image',
+			image: getDefault('image'),
+			position: getDefault('position'),
+			attachment: getDefault('attachment'),
+			repeat: getDefault('repeat'),
+			size: getDefault('size'),
+			overlayColor: getDefault('overlayColor')
+		});
+	};
 
 	return <PanelRow className={`bPlDropdown ${className}`}>
 		<Label className='mb5'>{label}</Label>
@@ -57,7 +70,10 @@ const Background = props => {
 					})} />
 				</PanelRow>
 
-				{'solid' === getValue('type') && isSolid && <ColorControl className='mt20' label={__('Color:')} value={getValue('color')} onChange={val => setValue('color', val)} defaultColor={getDefault('color')} />}
+				{'solid' === getValue('type') && isSolid && <>
+					<ColorControl className='mt20' label={__('Color:')} value={getValue('color')} onChange={val => setValue('color', val)} defaultColor={getDefault('color')} />
+					<Flex justify='flex-end' className='mt10'><Button variant='tertiary' onClick={() => setDefault('color')}>Clear</Button></Flex>
+				</>}
 
 				{'gradient' === getValue('type') && isGradient && <Gradient className='mt20' value={getValue('gradient')} onChange={val => setValue('gradient', val)} gradients={gradients} />}
 
@@ -90,6 +106,8 @@ const Background = props => {
 					</PanelRow>
 
 					<ColorControl className='mt20' label={__('Overlay Color:')} value={getValue('overlayColor')} onChange={val => setValue('overlayColor', val)} defaultColor={getDefault('overlayColor')} />
+
+					<Flex justify='flex-end' className='mt10'><Button variant='tertiary' onClick={clearImageSettings}>Clear</Button></Flex>
 				</>}
 			</>}
 		/>

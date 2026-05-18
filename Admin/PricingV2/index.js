@@ -4,9 +4,9 @@ import { getFeatures } from '../../../../bpl-tools/Admin/Pricing';
 import '../../../../bpl-tools/Admin/lib/fs';
 
 const cycleMeta = {
-    monthly: { label: 'Monthly', suffix: '/mo', short: 'month' },
-    annual: { label: 'Yearly', suffix: '/yr', short: 'year' },
-    lifetime: { label: 'Lifetime', suffix: '', short: 'lifetime' }
+    monthly: { label: 'Monthly', suffix: '/mo' },
+    annual: { label: 'Yearly', suffix: '/yr' },
+    lifetime: { label: 'Lifetime', suffix: '' }
 };
 
 const trustBadges = [
@@ -53,7 +53,7 @@ const formatPrice = (amount) => {
     return Number.isInteger(num) ? String(num) : num.toFixed(2);
 };
 
-const Pricing = ({ pricingInfo, options }) => {
+const PricingV2 = ({ pricingInfo, options }) => {
     const { pluginId, planId, licenses, button, featured, logo } = pricingInfo;
 
     const [product, setProduct] = useState({});
@@ -115,19 +115,11 @@ const Pricing = ({ pricingInfo, options }) => {
         if (fullYear > 0) annualSavingsPct = Math.round(((fullYear - annual) / fullYear) * 100);
     }
 
-    // Features are identical across license tiers — compute once, render in
-    // the shared "Everything included" section below the plan cards.
-    const sharedFeatures = getFeatures(plans, planId);
-
-    // Compare per-site value: how much each plan costs per site at the active
-    // cycle, so multi-site plans visibly become "better deal" cards.
-    const annualSavingsLabel = annualSavingsPct > 0 ? `Save ${annualSavingsPct}%` : '';
-
     return <div className='bp3dPricingV3'>
         <header className='bp3dPricingV3Hero'>
             <span className='bp3dPricingV3Eyebrow'>Pricing</span>
             <h1>Pick the plan that fits your project</h1>
-            <p>Same powerful features on every plan — just choose how many sites you need. Upgrade or downgrade any time.</p>
+            <p>Every plan unlocks all premium features — choose the license count that matches your sites. Upgrade or downgrade any time.</p>
         </header>
 
         {cycles.length > 1 && <div className='bp3dPricingV3CycleWrap'>
@@ -142,28 +134,26 @@ const Pricing = ({ pricingInfo, options }) => {
                         onClick={() => setCycle(c.name)}
                     >
                         {c.label}
-                        {c.name === 'annual' && annualSavingsLabel && <span className='bp3dPricingV3Save'>{annualSavingsLabel}</span>}
+                        {c.name === 'annual' && annualSavingsPct > 0 && <span className='bp3dPricingV3Save'>Save {annualSavingsPct}%</span>}
                     </button>
                 ))}
             </div>
         </div>}
 
-        <div className='bp3dPricingV3Plans bp3dPricingV3PlansCompact'>
+        <div className='bp3dPricingV3Plans'>
             {visiblePricing.length ? visiblePricing.map((price, index) => {
                 const licensesCount = price?.licenses;
                 const isFeatured = featured?.selected === (licensesCount || 'null');
+                const planFeatures = getFeatures(plans, planId);
                 const amount = price?.[cycle];
-                const cycleInfo = cycleMeta[cycle] || { label: '', suffix: '', short: '' };
-                const numericAmount = parseFloat(amount);
+                const cycleInfo = cycleMeta[cycle] || { label: '', suffix: '' };
                 const monthlyEquivalent = cycle === 'annual' && price?.annual ? (parseFloat(price.annual) / 12) : null;
-                const perSite = licensesCount && !isNaN(numericAmount) ? (numericAmount / licensesCount) : null;
-
                 const planLabel = !licensesCount
                     ? 'Unlimited Sites'
                     : (licensesCount === 1 ? 'Single Site' : `${licensesCount} Sites`);
                 const planTagline = !licensesCount
-                    ? 'For agencies & enterprise'
-                    : (licensesCount === 1 ? 'For solo creators' : 'For freelancers');
+                    ? 'For agencies & enterprise builds'
+                    : (licensesCount === 1 ? 'Perfect for personal projects' : 'Great for freelancers');
 
                 return <div key={index} className={`bp3dPricingV3Plan ${isFeatured ? 'isFeatured' : ''}`}>
                     {isFeatured && <div className='bp3dPricingV3Badge'>{featured?.text || 'Most Popular'}</div>}
@@ -180,19 +170,24 @@ const Pricing = ({ pricingInfo, options }) => {
                             {cycleInfo.suffix && <span className='bp3dPricingV3Suffix'>{cycleInfo.suffix}</span>}
                         </div>
 
-                        {perSite !== null && <p className='bp3dPricingV3Equiv'>
-                            ≈ ${formatPrice(perSite)} per site
+                        {monthlyEquivalent !== null && <p className='bp3dPricingV3Equiv'>
+                            ≈ ${formatPrice(monthlyEquivalent)}/month, billed yearly
                         </p>}
 
-                        {!licensesCount && <p className='bp3dPricingV3Equiv'>Use on every site you build.</p>}
-
-                        {monthlyEquivalent !== null && cycle === 'annual' && <p className='bp3dPricingV3Equiv bp3dPricingV3EquivSub'>
-                            Billed yearly · ${formatPrice(monthlyEquivalent)}/mo
-                        </p>}
-
-                        {cycle === 'lifetime' && <p className='bp3dPricingV3Equiv bp3dPricingV3EquivSub'>One-time payment, pay once forever.</p>}
-                        {cycle === 'monthly' && <p className='bp3dPricingV3Equiv bp3dPricingV3EquivSub'>Billed monthly, cancel anytime.</p>}
+                        {cycle === 'lifetime' && <p className='bp3dPricingV3Equiv'>One-time payment, pay once forever.</p>}
+                        {cycle === 'monthly' && <p className='bp3dPricingV3Equiv'>Billed monthly, cancel anytime.</p>}
                     </div>
+
+                    <ul className='bp3dPricingV3Features'>
+                        {planFeatures.map((f, i) => (
+                            <li key={i}>
+                                <svg viewBox='0 0 24 24' width={16} height={16} fill='none' stroke='currentColor' strokeWidth={2.5} strokeLinecap='round' strokeLinejoin='round'>
+                                    <polyline points='20 6 9 17 4 12' />
+                                </svg>
+                                <span dangerouslySetInnerHTML={{ __html: f }} />
+                            </li>
+                        ))}
+                    </ul>
 
                     <Button
                         className='bp3dPricingV3Cta'
@@ -216,27 +211,6 @@ const Pricing = ({ pricingInfo, options }) => {
                 </div>;
             }) : <p className='bp3dPricingV3Empty'>No plans available right now.</p>}
         </div>
-
-        {sharedFeatures.length > 0 && <section className='bp3dPricingV3Included'>
-            <header className='bp3dPricingV3IncludedHead'>
-                <span className='bp3dPricingV3IncludedTag'>Same on every plan</span>
-                <h2>Everything you get, on every license</h2>
-                <p>The feature set is identical across Single Site, 3 Sites, and Unlimited. The only thing that changes is how many sites you can activate it on.</p>
-            </header>
-
-            <ul className='bp3dPricingV3IncludedGrid'>
-                {sharedFeatures.map((f, i) => (
-                    <li key={i}>
-                        <span className='bp3dPricingV3IncludedCheck'>
-                            <svg viewBox='0 0 24 24' width={14} height={14} fill='none' stroke='currentColor' strokeWidth={3} strokeLinecap='round' strokeLinejoin='round'>
-                                <polyline points='20 6 9 17 4 12' />
-                            </svg>
-                        </span>
-                        <span dangerouslySetInnerHTML={{ __html: f }} />
-                    </li>
-                ))}
-            </ul>
-        </section>}
 
         <section className='bp3dPricingV3Trust'>
             {trustBadges.map((b, i) => (
@@ -275,4 +249,4 @@ const Pricing = ({ pricingInfo, options }) => {
     </div>;
 };
 
-export default Pricing;
+export default PricingV2;

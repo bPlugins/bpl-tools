@@ -186,11 +186,11 @@ const Activation = (props) => {
 							</ul>
 
 							<div className='links'>
-								<a href={`https://freemius.com/product/license-activation/14262/advanced-post-block/`} target='_blank' rel='noopener noreferrer'>Powered by Freemius</a>
+								<a href={`https://freemius.com/product/license-activation/${product_id}/${slug}/`} target='_blank' rel='noopener noreferrer'>Powered by Freemius</a>
 
 								<a href={`https://freemius.com/privacy/`} target='_blank' rel='noopener noreferrer'>Privacy Policy</a>
 
-								<a href={`https://freemius.com/product/14262/advanced-post-block/legal/eula/`} target='_blank' rel='noopener noreferrer'>License Agreement</a>
+								<a href={`https://freemius.com/product/${product_id}/${slug}/legal/eula/`} target='_blank' rel='noopener noreferrer'>License Agreement</a>
 							</div>
 						</>}
 
