@@ -1,278 +1,168 @@
 import { useEffect, useState } from 'react';
-import Button from '../../../../bpl-tools/Components/Button/Button';
-import { getFeatures } from '../../../../bpl-tools/Admin/Pricing';
-import '../../../../bpl-tools/Admin/lib/fs';
 
-const cycleMeta = {
-    monthly: { label: 'Monthly', suffix: '/mo', short: 'month' },
-    annual: { label: 'Yearly', suffix: '/yr', short: 'year' },
-    lifetime: { label: 'Lifetime', suffix: '', short: 'lifetime' }
-};
+import Button from '../../Components/Button/Button';
 
-const trustBadges = [
-    {
-        title: '14 days money back',
-        body: 'Risk-free purchase',
-        icon: <svg viewBox='0 0 24 24' width={18} height={18} fill='none' stroke='currentColor' strokeWidth={2} strokeLinecap='round' strokeLinejoin='round'><path d='M12 2L4 6v6c0 5 3.5 9.6 8 10 4.5-.4 8-5 8-10V6l-8-4z' /><polyline points='9 12 11 14 15 10' /></svg>
-    },
-    {
-        title: 'Lifetime updates',
-        body: 'On every plan',
-        icon: <svg viewBox='0 0 24 24' width={18} height={18} fill='none' stroke='currentColor' strokeWidth={2} strokeLinecap='round' strokeLinejoin='round'><polyline points='23 4 23 10 17 10' /><polyline points='1 20 1 14 7 14' /><path d='M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15' /></svg>
-    },
-    {
-        title: 'Priority support',
-        body: 'Get help when you need it',
-        icon: <svg viewBox='0 0 24 24' width={18} height={18} fill='none' stroke='currentColor' strokeWidth={2} strokeLinecap='round' strokeLinejoin='round'><path d='M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z' /></svg>
-    },
-    {
-        title: 'Secure checkout',
-        body: 'Powered by Freemius',
-        icon: <svg viewBox='0 0 24 24' width={18} height={18} fill='none' stroke='currentColor' strokeWidth={2} strokeLinecap='round' strokeLinejoin='round'><rect x='3' y='11' width='18' height='11' rx='2' /><path d='M7 11V7a5 5 0 0110 0v4' /></svg>
-    }
-];
+import '../lib/fs';
+import './style.scss';
 
-const faqs = [
-    {
-        q: 'Can I upgrade my plan later?',
-        a: 'Yes — you can upgrade any time from your account. We prorate the difference automatically.'
-    },
-    {
-        q: 'What happens after my license expires?',
-        a: 'The plugin keeps working forever. You only lose access to updates and premium support unless you renew.'
-    },
-    {
-        q: 'Do you offer refunds?',
-        a: 'Absolutely. Every plan is backed by a 14 days no-questions-asked money-back guarantee.'
-    }
-];
+export const getFeatures = (plans, planId) => {
+	const freeFeatures = plans.find(p => p.name === 'free')?.features?.map(f => f.title);
+	const proFeatures = plans.find(p => p.name === 'pro')?.features?.filter(f => !freeFeatures.includes(f.title)).map(f => f.title);
 
-const formatPrice = (amount) => {
-    const num = typeof amount === 'string' ? parseFloat(amount) : amount;
-    if (isNaN(num)) return '—';
-    return Number.isInteger(num) ? String(num) : num.toFixed(2);
-};
+	const features = {
+		'free': freeFeatures,
+		'pro': proFeatures
+	}
+
+	const planName = plans.find(p => parseInt(p.id) === parseInt(planId))?.name;
+	const planFeatures = features[planName] || plans.find(p => parseInt(p.id) === parseInt(planId))?.features?.map(f => f.title);
+
+	return planFeatures || [];
+}
 
 const Pricing = ({ pricingInfo, options }) => {
-    const { pluginId, planId, licenses, button, featured, logo } = pricingInfo;
+	const { pluginId, planId, licenses } = pricingInfo;
 
-    const [product, setProduct] = useState({});
-    const [isProductLoading, setIsProductLoading] = useState(false);
-    const [cycles, setCycles] = useState([]);
-    const [cycle, setCycle] = useState('');
-    const [openFaq, setOpenFaq] = useState(0);
+	// new state for fetched single product
+	const [product, setProduct] = useState({});
+	const [isProductLoading, setIsProductLoading] = useState(false);
+	useEffect(() => {
+		if (pluginId) {
+			let mounted = true;
+			const url = `https://api.bplugins.com/wp-json/bpl/v1/products/${pluginId}`;
+			setIsProductLoading(true);
+			fetch(url)
+				.then(response => {
+					if (!response.ok) throw new Error(`${response.status} ${response.statusText}`);
+					return response.json();
+				})
+				.then(data => {
+					if (!mounted) return;
+					setProduct(data);
+				})
+				.catch(err => {
+					if (!mounted) return;
+					// eslint-disable-next-line no-console
+					console.error(err.message || 'Fetch error');
+					setProduct({});
+				})
+				.finally(() => {
+					if (mounted) setIsProductLoading(false);
+				});
+			return () => {
+				mounted = false;
+			};
+		}
+	}, [pluginId]);
 
-    useEffect(() => {
-        if (!pluginId) return;
-        let mounted = true;
-        setIsProductLoading(true);
-        fetch(`https://api.bplugins.com/wp-json/bpl/v1/products/${pluginId}`)
-            .then((r) => r.ok ? r.json() : Promise.reject(`${r.status} ${r.statusText}`))
-            .then((data) => { if (mounted) setProduct(data); })
-            .catch(() => { if (mounted) setProduct({}); })
-            .finally(() => { if (mounted) setIsProductLoading(false); });
-        return () => { mounted = false; };
-    }, [pluginId]);
 
-    useEffect(() => {
-        if (!product?.id || !planId) return;
-        const { plans } = product;
-        const plan = plans?.find((p) => parseInt(p.id) === parseInt(planId)) || plans?.[0] || {};
-        const singlePrices = plan?.pricing?.[0];
+	const [cycles, setCycles] = useState([]);
+	const [cycle, setCycle] = useState(cycles?.find(c => c.isDefault)?.name || cycles[0]?.name);
 
-        if (singlePrices && typeof singlePrices === 'object') {
-            const c = [];
-            if (singlePrices.monthly !== undefined) c.push({ name: 'monthly', label: 'Monthly' });
-            if (singlePrices.annual !== undefined) c.push({ name: 'annual', label: 'Yearly', isDefault: true });
-            if (singlePrices.lifetime !== undefined) c.push({ name: 'lifetime', label: 'Lifetime' });
-            setCycles(c);
-            setCycle(c.find((cc) => cc.isDefault)?.name || c[0]?.name || '');
-        } else {
-            setCycles([]);
-            setCycle('');
-        }
-    }, [product, planId]);
+	useEffect(() => {
+		if (product?.id && planId) {
+			const { plans } = product || {};
+			const plan = plans?.find(p => parseInt(p.id) === parseInt(planId)) || plans?.[0] || {};
 
-    if (isProductLoading) {
-        return <div className='bp3dPricingV3 bp3dPricingV3Loading'>
-            <div className='bp3dPricingV3LoadingSpinner' />
-            <p>Loading the latest pricing…</p>
-        </div>;
-    }
+			const singlePrices = plan?.pricing?.[0];
 
-    if (!product?.id) return null;
+			if (singlePrices && typeof singlePrices === 'object') {
+				let c = []
+				// eslint-disable-next-line no-prototype-builtins
+				if (singlePrices.hasOwnProperty('monthly')) {
+					c.push({ name: 'monthly', label: 'Billed Monthly' });
+				}
+				// eslint-disable-next-line no-prototype-builtins
+				if (singlePrices.hasOwnProperty('annual')) {
+					c.push({ name: 'annual', label: 'Billed Yearly', isDefault: true });
+				}
+				// eslint-disable-next-line no-prototype-builtins
+				if (singlePrices.hasOwnProperty('lifetime')) {
+					c.push({ name: 'lifetime', label: 'Lifetime' });
+				}
+				setCycles(c);
+				setCycle(c?.find(cc => cc.isDefault)?.name || c[0]?.name)
+			} else {
+				setCycles([]);
+				setCycle('');
+			}
+		}
+	}, [product, isProductLoading, planId]);
 
-    const { plans } = product;
-    const plan = plans?.find((p) => parseInt(p.id) === parseInt(planId)) || plans?.[0] || {};
-    const pricing = plan?.pricing || [];
-    const visiblePricing = pricing.filter((p) => licenses.includes(p?.licenses ?? null));
+	if (isProductLoading) {
+		return <div className='bPlDashboardPricing bPlDashboardBox'>
+			<h2>Loading...</h2>
+		</div>;
+	}
 
-    const samplePrice = visiblePricing[0];
-    let annualSavingsPct = 0;
-    if (samplePrice?.monthly && samplePrice?.annual) {
-        const fullYear = parseFloat(samplePrice.monthly) * 12;
-        const annual = parseFloat(samplePrice.annual);
-        if (fullYear > 0) annualSavingsPct = Math.round(((fullYear - annual) / fullYear) * 100);
-    }
+	if (!product || !product?.id) {
+		return null;
+	}
 
-    // Features are identical across license tiers — compute once, render in
-    // the shared "Everything included" section below the plan cards.
-    const sharedFeatures = getFeatures(plans, planId);
+	const { plans } = product || {};
+	const plan = plans?.find(p => parseInt(p.id) === parseInt(planId)) || plans?.[0] || {};
+	const { pricing = [] } = plan || {};
 
-    // Compare per-site value: how much each plan costs per site at the active
-    // cycle, so multi-site plans visibly become "better deal" cards.
-    const annualSavingsLabel = annualSavingsPct > 0 ? `Save ${annualSavingsPct}%` : '';
+	return <div className='bPlDashboardPricing bPlDashboardCard'>
+		{cycles?.length > 1 && <div className='cycles'>
+			{cycles.map(c => {
+				return <button key={c.name} className={c.name === cycle ? 'active' : ''} onClick={() => setCycle(c.name)}>
+					{c.label}
+				</button>;
+			})}
+		</div>}
 
-    return <div className='bp3dPricingV3'>
-        <header className='bp3dPricingV3Hero'>
-            <span className='bp3dPricingV3Eyebrow'>Pricing</span>
-            <h1>Pick the plan that fits your project</h1>
-            <p>Same powerful features on every plan — just choose how many sites you need. Upgrade or downgrade any time.</p>
-        </header>
+		{cycles?.length === 1 && cycles[0]?.name === 'lifetime' && <h2 className='pricingTitle'>One-time payment, lifetime access</h2>}
 
-        {cycles.length > 1 && <div className='bp3dPricingV3CycleWrap'>
-            <div className='bp3dPricingV3Cycle' role='tablist'>
-                {cycles.map((c) => (
-                    <button
-                        key={c.name}
-                        type='button'
-                        role='tab'
-                        aria-selected={c.name === cycle}
-                        className={c.name === cycle ? 'isActive' : ''}
-                        onClick={() => setCycle(c.name)}
-                    >
-                        {c.label}
-                        {c.name === 'annual' && annualSavingsLabel && <span className='bp3dPricingV3Save'>{annualSavingsLabel}</span>}
-                    </button>
-                ))}
-            </div>
-        </div>}
+		<div className='plans'>
+			{pricing?.length ?
+				pricing?.map((price, index) => licenses.includes(price?.licenses) && <Plan key={index} {...{ pricingInfo, product, price, cycle, options }} />) :
 
-        <div className='bp3dPricingV3Plans bp3dPricingV3PlansCompact'>
-            {visiblePricing.length ? visiblePricing.map((price, index) => {
-                const licensesCount = price?.licenses;
-                const isFeatured = featured?.selected === (licensesCount || 'null');
-                const amount = price?.[cycle];
-                const cycleInfo = cycleMeta[cycle] || { label: '', suffix: '', short: '' };
-                const numericAmount = parseFloat(amount);
-                const monthlyEquivalent = cycle === 'annual' && price?.annual ? (parseFloat(price.annual) / 12) : null;
-                const perSite = licensesCount && !isNaN(numericAmount) ? (numericAmount / licensesCount) : null;
-
-                const planLabel = !licensesCount
-                    ? 'Unlimited Sites'
-                    : (licensesCount === 1 ? 'Single Site' : `${licensesCount} Sites`);
-                const planTagline = !licensesCount
-                    ? 'For agencies & enterprise'
-                    : (licensesCount === 1 ? 'For solo creators' : 'For freelancers');
-
-                return <div key={index} className={`bp3dPricingV3Plan ${isFeatured ? 'isFeatured' : ''}`}>
-                    {isFeatured && <div className='bp3dPricingV3Badge'>{featured?.text || 'Most Popular'}</div>}
-
-                    <div className='bp3dPricingV3PlanHead'>
-                        <h3>{planLabel}</h3>
-                        <p>{planTagline}</p>
-                    </div>
-
-                    <div className='bp3dPricingV3PriceWrap'>
-                        <div className='bp3dPricingV3Price'>
-                            <span className='bp3dPricingV3Currency'>$</span>
-                            <span className='bp3dPricingV3Amount'>{formatPrice(amount)}</span>
-                            {cycleInfo.suffix && <span className='bp3dPricingV3Suffix'>{cycleInfo.suffix}</span>}
-                        </div>
-
-                        {perSite !== null && <p className='bp3dPricingV3Equiv'>
-                            ≈ ${formatPrice(perSite)} per site
-                        </p>}
-
-                        {!licensesCount && <p className='bp3dPricingV3Equiv'>Use on every site you build.</p>}
-
-                        {monthlyEquivalent !== null && cycle === 'annual' && <p className='bp3dPricingV3Equiv bp3dPricingV3EquivSub'>
-                            Billed yearly · ${formatPrice(monthlyEquivalent)}/mo
-                        </p>}
-
-                        {cycle === 'lifetime' && <p className='bp3dPricingV3Equiv bp3dPricingV3EquivSub'>One-time payment, pay once forever.</p>}
-                        {cycle === 'monthly' && <p className='bp3dPricingV3Equiv bp3dPricingV3EquivSub'>Billed monthly, cancel anytime.</p>}
-                    </div>
-
-                    <Button
-                        className='bp3dPricingV3Cta'
-                        onClick={(e) => {
-                            e.preventDefault();
-                            new FS.Checkout({
-                                plugin_id: product.id,
-                                plan_id: planId,
-                                public_key: product.public_key
-                            }).open({
-                                image: logo || product.icon,
-                                title: product.title,
-                                licenses: licensesCount,
-                                billing_cycle: cycle,
-                                ...options
-                            });
-                        }}
-                    >
-                        {button.label}
-                    </Button>
-                </div>;
-            }) : <p className='bp3dPricingV3Empty'>No plans available right now.</p>}
-        </div>
-
-        {sharedFeatures.length > 0 && <section className='bp3dPricingV3Included'>
-            <header className='bp3dPricingV3IncludedHead'>
-                <span className='bp3dPricingV3IncludedTag'>Same on every plan</span>
-                <h2>Everything you get, on every license</h2>
-                <p>The feature set is identical across Single Site, 3 Sites, and Unlimited. The only thing that changes is how many sites you can activate it on.</p>
-            </header>
-
-            <ul className='bp3dPricingV3IncludedGrid'>
-                {sharedFeatures.map((f, i) => (
-                    <li key={i}>
-                        <span className='bp3dPricingV3IncludedCheck'>
-                            <svg viewBox='0 0 24 24' width={14} height={14} fill='none' stroke='currentColor' strokeWidth={3} strokeLinecap='round' strokeLinejoin='round'>
-                                <polyline points='20 6 9 17 4 12' />
-                            </svg>
-                        </span>
-                        <span dangerouslySetInnerHTML={{ __html: f }} />
-                    </li>
-                ))}
-            </ul>
-        </section>}
-
-        <section className='bp3dPricingV3Trust'>
-            {trustBadges.map((b, i) => (
-                <div key={i} className='bp3dPricingV3TrustItem'>
-                    <span className='bp3dPricingV3TrustIcon'>{b.icon}</span>
-                    <div>
-                        <strong>{b.title}</strong>
-                        <span>{b.body}</span>
-                    </div>
-                </div>
-            ))}
-        </section>
-
-        <section className='bp3dPricingV3Faq'>
-            <h2>Frequently asked questions</h2>
-
-            <div className='bp3dPricingV3FaqList'>
-                {faqs.map((f, i) => (
-                    <div key={i} className={`bp3dPricingV3FaqItem ${openFaq === i ? 'isOpen' : ''}`}>
-                        <button
-                            type='button'
-                            className='bp3dPricingV3FaqQ'
-                            aria-expanded={openFaq === i}
-                            onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                        >
-                            <span>{f.q}</span>
-                            <svg viewBox='0 0 24 24' width={18} height={18} fill='none' stroke='currentColor' strokeWidth={2} strokeLinecap='round' strokeLinejoin='round'>
-                                <polyline points='6 9 12 15 18 9' />
-                            </svg>
-                        </button>
-                        {openFaq === i && <div className='bp3dPricingV3FaqA'>{f.a}</div>}
-                    </div>
-                ))}
-            </div>
-        </section>
-    </div>;
+				<h3 style={{ gridColumn: `1 / -1`, textAlign: 'center' }}>Select a plan</h3>
+			}
+		</div>
+	</div>
 };
-
 export default Pricing;
+
+const Plan = ({ pricingInfo, product, price, cycle, options }) => {
+	const { logo, planId, button, featured } = pricingInfo;
+	const { title, id, public_key, icon } = product || {};
+	const { licenses } = price || {};
+
+	const amount = price?.[cycle] + '';
+
+	const name = !licenses ? 'Unlimited Sites' : (licenses === 1 ? 'Single Site' : `${licenses} Sites`);
+	const isFeatured = featured?.selected === (licenses || 'null');
+
+	return <div className={`plan ${isFeatured ? 'bestValue' : ''}`} data-best-text={featured?.text}>
+		<h3 className='planName wp-block-heading'>{name}</h3>
+
+		<div className='price'>
+			${amount}
+		</div>
+
+		<p className='note'>{!licenses ? 'Unlimited site' : (licenses === 1 ? '1 site' : `${licenses} sites`)} license for {'monthly' === cycle ? '1 month' : ('annual' === cycle ? '1 year' : cycle)}</p>
+
+		<ul className={`wp-block-list features checkList ${isFeatured ? 'whiteCheck' : 'themeCheck'}`}>
+			{getFeatures(product.plans, planId).map((f, i) => <li key={i} dangerouslySetInnerHTML={{ __html: f }} />)}
+		</ul>
+
+		<Button className={`${isFeatured ? 'white' : ''}`} onClick={e => {
+			e.preventDefault();
+
+			// eslint-disable-next-line no-undef
+			new FS.Checkout({
+				plugin_id: id,
+				plan_id: planId,
+				public_key
+			}).open({
+				image: logo || icon,
+				title,
+				licenses,
+				billing_cycle: cycle,
+				...options
+			});
+		}}>{button.label}</Button>
+	</div>
+}

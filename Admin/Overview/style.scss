@@ -1,0 +1,279 @@
+@import '../__variables';
+
+.bPlDashboardOverview {
+	width: 100%;
+	max-width: 1440px;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 32px;
+	margin: 0 auto;
+
+	.overviewLeft {
+		flex: 1;
+		width: 960px;
+		max-width: 100%;
+		display: flex;
+		flex-direction: column;
+		gap: 32px;
+
+		.overviewLeftTop {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			flex-wrap: wrap-reverse;
+			gap: 32px;
+
+			h2 {
+				font-size: 24px;
+				font-weight: 600;
+				color: var(--bpl-dashboard-title-color, $titleColor);
+				margin-bottom: 10px;
+			}
+
+			p {
+				font-size: 16px;
+				color: var(--bpl-dashboard-content-color, $contentColor);
+				margin-bottom: 32px;
+			}
+
+			>div:first-child {
+				flex: 1;
+				min-width: 420px;
+				width: 100%;
+				max-width: 545px;
+			}
+
+			.buttons {
+				display: flex;
+				align-items: center;
+				gap: 21px;
+
+				.bPlButton {
+					color: $whiteColor;
+					padding: 8px 20px;
+					background: var(--bpl-dashboard-primary-color, $primaryColor);
+					border-radius: 5px;
+
+					&::before {
+						background: var(--bpl-dashboard-secondary-color, $secondaryColor);
+					}
+
+					&:nth-child(2) {
+						background: var(--bpl-dashboard-secondary-color, $secondaryColor);
+
+						&::before {
+							background: var(--bpl-dashboard-primary-color, $primaryColor);
+						}
+					}
+				}
+			}
+
+			.overviewBanner {
+				width: 346px;
+				max-width: 100%;
+				position: relative;
+				background: var(--bpl-dashboard-primary-color, $primaryColor);
+				padding: 32px;
+				border-radius: 15px;
+				overflow: hidden;
+
+				&::before {
+					content: '';
+					width: 100%;
+					height: 100%;
+					position: absolute;
+					top: 0;
+					left: 0;
+					background: linear-gradient(to bottom, #0000, var(--bpl-dashboard-primary-color, $primaryColor));
+					z-index: 1;
+				}
+
+				img {
+					max-width: 100%;
+					height: auto;
+					width: 100%;
+				}
+
+				.playButton {
+					position: absolute;
+					top: 50%;
+					left: 50%;
+					transform: translate(-50%, -50%);
+					width: 64px;
+					height: 64px;
+					color: var(--bpl-dashboard-secondary-color, $secondaryColor);
+					background: $whiteColor;
+					border: none;
+					border-radius: 50%;
+					cursor: pointer;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					z-index: 2;
+					transition: all 0.3s ease;
+					box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+
+					svg {
+						fill: currentColor;
+						width: 32px;
+						height: 32px;
+						margin-left: 4px;
+					}
+
+					&:hover {
+						transform: translate(-50%, -50%) scale(1.1);
+						color: var(--bpl-dashboard-primary-color, $primaryColor);
+					}
+				}
+			}
+
+			@media screen and (max-width: 1600px) {
+				>div:first-child {
+					width: 515px;
+				}
+
+				.overviewBanner {
+					width: 300px;
+					padding: 16px;
+				}
+			}
+		}
+	}
+
+	.bPlVideoModal {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		z-index: 99999;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		.bPlVideoModalContent {
+			position: relative;
+			width: 90%;
+			max-width: 960px;
+			background: #000;
+			border-radius: 12px;
+			overflow: hidden;
+			z-index: 2;
+			box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+
+			.closeModal {
+				position: absolute;
+				top: 15px;
+				right: 15px;
+				width: 32px;
+				height: 32px;
+				background: rgba(255, 255, 255, 0.2);
+				border: none;
+				border-radius: 50%;
+				color: #fff;
+				cursor: pointer;
+				z-index: 10;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				transition: all 0.3s ease;
+
+				svg {
+					width: 20px;
+					height: 20px;
+					fill: currentColor;
+				}
+
+				&:hover {
+					background: #ff4d4d;
+					transform: rotate(90deg);
+				}
+			}
+
+			.bPlVideoPlayer {
+				aspect-ratio: 16 / 9;
+				height: auto !important;
+			}
+		}
+
+		.bPlVideoModalOverlay {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: rgba(0, 0, 0, 0.8);
+			backdrop-filter: blur(5px);
+		}
+	}
+
+	.overviewRight {
+		width: 370px;
+		display: flex;
+		flex-direction: column;
+		gap: 32px;
+
+		.helpInfoItem {
+			padding: 24px;
+
+			figure {
+				width: 100%;
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				background: #FAF1FF;
+				padding: 20px;
+				border-radius: 8px;
+				margin-bottom: 17px;
+
+				img {
+					width: 150px;
+				}
+			}
+
+			h4 {
+				font-size: 18px;
+				font-weight: 600;
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				color: var(--bpl-dashboard-title-color, $titleColor);
+				margin-bottom: 8px;
+
+				svg {
+					width: 18px;
+					height: 18px;
+					margin-left: 4px;
+				}
+			}
+
+			p {
+				font-size: 14px;
+				font-weight: 400;
+				color: var(--bpl-dashboard-content-color, $contentColor);
+				margin-bottom: 20px;
+			}
+
+			.bPlButton {
+				padding: 8px 16px;
+				color: $whiteColor;
+				background: var(--bpl-dashboard-secondary-color, $secondaryColor);
+				border-radius: 5px;
+
+				&::before {
+					background: var(--bpl-dashboard-primary-color, $primaryColor);
+				}
+			}
+
+			&:last-child {
+				.bPlButton {
+					background: var(--bpl-dashboard-primary-color, $primaryColor);
+
+					&::before {
+						background: var(--bpl-dashboard-secondary-color, $secondaryColor);
+					}
+				}
+			}
+		}
+	}
+}

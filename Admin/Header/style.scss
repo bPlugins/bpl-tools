@@ -1,0 +1,155 @@
+@import '../__variables.scss';
+
+.bPlDashboardHeader {
+	width: 100%;
+	min-height: 75px;
+	background-color: white;
+	display: flex;
+	align-items: stretch;
+	flex-wrap: wrap;
+	row-gap: 30px;
+	padding: 0 33px;
+	margin: 0 auto;
+
+	.pluginInfo {
+		min-height: 70px;
+		display: flex;
+		align-items: center;
+		justify-content: start;
+		position: relative;
+		padding-right: 28px;
+
+		&:after {
+			content: '';
+			width: 6px;
+			height: 103%;
+			background: #f6f8fa;
+			position: absolute;
+			right: 0;
+			top: 0;
+			transform: rotate(15deg);
+		}
+
+		img {
+			width: 42px;
+			height: 42px;
+			display: inline-block;
+			border-radius: 10px;
+			margin-right: 8px;
+		}
+
+		h1 {
+			font-family: "Lato", sans-serif;
+			font-size: 24px;
+			font-weight: 800;
+			color: #231F20;
+			margin-right: 8px;
+		}
+
+		.pluginVersion {
+			font-size: 13px;
+			font-weight: bold;
+			color: $whiteColor;
+			background: linear-gradient(to top right, #EC1C24 14%, #F16522 100%);
+			padding: 3px 6px;
+			border-radius: 5px 5px 5px 0;
+		}
+	}
+
+	.bPlDashboardNav {
+		min-height: 65px;
+		display: flex;
+		align-items: stretch;
+		font-size: 16px;
+		gap: 42px;
+		padding: 0 40px 0 70px;
+		margin-right: auto;
+
+		.navLink {
+			height: 100%;
+			font-weight: 500;
+			text-decoration: none;
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			color: rgba(var(--bpl-dashboard-title-color-rgb, $titleColor), .75);
+			border: none;
+			outline: none;
+			border-bottom: 2px solid transparent;
+			transition: all 0.3s ease-in-out;
+
+			&:hover {
+				color: var(--bpl-dashboard-title-color, $titleColor);
+			}
+
+			&.active {
+				color: var(--bpl-dashboard-title-color, $titleColor);
+				border-bottom: 2px solid var(--bpl-dashboard-primary-color, $primaryColor);
+			}
+
+			&:focus {
+				box-shadow: none;
+			}
+		}
+	}
+
+	.navButtons {
+		min-height: 60px;
+		display: flex;
+		align-items: center;
+		column-gap: 35px;
+		row-gap: 15px;
+		flex-wrap: wrap;
+		padding: 0 25px 0 0;
+
+		.linkButton {
+			font-size: 16px;
+			font-weight: 500;
+			text-decoration: none;
+			color: var(--bpl-dashboard-primary-color, $primaryColor);
+			padding-left: 32px;
+			border-left: 1px solid #aeaeb2;
+
+			&:hover,
+			&:focus,
+			&:active {
+				outline: 0;
+				box-shadow: none;
+			}
+		}
+
+		.bPlButton {
+			font-size: 16px;
+			font-weight: 500;
+			color: $whiteColor;
+			background: linear-gradient(to top right, var(--bpl-dashboard-primary-color, $primaryColor), var(--bpl-dashboard-secondary-color, $secondaryColor));
+			padding: 10px 20px;
+
+			&:before {
+				display: none;
+			}
+
+			&.upgrade {
+
+				svg {
+					fill: none;
+				}
+			}
+		}
+	}
+
+	@media screen and (max-width: 1600px) {
+		.bPlDashboardNav {
+			gap: 20px;
+			padding: 0 15px 0 20px;
+		}
+
+		.navButtons {
+			column-gap: 20px;
+
+			a:first-child {
+				padding-left: 15px;
+			}
+		}
+	}
+}

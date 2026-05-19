@@ -1,0 +1,197 @@
+@import '../_variables';
+
+.bPlDashboardPricing {
+	width: 100%;
+	max-width: 1440px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: 56px 32px !important;
+	margin: 0 auto;
+
+	.cycles {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		background: $whiteColor;
+		padding: 10px;
+		border: 1px solid #e4e4e4;
+		border-radius: 10px;
+		overflow: hidden;
+		margin-bottom: 21px;
+
+		button {
+			font-size: 18px;
+			font-weight: 500;
+			color: var(--bpl-dashboard-title-color, $titleColor);
+			background-color: #0000;
+			padding: 10px 16px;
+			border-radius: 5px;
+			border: 0;
+			cursor: pointer;
+
+			&.active {
+				color: $whiteColor;
+				background: linear-gradient(to bottom, rgba($whiteColor, 0.2) 0%, rgba($whiteColor, 0.07) 100%), var(--bpl-dashboard-secondary-color, $secondaryColor);
+				box-shadow: inset 0 0 0 1px rgba($whiteColor, 0.26), 0 0 0 1.5px var(--bpl-dashboard-secondary-color, $secondaryColor), 0 0 0 5px #0000000a;
+			}
+		}
+	}
+
+	h2.pricingTitle {
+		font-size: 18px;
+		font-weight: 500;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		color: $whiteColor;
+		background: linear-gradient(to bottom, rgba($whiteColor, 0.2) 0%, rgba($whiteColor, 0.07) 100%), var(--bpl-dashboard-secondary-color, $secondaryColor);
+		padding: 10px 20px;
+		border-radius: 10px;
+		box-shadow: inset 0 0 0 1px rgba($whiteColor, 0.26), 0 0 0 1.5px var(--bpl-dashboard-secondary-color, $secondaryColor), 0 0 0 5px #0000000a;
+		margin-bottom: 21px;
+	}
+
+	.plans {
+		width: 100%;
+		max-width: 100%;
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(min(390px, 100%), 1fr));
+		container-type: inline-size;
+		gap: 21px;
+		padding: 0;
+
+		.plan {
+			display: flex;
+			flex-direction: column;
+			align-items: flex-start;
+			background-color: $whiteColor;
+			padding: 32px;
+			border: 1px solid #e4e4e4;
+			border-radius: 10px;
+			margin: 0;
+
+			.planName {
+				font-size: 18px;
+				font-weight: 500;
+				color: var(--bpl-dashboard-content-color, $contentColor);
+				margin-bottom: 8px;
+			}
+
+			.price {
+				font-size: 36px;
+				font-weight: 500;
+				color: var(--bpl-dashboard-title-color, $titleColor);
+			}
+
+			.note {
+				font-size: 16px;
+				color: var(--bpl-dashboard-content-color, $contentColor);
+				margin-bottom: 32px;
+			}
+
+			.features {
+				font-size: 16px;
+				color: var(--bpl-dashboard-content-color, $contentColor);
+				margin-bottom: 24px;
+
+				li {
+					position: relative;
+					padding-left: 42px;
+					margin-bottom: 0;
+
+					&:not(:last-child) {
+						margin-bottom: 12px;
+					}
+
+					&::before {
+						content: '';
+						width: 26px;
+						height: 26px;
+						font-size: 0;
+						display: inline-flex;
+						align-items: center;
+						justify-content: center;
+						background: rgba(var(--bpl-dashboard-primary-color-rgb, $primaryColor), 0.15);
+						position: absolute;
+						left: 0;
+						top: -1px;
+						border-radius: 4.3px;
+					}
+
+					&::after {
+						content: "";
+						width: 16px;
+						height: 16px;
+						font-size: 0;
+						display: inline-block;
+						background-color: var(--bpl-dashboard-primary-color, $primaryColor);
+						-webkit-mask-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCA5NjAgOTYwJyB3aWR0aD0nMTYnIGhlaWdodD0nMTYnIGZpbGw9J2N1cnJlbnRDb2xvcic+PHBhdGggZD0nbTMyOC4zIDY3Ni44bDUyNi4yLTUyNi4ycTE4LjYtMTguNiA0My40LTE4LjYgMjQuOCAwIDQzLjUgMTguNiAxOC42IDE4LjcgMTguNiA0NC4zIDAgMjUuNi0xOC42IDQ0LjJsLTU2OS42IDU3MS4ycS0xOC43IDE4LjYtNDMuNSAxOC42LTI0LjggMC00My41LTE4LjZsLTI2Ni45LTI2N3EtMTguNi0xOC42LTE3LjktNDQuMiAwLjgtMjUuNiAxOS40LTQ0LjMgMTguNy0xOC42IDQ0LjMtMTguNiAyNS42IDAgNDQuMiAxOC42eicvPjwvc3ZnPg==");
+						mask-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCA5NjAgOTYwJyB3aWR0aD0nMTYnIGhlaWdodD0nMTYnIGZpbGw9J2N1cnJlbnRDb2xvcic+PHBhdGggZD0nbTMyOC4zIDY3Ni44bDUyNi4yLTUyNi4ycTE4LjYtMTguNiA0My40LTE4LjYgMjQuOCAwIDQzLjUgMTguNiAxOC42IDE4LjcgMTguNiA0NC4zIDAgMjUuNi0xOC42IDQ0LjJsLTU2OS42IDU3MS4ycS0xOC43IDE4LjYtNDMuNSAxOC42LTI0LjggMC00My41LTE4LjZsLTI2Ni45LTI2N3EtMTguNi0xOC42LTE3LjktNDQuMiAwLjgtMjUuNiAxOS40LTQ0LjMgMTguNy0xOC42IDQ0LjMtMTguNiAyNS42IDAgNDQuMiAxOC42eicvPjwvc3ZnPg==");
+						-webkit-mask-repeat: no-repeat;
+						mask-repeat: no-repeat;
+						-webkit-mask-size: contain;
+						mask-size: contain;
+						position: absolute;
+						left: 5px;
+						top: 4px;
+					}
+				}
+			}
+
+			.bPlButton {
+				width: 100%;
+				font-size: 16px;
+				font-weight: 500;
+				color: $whiteColor;
+				background: var(--bpl-dashboard-secondary-color, $secondaryColor);
+				justify-content: center;
+				padding: 16px 32px;
+				margin-top: auto;
+				margin-bottom: 0;
+
+				&::before {
+					background: var(--bpl-dashboard-primary-color, $primaryColor);
+				}
+			}
+
+			&.bestValue {
+				color: $whiteColor;
+				background-color: var(--bpl-dashboard-primary-color, $primaryColor);
+
+				.planName,
+				.price,
+				.note,
+				.features {
+					color: $whiteColor;
+				}
+
+				.features {
+					li::before {
+						background: rgba($whiteColor, 0.3);
+					}
+
+					li::after {
+						background-color: $whiteColor;
+					}
+				}
+
+				.bPlButton {
+					color: $whiteColor;
+					background: #0000;
+					padding: 14px 32px;
+					border: 2px solid $whiteColor;
+
+					&:hover {
+						color: var(--bpl-dashboard-primary-color, $primaryColor);
+					}
+
+					&::before {
+						background: $whiteColor;
+					}
+				}
+			}
+		}
+	}
+}

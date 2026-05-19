@@ -1,8 +1,16 @@
-import './style.scss';
+/**
+ * bpl-tools — Shared utility library for WordPress Gutenberg block plugins
+ * Copyright (C) 2025 bPlugins LLC
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ */
 
-// export { default as Activation } from './Activation';
-// export { default as Blocks } from './Blocks';
-// export { default as BlocksCard } from './Blocks/Card';
+export { default as Activation } from './Activation';
+export { default as Blocks } from './Blocks';
+export { default as BlocksCard } from './Blocks/Card';
 export { default as Changelog } from './Changelog';
 export { default as Demos } from './Demos';
 export { default as FeatureCompare } from './FeatureCompare';

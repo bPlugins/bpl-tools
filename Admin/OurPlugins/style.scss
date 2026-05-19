@@ -1,0 +1,132 @@
+@import '../__variables';
+
+.bPlDashboardOurPlugins {
+	width: 100%;
+	min-height: 200px;
+
+	.pluginsList {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(395px, 1fr));
+		gap: 21px;
+		width: 100%;
+	}
+
+	.pluginCard {
+		display: flex;
+		flex-direction: column;
+		position: relative;
+		background: $whiteColor;
+		padding: 27px;
+		overflow: hidden;
+		border: 1px solid $whiteColor;
+		border-radius: 10px;
+
+		&::after {
+			content: '';
+			width: 100px;
+			height: 42px;
+			position: absolute;
+			right: 0;
+			bottom: 0;
+			background: #E5F2FF;
+			transform: rotate(-45deg) translate(25%, 110%);
+		}
+
+		.cardHeader {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+			margin-bottom: 13px;
+
+			img {
+				width: 53px;
+				height: 53px;
+				border-radius: 10px;
+				flex-shrink: 0;
+				object-fit: contain;
+			}
+
+			h3 {
+				font-size: 21px;
+				font-weight: 500;
+				color: var(--bpl-dashboard-title-color, $titleColor);
+				margin: 0;
+			}
+		}
+
+		.description {
+			font-size: 17px;
+			text-align: left;
+			color: rgba(var(--bpl-dashboard-content-color-rgb, $contentColor), .7);
+			margin: 0 0 21px 0;
+			display: -webkit-box;
+			-webkit-line-clamp: 2;
+			-webkit-box-orient: vertical;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+
+		.cardFooter {
+			font-size: 16px;
+			display: flex;
+			justify-content: space-between;
+			gap: 12px;
+			color: rgba(var(--bpl-dashboard-content-color-rgb, $contentColor), .7);
+			margin: auto 0 21px 0;
+
+			.downloads,
+			.rating {
+				display: flex;
+				align-items: center;
+				gap: 6px;
+
+				svg {
+					width: 18px;
+					height: 18px;
+					fill: #FFCC00;
+				}
+			}
+		}
+
+		.bPlButton {
+			width: 100%;
+			font-size: 16px;
+			font-weight: 500;
+			justify-content: center;
+			background: var(--bpl-dashboard-primary-color, $primaryColor);
+
+			&::before {
+				background: var(--bpl-dashboard-secondary-color, $secondaryColor);
+			}
+
+			&.installed {
+				background: var(--bpl-dashboard-secondary-color, $secondaryColor);
+
+				&::before {
+					background: var(--bpl-dashboard-primary-color, $primaryColor);
+				}
+			}
+
+			&.success {
+				background: #038122;
+
+				&::before {
+					background: #025617;
+				}
+			}
+
+			&.error {
+				background: #d61e21;
+
+				&::before {
+					background: #a61315;
+				}
+			}
+
+			&:disabled {
+				opacity: .75;
+				cursor: not-allowed;
+			}
+		}
+	}
+}

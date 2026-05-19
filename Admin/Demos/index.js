@@ -1,215 +1,270 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
-const flatten = (demos) => {
-    const out = [];
-    demos.forEach((d) => {
-        if (d.children && d.children.length) {
-            d.children.forEach((c) => out.push(c));
-        } else if (d.url && d.url !== '#') {
-            out.push(d);
-        }
-    });
-    return out;
+import Button from '../../Components/Button/Button';
+import Loading from '../../Components/Loading/Loading';
+
+import './style.scss';
+
+export function slideDown(el, duration = 300) {
+	el.style.removeProperty('display');
+	let display = window.getComputedStyle(el).display;
+	if (display === 'none') display = 'block';
+	el.style.display = display;
+
+	let height = el.offsetHeight;
+	el.style.overflow = 'hidden';
+	el.style.height = 0;
+
+	el.offsetHeight;
+
+	el.style.transition = `height ${duration}ms ease`;
+	el.style.height = height + 'px';
+
+	window.setTimeout(() => {
+		el.style.removeProperty('height');
+		el.style.removeProperty('overflow');
+		el.style.removeProperty('transition');
+	}, duration);
+}
+
+export function slideUp(el, duration = 300) {
+	el.style.height = el.offsetHeight + 'px';
+	el.style.overflow = 'hidden';
+	el.offsetHeight;
+
+	el.style.transition = `height ${duration}ms ease`;
+	el.style.height = 0;
+
+	window.setTimeout(() => {
+		el.style.display = 'none';
+		el.style.removeProperty('height');
+		el.style.removeProperty('overflow');
+		el.style.removeProperty('transition');
+	}, duration);
+}
+
+export function slideToggle(el, duration = 300) {
+	if (window.getComputedStyle(el).display === 'none') {
+		return slideDown(el, duration);
+	}
+	return slideUp(el, duration);
+}
+
+const searchIcon = <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 640'>
+	<path d='M480 272C480 317.9 465.1 360.3 440 394.7L566.6 521.4C579.1 533.9 579.1 554.2 566.6 566.7C554.1 579.2 533.8 579.2 521.3 566.7L394.7 440C360.3 465.1 317.9 480 272 480C157.1 480 64 386.9 64 272C64 157.1 157.1 64 272 64C386.9 64 480 157.1 480 272zM272 416C351.5 416 416 351.5 416 272C416 192.5 351.5 128 272 128C192.5 128 128 192.5 128 272C128 351.5 192.5 416 272 416z' />
+</svg>;
+
+const angelDownIcon = <svg className='angelDown' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 640'>
+	<path d='M297.4 470.6C309.9 483.1 330.2 483.1 342.7 470.6L534.7 278.6C547.2 266.1 547.2 245.8 534.7 233.3C522.2 220.8 501.9 220.8 489.4 233.3L320 402.7L150.6 233.4C138.1 220.9 117.8 220.9 105.3 233.4C92.8 245.9 92.8 266.2 105.3 278.7L297.3 470.7z' />
+</svg>
+
+const warningIcon = <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 640'>
+	<path d='M320 576C178.6 576 64 461.4 64 320C64 178.6 178.6 64 320 64C461.4 64 576 178.6 576 320C576 461.4 461.4 576 320 576zM320 384C302.3 384 288 398.3 288 416C288 433.7 302.3 448 320 448C337.7 448 352 433.7 352 416C352 398.3 337.7 384 320 384zM320 192C301.8 192 287.3 207.5 288.6 225.7L296 329.7C296.9 342.3 307.4 352 319.9 352C332.5 352 342.9 342.3 343.8 329.7L351.2 225.7C352.5 207.5 338.1 192 319.8 192z' />
+</svg>
+
+/**
+ * Demos Component
+ * Renders a searchable and categorised list of product demos with an iframe/image preview.
+ *
+ * @param {object} props - Component props
+ * @param {object} props.demoInfo - Demo configuration {allInOneLabel, allInOneLink, demos}
+ * @returns {JSX.Element}
+ */
+const Demos = (props) => {
+	const { isPremium, demoInfo } = props;
+	const { allInOneLabel, allInOneLink, demos } = demoInfo;
+
+	const [activeDemo, setActiveDemo] = useState(demos[0]);
+	const [activeIndex, setActiveIndex] = useState(0);
+	const [isLoading, setIsLoading] = useState(true);
+	const [activeItem, setActiveItem] = useState(demoInfo.demos[0].children?.[0] || demoInfo.demos[0]);
+	const [expandedId, setExpandedId] = useState(demoInfo.demos[0].title);
+	const [searchQuery, setSearchQuery] = useState('');
+
+	const onAccordionChange = (index) => {
+		setIsLoading(true);
+		setActiveDemo(demos[index]);
+		setActiveIndex(index);
+		setExpandedId(demos[index].title);
+		setActiveItem(demos[index]?.children?.[0])
+	};
+
+	const onItemChange = (item) => {
+		setIsLoading(true);
+		if (item.url && item.url !== '#') {
+			setActiveItem(item);
+		}
+	};
+
+	// Filter the demos by search
+	const filteredData = useMemo(() => {
+		if (!searchQuery.trim()) return demoInfo.demos;
+		const query = searchQuery.toLowerCase();
+
+		return demoInfo.demos.filter(item => {
+			const matchParent = item.title.toLowerCase().includes(query);
+			const matchChildren = item.children?.some(child =>
+				child.title.toLowerCase().includes(query)
+			);
+			if (matchChildren && !matchParent) setExpandedId(item.title);
+			return matchParent || matchChildren;
+		}).map(item => {
+			if (item.children) {
+				return {
+					...item,
+					children: item.children.filter(child =>
+						child.title.toLowerCase().includes(query) || item.title.toLowerCase().includes(query)
+					)
+				};
+			}
+			return item;
+		});
+	}, [searchQuery]);
+
+	// Image Effect
+	const imgWrapRef = useRef(null);
+	const imgRef = useRef(null);
+	useEffect(() => {
+		const wrapEl = imgWrapRef.current;
+		const imgEl = imgRef.current;
+		const wrapperHeight = wrapEl?.clientHeight;
+		const imgHeight = imgEl?.scrollHeight;
+
+		function handleMouseOver() {
+			imgEl.style.transform = `translateY(-${Number(imgHeight) - parseInt(wrapperHeight)}px)`;
+		}
+		function handleMouseOut() {
+			imgEl.style.transform = `translateY(0px)`;
+		}
+
+		if (wrapEl && imgEl && Number(imgHeight) > parseInt(wrapperHeight)) {
+			wrapEl.addEventListener('mouseover', handleMouseOver);
+			wrapEl.addEventListener('mouseout', handleMouseOut);
+		}
+
+		return () => {
+			if (wrapEl && imgEl) {
+				wrapEl.removeEventListener('mouseover', handleMouseOver);
+				wrapEl.removeEventListener('mouseout', handleMouseOut);
+			}
+		};
+	}, [activeDemo, activeIndex, isLoading]);
+
+	return <div className='bPlDashboardDemos bPlDashboardCard'>
+		<div className='sidebar'>
+			<div className='sidebarHeader'>
+				<p>Search</p>
+
+				<div className='search'>
+					{searchIcon}
+
+					<input type='text' placeholder='Search demo...' value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
+				</div>
+
+				<div className='bPlDashboardButtons'>
+					{!isPremium && <Button href='#pricing'>Buy Now</Button>}
+
+					{allInOneLabel && <Button href={allInOneLink} target='_blank' variant='secondary'>{allInOneLabel}</Button>}
+				</div>
+			</div>
+
+			<div className='sidebarList'>
+				{filteredData.length > 0 ?
+					filteredData.map((item, index) => {
+						const { icon, title, url, children } = item;
+						const hasChildren = children && children.length > 0;
+						const isExpanded = expandedId === title;
+
+						return <div key={index} className='demoItem'>
+							{hasChildren ?
+								<div className={`accordion ${isExpanded ? 'expanded' : ''}`}>
+									<button onClick={() => onAccordionChange(index)} className={`parentDemo ${isExpanded ? 'active' : ''}`}>
+										{'string' === typeof icon ?
+											<span className='icon' dangerouslySetInnerHTML={{ __html: icon }} /> :
+											(icon ? icon : null)}
+
+										<span className='text-sm font-semibold'>{title}</span>
+
+										{angelDownIcon}
+									</button>
+
+									<ul className={isExpanded ? 'expanded' : ''} ref={(el) => {
+										if (el) {
+											if (isExpanded) {
+												if ('block' !== el.style.display) {
+													slideDown(el);
+												}
+											} else {
+												slideUp(el);
+											}
+										}
+									}}>
+										{children.map((child, cIdx) => <li key={cIdx} className={activeItem.url === child.url ? 'active' : ''} onClick={(e) => {
+											e.preventDefault();
+											e.stopPropagation();
+
+											onItemChange(child);
+										}}>
+											{child.title}
+										</li>)}
+									</ul>
+								</div> :
+								<button className={`parentDemo ${activeItem.url === url ? 'active' : ''}`} onClick={(e) => {
+									e.preventDefault();
+									e.stopPropagation();
+
+									onItemChange(item);
+									setExpandedId(null);
+								}}>
+									{'string' === typeof icon ?
+										<span className='icon' dangerouslySetInnerHTML={{ __html: icon }} /> :
+										(icon ? icon : null)}
+
+									<span>{title}</span>
+								</button>
+							}
+						</div>
+					}) :
+					<div className='notFound'>
+						{warningIcon}
+						<p className='text-sm text-gray-500'>No matching results</p>
+					</div>
+				}
+			</div>
+		</div>
+
+		{/* Right Content - Demo Preview */}
+		<div className='main'>
+			{/* Demo Header */}
+			<div className='mainHeader'>
+				<div className='headerInfo'>
+					<h3>{expandedId ? `${activeDemo?.title || ''} - ` : ''}{activeItem?.title || ''}</h3>
+				</div>
+
+				<div className='bPlDashboardButtons'>
+					{!isPremium && <Button href='#pricing'>Buy Now</Button>}
+
+					{allInOneLabel && <Button href={allInOneLink} target='_blank' variant='secondary'>{allInOneLabel}</Button>}
+				</div>
+			</div>
+
+			{/* Demo Preview */}
+			<div className='canvas'>
+				{isLoading && <Loading text='Demo Loading...' orientation='vertical' />}
+
+				{activeItem.type === 'iframe' ?
+					<iframe
+						src={activeItem.url}
+						title={`${activeItem.title} Demo`}
+						onLoad={() => setIsLoading(false)}
+						sandbox='allow-scripts allow-same-origin allow-popups allow-forms'
+					/> :
+					<div className='canvasImg' ref={imgWrapRef}>
+						<img src={activeItem.url} alt={`${activeItem.title} Demo`} onLoad={() => setIsLoading(false)} ref={imgRef} />
+					</div>
+				}
+			</div>
+		</div>
+	</div >
 };
-
-const categorize = (title) => {
-    if (/grid/i.test(title)) return 'Grid';
-    if (/masonry/i.test(title)) return 'Masonry';
-    if (/slider/i.test(title)) return 'Slider';
-    if (/ticker/i.test(title)) return 'Ticker';
-    if (/section|design/i.test(title)) return 'Sections';
-    return 'All Posts';
-};
-
-const categoryAccent = {
-    Grid: '#146ef5',
-    Masonry: '#a855f7',
-    Slider: '#0ea5e9',
-    Ticker: '#22c55e',
-    Sections: '#ff7a00',
-    'All Posts': '#64748b'
-};
-
-const Demos = ({ demoInfo }) => {
-    const items = useMemo(() => flatten(demoInfo.demos || []), [demoInfo]);
-
-    const [search, setSearch] = useState('');
-    const [activeCategory, setActiveCategory] = useState('All');
-    const [openIndex, setOpenIndex] = useState(null);
-    const [iframeLoading, setIframeLoading] = useState(false);
-
-    const categories = useMemo(() => {
-        const set = new Set();
-        items.forEach((i) => set.add(categorize(i.title)));
-        return ['All', ...Array.from(set)];
-    }, [items]);
-
-    const filtered = useMemo(() => {
-        const q = search.trim().toLowerCase();
-        return items.filter((i) => {
-            const cat = categorize(i.title);
-            if (activeCategory !== 'All' && cat !== activeCategory) return false;
-            if (q && !i.title.toLowerCase().includes(q)) return false;
-            return true;
-        });
-    }, [items, search, activeCategory]);
-
-    const active = openIndex !== null ? filtered[openIndex] : null;
-
-    useEffect(() => {
-        if (active) setIframeLoading(true);
-    }, [active?.url]);
-
-    useEffect(() => {
-        if (openIndex === null) return;
-        const onKey = (e) => {
-            if (e.key === 'Escape') setOpenIndex(null);
-            if (e.key === 'ArrowRight') setOpenIndex((i) => (i !== null && i < filtered.length - 1 ? i + 1 : i));
-            if (e.key === 'ArrowLeft') setOpenIndex((i) => (i !== null && i > 0 ? i - 1 : i));
-        };
-        document.addEventListener('keydown', onKey);
-        document.body.style.overflow = 'hidden';
-        return () => {
-            document.removeEventListener('keydown', onKey);
-            document.body.style.overflow = '';
-        };
-    }, [openIndex, filtered.length]);
-
-    return <div className='bp3dDemosV3'>
-        <header className='bp3dDemosV3Hero'>
-            <span className='bp3dDemosV3Eyebrow'>Live Demos</span>
-            <h1>See Advanced Post Block in action</h1>
-            <p>Browse ready-made demos to discover what you can build — click any card to open a live, interactive preview.</p>
-        </header>
-
-        <div className='bp3dDemosV3Toolbar'>
-            <div className='bp3dDemosV3Search'>
-                <svg viewBox='0 0 24 24' width={18} height={18} fill='none' stroke='currentColor' strokeWidth={2} strokeLinecap='round' strokeLinejoin='round'>
-                    <circle cx='11' cy='11' r='7' />
-                    <line x1='21' y1='21' x2='16.65' y2='16.65' />
-                </svg>
-                <input type='text' value={search} placeholder='Search demos…' onChange={(e) => setSearch(e.target.value)} />
-                {search && <button className='bp3dDemosV3SearchClear' onClick={() => setSearch('')} aria-label='Clear search'>×</button>}
-            </div>
-
-            <div className='bp3dDemosV3Chips' role='tablist'>
-                {categories.map((cat) => (
-                    <button
-                        key={cat}
-                        type='button'
-                        role='tab'
-                        aria-selected={activeCategory === cat}
-                        className={`bp3dDemosV3Chip ${activeCategory === cat ? 'isActive' : ''}`}
-                        onClick={() => setActiveCategory(cat)}
-                    >
-                        <span className='bp3dDemosV3ChipDot' style={{ background: cat === 'All' ? '#94a3b8' : categoryAccent[cat] || '#146ef5' }} />
-                        {cat}
-                    </button>
-                ))}
-            </div>
-        </div>
-
-        <p className='bp3dDemosV3Count'>
-            <strong>{filtered.length}</strong> {filtered.length === 1 ? 'demo' : 'demos'}
-            {activeCategory !== 'All' && ` in ${activeCategory}`}
-            {search && ` matching "${search}"`}
-        </p>
-
-        {filtered.length === 0 ? <div className='bp3dDemosV3Empty'>
-            <svg viewBox='0 0 24 24' width={36} height={36} fill='none' stroke='currentColor' strokeWidth={1.6} strokeLinecap='round' strokeLinejoin='round'>
-                <circle cx='11' cy='11' r='7' />
-                <line x1='21' y1='21' x2='16.65' y2='16.65' />
-            </svg>
-            <h3>No demos found</h3>
-            <p>Try a different search or category.</p>
-        </div> : <div className='bp3dDemosV3Grid'>
-            {filtered.map((demo, index) => {
-                const cat = categorize(demo.title);
-                const accent = categoryAccent[cat] || '#146ef5';
-
-                return <button
-                    key={`${demo.title}-${index}`}
-                    type='button'
-                    className='bp3dDemosV3Card'
-                    onClick={() => setOpenIndex(index)}
-                    style={{ '--bp3dDemoAccent': accent }}
-                >
-                    <div className='bp3dDemosV3CardIcon'>{demo.icon}</div>
-                    <span className='bp3dDemosV3CardCat'>{cat}</span>
-                    <h3 className='bp3dDemosV3CardTitle'>{demo.title}</h3>
-                    <span className='bp3dDemosV3CardAction'>
-                        Preview
-                        <svg viewBox='0 0 24 24' width={14} height={14} fill='none' stroke='currentColor' strokeWidth={2.5} strokeLinecap='round' strokeLinejoin='round'>
-                            <line x1='5' y1='12' x2='19' y2='12' />
-                            <polyline points='12 5 19 12 12 19' />
-                        </svg>
-                    </span>
-                </button>;
-            })}
-        </div>}
-
-        {active && <div className='bp3dDemosV3Modal' role='dialog' aria-modal='true' aria-labelledby='bp3dDemoTitle'>
-            <div className='bp3dDemosV3ModalBackdrop' onClick={() => setOpenIndex(null)} />
-
-            <div className='bp3dDemosV3ModalContent'>
-                <header className='bp3dDemosV3ModalHead'>
-                    <div className='bp3dDemosV3ModalTitleWrap'>
-                        <span className='bp3dDemosV3ModalCat' style={{ background: categoryAccent[categorize(active.title)] || '#146ef5' }}>
-                            {categorize(active.title)}
-                        </span>
-                        <h2 id='bp3dDemoTitle'>{active.title}</h2>
-                        <span className='bp3dDemosV3ModalProgress'>{(openIndex ?? 0) + 1} of {filtered.length}</span>
-                    </div>
-
-                    <div className='bp3dDemosV3ModalActions'>
-                        <a className='bp3dDemosV3ModalOpen' href={active.url} target='_blank' rel='noopener noreferrer'>
-                            Open in new tab
-                            <svg viewBox='0 0 24 24' width={14} height={14} fill='none' stroke='currentColor' strokeWidth={2} strokeLinecap='round' strokeLinejoin='round'>
-                                <path d='M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6' />
-                                <polyline points='15 3 21 3 21 9' />
-                                <line x1='10' y1='14' x2='21' y2='3' />
-                            </svg>
-                        </a>
-
-                        <button className='bp3dDemosV3ModalClose' onClick={() => setOpenIndex(null)} aria-label='Close demo'>
-                            <svg viewBox='0 0 24 24' width={18} height={18} fill='none' stroke='currentColor' strokeWidth={2} strokeLinecap='round' strokeLinejoin='round'>
-                                <line x1='18' y1='6' x2='6' y2='18' />
-                                <line x1='6' y1='6' x2='18' y2='18' />
-                            </svg>
-                        </button>
-                    </div>
-                </header>
-
-                <div className='bp3dDemosV3ModalStage'>
-                    {openIndex !== null && openIndex > 0 && <button className='bp3dDemosV3ModalNav bp3dDemosV3ModalNavPrev' onClick={() => setOpenIndex(openIndex - 1)} aria-label='Previous demo'>
-                        <svg viewBox='0 0 24 24' width={20} height={20} fill='none' stroke='currentColor' strokeWidth={2} strokeLinecap='round' strokeLinejoin='round'>
-                            <polyline points='15 18 9 12 15 6' />
-                        </svg>
-                    </button>}
-
-                    {iframeLoading && <div className='bp3dDemosV3IframeLoader'>
-                        <div className='bp3dDemosV3Spinner' />
-                        <span>Loading demo…</span>
-                    </div>}
-
-                    {active.type === 'iframe' ? <iframe
-                        src={active.url}
-                        title={`${active.title} demo`}
-                        sandbox='allow-scripts allow-same-origin allow-popups allow-forms'
-                        onLoad={() => setIframeLoading(false)}
-                    /> : <div className='bp3dDemosV3ImgScroll'>
-                        <img src={active.url} alt={active.title} onLoad={() => setIframeLoading(false)} />
-                    </div>}
-
-                    {openIndex !== null && openIndex < filtered.length - 1 && <button className='bp3dDemosV3ModalNav bp3dDemosV3ModalNavNext' onClick={() => setOpenIndex(openIndex + 1)} aria-label='Next demo'>
-                        <svg viewBox='0 0 24 24' width={20} height={20} fill='none' stroke='currentColor' strokeWidth={2} strokeLinecap='round' strokeLinejoin='round'>
-                            <polyline points='9 18 15 12 9 6' />
-                        </svg>
-                    </button>}
-                </div>
-            </div>
-        </div>}
-    </div>;
-};
-
 export default Demos;

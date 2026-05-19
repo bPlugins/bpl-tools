@@ -1,0 +1,78 @@
+@import '../__variables';
+
+.bPlDashboardChangelog {
+	width: 100%;
+	padding: 32px !important;
+
+	h3 {
+		font-size: 18px;
+		font-weight: 600;
+		color: var(--bpl-dashboard-title-color, $titleColor);
+		margin: 0 0 15px 0;
+	}
+
+	.changelog {
+		position: relative;
+		padding: 0 0 0 25px;
+
+		&::before {
+			content: '';
+			width: 5px;
+			height: calc(100% - 10px);
+			background: var(--bpl-dashboard-primary-color, $primaryColor);
+			position: absolute;
+			top: 50%;
+			left: 0;
+			transform: translateY(-50%);
+			border-radius: 50px;
+		}
+
+		&:not(:last-child) {
+			margin-bottom: 15px;
+		}
+
+		&.update,
+		&.improve,
+		&.improvement {
+			&::before {
+				background: #FF8D28;
+			}
+		}
+
+		&.fix,
+		&.fixing {
+			&::before {
+				background: #FF383C;
+			}
+		}
+
+		.list {
+			font-size: 14px;
+			font-weight: 500;
+			list-style-type: none;
+			color: var(--bpl-dashboard-content-color, $contentColor);
+			margin-bottom: 8px;
+
+			li {
+				margin-bottom: 5px;
+			}
+		}
+
+		.time {
+			font-size: 14px;
+			color: rgba(var(--bpl-dashboard-content-color-rgb, $contentColor), .75);
+			margin: 0;
+		}
+	}
+
+	.bPlButton {
+		font-size: 16px;
+		color: $whiteColor;
+		background: var(--bpl-dashboard-primary-color, $primaryColor);
+		padding: 10px 21px;
+
+		&::before {
+			background: var(--bpl-dashboard-secondary-color, $secondaryColor);
+		}
+	}
+}

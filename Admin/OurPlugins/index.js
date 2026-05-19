@@ -1,264 +1,231 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { withSelect } from '@wordpress/data';
 import apiFetch from '@wordpress/api-fetch';
-import Button from '../../../../bpl-tools/Components/Button/Button';
 
-const DEFAULT_SLUGS = [
-    '3d-viewer',
-    'html5-video-player',
-    'html5-audio-player',
-    'pdf-poster',
-    'document-emberdder',
-    'advanced-post-block',
-    'advance-custom-html',
-    'b-carousel-block',
-    'b-blocks',
-    'embed-lottie-player',
-    'b-slider'
-];
+import Button from '../../Components/Button/Button';
 
-const formatCount = (num) => {
-    if (num === undefined || num === null) return '0';
-    const abs = Math.abs(num);
-    if (abs >= 1e9) return (num / 1e9).toFixed(1).replace(/\.0$/, '') + 'B';
-    if (abs >= 1e6) return (num / 1e6).toFixed(1).replace(/\.0$/, '') + 'M';
-    if (abs >= 1e3) return (num / 1e3).toFixed(1).replace(/\.0$/, '') + 'k';
-    return String(num);
+import './style.scss';
+
+// Format download count with appropriate suffix
+const formatDownloadCount = (num) => {
+	if (num === undefined || num === null) return '0';
+
+	const absNum = Math.abs(num);
+
+	if (absNum >= 1000000000) {
+		return (num / 1000000000).toFixed(1).replace(/\.0$/, '') + 'B';
+	}
+	if (absNum >= 1000000) {
+		return (num / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
+	}
+	if (absNum >= 1000) {
+		return (num / 1000).toFixed(1).replace(/\.0$/, '') + 'k';
+	}
+	return num.toString();
 };
 
-const getDisplayName = (name) => {
-    if (!name) return '';
-    const decoded = name
-        .replace(/&#8211;/g, '–')
-        .replace(/&#8212;/g, '—')
-        .replace(/&ndash;/g, '–')
-        .replace(/&mdash;/g, '—')
-        .replace(/&#45;/g, '-');
-    return decoded.split(/\s*[–\-—]\s*/)[0].trim();
+// Extract plugin name before dash or em-dash
+const getPluginDisplayName = (name) => {
+	if (!name) return '';
+	// Replace HTML entities with their character equivalents
+	let decodedName = name
+		.replace(/&#8211;/g, '–')	// en-dash entity
+		.replace(/&#8212;/g, '—')	// em-dash entity
+		.replace(/&ndash;/g, '–')	// en-dash named entity
+		.replace(/&mdash;/g, '—')	// em-dash named entity
+		.replace(/&#45;/g, '-');	// hyphen entity
+
+	return decodedName.split(/\s*[–\-—]\s*/)[0].trim();
 };
 
-const stripTags = (s) => (s || '').replace(/<[^>]+>/g, '');
+const handleInstall = async (slug, path, status, setStatus) => {
+	setStatus('installed' === status ? 'activating' : 'installing');
 
-const StarRow = ({ rating = 0 }) => {
-    const stars = Math.round(rating / 20);
-    return <span className='bp3dOurPlugV3Stars' aria-label={`${(rating / 20).toFixed(1)} out of 5`}>
-        {[1, 2, 3, 4, 5].map((i) => (
-            <svg key={i} viewBox='0 0 24 24' width={13} height={13} fill={i <= stars ? '#fbbf24' : '#e5e7eb'}>
-                <path d='M12 2l2.39 6.95L22 9.27l-5.45 4.73L18.18 22 12 17.77 5.82 22l1.63-7.99L2 9.27l7.61-.32L12 2z' />
-            </svg>
-        ))}
-    </span>;
+	try {
+		// If plugin is already installed, just activate it
+		if ('installed' === status && path) {
+
+			await apiFetch({
+				path: `/wp/v2/plugins/${path}`,
+				method: 'POST',
+				data: {
+					status: 'active'
+				},
+			});
+
+			setStatus('success');
+
+			// eslint-disable-next-line no-console
+			console.log(`Successfully activated: ${slug}`);
+
+			setTimeout(() => {
+				setStatus('activated');
+			}, 1000);
+			return;
+		}
+
+		// Install and activate new plugin
+		const response = await apiFetch({
+			path: '/wp/v2/plugins',
+			method: 'POST',
+			data: {
+				slug,
+				status: 'active'
+			},
+		});
+
+		setStatus('success');
+
+		// eslint-disable-next-line no-console
+		console.log(`Successfully installed: ${response.name}`);
+
+		setTimeout(() => {
+			setStatus('activated');
+		}, 1000);
+	} catch (error) {
+		setStatus('error');
+
+		// eslint-disable-next-line no-console
+		console.error('Installation failed:', error.message);
+
+		setTimeout(() => {
+			setStatus('installed' === status ? 'installed' : 'notfound');
+		}, 1000);
+	}
 };
+
+/**
+ * OurPlugins Component
+ * Fetches and displays a list of other bPlugins products with install/activate functionality.
+ *
+ * @param {object} props - Component props
+ * @param {string} props.slug - Current plugin slug (to exclude from list)
+ * @param {Array} [props.slugs] - List of specific plugin slugs to display
+ * @param {Array} props.installedPlugins - Provided by withSelect, list of locally installed plugins
+ * @returns {JSX.Element}
+ */
+const OurPlugins = ({ slug, slugs: allSlugs = ['3d-viewer', 'html5-video-player', 'html5-audio-player', 'pdf-poster', 'document-emberdder', 'advanced-post-block', 'advance-custom-html', 'b-carousel-block', 'b-blocks', 'html5-video-player', 'embed-lottie-player', 'b-slider'], installedPlugins } = {}) => {
+	const [plugins, setPlugins] = useState([]);
+	const [isLoading, setIsLoading] = useState(false);
+
+	const slugs = allSlugs?.filter(s => s !== slug);
+
+	useEffect(() => {
+		const fetchPlugins = async () => {
+			try {
+				setIsLoading(true);
+				const response = await fetch(`https://api.wordpress.org/plugins/info/1.2/?action=query_plugins&request[author]=bplugins&request[per_page]=100&request[fields]=title,name,slug,icons,short_description,version,active_installs,rating,ratings,downloaded`, {
+					credentials: 'omit',
+					mode: 'cors'
+				});
+				const data = await response.json();
+				setPlugins(data?.plugins?.filter(p => slugs.includes(p.slug)) || []);
+				setIsLoading(false);
+			} catch (error) {
+				// eslint-disable-next-line no-console
+				console.error('Error fetching plugins:', error);
+				setPlugins([]);
+				setIsLoading(false);
+			}
+		};
+
+		if (slugs && slugs.length > 0) {
+			fetchPlugins();
+		}
+	}, [JSON.stringify(slugs)]);
+
+	if (isLoading) {
+		return <div className='bPlDashboardBox' style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+			<h2>Loading...</h2>
+		</div>;
+	}
+
+	return <div className='bPlDashboardOurPlugins'>
+		{plugins?.length > 0 ? <div className='pluginsList'>
+			{plugins
+				.sort((a, b) => b.active_installs - a.active_installs)
+				.map((plugin) => {
+					const { slug } = plugin;
+
+					const installed = installedPlugins?.find(i => i?.plugin?.includes(slug)) ?? false;
+
+					const activated = installed ? 'active' === installed?.status : false;
+
+					return <PluginCard key={slug} plugin={plugin} path={installed?.plugin} initStatus={activated ? 'activated' : (installed ? 'installed' : 'notfound')} />
+				})}
+		</div> :
+			<p>No plugins found</p>
+		}
+	</div>
+}
+export default withSelect((select) => {
+	const { getPlugins } = select('core');
+
+	return {
+		installedPlugins: getPlugins?.({ per_page: -1 })
+	}
+})(OurPlugins);
 
 const PluginCard = ({ plugin, path, initStatus }) => {
-    const { name, slug, icons, short_description, version } = plugin;
-    const [status, setStatus] = useState(initStatus);
+	const { name, slug, icons, short_description, downloaded } = plugin;
 
-    const handleInstall = async () => {
-        setStatus(status === 'installed' ? 'activating' : 'installing');
-        try {
-            if (status === 'installed' && path) {
-                await apiFetch({
-                    path: `/wp/v2/plugins/${path}`,
-                    method: 'POST',
-                    data: { status: 'active' }
-                });
-                setStatus('success');
-                setTimeout(() => setStatus('activated'), 1000);
-                return;
-            }
-            await apiFetch({
-                path: '/wp/v2/plugins',
-                method: 'POST',
-                data: { slug, status: 'active' }
-            });
-            setStatus('success');
-            setTimeout(() => setStatus('activated'), 1000);
-        } catch (e) {
-            setStatus('error');
-            setTimeout(() => setStatus(status === 'installed' ? 'installed' : 'notfound'), 1400);
-        }
-    };
+	const [status, setStatus] = useState(initStatus);
 
-    const label = (() => {
-        switch (status) {
-            case 'activated':
-            case 'success':
-                return 'Activated';
-            case 'installed':
-                return 'Activate';
-            case 'activating':
-                return 'Activating…';
-            case 'installing':
-                return 'Installing…';
-            case 'error':
-                return 'Failed';
-            default:
-                return 'Install & Activate';
-        }
-    })();
+	return <div className='pluginCard'>
+		<div className='cardHeader'>
+			<img src={icons?.['1x'] || icons?.['2x']} alt={name} />
 
-    const isDone = status === 'activated' || status === 'success';
-    const isBusy = status === 'installing' || status === 'activating';
+			<h3 dangerouslySetInnerHTML={{ __html: getPluginDisplayName(name) }} />
+		</div>
 
-    return <article className='bp3dOurPlugV3Card'>
-        <div className='bp3dOurPlugV3CardTop'>
-            <img className='bp3dOurPlugV3Icon' src={icons?.['1x'] || icons?.['2x'] || ''} alt={name} />
+		<p className='description' dangerouslySetInnerHTML={{ __html: short_description }} />
 
-            <div className='bp3dOurPlugV3CardId'>
-                <h3 dangerouslySetInnerHTML={{ __html: getDisplayName(name) }} />
-                {version && <span className='bp3dOurPlugV3Ver'>v{version}</span>}
-            </div>
+		<div className='cardFooter'>
+			<div className='downloads'>
+				Download: {formatDownloadCount(downloaded)}
+			</div>
 
-            {isDone && <span className='bp3dOurPlugV3Active' title='Active on this site'>
-                <svg viewBox='0 0 24 24' width={12} height={12} fill='none' stroke='currentColor' strokeWidth={3} strokeLinecap='round' strokeLinejoin='round'>
-                    <polyline points='20 6 9 17 4 12' />
-                </svg>
-                Active
-            </span>}
-        </div>
+			<div className='rating'>
+				<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 640'>
+					<path d='M305 151.1L320 171.8L335 151.1C360 116.5 400.2 96 442.9 96C516.4 96 576 155.6 576 229.1L576 231.7C576 343.9 436.1 474.2 363.1 529.9C350.7 539.3 335.5 544 320 544C304.5 544 289.2 539.4 276.9 529.9C203.9 474.2 64 343.9 64 231.7L64 229.1C64 155.6 123.6 96 197.1 96C239.8 96 280 116.5 305 151.1z' />
+				</svg>
 
-        <p className='bp3dOurPlugV3Desc' dangerouslySetInnerHTML={{ __html: stripTags(short_description) }} />
+				<span className='value'>{(plugin?.rating / 20).toFixed(1)} Rating</span>
+			</div>
+		</div>
 
-        <div className='bp3dOurPlugV3Stats'>
-            <span className='bp3dOurPlugV3Stat'>
-                <svg viewBox='0 0 24 24' width={14} height={14} fill='none' stroke='currentColor' strokeWidth={2} strokeLinecap='round' strokeLinejoin='round'>
-                    <path d='M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4' />
-                    <polyline points='7 10 12 15 17 10' />
-                    <line x1='12' y1='15' x2='12' y2='3' />
-                </svg>
-                {formatCount(plugin.downloaded)}
-            </span>
+		<Button
+			disabled={['activated', 'success', 'installing'].includes(status)}
+			onClick={() => {
+				if (!['activated', 'success', 'installing'].includes(status)) {
+					handleInstall(slug, path, status, setStatus);
+				}
+			}}
+			className={status}
+		>
+			{(() => {
+				switch (status) {
+					case 'activated':
+					case 'success':
+						return 'Activated';
 
-            <span className='bp3dOurPlugV3Stat'>
-                <StarRow rating={plugin.rating} />
-                <strong>{((plugin.rating || 0) / 20).toFixed(1)}</strong>
-            </span>
-        </div>
+					case 'installed':
+						return 'Activate';
 
-        <Button
-            className={`bp3dOurPlugV3Cta status-${status}`}
-            disabled={isDone || isBusy}
-            onClick={handleInstall}
-        >
-            {isBusy && <span className='bp3dOurPlugV3CtaSpinner' />}
-            {label}
-        </Button>
-    </article>;
-};
+					case 'activating':
+						return 'Activating...';
 
-const OurPlugins = ({ slug, slugs: allSlugs = DEFAULT_SLUGS, installedPlugins }) => {
-    const [plugins, setPlugins] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
-    const [search, setSearch] = useState('');
-    const [sort, setSort] = useState('popular');
+					case 'installing':
+						return 'Installing...';
 
-    const slugs = useMemo(() => (allSlugs || []).filter((s) => s !== slug), [allSlugs, slug]);
+					case 'error':
+						return 'Failed to Install';
 
-    useEffect(() => {
-        if (!slugs.length) return;
-        let cancelled = false;
-        setIsLoading(true);
-        fetch('https://api.wordpress.org/plugins/info/1.2/?action=query_plugins&request[author]=bplugins&request[per_page]=100&request[fields]=title,name,slug,icons,short_description,version,active_installs,rating,ratings,downloaded', {
-            credentials: 'omit',
-            mode: 'cors'
-        })
-            .then((r) => r.json())
-            .then((data) => {
-                if (cancelled) return;
-                setPlugins((data?.plugins || []).filter((p) => slugs.includes(p.slug)));
-            })
-            .catch(() => { if (!cancelled) setPlugins([]); })
-            .finally(() => { if (!cancelled) setIsLoading(false); });
-        return () => { cancelled = true; };
-    }, [JSON.stringify(slugs)]);
-
-    const filteredSorted = useMemo(() => {
-        const q = search.trim().toLowerCase();
-        let list = plugins.filter((p) => !q || p.name.toLowerCase().includes(q) || (p.short_description || '').toLowerCase().includes(q));
-        if (sort === 'popular') list.sort((a, b) => (b.active_installs || 0) - (a.active_installs || 0));
-        if (sort === 'rating') list.sort((a, b) => (b.rating || 0) - (a.rating || 0));
-        if (sort === 'name') list.sort((a, b) => getDisplayName(a.name).localeCompare(getDisplayName(b.name)));
-        return list;
-    }, [plugins, search, sort]);
-
-    if (isLoading) {
-        return <div className='bp3dOurPlugV3 bp3dOurPlugV3Loading'>
-            <div className='bp3dOurPlugV3Spinner' />
-            <p>Fetching plugins from the WordPress directory…</p>
-        </div>;
-    }
-
-    return <div className='bp3dOurPlugV3'>
-        <header className='bp3dOurPlugV3Hero'>
-            <span className='bp3dOurPlugV3Eyebrow'>Made by bPlugins</span>
-            <h1>Discover more plugins from our team</h1>
-            <p>Hand-crafted WordPress plugins built with the same care as Advanced Post Block. Install any of them with a single click.</p>
-        </header>
-
-        <div className='bp3dOurPlugV3Toolbar'>
-            <div className='bp3dOurPlugV3Search'>
-                <svg viewBox='0 0 24 24' width={18} height={18} fill='none' stroke='currentColor' strokeWidth={2} strokeLinecap='round' strokeLinejoin='round'>
-                    <circle cx='11' cy='11' r='7' />
-                    <line x1='21' y1='21' x2='16.65' y2='16.65' />
-                </svg>
-                <input
-                    type='text'
-                    placeholder='Search plugins…'
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
-                />
-                {search && <button onClick={() => setSearch('')} aria-label='Clear search'>×</button>}
-            </div>
-
-            <div className='bp3dOurPlugV3SortLabel'>Sort by</div>
-
-            <div className='bp3dOurPlugV3Sort' role='tablist'>
-                {[
-                    { key: 'popular', label: 'Popular' },
-                    { key: 'rating', label: 'Top Rated' },
-                    { key: 'name', label: 'A–Z' }
-                ].map((opt) => (
-                    <button
-                        key={opt.key}
-                        type='button'
-                        role='tab'
-                        aria-selected={sort === opt.key}
-                        className={sort === opt.key ? 'isActive' : ''}
-                        onClick={() => setSort(opt.key)}
-                    >
-                        {opt.label}
-                    </button>
-                ))}
-            </div>
-        </div>
-
-        <p className='bp3dOurPlugV3Count'>
-            <strong>{filteredSorted.length}</strong> {filteredSorted.length === 1 ? 'plugin' : 'plugins'}
-            {search && ` matching "${search}"`}
-        </p>
-
-        {filteredSorted.length === 0 ? <div className='bp3dOurPlugV3Empty'>
-            <svg viewBox='0 0 24 24' width={36} height={36} fill='none' stroke='currentColor' strokeWidth={1.6} strokeLinecap='round' strokeLinejoin='round'>
-                <circle cx='11' cy='11' r='7' />
-                <line x1='21' y1='21' x2='16.65' y2='16.65' />
-            </svg>
-            <h3>No plugins match</h3>
-            <p>Try a different keyword.</p>
-        </div> : <div className='bp3dOurPlugV3Grid'>
-            {filteredSorted.map((plugin) => {
-                const installed = installedPlugins?.find((i) => i?.plugin?.includes(plugin.slug)) ?? null;
-                const activated = installed ? installed.status === 'active' : false;
-                const initStatus = activated ? 'activated' : (installed ? 'installed' : 'notfound');
-                return <PluginCard key={plugin.slug} plugin={plugin} path={installed?.plugin} initStatus={initStatus} />;
-            })}
-        </div>}
-    </div>;
-};
-
-export default withSelect((select) => {
-    const { getPlugins } = select('core');
-    return {
-        installedPlugins: getPlugins?.({ per_page: -1 })
-    };
-})(OurPlugins);
+					case 'notfound':
+					default:
+						return 'Install & Activate'
+				}
+			})()}
+		</Button>
+	</div>
+}
