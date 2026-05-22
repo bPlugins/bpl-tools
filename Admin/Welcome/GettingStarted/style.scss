@@ -26,7 +26,7 @@
 		gap: 4px;
 		padding: 4px;
 		background: #f1f3f8;
-		border-radius: 10px;
+		// border-radius: 10px;
 	}
 
 	.tab {
@@ -43,7 +43,7 @@
 		font-size: 12.5px;
 		font-weight: 600;
 		white-space: nowrap;
-		border-radius: 7px;
+		// border-radius: 7px;
 		cursor: pointer;
 		transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
 
@@ -65,8 +65,10 @@
 	}
 
 	.tabsViewport {
+		// border-radius: 8px;
+		aspect-ratio: 16 / 9;
 		overflow: hidden;
-		border-radius: 8px;
+		overflow-y: auto;
 	}
 
 	.tabsTrack {
@@ -93,7 +95,7 @@
 		padding: 16px;
 		background: #f7f8fb;
 		border: 1px solid #eceef3;
-		border-radius: 10px;
+		// border-radius: 10px;
 		align-items: flex-start;
 		transition: border-color 0.15s ease, background 0.15s ease;
 
@@ -107,7 +109,7 @@
 		flex: 0 0 32px;
 		width: 32px;
 		height: 32px;
-		border-radius: 50%;
+		// border-radius: 50%;
 		background: var(--bpl-dashboard-primary-color, $primaryColor);
 		color: #fff;
 		font-weight: 600;
@@ -150,7 +152,7 @@
 		justify-content: space-between;
 		gap: 20px;
 		padding: 18px 20px;
-		border-radius: 10px;
+		// border-radius: 10px;
 		background: linear-gradient(135deg, rgba(97, 85, 245, 0.08), rgba(97, 85, 245, 0.02));
 		border: 1px solid rgba(97, 85, 245, 0.18);
 		flex-wrap: wrap;
@@ -173,7 +175,7 @@
 		background: var(--bpl-dashboard-primary-color, $primaryColor);
 		color: #fff;
 		padding: 9px 18px;
-		border-radius: 6px;
+		// border-radius: 6px;
 		font-size: 14px;
 		font-weight: 600;
 		text-decoration: none;

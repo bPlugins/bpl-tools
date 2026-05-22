@@ -2,7 +2,7 @@ import { Modal } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
 import './AboutProModal.scss';
-import { Button } from '../../Components';
+import Button from '../../Components/Button/Button';
 
 const AboutProModal = ({ isProModalOpen, setIsProModalOpen, link, children }) => isProModalOpen && <Modal className='bplAboutProModal' title={__('Upgrade to PRO')} onRequestClose={() => setIsProModalOpen(false)}>
 	<h3>{__('Explore new features in Pro')}</h3>

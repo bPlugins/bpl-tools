@@ -1,7 +1,9 @@
 import { __ } from '@wordpress/i18n';
 import { PanelBody, TabPanel, PanelRow, RangeControl, __experimentalBorderBoxControl as BorderBoxControl } from '@wordpress/components';
 
-import { Label, ShadowControl, BoxControl } from '../Components';
+import Label from '../Components/Label/Label';
+import ShadowControl from '../Components/ShadowControl/ShadowControl';
+import BoxControl from '../Components/BoxControl/BoxControl';
 import { updateData } from '../utils/functions';
 
 const BorderShadow = ({ borderShadow, onChange, enabled }) => {

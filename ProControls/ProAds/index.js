@@ -2,7 +2,7 @@ import { __ } from '@wordpress/i18n';
 import { useMemo } from '@wordpress/element';
 
 import './style.scss';
-import { Button } from '../../Components';
+import Button from '../../Components/Button/Button';
 import { starIcon, checkIcon } from '../../utils/icons';
 
 const ProAds = ({ isPremium, list, link }) => {

@@ -1,6 +1,6 @@
 import { Flex, RadioControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
-import { Label } from "../../Components";
+import Label from "../../Components/Label/Label";
 import "./RadioControlPro.scss";
 const prefix = "radioControl"
 const RadioControlPro = ({ label, onChange, className, isPremium = false, setIsProModalOpen, gap = "130px", direction = 'row', ...restProps }) => {

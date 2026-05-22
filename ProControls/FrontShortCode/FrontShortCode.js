@@ -3,7 +3,7 @@ import { __ } from '@wordpress/i18n';
 import { withSelect } from '@wordpress/data';
 
 import './FrontShortCode.scss';
-import { Label } from '../../Components';
+import Label from '../../Components/Label/Label';
 
 const FrontShortCode = ({ postType, shortCode, currentPostType }) => {
 	const tooltip = useRef(null);

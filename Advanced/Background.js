@@ -1,7 +1,8 @@
 import { withSelect } from '@wordpress/data';
 import { PanelBody, TabPanel, RangeControl } from '@wordpress/components';
 
-import { AdvBackground, OverlayControl } from '../Components';
+import AdvBackground from '../Components/AdvBackground/AdvBackground';
+import OverlayControl from '../Components/OverlayControl/OverlayControl';
 import { updateData } from '../utils/functions';
 
 const Background = ({ background, onChange, enabled, isPremium }) => {

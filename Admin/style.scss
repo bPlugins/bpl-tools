@@ -35,7 +35,22 @@ div.fs-notice.updated {
 		margin: 0;
 		box-sizing: border-box;
 		line-height: 1.5;
+		// border-radius: 0 !important;
 	}
+
+	// Spinners must stay circular — squaring them breaks the CSS rotation animation
+	// .actSpinner,
+	// .pricingLoadingSpinner,
+	// .fcSpinner,
+	// .iframeLoader .spinner {
+	// 	border-radius: 50% !important;
+	// }
+
+	// Tiny status-indicator dots must stay circular
+	// .statusDot,
+	// .actStatusDot {
+	// 	border-radius: 50% !important;
+	// }
 
 	.bPlDashboardContainer {
 		width: 100%;
@@ -58,12 +73,16 @@ div.fs-notice.updated {
 	.bPlDashboardCard {
 		background-color: $whiteColor;
 		padding: 24px;
-		border-radius: 12px;
+		// border-radius: 12px;
 	}
 
 	.bPlDashboardButtons {
 		display: flex;
 		align-items: center;
 		gap: 10px;
+	}
+
+	.bPlButton {
+		border-radius: 0 !important;
 	}
 }

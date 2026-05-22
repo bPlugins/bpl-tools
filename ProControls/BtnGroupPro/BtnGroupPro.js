@@ -8,7 +8,7 @@
 import { PanelRow, Button, ButtonGroup } from '@wordpress/components';
 
 import './BtnGroupPro.scss';
-import { Label } from '../../Components';
+import Label from '../../Components/Label/Label';
 
 const BtnGroupPro = props => {
 	const { className, label, value, onChange, options, isIcon = false, isTextIcon = false, size = 'compact', isPremium = false, setIsProModalOpen = () => { }, proValues } = props;

@@ -2,7 +2,7 @@ import { Modal } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
 import './style.scss';
-import { Button } from '../../Components';
+import Button from '../../Components/Button/Button';
 
 const ProModal = ({
 	isProModalOpen,

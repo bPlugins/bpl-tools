@@ -26,7 +26,7 @@
 			color: var(--bpl-dashboard-primary-color, $primaryColor);
 			padding: 5px 12px;
 			background: rgba($primaryColor, .08);
-			border-radius: 999px;
+			// border-radius: 999px;
 		}
 
 		h1 {
@@ -53,7 +53,7 @@
 		padding: 18px 22px;
 		background: linear-gradient(135deg, rgba($primaryColor, .07), rgba($primaryColor, .01));
 		border: 1px solid rgba($primaryColor, .22);
-		border-radius: 14px;
+		// border-radius: 14px;
 
 		.settingsStatusIcon {
 			flex-shrink: 0;
@@ -62,7 +62,7 @@
 			display: inline-flex;
 			align-items: center;
 			justify-content: center;
-			border-radius: 12px;
+			// border-radius: 12px;
 			background: $whiteColor;
 			color: #16a34a;
 			box-shadow: 0 1px 2px rgba($secondaryColor, .06);
@@ -99,7 +99,7 @@
 			color: $contentColor;
 			background: $whiteColor;
 			padding: 4px 10px;
-			border-radius: 999px;
+			// border-radius: 999px;
 			border: 1px solid #e6e8ee;
 			flex-shrink: 0;
 		}
@@ -117,7 +117,7 @@
 	.settingsCard {
 		background: $whiteColor;
 		border: 1px solid #eef0f5;
-		border-radius: 14px;
+		// border-radius: 14px;
 		overflow: hidden;
 		box-shadow: 0 1px 2px rgba($secondaryColor, .03);
 		transition: border-color .2s ease, box-shadow .2s ease;
@@ -157,6 +157,7 @@
 	}
 
 	.dangerBadge {
+		line-height: 1;
 		align-self: flex-start;
 		display: inline-flex;
 		align-items: center;
@@ -169,7 +170,7 @@
 		background: rgba(220, 38, 38, .1);
 		border: 1px solid rgba(220, 38, 38, .2);
 		padding: 4px 10px 4px 8px;
-		border-radius: 999px;
+		// border-radius: 999px;
 
 		svg {
 			width: 13px;
@@ -209,7 +210,7 @@
 			padding: 10px 12px;
 			background: #fbfafa;
 			border: 1px solid #f1ecec;
-			border-radius: 9px;
+			// border-radius: 9px;
 			font-size: 13px;
 			color: $titleColor;
 			line-height: 1.4;
@@ -223,7 +224,7 @@
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
-		border-radius: 8px;
+		// border-radius: 8px;
 		background: rgba(220, 38, 38, .1);
 		color: #dc2626;
 
@@ -240,7 +241,7 @@
 		padding: 12px 14px;
 		background: rgba(245, 158, 11, .08);
 		border: 1px solid rgba(245, 158, 11, .28);
-		border-radius: 10px;
+		// border-radius: 10px;
 		font-size: 13px;
 		line-height: 1.55;
 		color: #92400e;
@@ -302,7 +303,7 @@
 			position: absolute;
 			inset: 0;
 			background: #cbd5e1;
-			border-radius: 999px;
+			// border-radius: 999px;
 			cursor: pointer;
 			transition: background .22s ease, box-shadow .22s ease;
 
@@ -314,7 +315,7 @@
 				left: 3px;
 				top: 3px;
 				background: $whiteColor;
-				border-radius: 50%;
+				// border-radius: 50%;
 				transition: transform .22s ease;
 				box-shadow: 0 1px 2px rgba($secondaryColor, .2);
 			}
@@ -360,7 +361,7 @@
 		padding: 12px 14px;
 		background: $whiteColor;
 		border: 1px solid #eef0f5;
-		border-radius: 12px;
+		// border-radius: 12px;
 		box-shadow: 0 12px 30px rgba($secondaryColor, .15);
 		font-size: 13.5px;
 		font-weight: 600;
@@ -373,7 +374,7 @@
 			width: 16px;
 			height: 16px;
 			padding: 3px;
-			border-radius: 50%;
+			// border-radius: 50%;
 			box-sizing: border-box;
 		}
 
@@ -393,7 +394,7 @@
 			color: #8a93a6;
 			cursor: pointer;
 			padding: 4px;
-			border-radius: 6px;
+			// border-radius: 6px;
 			margin-left: 4px;
 			display: inline-flex;
 			align-items: center;
@@ -425,7 +426,7 @@
 			z-index: 2;
 			width: min(480px, 92vw);
 			background: $whiteColor;
-			border-radius: 16px;
+			// border-radius: 16px;
 			box-shadow: 0 24px 60px rgba(0, 0, 0, .3);
 			overflow: hidden;
 			display: flex;
@@ -467,7 +468,7 @@
 			display: inline-flex;
 			align-items: center;
 			justify-content: center;
-			border-radius: 10px;
+			// border-radius: 10px;
 			background: rgba(220, 38, 38, .12);
 			color: #dc2626;
 
@@ -484,7 +485,7 @@
 			border: none;
 			background: transparent;
 			color: #8a93a6;
-			border-radius: 8px;
+			// border-radius: 8px;
 			cursor: pointer;
 			display: inline-flex;
 			align-items: center;
@@ -518,7 +519,7 @@
 			padding: 12px 14px;
 			background: rgba(220, 38, 38, .06);
 			border: 1px solid rgba(220, 38, 38, .2);
-			border-radius: 10px;
+			// border-radius: 10px;
 			font-size: 13px;
 			line-height: 1.5;
 			color: #991b1b;
@@ -547,7 +548,7 @@
 					background: #fbe9e9;
 					color: #b91c1c;
 					padding: 1px 6px;
-					border-radius: 4px;
+					// border-radius: 4px;
 					font-weight: 700;
 					letter-spacing: .5px;
 				}
@@ -558,7 +559,7 @@
 				padding: 9px 12px;
 				background: #f7f8fb;
 				border: 1px solid transparent;
-				border-radius: 8px;
+				// border-radius: 8px;
 				color: $titleColor;
 				font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
 				letter-spacing: 1px;
@@ -579,7 +580,7 @@
 			color: $titleColor;
 			background: transparent;
 			border: 1.5px solid #d8dce5;
-			border-radius: 9px;
+			// border-radius: 9px;
 			cursor: pointer;
 			transition: background .15s ease, border-color .15s ease;
 
@@ -599,7 +600,7 @@
 			color: $whiteColor;
 			background: #dc2626;
 			border: 1.5px solid #dc2626;
-			border-radius: 9px;
+			// border-radius: 9px;
 			cursor: pointer;
 			box-shadow: 0 2px 6px rgba(220, 38, 38, .22);
 			transition: background .18s ease, transform .18s ease, opacity .18s ease, box-shadow .18s ease;

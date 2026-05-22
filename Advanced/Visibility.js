@@ -2,7 +2,8 @@ import { __ } from '@wordpress/i18n';
 import { withSelect } from '@wordpress/data';
 import { PanelBody, PanelRow, SelectControl, __experimentalNumberControl as NumberControl } from '@wordpress/components';
 
-import { Label, Device } from '../Components';
+import Label from '../Components/Label/Label';
+import Device from '../Components/Device/Device';
 import { updateData } from '../utils/functions';
 import { overflows } from '../utils/options';
 

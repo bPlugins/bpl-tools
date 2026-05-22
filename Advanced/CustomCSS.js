@@ -1,6 +1,6 @@
 import { PanelBody } from '@wordpress/components';
 
-import { CustomCodeEditor } from '../Components';
+import CustomCodeEditor from '../Components/CustomCodeEditor/CustomCodeEditor';
 import { updateData } from '../utils/functions';
 
 const CustomCSS = ({ css = '', onChange }) => {

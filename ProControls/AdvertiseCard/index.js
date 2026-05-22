@@ -1,6 +1,6 @@
 import { __ } from '@wordpress/i18n';
 
-import { Button } from '../../Components';
+import Button from '../../Components/Button/Button';
 
 import './style.scss';
 
