@@ -1,0 +1,188 @@
+@import '../../__variables';
+
+.bPlDashboardGettingStarted {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	padding: 28px;
+
+	.header {
+		h2 {
+			color: var(--bpl-dashboard-title-color, $titleColor);
+			font-size: 22px;
+			font-weight: 600;
+			margin: 0 0 6px;
+		}
+
+		p {
+			color: var(--bpl-dashboard-content-color, $contentColor);
+			font-size: 14px;
+			margin: 0;
+		}
+	}
+
+	.tabsNav {
+		display: flex;
+		gap: 4px;
+		padding: 4px;
+		background: #f1f3f8;
+		border-radius: 10px;
+	}
+
+	.tab {
+		flex: 1;
+		min-width: 0;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 6px;
+		padding: 9px 8px;
+		border: none;
+		background: transparent;
+		color: var(--bpl-dashboard-content-color, $contentColor);
+		font-size: 12.5px;
+		font-weight: 600;
+		white-space: nowrap;
+		border-radius: 7px;
+		cursor: pointer;
+		transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+
+		.tabIcon {
+			display: inline-flex;
+			color: currentColor;
+			opacity: 0.85;
+		}
+
+		&:hover {
+			color: var(--bpl-dashboard-title-color, $titleColor);
+		}
+
+		&.isActive {
+			background: #fff;
+			color: var(--bpl-dashboard-primary-color, $primaryColor);
+			box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+		}
+	}
+
+	.tabsViewport {
+		overflow: hidden;
+		border-radius: 8px;
+	}
+
+	.tabsTrack {
+		display: flex;
+		width: 100%;
+		transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+	}
+
+	.tabPanel {
+		flex: 0 0 100%;
+		min-width: 0;
+		padding: 2px;
+	}
+
+	.steps {
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+	}
+
+	.step {
+		display: flex;
+		gap: 14px;
+		padding: 16px;
+		background: #f7f8fb;
+		border: 1px solid #eceef3;
+		border-radius: 10px;
+		align-items: flex-start;
+		transition: border-color 0.15s ease, background 0.15s ease;
+
+		&:hover {
+			border-color: rgba(97, 85, 245, 0.4);
+			background: #fff;
+		}
+	}
+
+	.stepNum {
+		flex: 0 0 32px;
+		width: 32px;
+		height: 32px;
+		border-radius: 50%;
+		background: var(--bpl-dashboard-primary-color, $primaryColor);
+		color: #fff;
+		font-weight: 600;
+		font-size: 14px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.stepBody {
+		h3 {
+			color: var(--bpl-dashboard-title-color, $titleColor);
+			font-size: 15px;
+			font-weight: 600;
+			margin: 4px 0 6px;
+		}
+
+		p {
+			color: var(--bpl-dashboard-content-color, $contentColor);
+			font-size: 14px;
+			line-height: 1.5;
+			margin: 0 0 10px;
+		}
+	}
+
+	.stepLink {
+		color: var(--bpl-dashboard-primary-color, $primaryColor);
+		font-size: 13px;
+		font-weight: 600;
+		text-decoration: none;
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+
+	.docs {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 20px;
+		padding: 18px 20px;
+		border-radius: 10px;
+		background: linear-gradient(135deg, rgba(97, 85, 245, 0.08), rgba(97, 85, 245, 0.02));
+		border: 1px solid rgba(97, 85, 245, 0.18);
+		flex-wrap: wrap;
+
+		h3 {
+			color: var(--bpl-dashboard-title-color, $titleColor);
+			font-size: 16px;
+			font-weight: 600;
+			margin: 0 0 4px;
+		}
+
+		p {
+			color: var(--bpl-dashboard-content-color, $contentColor);
+			font-size: 14px;
+			margin: 0;
+		}
+	}
+
+	.docsBtn {
+		background: var(--bpl-dashboard-primary-color, $primaryColor);
+		color: #fff;
+		padding: 9px 18px;
+		border-radius: 6px;
+		font-size: 14px;
+		font-weight: 600;
+		text-decoration: none;
+		white-space: nowrap;
+
+		&:hover,
+		&:focus {
+			color: #fff;
+			opacity: 0.92;
+		}
+	}
+}

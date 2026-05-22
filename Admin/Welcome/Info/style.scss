@@ -1,0 +1,79 @@
+@import '../../__variables';
+
+.bPlDashboardWelcomeInfo {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+	gap: 20px;
+
+	.infoCard {
+		display: flex;
+		flex-direction: column;
+		padding: 20px;
+
+		figure {
+			width: 100%;
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			background: #FAF1FF;
+			padding: 20px;
+			border-radius: 8px;
+			margin-bottom: 17px;
+
+			img {
+				width: 150px;
+			}
+		}
+
+		h4 {
+			display: flex;
+			align-items: center;
+			gap: 6px;
+			font-size: 15px;
+			font-weight: 600;
+			color: var(--bpl-dashboard-title-color, $titleColor);
+			margin: 0 0 8px;
+
+			.titleIcon {
+				display: inline-flex;
+
+				svg {
+					width: 18px;
+					height: 18px;
+				}
+			}
+		}
+
+		p {
+			color: var(--bpl-dashboard-content-color, $contentColor);
+			font-size: 13px;
+			line-height: 1.5;
+			margin: 0 0 14px;
+			flex: 1;
+		}
+
+		.bPlButton {
+			align-self: flex-start;
+			background: transparent !important;
+			color: var(--bpl-dashboard-primary-color, $primaryColor) !important;
+			border: 1.5px solid rgba(97, 85, 245, 0.35);
+			padding: 7px 14px !important;
+			border-radius: 8px !important;
+			font-size: 13px !important;
+			font-weight: 600 !important;
+			overflow: hidden;
+			transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+
+			&::before {
+				display: none !important;
+			}
+
+			&:hover,
+			&:focus {
+				background: var(--bpl-dashboard-primary-color, $primaryColor) !important;
+				border-color: var(--bpl-dashboard-primary-color, $primaryColor);
+				color: #fff !important;
+			}
+		}
+	}
+}

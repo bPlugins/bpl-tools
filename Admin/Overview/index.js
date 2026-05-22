@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { withSelect } from '@wordpress/data';
 
 import Button from '../../Components/Button/Button';
-import { closeIcon, playIcon } from '../../utils/icons';
+import { closeIcon, playIcon, facebookIcon } from '../utils/icons';
 
 import './style.scss';
 import VideoPlayer from './VideoPlayer';
@@ -46,9 +46,7 @@ const Overview = (props) => {
 			linkText: 'Contact Support'
 		},
 		{
-			titleIcon: <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 292 512' fill='#1877F2'>
-				<path d='m66 299.3v212.7h116v-212.7h86.5l18-97.8h-104.5v-34.6c0-51.7 20.3-71.5 72.7-71.5 16.3 0 29.4 0.4 37 1.2v-88.7c-14.3-3.9-49.3-7.9-69.5-7.9-106.9 0-156.2 50.5-156.2 159.4v42.1h-66v97.8z' />
-			</svg>,
+			titleIcon: facebookIcon,
 			title: 'Join Our Community',
 			description: 'Get tutorials, plugin updates, feature announcements, and support from other WordPress users.',
 			link: 'https://facebook.com/groups/1828495198556137',

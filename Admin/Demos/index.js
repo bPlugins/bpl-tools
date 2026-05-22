@@ -1,270 +1,227 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { __, sprintf } from '@wordpress/i18n';
+import { useEffect, useMemo, useState } from 'react';
 
-import Button from '../../Components/Button/Button';
-import Loading from '../../Components/Loading/Loading';
+import { searchIcon, closeIcon, externalIcon, arrowRightIcon, chevronLeftIcon, chevronRightIcon } from '../utils/icons';
 
 import './style.scss';
 
-export function slideDown(el, duration = 300) {
-	el.style.removeProperty('display');
-	let display = window.getComputedStyle(el).display;
-	if (display === 'none') display = 'block';
-	el.style.display = display;
-
-	let height = el.offsetHeight;
-	el.style.overflow = 'hidden';
-	el.style.height = 0;
-
-	el.offsetHeight;
-
-	el.style.transition = `height ${duration}ms ease`;
-	el.style.height = height + 'px';
-
-	window.setTimeout(() => {
-		el.style.removeProperty('height');
-		el.style.removeProperty('overflow');
-		el.style.removeProperty('transition');
-	}, duration);
-}
-
-export function slideUp(el, duration = 300) {
-	el.style.height = el.offsetHeight + 'px';
-	el.style.overflow = 'hidden';
-	el.offsetHeight;
-
-	el.style.transition = `height ${duration}ms ease`;
-	el.style.height = 0;
-
-	window.setTimeout(() => {
-		el.style.display = 'none';
-		el.style.removeProperty('height');
-		el.style.removeProperty('overflow');
-		el.style.removeProperty('transition');
-	}, duration);
-}
-
-export function slideToggle(el, duration = 300) {
-	if (window.getComputedStyle(el).display === 'none') {
-		return slideDown(el, duration);
-	}
-	return slideUp(el, duration);
-}
-
-const searchIcon = <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 640'>
-	<path d='M480 272C480 317.9 465.1 360.3 440 394.7L566.6 521.4C579.1 533.9 579.1 554.2 566.6 566.7C554.1 579.2 533.8 579.2 521.3 566.7L394.7 440C360.3 465.1 317.9 480 272 480C157.1 480 64 386.9 64 272C64 157.1 157.1 64 272 64C386.9 64 480 157.1 480 272zM272 416C351.5 416 416 351.5 416 272C416 192.5 351.5 128 272 128C192.5 128 128 192.5 128 272C128 351.5 192.5 416 272 416z' />
-</svg>;
-
-const angelDownIcon = <svg className='angelDown' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 640'>
-	<path d='M297.4 470.6C309.9 483.1 330.2 483.1 342.7 470.6L534.7 278.6C547.2 266.1 547.2 245.8 534.7 233.3C522.2 220.8 501.9 220.8 489.4 233.3L320 402.7L150.6 233.4C138.1 220.9 117.8 220.9 105.3 233.4C92.8 245.9 92.8 266.2 105.3 278.7L297.3 470.7z' />
-</svg>
-
-const warningIcon = <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 640'>
-	<path d='M320 576C178.6 576 64 461.4 64 320C64 178.6 178.6 64 320 64C461.4 64 576 178.6 576 320C576 461.4 461.4 576 320 576zM320 384C302.3 384 288 398.3 288 416C288 433.7 302.3 448 320 448C337.7 448 352 433.7 352 416C352 398.3 337.7 384 320 384zM320 192C301.8 192 287.3 207.5 288.6 225.7L296 329.7C296.9 342.3 307.4 352 319.9 352C332.5 352 342.9 342.3 343.8 329.7L351.2 225.7C352.5 207.5 338.1 192 319.8 192z' />
-</svg>
+const CATEGORY_COLORS = [
+    '#3b82f6', // blue
+    '#10b981', // emerald
+    '#8b5cf6', // violet
+    '#f59e0b', // amber
+    '#ec4899', // pink
+    '#06b6d4', // cyan
+    '#f43f5e', // rose
+    '#14b8a6', // teal
+];
 
 /**
- * Demos Component
- * Renders a searchable and categorised list of product demos with an iframe/image preview.
+ * Live-demo browser — category filter chips, search, and iframe/image preview modal.
  *
- * @param {object} props - Component props
- * @param {object} props.demoInfo - Demo configuration {allInOneLabel, allInOneLink, demos}
- * @returns {JSX.Element}
+ * @param {object} props
+ * @param {string} props.name      - Plugin name shown in the page heading
+ * @param {object} props.demoInfo  - {allInOneLabel?, allInOneLink?, demos: DemoItem[]}
+ *   DemoItem (flat):    {icon?, title, type: 'iframe'|'image', url, category?}
+ *   DemoItem (grouped): {icon?, title, children: FlatDemoItem[]}
  */
-const Demos = (props) => {
-	const { isPremium, demoInfo } = props;
-	const { allInOneLabel, allInOneLink, demos } = demoInfo;
+const Demos = ({ name, isPremium, demoInfo }) => {
+    const { demos } = demoInfo;
 
-	const [activeDemo, setActiveDemo] = useState(demos[0]);
-	const [activeIndex, setActiveIndex] = useState(0);
-	const [isLoading, setIsLoading] = useState(true);
-	const [activeItem, setActiveItem] = useState(demoInfo.demos[0].children?.[0] || demoInfo.demos[0]);
-	const [expandedId, setExpandedId] = useState(demoInfo.demos[0].title);
-	const [searchQuery, setSearchQuery] = useState('');
+    const [activeCategory, setActiveCategory] = useState('All');
+    const [search, setSearch] = useState('');
+    const [openIndex, setOpenIndex] = useState(null);
+    const [iframeLoading, setIframeLoading] = useState(false);
 
-	const onAccordionChange = (index) => {
-		setIsLoading(true);
-		setActiveDemo(demos[index]);
-		setActiveIndex(index);
-		setExpandedId(demos[index].title);
-		setActiveItem(demos[index]?.children?.[0])
-	};
+    const categories = useMemo(() => [
+        'All',
+        ...demos.filter(d => d.children?.length > 0 || (d.url && d.url !== '#')).map(d => d.title)
+    ], [demos]);
 
-	const onItemChange = (item) => {
-		setIsLoading(true);
-		if (item.url && item.url !== '#') {
-			setActiveItem(item);
-		}
-	};
+    const categoryAccents = useMemo(() => {
+        const map = {};
+        const activeCats = categories.filter(cat => cat !== 'All');
+        activeCats.forEach((cat, index) => {
+            map[cat] = CATEGORY_COLORS[index % CATEGORY_COLORS.length];
+        });
+        return map;
+    }, [categories]);
 
-	// Filter the demos by search
-	const filteredData = useMemo(() => {
-		if (!searchQuery.trim()) return demoInfo.demos;
-		const query = searchQuery.toLowerCase();
+    const allCards = useMemo(() => {
+        const cards = [];
+        demos.forEach(demo => {
+            const accent = categoryAccents[demo.title];
+            const processCard = (cardData) => ({
+                ...cardData,
+                category: demo.title,
+                categoryIcon: demo.icon,
+                accent,
+                _searchTarget: `${cardData.title.toLowerCase()} ${demo.title.toLowerCase()}`
+            });
 
-		return demoInfo.demos.filter(item => {
-			const matchParent = item.title.toLowerCase().includes(query);
-			const matchChildren = item.children?.some(child =>
-				child.title.toLowerCase().includes(query)
-			);
-			if (matchChildren && !matchParent) setExpandedId(item.title);
-			return matchParent || matchChildren;
-		}).map(item => {
-			if (item.children) {
-				return {
-					...item,
-					children: item.children.filter(child =>
-						child.title.toLowerCase().includes(query) || item.title.toLowerCase().includes(query)
-					)
-				};
-			}
-			return item;
-		});
-	}, [searchQuery]);
+            if (demo.children?.length) {
+                demo.children.forEach(child => cards.push(processCard(child)));
+            } else if (demo.url && demo.url !== '#') {
+                cards.push(processCard(demo));
+            }
+        });
+        return cards;
+    }, [demos, categoryAccents]);
 
-	// Image Effect
-	const imgWrapRef = useRef(null);
-	const imgRef = useRef(null);
-	useEffect(() => {
-		const wrapEl = imgWrapRef.current;
-		const imgEl = imgRef.current;
-		const wrapperHeight = wrapEl?.clientHeight;
-		const imgHeight = imgEl?.scrollHeight;
+    const filtered = useMemo(() => {
+        const q = search.trim().toLowerCase();
+        return allCards.filter(card => {
+            if (activeCategory !== 'All' && card.category !== activeCategory) return false;
+            if (q && !card._searchTarget.includes(q)) return false;
+            return true;
+        });
+    }, [allCards, activeCategory, search]);
 
-		function handleMouseOver() {
-			imgEl.style.transform = `translateY(-${Number(imgHeight) - parseInt(wrapperHeight)}px)`;
-		}
-		function handleMouseOut() {
-			imgEl.style.transform = `translateY(0px)`;
-		}
+    const active = openIndex !== null ? filtered[openIndex] : null;
 
-		if (wrapEl && imgEl && Number(imgHeight) > parseInt(wrapperHeight)) {
-			wrapEl.addEventListener('mouseover', handleMouseOver);
-			wrapEl.addEventListener('mouseout', handleMouseOut);
-		}
+    useEffect(() => {
+        if (active) setIframeLoading(true);
+    }, [active?.url]);
 
-		return () => {
-			if (wrapEl && imgEl) {
-				wrapEl.removeEventListener('mouseover', handleMouseOver);
-				wrapEl.removeEventListener('mouseout', handleMouseOut);
-			}
-		};
-	}, [activeDemo, activeIndex, isLoading]);
+    const isModalOpen = openIndex !== null;
 
-	return <div className='bPlDashboardDemos bPlDashboardCard'>
-		<div className='sidebar'>
-			<div className='sidebarHeader'>
-				<p>Search</p>
+    useEffect(() => {
+        if (!isModalOpen) return;
+        const handler = (e) => {
+            if (e.key === 'Escape') setOpenIndex(null);
+            if (e.key === 'ArrowRight') setOpenIndex(i => Math.min(i + 1, filtered.length - 1));
+            if (e.key === 'ArrowLeft') setOpenIndex(i => Math.max(i - 1, 0));
+        };
+        document.addEventListener('keydown', handler);
+        document.body.style.overflow = 'hidden';
+        return () => {
+            document.removeEventListener('keydown', handler);
+            document.body.style.overflow = '';
+        };
+    }, [isModalOpen, filtered.length]);
 
-				<div className='search'>
-					{searchIcon}
+    return <div className='bPlDashboardDemos'>
+        <header className='hero'>
+            <span className='eyebrow'>{__('Live Demos')}</span>
+            <h1>{sprintf(__('See the %s in action'), name)}</h1>
+            <p>{__('Browse ready-made demos - click any card to open a live, interactive preview.')}</p>
+        </header>
 
-					<input type='text' placeholder='Search demo...' value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
-				</div>
+        <div className='toolbar'>
+            <div className='search'>
+                {searchIcon}
+                <input
+                    type='text'
+                    value={search}
+                    placeholder='Search demos…'
+                    onChange={e => setSearch(e.target.value)}
+                />
+                {search && <button className='searchClear' onClick={() => setSearch('')} aria-label='Clear search'>×</button>}
+            </div>
 
-				<div className='bPlDashboardButtons'>
-					{!isPremium && <Button href='#pricing'>Buy Now</Button>}
+            <div className='chips' role='tablist'>
+                {categories.map(cat => <button
+                    key={cat}
+                    type='button'
+                    role='tab'
+                    aria-selected={activeCategory === cat}
+                    className={`chip ${activeCategory === cat ? 'isActive' : ''}`}
+                    style={cat !== 'All' ? { '--accent': categoryAccents[cat] } : undefined}
+                    onClick={() => setActiveCategory(cat)}
+                >
+                    <span className='chipDot' />
+                    {cat}
+                </button>)}
+            </div>
+        </div>
 
-					{allInOneLabel && <Button href={allInOneLink} target='_blank' variant='secondary'>{allInOneLabel}</Button>}
-				</div>
-			</div>
+        <p className='count'>
+            <strong>{filtered.length}</strong> {filtered.length === 1 ? 'demo' : 'demos'}
+            {activeCategory !== 'All' && ` in ${activeCategory}`}
+            {search.trim() && ` matching "${search}"`}
+        </p>
 
-			<div className='sidebarList'>
-				{filteredData.length > 0 ?
-					filteredData.map((item, index) => {
-						const { icon, title, url, children } = item;
-						const hasChildren = children && children.length > 0;
-						const isExpanded = expandedId === title;
+        {filtered.length === 0
+            ? <div className='empty'>
+                {searchIcon}
+                <h3>No demos found</h3>
+                <p>Try a different search or category.</p>
+            </div>
+            : <div className='grid'>
+                {filtered.map((card, i) => <button
+                    key={`${card.title}-${i}`}
+                    type='button'
+                    className='card'
+                    style={card.accent ? { '--accent': card.accent } : undefined}
+                    onClick={() => setOpenIndex(i)}
+                >
+                    {card.categoryIcon && (
+                        <div className='cardIcon'>
+                            {'string' === typeof card.categoryIcon
+                                ? <span dangerouslySetInnerHTML={{ __html: card.categoryIcon }} />
+                                : card.categoryIcon}
+                        </div>
+                    )}
+                    <span className='cardCat'>{card.category}</span>
+                    <h3 className='cardTitle'>{card.title}</h3>
+                    <span className='cardAction'>
+                        Preview
+                        {arrowRightIcon}
+                    </span>
+                </button>)}
+            </div>
+        }
 
-						return <div key={index} className='demoItem'>
-							{hasChildren ?
-								<div className={`accordion ${isExpanded ? 'expanded' : ''}`}>
-									<button onClick={() => onAccordionChange(index)} className={`parentDemo ${isExpanded ? 'active' : ''}`}>
-										{'string' === typeof icon ?
-											<span className='icon' dangerouslySetInnerHTML={{ __html: icon }} /> :
-											(icon ? icon : null)}
+        {active && <div className='modal' role='dialog' aria-modal='true'>
+            <div className='modalBackdrop' onClick={() => setOpenIndex(null)} />
 
-										<span className='text-sm font-semibold'>{title}</span>
+            <div className='modalContent'>
+                <header className='modalHead'>
+                    <div className='modalTitleWrap'>
+                        {active.accent && <span className='modalCat' style={{ background: active.accent }}>{active.category}</span>}
+                        <h2>{active.title}</h2>
+                        <span className='modalProgress'>{openIndex + 1} of {filtered.length}</span>
+                    </div>
 
-										{angelDownIcon}
-									</button>
+                    <div className='modalActions'>
+                        <a className='modalOpen' href={active.url} target='_blank' rel='noopener noreferrer'>
+                            Open in new tab
+                            {externalIcon}
+                        </a>
+                        <button className='modalClose' onClick={() => setOpenIndex(null)} aria-label='Close demo'>
+                            {closeIcon}
+                        </button>
+                    </div>
+                </header>
 
-									<ul className={isExpanded ? 'expanded' : ''} ref={(el) => {
-										if (el) {
-											if (isExpanded) {
-												if ('block' !== el.style.display) {
-													slideDown(el);
-												}
-											} else {
-												slideUp(el);
-											}
-										}
-									}}>
-										{children.map((child, cIdx) => <li key={cIdx} className={activeItem.url === child.url ? 'active' : ''} onClick={(e) => {
-											e.preventDefault();
-											e.stopPropagation();
+                <div className='modalStage'>
+                    {openIndex > 0 && <button className='modalNav modalNavPrev' onClick={() => setOpenIndex(openIndex - 1)} aria-label='Previous demo'>
+                        {chevronLeftIcon}
+                    </button>}
 
-											onItemChange(child);
-										}}>
-											{child.title}
-										</li>)}
-									</ul>
-								</div> :
-								<button className={`parentDemo ${activeItem.url === url ? 'active' : ''}`} onClick={(e) => {
-									e.preventDefault();
-									e.stopPropagation();
+                    {iframeLoading && <div className='iframeLoader'>
+                        <div className='spinner' />
+                        <span>Loading demo…</span>
+                    </div>}
 
-									onItemChange(item);
-									setExpandedId(null);
-								}}>
-									{'string' === typeof icon ?
-										<span className='icon' dangerouslySetInnerHTML={{ __html: icon }} /> :
-										(icon ? icon : null)}
+                    {active.type === 'iframe'
+                        ? <iframe
+                            src={active.url}
+                            title={`${active.title} demo`}
+                            sandbox='allow-scripts allow-same-origin allow-popups allow-forms'
+                            onLoad={() => setIframeLoading(false)}
+                        />
+                        : <div className='imgScroll'>
+                            <img src={active.url} alt={active.title} onLoad={() => setIframeLoading(false)} />
+                        </div>
+                    }
 
-									<span>{title}</span>
-								</button>
-							}
-						</div>
-					}) :
-					<div className='notFound'>
-						{warningIcon}
-						<p className='text-sm text-gray-500'>No matching results</p>
-					</div>
-				}
-			</div>
-		</div>
-
-		{/* Right Content - Demo Preview */}
-		<div className='main'>
-			{/* Demo Header */}
-			<div className='mainHeader'>
-				<div className='headerInfo'>
-					<h3>{expandedId ? `${activeDemo?.title || ''} - ` : ''}{activeItem?.title || ''}</h3>
-				</div>
-
-				<div className='bPlDashboardButtons'>
-					{!isPremium && <Button href='#pricing'>Buy Now</Button>}
-
-					{allInOneLabel && <Button href={allInOneLink} target='_blank' variant='secondary'>{allInOneLabel}</Button>}
-				</div>
-			</div>
-
-			{/* Demo Preview */}
-			<div className='canvas'>
-				{isLoading && <Loading text='Demo Loading...' orientation='vertical' />}
-
-				{activeItem.type === 'iframe' ?
-					<iframe
-						src={activeItem.url}
-						title={`${activeItem.title} Demo`}
-						onLoad={() => setIsLoading(false)}
-						sandbox='allow-scripts allow-same-origin allow-popups allow-forms'
-					/> :
-					<div className='canvasImg' ref={imgWrapRef}>
-						<img src={activeItem.url} alt={`${activeItem.title} Demo`} onLoad={() => setIsLoading(false)} ref={imgRef} />
-					</div>
-				}
-			</div>
-		</div>
-	</div >
+                    {openIndex < filtered.length - 1 && <button className='modalNav modalNavNext' onClick={() => setOpenIndex(openIndex + 1)} aria-label='Next demo'>
+                        {chevronRightIcon}
+                    </button>}
+                </div>
+            </div>
+        </div>}
+    </div>;
 };
 export default Demos;

@@ -80,10 +80,16 @@ $shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 			display: grid;
 			place-items: center;
 
+			svg {
+				width: 32px;
+				height: 32px;
+			}
+
 			// margin-left: 4px;
 			svg.video-player-pause-icon {
 				fill: #dddddd;
 				width: 18px;
+				height: 18px;
 			}
 		}
 	}

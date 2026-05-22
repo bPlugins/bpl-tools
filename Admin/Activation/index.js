@@ -1,29 +1,28 @@
 import { useState } from 'react';
-import { Spinner, Tooltip } from '@wordpress/components';
+import { __ } from '@wordpress/i18n';
 
 import './style.scss';
 
-import Button from '../../Components/Button/Button';
-import { circleCheckIcon, linkIcon, pluginIcon, questionIcon } from '../../utils/icons';
+import { circleCheckIcon, showLicenseIcon, hideLicenseIcon, keyIcon, copyIcon, infoIcon, shieldIcon, refreshIcon, externalIcon } from '../utils/icons';
 import useLicense from './useLicense';
 
 /**
- * License Activation Component
- * Handles license activation with Freemius integration
- * 
- * @param {object} props - Component props from data.js
- * @param {string} props.name - Plugin name
- * @param {string} props.version - Plugin version
- * @param {object} props.media - Media object containing logo
- * @param {object} props.freemius - Freemius configuration
- * @param {boolean} props.isPremium - Whether premium is active
+ * License activation / deactivation page.
+ * Communicates with the bPlugins LicenseActivation.php AJAX bridge.
+ *
+ * @param {object} props
+ * @param {string} props.name               - Plugin name
+ * @param {string} props.slug               - WordPress.org slug (Freemius recover-license + EULA links)
+ * @param {string} [props.version]          - Plugin version shown in the card header
+ * @param {object} [props.media]            - {logo?}
+ * @param {object} props.freemius           - {product_id, public_key}
+ * @param {string} props.licenseActiveNonce - wp_create_nonce('bPlLicenseActivation')
  */
 const Activation = (props) => {
 	const { name, slug, version, media, freemius, licenseActiveNonce } = props;
 	const { product_id, public_key } = freemius || {};
 	const { logo } = media || {};
 
-	// Hook management
 	const {
 		isActivated,
 		isLoading,
@@ -33,178 +32,241 @@ const Activation = (props) => {
 		deactivateLicense
 	} = useLicense({ product_id, public_key, licenseActiveNonce });
 
-	// Local state management
 	const [licenseKey, setLicenseKey] = useState('');
 	const [showLicense, setShowLicense] = useState(false);
 	const [showActivationForm, setShowActivationForm] = useState(false);
+	const [showConfirm, setShowConfirm] = useState(false);
+	const [copied, setCopied] = useState(false);
 
-	// Handle license activation
 	const handleActivation = async () => {
-		const success = await activateLicense(licenseKey);
-		if (success) {
+		const ok = await activateLicense(licenseKey);
+		if (ok) {
 			setLicenseKey('');
-			setShowActivationForm(false); // Hide form after successful activation
+			setShowActivationForm(false);
 			window.location.reload();
 		}
 	};
 
-	// Handle deactivate license
-	const handleDeactivateLicense = async () => {
-		if (!window.confirm('Are you sure you want to deactivate this license?')) {
-			return;
-		}
-
-		const success = await deactivateLicense();
-		if (success) {
+	const handleDeactivate = async () => {
+		setShowConfirm(false);
+		const ok = await deactivateLicense();
+		if (ok) {
 			setShowActivationForm(true);
 			setLicenseKey('');
 			window.location.reload();
 		}
 	};
 
-	// Mask license key for display
+	const copyLicense = async () => {
+		if (!activatedLicense) return;
+		try {
+			await navigator.clipboard.writeText(activatedLicense);
+			setCopied(true);
+			setTimeout(() => setCopied(false), 1600);
+		} catch (e) {
+			// eslint-disable-next-line no-console
+			console.error(e.message);
+		}
+	};
+
 	const getMaskedLicense = (license) => {
 		if (!license) return '';
 		if (showLicense) return license;
 		const start = license.substring(0, 4);
 		const end = license.substring(license.length - 4);
-		const middle = 'x'.repeat(Math.max(0, license.length - 8));
+		const middle = '•'.repeat(Math.max(0, license.length - 8));
 		return `${start}${middle}${end}`;
 	};
 
 	const isChangeLicense = showActivationForm && isActivated;
+	const showSuccessView = isActivated && !showActivationForm;
 
-	return <div className='bPlDashboardActivation bPlDashboardCard'>
-		<div className='activationHeader'>
-			<div className='pluginInfo'>
-				{logo && <img src={logo} alt={name || 'Plugin'} />}
-				<div className='pluginDetails'>
-					<h1>{name || 'Plugin'}</h1>
-					{version && <p className='version'>Current Version: {version}</p>}
+	return <div className='bPlDashboardActivation'>
+		<header className='actHero'>
+			<span className='actEyebrow'>{__('License')}</span>
+			<h1>
+				{showSuccessView
+					? __('Your license is active')
+					: (isChangeLicense ? __('Change your license key') : __('Activate your license'))}
+			</h1>
+			<p>
+				{showSuccessView
+					? <>{__("You're receiving security updates, new features and priority support for")}{' '}<strong>{name}</strong>{'.'}</>
+					: <>{__('Enter the license key you received with your purchase to unlock premium features and updates for')}{' '}<strong>{name}</strong>{'.'}</>
+				}
+			</p>
+		</header>
+
+		<section className={`actCard ${showSuccessView ? 'isActive' : 'isInactive'}`}>
+			<header className='actCardHead'>
+				<div className='actPluginInfo'>
+					{logo && <img src={logo} alt={name || __('Plugin')} />}
+					<div>
+						<h2>{name || __('Plugin')}</h2>
+						{version && <span className='actVer'>v{version}</span>}
+					</div>
 				</div>
-			</div>
 
-			<div className={`statusBadge ${isActivated ? 'active' : 'inactive'}`}>
-				{isActivated ? 'Actived' : 'Not Active'}
-			</div>
-		</div>
+				<span className={`actStatus ${isActivated ? 'isOk' : 'isOff'}`}>
+					<span className='actStatusDot' />
+					{isActivated ? __('Activated') : __('Not activated')}
+				</span>
+			</header>
 
-		<div className='activationContent'>
-			{isLoading ? <div className='activationLoading'>
-				<Spinner />
-				<p>Loading...</p>
-			</div> :
-				(activatedLicense && !showActivationForm) ? <div className='activationSuccess'>
-					<div className='successIcon'>
+			{isLoading && <div className='actLoading'>
+				<div className='actSpinner' />
+				<p>{__('Talking to the license server…')}</p>
+			</div>}
+
+			{!isLoading && showSuccessView && <div className='actBody'>
+				<div className='actSuccessTop'>
+					<div className='actSuccessIcon'>
 						{circleCheckIcon}
 					</div>
+					<div>
+						<h3>{__('License verified')}</h3>
+						<p>{__('Your purchase code is bound to this site and is in good standing.')}</p>
+					</div>
+				</div>
 
-					<h2>License Activated</h2>
-
-					<p className='successMessage'>Your license has been activated and is ready to use.</p>
-
-					<div className='licenseDisplay'>
-						<input
-							type='text'
-							value={getMaskedLicense(activatedLicense)}
-							readOnly
-							className='licenseInput'
-						/>
+				<div className='actLicenseRow'>
+					<span className='actFieldLabel'>{__('License key')}</span>
+					<div className='actLicenseDisplay'>
+						<input type='text' value={getMaskedLicense(activatedLicense)} readOnly />
 						<button
-							className='toggleVisibility'
-							onClick={() => setShowLicense(prev => !prev)}
-							aria-label={showLicense ? 'Hide license' : 'Show license'}
+							type='button'
+							className='actIconBtn'
+							onClick={() => setShowLicense(v => !v)}
+							aria-label={showLicense ? __('Hide license') : __('Show license')}
 						>
-							<svg width='24' height='24' viewBox='0 0 24 24' fill='none'>
-								{showLicense ? <>
-									<path d='M3 3L21 21' stroke='currentColor' strokeWidth='2' strokeLinecap='round' />
-									<path d='M10.5 10.677a2 2 0 002.823 2.823' stroke='currentColor' strokeWidth='2' strokeLinecap='round' />
-									<path d='M7.362 7.561C5.68 8.74 4.279 10.42 3 12c1.889 2.991 5.282 6 9 6 1.55 0 3.043-.523 4.395-1.35M12 6c4.008 0 6.701 3.158 9 6a15.66 15.66 0 01-1.078 1.5' stroke='currentColor' strokeWidth='2' strokeLinecap='round' />
-								</> : <>
-									<path d='M12 5C7.52 5 3.73 7.61 1 12c2.73 4.39 6.52 7 11 7s8.27-2.61 11-7c-2.73-4.39-6.52-7-11-7z' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round' />
-									<circle cx='12' cy='12' r='3' stroke='currentColor' strokeWidth='2' />
-								</>}
-							</svg>
+							{showLicense ? showLicenseIcon : hideLicenseIcon}
+						</button>
+						<button
+							type='button'
+							className={`actIconBtn ${copied ? 'isCopied' : ''}`}
+							onClick={copyLicense}
+							aria-label={__('Copy license to clipboard')}
+						>
+							{copyIcon}
+							{copied && <span className='actCopiedTip'>{__('Copied')}</span>}
 						</button>
 					</div>
+				</div>
 
-					<div className='licenseActions'>
-						<button className='linkButton' onClick={() => setShowActivationForm(true)}>
-							Change License
-						</button>
-						<button className='linkButton danger' onClick={handleDeactivateLicense}>
-							Deactivate License
-						</button>
-					</div>
-				</div> :
-					<div className='activationForm'>
-						<h2>{isChangeLicense ? 'Change License' : 'Activate License'}</h2>
+				<footer className='actFoot'>
+					<button type='button' className='actLinkBtn' onClick={() => setShowActivationForm(true)}>
+						{refreshIcon}
+						{__('Change license')}
+					</button>
+					<button type='button' className='actLinkBtn isDanger' onClick={() => setShowConfirm(true)}>
+						{__('Deactivate license')}
+					</button>
+				</footer>
+			</div>}
 
-						<p className='formDescription'>
-							Enter Your license key below. {!isChangeLicense && <><a href={`https://dashboard.freemius.com/license-recovery/${product_id}/${slug}/`} target='_blank' rel='noopener noreferrer'>Can&apos;t find license key?</a> or <a href={`https://freemius.com/help/documentation/wordpress-sdk/license-activation-issues/`} target='_blank' rel='noopener noreferrer'>License issues?</a></>}
-						</p>
+			{!isLoading && !showSuccessView && <div className='actBody'>
+				<label className='actField'>
+					<span className='actFieldLabel'>
+						{keyIcon}
+						{__('License key')}
+					</span>
+					<input
+						type='text'
+						value={licenseKey}
+						placeholder='xxxx-xxxx-xxxx-xxxx-xxxx-xxxx'
+						onChange={e => setLicenseKey(e.target.value)}
+						onKeyDown={e => e.key === 'Enter' && licenseKey.trim() && handleActivation()}
+						disabled={isLoading}
+						autoFocus
+						spellCheck={false}
+						autoCapitalize='none'
+						autoCorrect='off'
+					/>
+				</label>
 
-						<div className='formGroup'>
-							<input type='text' className='licenseInput' placeholder='Enter your purchase code here.' value={licenseKey} onChange={(e) => setLicenseKey(e.target.value)} disabled={isLoading} />
-						</div>
+				{error && <div className='actError'>
+					{infoIcon}
+					<span>{error}</span>
+				</div>}
 
-						{error && <div className='errorMessage'>{error}</div>}
+				<button
+					type='button'
+					className='actPrimaryBtn'
+					onClick={handleActivation}
+					disabled={isLoading || !licenseKey.trim()}
+				>
+					{isLoading ? __('Activating…') : (isChangeLicense ? __('Update License') : __('Activate License'))}
+				</button>
 
-						<Button variant='primary' onClick={handleActivation} disabled={isLoading} className='activateButton'>
-							{isLoading ? 'Activating...' : 'Activate your License'}
-						</Button>
+				{!isChangeLicense && <p className='actHelp'>
+					{__("Can't find your key?")}{' '}
+					<a href={`https://dashboard.freemius.com/license-recovery/${product_id}/${slug}/`} target='_blank' rel='noopener noreferrer'>
+						{__('Recover license')}{externalIcon}
+					</a>
+					{' '}{__('or')}{' '}
+					<a href='https://freemius.com/help/documentation/wordpress-sdk/license-activation-issues/' target='_blank' rel='noopener noreferrer'>
+						{__('activation help')}{externalIcon}
+					</a>
+				</p>}
 
-						{!isChangeLicense && <>
-							<p className='formDescription'>
-								For delivery of security &amp; feature updates, and license management, <strong>{name}</strong> needs to ↓
-							</p>
-
-							<ul className='formPermissions'>
-								<li>
-									{linkIcon}
-
-									<div>
-										<h4>View License Essentials <Tooltip text='To let you manage &amp; control where the license is activated and ensure plugin security &amp; feature updates are only delivered to websites you authorize.' placement='top' delay={300}>
-											{questionIcon}
-										</Tooltip></h4>
-
-										<p>Homepage URL, Plugin version, SDK version</p>
-									</div>
-								</li>
-
-								<li>
-									{pluginIcon}
-
-									<div>
-										<h4>View Plugin State <Tooltip text='So you can reuse the license when the plugin is no longer active.' placement='top' delay={300}>
-											{questionIcon}
-										</Tooltip></h4>
-
-										<p>Is active, deactivated, or uninstalled</p>
-									</div>
-								</li>
-							</ul>
-
-							<div className='links'>
-								<a href={`https://freemius.com/product/license-activation/${product_id}/${slug}/`} target='_blank' rel='noopener noreferrer'>Powered by Freemius</a>
-
-								<a href={`https://freemius.com/privacy/`} target='_blank' rel='noopener noreferrer'>Privacy Policy</a>
-
-								<a href={`https://freemius.com/product/${product_id}/${slug}/legal/eula/`} target='_blank' rel='noopener noreferrer'>License Agreement</a>
+				{!isChangeLicense && <div className='actPermsBlock'>
+					<h4>{name}{' '}{__('needs the following to deliver updates & security patches')}</h4>
+					<ul className='actPerms'>
+						<li>
+							<span className='actPermIcon'>{shieldIcon}</span>
+							<div>
+								<strong>{__('License essentials')}</strong>
+								<span>{__('Homepage URL · Plugin version · SDK version')}</span>
 							</div>
-						</>}
+						</li>
+						<li>
+							<span className='actPermIcon'>{refreshIcon}</span>
+							<div>
+								<strong>{__('Plugin state')}</strong>
+								<span>{__('Whether the plugin is active, deactivated or uninstalled')}</span>
+							</div>
+						</li>
+					</ul>
+				</div>}
 
-						{isChangeLicense && <Button
-							variant='secondary'
-							onClick={() => setShowActivationForm(false)}
-							className='cancelButton'
-						>
-							Cancel
-						</Button>}
+				{!isChangeLicense && <footer className='actLegalRow'>
+					<a href={`https://freemius.com/product/license-activation/${product_id}/${slug}/`} target='_blank' rel='noopener noreferrer'>{__('Powered by Freemius')}</a>
+					<span>·</span>
+					<a href='https://freemius.com/privacy/' target='_blank' rel='noopener noreferrer'>{__('Privacy Policy')}</a>
+					<span>·</span>
+					<a href={`https://freemius.com/product/${product_id}/${slug}/legal/eula/`} target='_blank' rel='noopener noreferrer'>{__('License Agreement')}</a>
+				</footer>}
+
+				{isChangeLicense && <button type='button' className='actLinkBtn isCenter' onClick={() => setShowActivationForm(false)}>
+					{__('Cancel and keep current license')}
+				</button>}
+			</div>}
+		</section>
+
+		{showConfirm && <div className='actModal' role='dialog' aria-modal='true'>
+			<div className='actModalBackdrop' onClick={() => setShowConfirm(false)} />
+			<div className='actModalContent'>
+				<header>
+					<div className='actModalIcon'>{infoIcon}</div>
+					<div>
+						<h3>{__('Deactivate this license?')}</h3>
+						<p>{__('You can re-activate it later on this site or move it to a different one.')}</p>
 					</div>
-			}
-		</div>
-	</div>
+				</header>
+				<div className='actModalNote'>
+					{__('Premium features and automatic updates will stop on this site until you re-activate.')}
+				</div>
+				<footer>
+					<button type='button' className='actModalCancel' onClick={() => setShowConfirm(false)}>
+						{__('Keep license active')}
+					</button>
+					<button type='button' className='actModalAction' onClick={handleDeactivate}>
+						{__('Yes, deactivate')}
+					</button>
+				</footer>
+			</div>
+		</div>}
+	</div>;
 };
 
 export default Activation;

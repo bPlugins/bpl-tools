@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
+import { __ } from '@wordpress/i18n';
 
 import Button from '../../Components/Button/Button';
-
 import '../lib/fs';
 import './style.scss';
+
+import { checkCircleIcon, chevronDownIcon, moneyBackIcon, refreshIcon, chatIcon, lockIcon } from '../utils/icons';
 
 export const getFeatures = (plans, planId) => {
 	const freeFeatures = plans.find(p => p.name === 'free')?.features?.map(f => f.title);
@@ -12,157 +14,283 @@ export const getFeatures = (plans, planId) => {
 	const features = {
 		'free': freeFeatures,
 		'pro': proFeatures
-	}
+	};
 
 	const planName = plans.find(p => parseInt(p.id) === parseInt(planId))?.name;
 	const planFeatures = features[planName] || plans.find(p => parseInt(p.id) === parseInt(planId))?.features?.map(f => f.title);
 
 	return planFeatures || [];
-}
+};
 
+const cycleMeta = {
+	monthly: { suffix: '/mo' },
+	annual: { suffix: '/yr' },
+	lifetime: { suffix: '' }
+};
+
+const formatPrice = (amount) => {
+	const num = typeof amount === 'string' ? parseFloat(amount) : amount;
+	if (isNaN(num)) return '—';
+	return Number.isInteger(num) ? String(num) : num.toFixed(2);
+};
+
+/**
+ * Freemius-powered pricing page — fetches live plan data, renders plan cards with
+ * billing-cycle switcher, feature list, trust badges, and FAQ accordion.
+ *
+ * @param {object} props
+ * @param {object} props.pricingInfo          - {logo?, pluginId, planId, licenses, button, featured, hero?, included?, trustBadges?, faqs?}
+ * @param {object} props.options              - Extra options forwarded to FS.Checkout.open() (pass {} for none)
+ */
 const Pricing = ({ pricingInfo, options }) => {
-	const { pluginId, planId, licenses } = pricingInfo;
+	const {
+		pluginId, planId, licenses, button, featured, logo,
+		hero: heroProp,
+		included: includedProp,
+		trustBadges: customTrustBadges,
+		faqs: customFaqs,
+	} = pricingInfo;
 
-	// new state for fetched single product
 	const [product, setProduct] = useState({});
 	const [isProductLoading, setIsProductLoading] = useState(false);
+	const [cycles, setCycles] = useState([]);
+	const [cycle, setCycle] = useState('');
+	const [openFaq, setOpenFaq] = useState(0);
+
 	useEffect(() => {
-		if (pluginId) {
-			let mounted = true;
-			const url = `https://api.bplugins.com/wp-json/bpl/v1/products/${pluginId}`;
-			setIsProductLoading(true);
-			fetch(url)
-				.then(response => {
-					if (!response.ok) throw new Error(`${response.status} ${response.statusText}`);
-					return response.json();
-				})
-				.then(data => {
-					if (!mounted) return;
-					setProduct(data);
-				})
-				.catch(err => {
-					if (!mounted) return;
-					// eslint-disable-next-line no-console
-					console.error(err.message || 'Fetch error');
-					setProduct({});
-				})
-				.finally(() => {
-					if (mounted) setIsProductLoading(false);
-				});
-			return () => {
-				mounted = false;
-			};
-		}
+		if (!pluginId) return;
+		let mounted = true;
+		setIsProductLoading(true);
+		fetch(`https://api.bplugins.com/wp-json/bpl/v1/products/${pluginId}`)
+			.then(r => r.ok ? r.json() : Promise.reject(`${r.status} ${r.statusText}`))
+			.then(data => { if (mounted) setProduct(data); })
+			.catch(() => { if (mounted) setProduct({}); })
+			.finally(() => { if (mounted) setIsProductLoading(false); });
+		return () => { mounted = false; };
 	}, [pluginId]);
 
-
-	const [cycles, setCycles] = useState([]);
-	const [cycle, setCycle] = useState(cycles?.find(c => c.isDefault)?.name || cycles[0]?.name);
-
 	useEffect(() => {
-		if (product?.id && planId) {
-			const { plans } = product || {};
-			const plan = plans?.find(p => parseInt(p.id) === parseInt(planId)) || plans?.[0] || {};
+		if (!product?.id || !planId) return;
+		const { plans } = product;
+		const plan = plans?.find(p => parseInt(p.id) === parseInt(planId)) || plans?.[0] || {};
+		const singlePrices = plan?.pricing?.[0];
 
-			const singlePrices = plan?.pricing?.[0];
-
-			if (singlePrices && typeof singlePrices === 'object') {
-				let c = []
-				// eslint-disable-next-line no-prototype-builtins
-				if (singlePrices.hasOwnProperty('monthly')) {
-					c.push({ name: 'monthly', label: 'Billed Monthly' });
-				}
-				// eslint-disable-next-line no-prototype-builtins
-				if (singlePrices.hasOwnProperty('annual')) {
-					c.push({ name: 'annual', label: 'Billed Yearly', isDefault: true });
-				}
-				// eslint-disable-next-line no-prototype-builtins
-				if (singlePrices.hasOwnProperty('lifetime')) {
-					c.push({ name: 'lifetime', label: 'Lifetime' });
-				}
-				setCycles(c);
-				setCycle(c?.find(cc => cc.isDefault)?.name || c[0]?.name)
-			} else {
-				setCycles([]);
-				setCycle('');
-			}
+		if (singlePrices && typeof singlePrices === 'object') {
+			const c = [];
+			if (singlePrices.monthly !== undefined) c.push({ name: 'monthly', label: __('Monthly') });
+			if (singlePrices.annual !== undefined) c.push({ name: 'annual', label: __('Yearly'), isDefault: true });
+			if (singlePrices.lifetime !== undefined) c.push({ name: 'lifetime', label: __('Lifetime') });
+			setCycles(c);
+			setCycle(c.find(cc => cc.isDefault)?.name || c[0]?.name || '');
+		} else {
+			setCycles([]);
+			setCycle('');
 		}
-	}, [product, isProductLoading, planId]);
+	}, [product, planId]);
 
 	if (isProductLoading) {
-		return <div className='bPlDashboardPricing bPlDashboardBox'>
-			<h2>Loading...</h2>
+		return <div className='bPlDashboardPricing bPlDashboardPricingLoading'>
+			<div className='pricingLoadingSpinner' />
+			<p>{__('Loading the latest pricing…')}</p>
 		</div>;
 	}
 
-	if (!product || !product?.id) {
-		return null;
+	if (!product?.id) return null;
+
+	const { plans } = product;
+	const plan = plans?.find(p => parseInt(p.id) === parseInt(planId)) || plans?.[0] || {};
+	const pricing = plan?.pricing || [];
+	const visiblePricing = pricing.filter(p => licenses.includes(p?.licenses ?? null));
+
+	const samplePrice = visiblePricing[0];
+	let annualSavingsPct = 0;
+	if (samplePrice?.monthly && samplePrice?.annual) {
+		const fullYear = parseFloat(samplePrice.monthly) * 12;
+		const annual = parseFloat(samplePrice.annual);
+		if (fullYear > 0) annualSavingsPct = Math.round(((fullYear - annual) / fullYear) * 100);
 	}
 
-	const { plans } = product || {};
-	const plan = plans?.find(p => parseInt(p.id) === parseInt(planId)) || plans?.[0] || {};
-	const { pricing = [] } = plan || {};
+	const sharedFeatures = getFeatures(plans, planId);
+	const annualSavingsLabel = annualSavingsPct > 0 ? `Save ${annualSavingsPct}%` : '';
 
-	return <div className='bPlDashboardPricing bPlDashboardCard'>
-		{cycles?.length > 1 && <div className='cycles'>
-			{cycles.map(c => {
-				return <button key={c.name} className={c.name === cycle ? 'active' : ''} onClick={() => setCycle(c.name)}>
-					{c.label}
-				</button>;
-			})}
+	const isLifetimeOnly = cycles.length === 1 && cycles[0]?.name === 'lifetime';
+
+	const hero = {
+		eyebrow: heroProp?.eyebrow ?? __('Pricing'),
+		title: heroProp?.title ?? __('Pick the plan that fits your project'),
+		description: heroProp?.description ?? __('Same powerful features on every plan — just choose how many sites you need. Upgrade or downgrade any time.'),
+	};
+
+	const included = {
+		tag: includedProp?.tag ?? __('Same on every plan'),
+		title: includedProp?.title ?? __('Everything you get, on every license'),
+		description: includedProp?.description ?? __('Every feature is available on every license tier. The only difference is how many sites you can activate the plugin on.'),
+	};
+
+	const trustBadges = customTrustBadges || [
+		{ title: __('14 days money back'), body: __('Risk-free purchase'), icon: moneyBackIcon },
+		{ title: isLifetimeOnly ? __('Lifetime updates') : __('Plugins updates'), body: __('On every plan'), icon: refreshIcon },
+		{ title: __('Priority support'), body: __('Get help when you need it'), icon: chatIcon },
+		{ title: __('Secure checkout'), body: __('Powered by Freemius'), icon: lockIcon }
+	];
+
+	const faqs = customFaqs || [
+		{
+			q: __('Can I upgrade my plan later?'),
+			a: __('Yes — you can upgrade any time from your account. We prorate the difference automatically.')
+		},
+		isLifetimeOnly ? {
+			q: __('Will I receive updates if I purchase a lifetime license?'),
+			a: __('Yes, a lifetime license holds lifetime updates and never expires, ensuring you always have access to the latest features and bug fixes without recurring fees.')
+		} : {
+			q: __('What happens after my license expires?'),
+			a: __('The plugin keeps working forever. You only lose access to premium features, updates and premium support unless you renew.')
+		},
+		{
+			q: __('Do you offer refunds?'),
+			a: __('Absolutely. Every plan is backed by a 14 days no-questions-asked money-back guarantee.')
+		}
+	];
+
+	return <div className='bPlDashboardPricing'>
+		<header className='pricingHero'>
+			<span className='pricingEyebrow'>{hero.eyebrow}</span>
+			<h1>{hero.title}</h1>
+			<p>{hero.description}</p>
+		</header>
+
+		{cycles.length > 1 && <div className='pricingCycleWrap'>
+			<div className='pricingCycle' role='tablist'>
+				{cycles.map(c => (
+					<button
+						key={c.name}
+						type='button'
+						role='tab'
+						aria-selected={c.name === cycle}
+						className={c.name === cycle ? 'isActive' : ''}
+						onClick={() => setCycle(c.name)}
+					>
+						{c.label}
+						{c.name === 'annual' && annualSavingsLabel && <span className='pricingSave'>{annualSavingsLabel}</span>}
+					</button>
+				))}
+			</div>
 		</div>}
 
-		{cycles?.length === 1 && cycles[0]?.name === 'lifetime' && <h2 className='pricingTitle'>One-time payment, lifetime access</h2>}
+		<div className='pricingPlans'>
+			{visiblePricing.length ? visiblePricing.map((price, index) => {
+				const licensesCount = price?.licenses;
+				const isFeatured = featured?.selected === (licensesCount || 'null');
+				const amount = price?.[cycle];
+				const cycleInfo = cycleMeta[cycle] || { suffix: '' };
+				const numericAmount = parseFloat(amount);
+				const monthlyEquivalent = cycle === 'annual' && price?.annual ? (parseFloat(price.annual) / 12) : null;
+				const perSite = licensesCount && !isNaN(numericAmount) ? (numericAmount / licensesCount) : null;
 
-		<div className='plans'>
-			{pricing?.length ?
-				pricing?.map((price, index) => licenses.includes(price?.licenses) && <Plan key={index} {...{ pricingInfo, product, price, cycle, options }} />) :
+				const planLabel = !licensesCount
+					? __('Unlimited Sites')
+					: (licensesCount === 1 ? __('Single Site') : `${licensesCount} ${__('Sites')}`);
+				const planTagline = !licensesCount
+					? __('For agencies & enterprise')
+					: (licensesCount === 1 ? __('For solo creators') : __('For freelancers'));
 
-				<h3 style={{ gridColumn: `1 / -1`, textAlign: 'center' }}>Select a plan</h3>
-			}
+				return <div key={index} className={`pricingPlan ${isFeatured ? 'isFeatured' : ''}`}>
+					{isFeatured && <div className='pricingBadge'>{featured?.text || __('Most Popular')}</div>}
+
+					<div className='pricingPlanHead'>
+						<h3>{planLabel}</h3>
+						<p>{planTagline}</p>
+					</div>
+
+					<div className='pricingPriceWrap'>
+						<div className='pricingPrice'>
+							<span className='pricingCurrency'>$</span>
+							<span className='pricingAmount'>{formatPrice(amount)}</span>
+							{cycleInfo.suffix && <span className='pricingSuffix'>{cycleInfo.suffix}</span>}
+						</div>
+
+						{perSite !== null && <p className='pricingEquiv'>≈ ${formatPrice(perSite)} {__('per site')}</p>}
+						{!licensesCount && <p className='pricingEquiv'>{__('Use on every site you build.')}</p>}
+						{monthlyEquivalent !== null && cycle === 'annual' && <p className='pricingEquiv'>
+							{__('Billed yearly')} · ${formatPrice(monthlyEquivalent)}/mo
+						</p>}
+						{cycle === 'lifetime' && <p className='pricingEquiv'>{__('One-time payment, pay once forever.')}</p>}
+						{cycle === 'monthly' && <p className='pricingEquiv'>{__('Billed monthly, cancel anytime.')}</p>}
+					</div>
+
+					<Button
+						className='pricingCta'
+						onClick={e => {
+							e.preventDefault();
+							// eslint-disable-next-line no-undef
+							new FS.Checkout({
+								plugin_id: product.id,
+								plan_id: planId,
+								public_key: product.public_key
+							}).open({
+								image: logo || product.icon,
+								title: product.title,
+								licenses: licensesCount,
+								billing_cycle: cycle,
+								...options
+							});
+						}}
+					>
+						{button.label}
+					</Button>
+				</div>;
+			}) : <p className='pricingEmpty'>{__('No plans available right now.')}</p>}
 		</div>
-	</div>
+
+		{sharedFeatures.length > 0 && <section className='pricingIncluded'>
+			<header className='pricingIncludedHead'>
+				<span className='pricingIncludedTag'>{included.tag}</span>
+				<h2>{included.title}</h2>
+				<p>{included.description}</p>
+			</header>
+
+			<ul className='pricingIncludedGrid'>
+				{sharedFeatures.map((f, i) => (
+					<li key={i}>
+						<span className='pricingIncludedCheck'>{checkCircleIcon}</span>
+						<span dangerouslySetInnerHTML={{ __html: f }} />
+					</li>
+				))}
+			</ul>
+		</section>}
+
+		<section className='pricingTrust'>
+			{trustBadges.map((b, i) => (
+				<div key={i} className='pricingTrustItem'>
+					<span className='pricingTrustIcon'>{b.icon}</span>
+					<div>
+						<strong>{b.title}</strong>
+						<span>{b.body}</span>
+					</div>
+				</div>
+			))}
+		</section>
+
+		<section className='pricingFaq'>
+			<h2>{__('Frequently asked questions')}</h2>
+			<div className='pricingFaqList'>
+				{faqs.map((f, i) => (
+					<div key={i} className={`pricingFaqItem ${openFaq === i ? 'isOpen' : ''}`}>
+						<button
+							type='button'
+							className='pricingFaqQ'
+							aria-expanded={openFaq === i}
+							onClick={() => setOpenFaq(openFaq === i ? null : i)}
+						>
+							<span>{f.q}</span>
+							{chevronDownIcon}
+						</button>
+						{openFaq === i && <div className='pricingFaqA'>{f.a}</div>}
+					</div>
+				))}
+			</div>
+		</section>
+	</div>;
 };
+
 export default Pricing;
-
-const Plan = ({ pricingInfo, product, price, cycle, options }) => {
-	const { logo, planId, button, featured } = pricingInfo;
-	const { title, id, public_key, icon } = product || {};
-	const { licenses } = price || {};
-
-	const amount = price?.[cycle] + '';
-
-	const name = !licenses ? 'Unlimited Sites' : (licenses === 1 ? 'Single Site' : `${licenses} Sites`);
-	const isFeatured = featured?.selected === (licenses || 'null');
-
-	return <div className={`plan ${isFeatured ? 'bestValue' : ''}`} data-best-text={featured?.text}>
-		<h3 className='planName wp-block-heading'>{name}</h3>
-
-		<div className='price'>
-			${amount}
-		</div>
-
-		<p className='note'>{!licenses ? 'Unlimited site' : (licenses === 1 ? '1 site' : `${licenses} sites`)} license for {'monthly' === cycle ? '1 month' : ('annual' === cycle ? '1 year' : cycle)}</p>
-
-		<ul className={`wp-block-list features checkList ${isFeatured ? 'whiteCheck' : 'themeCheck'}`}>
-			{getFeatures(product.plans, planId).map((f, i) => <li key={i} dangerouslySetInnerHTML={{ __html: f }} />)}
-		</ul>
-
-		<Button className={`${isFeatured ? 'white' : ''}`} onClick={e => {
-			e.preventDefault();
-
-			// eslint-disable-next-line no-undef
-			new FS.Checkout({
-				plugin_id: id,
-				plan_id: planId,
-				public_key
-			}).open({
-				image: logo || icon,
-				title,
-				licenses,
-				billing_cycle: cycle,
-				...options
-			});
-		}}>{button.label}</Button>
-	</div>
-}

@@ -2,250 +2,533 @@
 
 .bPlDashboardFeatureCompare {
 	width: 100%;
-	max-width: 1440px;
+	max-width: 1140px;
 	margin: 0 auto;
-	overflow-x: auto;
+	display: flex;
+	flex-direction: column;
+	gap: 32px;
 
-	.featureComparePricing {
-		width: 100%;
-		min-width: 1380px;
-		display: flex;
+	&.bPlDashboardFeatureCompareLoading {
+		min-height: 320px;
 		align-items: center;
-		gap: 26px;
-		padding-bottom: 32px;
-		border-bottom: 1px solid #E4E4E4;
-		margin-bottom: 32px;
-		flex-wrap: wrap;
+		justify-content: center;
+		color: var(--bpl-dashboard-content-color, $contentColor);
+	}
 
-		.cyclesSelector {
-			margin-right: auto;
+	.fcSpinner {
+		width: 36px;
+		height: 36px;
+		border-radius: 50%;
+		border: 3px solid rgba($primaryColor, 0.18);
+		border-top-color: var(--bpl-dashboard-primary-color, $primaryColor);
+		animation: bplFeatureCompareSpin 0.9s linear infinite;
+	}
 
-			h2 {
-				font-size: 18px;
-				font-weight: 400;
-				color: var(--bpl-dashboard-title-color, $titleColor);
-				margin: 0 0 21px 0;
+	.fcHero {
+		text-align: center;
+		max-width: 720px;
+		margin: 0 auto;
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+
+		.fcEyebrow {
+			align-self: center;
+			font-size: 12px;
+			font-weight: 700;
+			text-transform: uppercase;
+			letter-spacing: 1.5px;
+			color: var(--bpl-dashboard-primary-color, $primaryColor);
+			padding: 5px 12px;
+			background: rgba($primaryColor, 0.08);
+			border-radius: 999px;
+		}
+
+		h1 {
+			font-size: 34px;
+			line-height: 1.16;
+			font-weight: 700;
+			color: var(--bpl-dashboard-title-color, $titleColor);
+			margin: 0;
+			letter-spacing: -0.4px;
+		}
+
+		p {
+			font-size: 15px;
+			line-height: 1.6;
+			color: var(--bpl-dashboard-content-color, $contentColor);
+			margin: 0;
+
+			strong {
+				color: var(--bpl-dashboard-primary-color, $primaryColor);
+				font-weight: 700;
 			}
+		}
+	}
 
-			.cycles {
-				display: inline-flex;
-				align-items: center;
-				justify-content: center;
-				background: $whiteColor;
-				padding: 6px;
-				border: 1px solid #e4e4e4;
-				border-radius: 10px;
-				overflow: hidden;
+	.fcCycleWrap {
+		display: flex;
+		justify-content: center;
+	}
 
-				button {
-					font-size: 16px;
-					font-weight: 500;
-					color: var(--bpl-dashboard-title-color, $titleColor);
-					background-color: #0000;
-					padding: 8px 15px;
-					border-radius: 5px;
-					border: 0;
-					cursor: pointer;
+	.fcCycle {
+		display: inline-flex;
+		align-items: center;
+		gap: 4px;
+		padding: 5px;
+		background: $whiteColor;
+		border: 1px solid #e6e8ee;
+		border-radius: 999px;
+		box-shadow: 0 1px 2px rgba($secondaryColor, 0.04);
 
-					&.active {
-						color: $whiteColor;
-						background: linear-gradient(to bottom, rgba($whiteColor, 0.2), rgba($whiteColor, 0.07)), var(--bpl-dashboard-secondary-color, $secondaryColor);
-						box-shadow: inset 0 0 0 1px rgba($whiteColor, 0.26), 0 0 0 1.5px var(--bpl-dashboard-secondary-color, $secondaryColor), 0 0 0 5px #0000000a;
-					}
-				}
-			}
+		button {
+			display: inline-flex;
+			align-items: center;
+			gap: 8px;
+			padding: 9px 22px;
+			border: none;
+			background: transparent;
+			color: var(--bpl-dashboard-content-color, $contentColor);
+			font-size: 14px;
+			font-weight: 600;
+			border-radius: 999px;
+			cursor: pointer;
+			transition: background 0.18s ease, color 0.18s ease;
 
-			h2.pricingTitle {
-				font-size: 16px;
-				font-weight: 500;
-				display: inline-flex;
-				align-items: center;
-				justify-content: center;
+			&.isActive {
+				background: var(--bpl-dashboard-title-color, $titleColor);
 				color: $whiteColor;
-				background: linear-gradient(to bottom, rgba($whiteColor, 0.2) 0%, rgba($whiteColor, 0.07) 100%), var(--bpl-dashboard-secondary-color, $secondaryColor);
-				padding: 10px 20px;
-				border-radius: 10px;
-				box-shadow: inset 0 0 0 1px rgba($whiteColor, 0.26), 0 0 0 1.5px var(--bpl-dashboard-secondary-color, $secondaryColor), 0 0 0 5px #0000000a;
 			}
 		}
 
-		.plan {
-			min-width: 310px;
-			max-width: 100%;
-			padding: 18px 24px;
-			border-radius: 10px;
+		.fcSave {
+			background: #22c55e;
+			color: $whiteColor;
+			font-size: 11px;
+			font-weight: 700;
+			padding: 2px 8px;
+			border-radius: 999px;
+			letter-spacing: 0.3px;
+		}
+	}
 
-			.note {
-				font-size: 14px;
-				font-weight: 400;
+	.fcPlans {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+		gap: 20px;
+	}
+
+	.fcPlan {
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
+		padding: 28px;
+		background: $whiteColor;
+		border: 1px solid #eef0f5;
+		border-radius: 16px;
+		position: relative;
+
+		&.isPro {
+			background: linear-gradient(180deg, darken($primaryColor, 14%) 0%, $primaryColor 100%);
+			color: $whiteColor;
+			border-color: transparent;
+			box-shadow: 0 14px 36px rgba($primaryColor, 0.22);
+
+			.fcPlanTag {
+				background: rgba($whiteColor, 0.2);
+				color: $whiteColor;
 			}
 
-			.price {
-				font-size: 28px;
-				font-weight: 500;
-				margin-bottom: 6px;
-				display: flex;
-				align-items: baseline;
-				gap: 10px;
-
-				h3 {
-					font-size: 16px;
-					font-weight: 500;
-					margin: 0;
-				}
+			h3 {
+				color: $whiteColor;
 			}
 
-			.bPlButton {
-				width: 100%;
-				font-size: 14px;
-				font-weight: 500;
-				justify-content: center;
-				padding: 10px 20px;
-				margin-top: 14px;
-
-				&:hover {
-					color: #fff !important;
-				}
+			.fcPlanHead p {
+				color: rgba($whiteColor, 0.82);
 			}
 
-			&.free {
-				background: $whiteColor;
-				border: 1px solid #485e9033;
+			.fcPlanPrice {
+				color: $whiteColor;
 
-				h3 {
-					color: var(--bpl-dashboard-content-color, $contentColor);
-				}
-
-				.price {
-					color: var(--bpl-dashboard-title-color, $titleColor);
-				}
-
-				.note {
-					color: var(--bpl-dashboard-title-color, $titleColor);
-				}
-
-				.bPlButton {
-					color: var(--bpl-dashboard-title-color, $titleColor);
-					background: #0000;
-					border: 1px solid #DADFE9;
-
-					&::before {
-						background: var(--bpl-dashboard-primary-color, $primaryColor);
-					}
+				.fcCyc {
+					color: rgba($whiteColor, 0.75);
 				}
 			}
 
-			&.premium {
-				background: var(--bpl-dashboard-primary-color, $primaryColor);
-				border: 1px solid var(--bpl-dashboard-primary-color, $primaryColor);
+			.fcPlanCta {
+				background: $whiteColor !important;
+				color: var(--bpl-dashboard-primary-color, $primaryColor) !important;
 
-				h3,
-				.price,
-				.note {
-					color: $whiteColor;
-				}
-
-				.bPlButton {
-					color: var(--bpl-dashboard-title-color, $titleColor);
-					background: $whiteColor;
-
-					&::before {
-						background: var(--bpl-dashboard-secondary-color, $secondaryColor);
-					}
+				&:hover,
+				&:focus {
+					background: rgba($whiteColor, 0.92) !important;
+					color: var(--bpl-dashboard-primary-color, $primaryColor) !important;
 				}
 			}
 		}
 	}
 
-	table {
+	.fcPlanHead {
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+
+		h3 {
+			font-size: 22px;
+			font-weight: 700;
+			margin: 0;
+			color: var(--bpl-dashboard-title-color, $titleColor);
+		}
+
+		p {
+			font-size: 14px;
+			line-height: 1.5;
+			margin: 0;
+			color: var(--bpl-dashboard-content-color, $contentColor);
+		}
+	}
+
+	.fcPlanTag {
+		align-self: flex-start;
+		font-size: 11px;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 1px;
+		padding: 5px 11px;
+		border-radius: 999px;
+		background: #f1f3f8;
+		color: var(--bpl-dashboard-content-color, $contentColor);
+	}
+
+	.fcPlanPrice {
+		display: flex;
+		align-items: baseline;
+		gap: 4px;
+		color: var(--bpl-dashboard-title-color, $titleColor);
+		flex-wrap: wrap;
+
+		.fcCurr {
+			font-size: 20px;
+			font-weight: 600;
+		}
+
+		.fcAmt {
+			font-size: 42px;
+			font-weight: 700;
+			letter-spacing: -1px;
+			line-height: 1;
+		}
+
+		.fcCyc {
+			font-size: 13px;
+			font-weight: 500;
+			color: var(--bpl-dashboard-content-color, $contentColor);
+			opacity: 0.8;
+			margin-left: 6px;
+		}
+	}
+
+	.fcPlanCta {
+		margin-top: auto;
 		width: 100%;
-		min-width: 1380px;
-		text-indent: 0;
-		border-color: inherit;
+		justify-content: center;
+		padding: 12px 20px !important;
+		font-size: 14.5px !important;
+		font-weight: 600 !important;
+		border-radius: 10px !important;
+		background: var(--bpl-dashboard-primary-color, $primaryColor) !important;
+		color: $whiteColor !important;
+		display: inline-flex;
+		align-items: center;
+		text-align: center;
+		overflow: hidden;
+		transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+
+		&::before {
+			display: none !important;
+		}
+
+		&:hover,
+		&:focus {
+			background: darken($primaryColor, 10%) !important;
+			color: $whiteColor !important;
+		}
+	}
+
+	.fcPlanCtaHave {
+		margin-top: auto;
+		width: 100%;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 8px;
+		padding: 12px 20px;
+		font-size: 14.5px;
+		font-weight: 600;
+		border-radius: 10px;
+		background: rgba(34, 197, 94, 0.12);
+		color: #15803d;
+		border: 1.5px solid rgba(34, 197, 94, 0.35);
+		cursor: default;
+		pointer-events: none;
+		text-align: center;
+
+		svg {
+			width: 16px;
+			height: 16px;
+			flex-shrink: 0;
+			color: #16a34a;
+		}
+	}
+
+	.fcTableWrap {
+		background: $whiteColor;
+		border: 1px solid #eef0f5;
+		border-radius: 16px;
+		overflow: hidden;
+		box-shadow: 0 1px 2px rgba($secondaryColor, 0.03);
+	}
+
+	.fcTableHead {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 16px;
+		padding: 20px 24px;
+		border-bottom: 1px solid #eef0f5;
+		flex-wrap: wrap;
+
+		h2 {
+			font-size: 18px;
+			font-weight: 700;
+			margin: 0;
+			color: var(--bpl-dashboard-title-color, $titleColor);
+		}
+	}
+
+	.fcSearchBox {
+		position: relative;
+		display: flex;
+		align-items: center;
+		min-width: 220px;
+
+		>svg {
+			position: absolute;
+			left: 12px;
+			width: 16px;
+			height: 16px;
+			color: #8a93a6;
+			pointer-events: none;
+		}
+
+		input {
+			flex: 1;
+			font-size: 13.5px;
+			padding: 8px 32px 8px 34px;
+			background: #f7f8fb;
+			border: 1px solid transparent;
+			border-radius: 8px;
+			color: var(--bpl-dashboard-title-color, $titleColor);
+			outline: none;
+
+			&:focus {
+				background: $whiteColor;
+				border-color: rgba($primaryColor, 0.45);
+				box-shadow: 0 0 0 3px rgba($primaryColor, 0.12);
+			}
+
+			&::placeholder {
+				color: #94a3b8;
+			}
+		}
+
+		button {
+			position: absolute;
+			right: 6px;
+			width: 22px;
+			height: 22px;
+			border-radius: 50%;
+			border: none;
+			background: #e5e7ee;
+			color: #4b5563;
+			font-size: 16px;
+			line-height: 1;
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+	}
+
+	.fcTableScroll {
+		width: 100%;
+		overflow-x: auto;
+	}
+
+	.fcTable {
+		width: 100%;
 		border-collapse: collapse;
+		font-size: 14px;
 
-		thead {
-			tr {
-				font-size: 24px;
-				font-weight: 500;
-				text-align: left;
-				color: var(--bpl-dashboard-title-color, $titleColor);
-				display: inline-block;
-				margin-bottom: 20px;
+		thead th {
+			position: sticky;
+			top: 0;
+			background: #f9fafc;
+			padding: 14px 16px;
+			text-align: left;
+			font-weight: 700;
+			font-size: 13px;
+			text-transform: uppercase;
+			letter-spacing: 0.5px;
+			color: var(--bpl-dashboard-content-color, $contentColor);
+			border-bottom: 1px solid #eef0f5;
+			white-space: nowrap;
 
-				&:not(:first-child) {
-					min-width: 310px;
-					max-width: 100%;
-				}
+			&.isProCol {
+				color: var(--bpl-dashboard-primary-color, $primaryColor);
+				text-align: center;
+			}
+
+			&.isFreeCol {
+				text-align: center;
+			}
+
+			&:first-child {
+				min-width: 240px;
+				padding-left: 24px;
+			}
+
+			&:last-child {
+				padding-right: 24px;
 			}
 		}
 
-		tbody {
-			tr {
-				display: flex;
-				align-items: stretch;
-				gap: 26px;
-				margin-bottom: 20px;
+		tbody tr {
+			transition: background 0.12s ease;
 
-				&:last-child {
-					border-bottom: 0;
-				}
+			&:hover {
+				background: rgba($primaryColor, 0.04);
 			}
 
-			td {
-				padding: 0 0 20px 0;
-				border-bottom: 1px solid #E4E4E4;
-
-				&:first-child {
-					flex: 1;
-					font-size: 18px;
-					font-weight: 400;
-					color: var(--bpl-dashboard-content-color, $contentColor);
-					margin-right: auto;
-				}
-
-				&:not(:first-child) {
-					min-width: 310px;
-					max-width: 100%;
-					text-align: center;
-				}
-
-				>* {
-					display: inline-block;
-				}
-
-				svg {
-					fill: currentColor;
-				}
-
-				.icon {
-					width: 24px;
-					height: 24px;
-					color: $whiteColor;
-					display: inline-flex;
-					align-items: center;
-					justify-content: center;
-					border-radius: 50%;
-				}
-
-				.icon.check {
-					background: #34C759;
-
-					svg {
-						width: 20px;
-						height: 20px;
-					}
-				}
-
-				.icon.cross {
-					background: #FF383C;
-
-					svg {
-						width: 18px;
-						height: 18px;
-					}
-				}
+			&.isProOnly {
+				background: rgba($primaryColor, 0.04);
 			}
 		}
+
+		tbody td {
+			padding: 13px 16px;
+			border-bottom: 1px solid #f4f5f9;
+			color: var(--bpl-dashboard-title-color, $titleColor);
+			vertical-align: middle;
+
+			&:first-child {
+				padding-left: 24px;
+				line-height: 1.45;
+			}
+
+			&:last-child {
+				padding-right: 24px;
+			}
+
+			&.isFreeCol,
+			&.isProCol {
+				text-align: center;
+				width: 1%;
+				white-space: nowrap;
+			}
+		}
+
+		tbody tr:last-child td {
+			border-bottom: none;
+		}
+	}
+
+	.fcRowTag {
+		display: inline-block;
+		margin-left: 8px;
+		font-size: 10.5px;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.8px;
+		color: var(--bpl-dashboard-primary-color, $primaryColor);
+		background: rgba($primaryColor, 0.1);
+		padding: 2px 7px;
+		border-radius: 999px;
+		vertical-align: middle;
+	}
+
+	.fcCell {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 28px;
+		height: 28px;
+		border-radius: 50%;
+
+		svg {
+			width: 14px;
+			height: 14px;
+		}
+
+		&.isCheck {
+			background: rgba(34, 197, 94, 0.14);
+			color: #16a34a;
+		}
+
+		&.isCross {
+			background: rgba(148, 163, 184, 0.16);
+			color: #94a3b8;
+
+			svg {
+				width: 12px;
+				height: 12px;
+			}
+		}
+	}
+
+	.fcEmpty {
+		text-align: center;
+		padding: 40px 16px !important;
+		color: var(--bpl-dashboard-content-color, $contentColor);
+		opacity: 0.7;
+	}
+
+	.fcCtaBanner {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 24px;
+		flex-wrap: wrap;
+		padding: 28px 32px;
+		background: linear-gradient(135deg, rgba($primaryColor, 0.08), rgba($primaryColor, 0.02));
+		border: 1px solid rgba($primaryColor, 0.18);
+		border-radius: 16px;
+
+		h2 {
+			font-size: 22px;
+			font-weight: 700;
+			color: var(--bpl-dashboard-title-color, $titleColor);
+			margin: 0 0 6px;
+		}
+
+		p {
+			font-size: 14px;
+			line-height: 1.55;
+			color: var(--bpl-dashboard-content-color, $contentColor);
+			margin: 0;
+			max-width: 580px;
+		}
+
+		.fcPlanCta {
+			width: auto;
+			flex-shrink: 0;
+			padding: 12px 26px !important;
+		}
+	}
+}
+
+@keyframes bplFeatureCompareSpin {
+	to {
+		transform: rotate(360deg);
 	}
 }
