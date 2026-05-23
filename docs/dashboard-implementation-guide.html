@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>bpl-tools Dashboard — Developer Implementation Guide</title>
+<style>
+  /* ── Reset & Base ─────────────────────────────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-size: 14px; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    color: #1a1a2e;
+    background: #fff;
+    line-height: 1.7;
+    padding: 0;
+  }
+
+  /* ── Page layout ──────────────────────────────────────────────────── */
+  .page {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 48px 56px;
+  }
+
+  /* ── Cover ────────────────────────────────────────────────────────── */
+  .cover {
+    min-height: 96vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-bottom: 3px solid #6155F5;
+    padding-bottom: 48px;
+    margin-bottom: 56px;
+  }
+  .cover-badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #6155F5;
+    background: #f0effe;
+    border: 1px solid #d4d0fc;
+    border-radius: 4px;
+    padding: 4px 12px;
+    margin-bottom: 28px;
+  }
+  .cover h1 {
+    font-size: 38px;
+    font-weight: 800;
+    line-height: 1.15;
+    color: #0d0b1f;
+    margin-bottom: 16px;
+  }
+  .cover h1 span { color: #6155F5; }
+  .cover .subtitle {
+    font-size: 16px;
+    color: #5a607a;
+    max-width: 560px;
+    margin-bottom: 40px;
+  }
+  .cover-meta {
+    display: flex;
+    gap: 32px;
+    font-size: 12px;
+    color: #8892a4;
+  }
+  .cover-meta strong { color: #3d4563; }
+
+  /* ── TOC ──────────────────────────────────────────────────────────── */
+  .toc {
+    background: #f8f9fc;
+    border: 1px solid #e8ecf4;
+    border-radius: 8px;
+    padding: 28px 32px;
+    margin-bottom: 56px;
+    page-break-after: always;
+  }
+  .toc h2 { font-size: 15px; font-weight: 700; color: #6155F5; margin-bottom: 16px; letter-spacing: 1px; text-transform: uppercase; }
+  .toc ol { padding-left: 20px; }
+  .toc li { margin-bottom: 6px; font-size: 13px; }
+  .toc a { color: #3d4563; text-decoration: none; }
+  .toc a:hover { color: #6155F5; text-decoration: underline; }
+  .toc .sub { padding-left: 16px; margin-top: 4px; list-style: disc; }
+  .toc .sub li { margin-bottom: 2px; font-size: 12px; color: #6b7490; }
+
+  /* ── Section headings ─────────────────────────────────────────────── */
+  .section { margin-bottom: 52px; }
+  .step-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 18px;
+  }
+  .step-num {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #6155F5;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  h2 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #0d0b1f;
+  }
+  h3 {
+    font-size: 15px;
+    font-weight: 700;
+    color: #3d4563;
+    margin: 24px 0 10px;
+    border-left: 3px solid #6155F5;
+    padding-left: 10px;
+  }
+  h4 {
+    font-size: 13px;
+    font-weight: 700;
+    color: #6155F5;
+    margin: 18px 0 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  p { margin-bottom: 12px; color: #3d4563; font-size: 13.5px; }
+
+  /* ── Code blocks ──────────────────────────────────────────────────── */
+  pre {
+    background: #111827;
+    color: #e2e8f0;
+    border-radius: 6px;
+    padding: 18px 20px;
+    overflow-x: auto;
+    font-size: 12px;
+    line-height: 1.6;
+    margin: 12px 0 20px;
+    white-space: pre;
+  }
+  code {
+    background: #eef0f8;
+    color: #5b45e8;
+    font-size: 12px;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: 'Consolas', 'Fira Code', monospace;
+  }
+  pre code { background: none; color: inherit; padding: 0; font-family: 'Consolas', 'Fira Code', monospace; }
+
+  /* Syntax color hints */
+  .kw  { color: #c792ea; }
+  .str { color: #c3e88d; }
+  .cm  { color: #546e7a; font-style: italic; }
+  .fn  { color: #82aaff; }
+  .num { color: #f78c6c; }
+  .key { color: #80cbc4; }
+
+  /* ── Tables ───────────────────────────────────────────────────────── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12.5px;
+    margin: 12px 0 24px;
+  }
+  thead th {
+    background: #6155F5;
+    color: #fff;
+    font-weight: 600;
+    text-align: left;
+    padding: 9px 12px;
+  }
+  tbody tr:nth-child(odd)  { background: #f8f9fc; }
+  tbody tr:nth-child(even) { background: #fff; }
+  tbody td { padding: 8px 12px; color: #3d4563; border-bottom: 1px solid #e8ecf4; vertical-align: top; }
+  tbody td:first-child { font-weight: 600; color: #5b45e8; font-family: monospace; }
+
+  /* ── Callouts ─────────────────────────────────────────────────────── */
+  .callout {
+    border-radius: 6px;
+    padding: 14px 18px;
+    margin: 16px 0 20px;
+    font-size: 13px;
+  }
+  .callout-info    { background: #eef4ff; border-left: 4px solid #6155F5; color: #2d3a6b; }
+  .callout-warn    { background: #fffbeb; border-left: 4px solid #f59e0b; color: #78490a; }
+  .callout-success { background: #f0fdf4; border-left: 4px solid #22c55e; color: #14532d; }
+  .callout strong  { font-weight: 700; }
+
+  /* ── Checklist ────────────────────────────────────────────────────── */
+  .checklist { list-style: none; padding: 0; }
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 7px 0;
+    border-bottom: 1px solid #f0f2f8;
+    font-size: 13px;
+    color: #3d4563;
+  }
+  .checklist li::before {
+    content: '☐';
+    font-size: 16px;
+    color: #6155F5;
+    flex-shrink: 0;
+    margin-top: -1px;
+  }
+
+  /* ── File tree ────────────────────────────────────────────────────── */
+  .filetree {
+    background: #f8f9fc;
+    border: 1px solid #e3e8f0;
+    border-radius: 6px;
+    padding: 16px 20px;
+    font-family: monospace;
+    font-size: 12.5px;
+    line-height: 1.8;
+    color: #3d4563;
+    margin: 12px 0 20px;
+  }
+  .filetree .dir  { color: #6155F5; font-weight: 600; }
+  .filetree .file { color: #3d4563; }
+  .filetree .note { color: #8892a4; font-style: italic; }
+
+  /* ── Badge chip ───────────────────────────────────────────────────── */
+  .badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 20px;
+    color: #fff;
+    vertical-align: middle;
+    margin-left: 4px;
+  }
+  .badge-new    { background: #6155F5; }
+  .badge-update { background: #FF8D28; }
+  .badge-fix    { background: #FF383C; }
+  .badge-imp    { background: #8b5cf6; }
+  .badge-gray   { background: #9ca3af; }
+
+  /* ── Divider ──────────────────────────────────────────────────────── */
+  hr { border: none; border-top: 1px solid #e8ecf4; margin: 40px 0; }
+
+  /* ── Page break hints ─────────────────────────────────────────────── */
+  @media print {
+    body { font-size: 12px; }
+    .page { padding: 32px 40px; }
+    .cover { min-height: auto; page-break-after: always; }
+    .toc   { page-break-after: always; }
+    .no-break { page-break-inside: avoid; }
+    pre { font-size: 10.5px; }
+    a { color: inherit; text-decoration: none; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ═══ COVER ═══════════════════════════════════════════════════════ -->
+  <div class="cover">
+    <span class="cover-badge">bPlugins · Internal Developer Docs</span>
+    <h1>bpl-tools Dashboard<br><span>Implementation Guide</span></h1>
+    <p class="subtitle">
+      A complete step-by-step reference for wiring the shared <code>bpl-tools</code>
+      React admin dashboard into a new WordPress plugin — from data files to PHP
+      registration to theming.
+    </p>
+    <div class="cover-meta">
+      <span><strong>Version</strong> 1.0</span>
+      <span><strong>Date</strong> May 2026</span>
+      <span><strong>Audience</strong> bPlugins Plugin Developers</span>
+    </div>
+  </div>
+
+  <!-- ═══ TABLE OF CONTENTS ══════════════════════════════════════════ -->
+  <div class="toc">
+    <h2>Table of Contents</h2>
+    <ol>
+      <li><a href="#s0">Overview — How the system works</a></li>
+      <li><a href="#s1">Step 1 — Understand exported components</a></li>
+      <li><a href="#s2">Step 2 — Create your plugin's data file</a>
+        <ul class="sub">
+          <li><a href="#s2a">dashboardInfo()</a></li>
+          <li><a href="#s2b">welcomeInfo()</a></li>
+          <li><a href="#s2c">Changelog badge color rules</a></li>
+          <li><a href="#s2d">demoInfo</a></li>
+          <li><a href="#s2e">pricingInfo</a></li>
+        </ul>
+      </li>
+      <li><a href="#s3">Step 3 — Create your blocks data file</a></li>
+      <li><a href="#s4">Step 4 — Build the App router</a></li>
+      <li><a href="#s5">Step 5 — Admin entry point</a></li>
+      <li><a href="#s6">Step 6 — Set CSS custom properties (theming)</a></li>
+      <li><a href="#s7">Step 7 — PHP: register page + localize data</a></li>
+      <li><a href="#s8">Step 8 — webpack / build config</a></li>
+      <li><a href="#s9">Component prop reference</a></li>
+      <li><a href="#s10">File structure summary</a></li>
+      <li><a href="#s11">Final checklist</a></li>
+    </ol>
+  </div>
+
+  <!-- ═══ OVERVIEW ═══════════════════════════════════════════════════ -->
+  <div class="section" id="s0">
+    <h2>Overview — How the system works</h2>
+    <p>
+      The dashboard is a React SPA living inside <code>bpl-tools/Admin/</code>.
+      It exports ready-made page components. Your plugin consumes them by:
+    </p>
+    <ol style="padding-left:20px;font-size:13.5px;color:#3d4563;line-height:2">
+      <li>Creating a <code>data.js</code> file with your plugin's metadata</li>
+      <li>Building a lightweight React <code>App.js</code> that routes between pages</li>
+      <li>Registering a WordPress admin page and enqueuing the compiled bundle</li>
+    </ol>
+    <div class="callout callout-info">
+      <strong>Single source of truth:</strong> All plugin-specific content (name, slugs, changelogs, getting-started steps, demos, pricing) lives in your <code>data.js</code> file. The shared components in <code>bpl-tools</code> are never modified per-plugin.
+    </div>
+  </div>
+
+  <!-- ═══ STEP 1 ══════════════════════════════════════════════════════ -->
+  <div class="section" id="s1">
+    <div class="step-header">
+      <div class="step-num">1</div>
+      <h2>Understand the exported components</h2>
+    </div>
+    <p>File: <code>bpl-tools/Admin/index.js</code></p>
+    <pre><span class="kw">export</span> { <span class="kw">default</span> <span class="kw">as</span> <span class="fn">Header</span>          } <span class="kw">from</span> <span class="str">'./Header'</span>;
+<span class="kw">export</span> { <span class="kw">default</span> <span class="kw">as</span> <span class="fn">Welcome</span>         } <span class="kw">from</span> <span class="str">'./Welcome'</span>;
+<span class="kw">export</span> { <span class="kw">default</span> <span class="kw">as</span> <span class="fn">Blocks</span>          } <span class="kw">from</span> <span class="str">'./Blocks'</span>;
+<span class="kw">export</span> { <span class="kw">default</span> <span class="kw">as</span> <span class="fn">Demos</span>           } <span class="kw">from</span> <span class="str">'./Demos'</span>;
+<span class="kw">export</span> { <span class="kw">default</span> <span class="kw">as</span> <span class="fn">Pricing</span>         } <span class="kw">from</span> <span class="str">'./Pricing'</span>;
+<span class="kw">export</span> { <span class="kw">default</span> <span class="kw">as</span> <span class="fn">Settings</span>        } <span class="kw">from</span> <span class="str">'./Settings'</span>;
+<span class="kw">export</span> { <span class="kw">default</span> <span class="kw">as</span> <span class="fn">OurPlugins</span>      } <span class="kw">from</span> <span class="str">'./OurPlugins'</span>;
+<span class="kw">export</span> { <span class="kw">default</span> <span class="kw">as</span> <span class="fn">Activation</span>      } <span class="kw">from</span> <span class="str">'./Activation'</span>;
+<span class="kw">export</span> { <span class="kw">default</span> <span class="kw">as</span> <span class="fn">FeatureCompare</span>  } <span class="kw">from</span> <span class="str">'./FeatureCompare'</span>;</pre>
+    <p>Most plugins use: <strong>Header, Welcome, Blocks, Demos, Pricing</strong>. Import only what you need.</p>
+  </div>
+
+  <!-- ═══ STEP 2 ══════════════════════════════════════════════════════ -->
+  <div class="section" id="s2">
+    <div class="step-header">
+      <div class="step-num">2</div>
+      <h2>Create your plugin's data file</h2>
+    </div>
+    <p>Create <code>src/admin/utils/data.js</code>. This is the single source of truth for all dashboard content.</p>
+
+    <h3 id="s2a">dashboardInfo(info)</h3>
+    <p>Consumed by <strong>Header, Overview, Pricing, OurPlugins, Activation</strong>. <code>info</code> comes from <code>wp_localize_script</code>.</p>
+    <pre><span class="kw">export const</span> <span class="fn">dashboardInfo</span> = (<span class="key">info</span>) => {
+  <span class="kw">const</span> { version, isPremium, nonce, adminUrl = <span class="str">''</span>, licenseActiveNonce } = info;
+  <span class="kw">const</span> proSuffix = isPremium ? <span class="str">' Pro'</span> : <span class="str">''</span>;
+
+  <span class="kw">return</span> {
+    name:            <span class="str">`Your Plugin<span class="kw">${proSuffix}</span>`</span>,
+    displayName:     <span class="str">`Your Plugin<span class="kw">${proSuffix}</span> - Short tagline`</span>,
+    description:     <span class="str">'One-two sentences describing what the plugin does.'</span>,
+    slug,           <span class="cm">// WordPress.org slug</span>
+    version,
+    isPremium,
+    adminUrl,
+    displayOurPlugins: <span class="num">true</span>,
+
+    media: {
+      logo:         <span class="str">`https://ps.w.org/${slug}/assets/icon-128x128.png`</span>,
+      banner:       <span class="str">`https://ps.w.org/${slug}/assets/banner-772x250.png`</span>,
+      thumbnail:    <span class="str">`https://bplugins.com/.../products/${slug}.png`</span>,
+      proThumbnail: <span class="str">`https://bplugins.com/.../products/${slug}-pro.png`</span>,
+      video:        <span class="str">''</span>,         <span class="cm">// YouTube URL or ''. Leave '' to hide.</span>
+      isYoutube:    <span class="num">true</span>
+    },
+
+    pages: {
+      org:     <span class="str">`https://wordpress.org/plugins/${slug}/`</span>,
+      docs:    <span class="str">`https://bplugins.com/docs/${webSlug}/`</span>,
+      pricing: <span class="str">`https://bplugins.com/products/${webSlug}/pricing/`</span>,
+      <span class="cm">// landing: `...`  ← add to enable "View Demos" button in hero</span>
+    },
+
+    freemius: {
+      product_id: <span class="num">00000</span>,
+      plan_id:    <span class="num">00000</span>,
+      public_key: <span class="str">'pk_...'</span>
+    },
+
+    licenseActiveNonce,
+
+    startButton: {
+      label: <span class="str">'Start Now'</span>,
+      url:   <span class="str">`${adminUrl}/post-new.php?...&amp;nonce=${nonce}`</span>
+    }
+  };
+};</pre>
+
+    <h3 id="s2b">welcomeInfo(adminUrl)</h3>
+    <p>Consumed by the <strong>Welcome</strong> page only. Spread directly onto the component.</p>
+    <pre><span class="kw">export const</span> <span class="fn">welcomeInfo</span> = (<span class="key">adminUrl</span>) => ({
+
+  keywords:      [<span class="str">'Keyword1'</span>, <span class="str">'Keyword2'</span>],
+  keywordsLabel: <span class="str">'Features'</span>,
+
+  <span class="cm">// ── Getting Started tabs ──────────────────────────────────────────</span>
+  <span class="cm">// Omit gettingStarted entirely to hide the panel.</span>
+  gettingStarted: {
+    tabs: [
+      {
+        key:   <span class="str">'gutenberg'</span>,
+        label: <span class="str">'Gutenberg'</span>,
+        icon:  gutenbergTabIcon,     <span class="cm">// ReactNode — import from your icons file</span>
+        steps: [
+          {
+            num:   <span class="num">1</span>,
+            title: <span class="str">'Add the Block'</span>,
+            body:  <span class="str">'Click &lt;strong&gt;+&lt;/strong&gt; and search for your block.'</span>,
+            link:  { url: <span class="str">`${adminUrl}/post-new.php`</span>, label: <span class="str">'Open Editor'</span> }
+          },
+          { num: <span class="num">2</span>, title: <span class="str">'Configure'</span>, body: <span class="str">'Adjust settings in the sidebar.'</span> },
+          { num: <span class="num">3</span>, title: <span class="str">'Publish'</span>,   body: <span class="str">'Hit Publish when ready.'</span> }
+        ]
+      }
+      <span class="cm">// Add more tabs (shortcode, elementor, php…) as needed</span>
+    ]
+  },
+
+  <span class="cm">// ── Changelogs ─────────────────────────────────────────────────────</span>
+  <span class="cm">// Omit changelogs entirely to hide the panel.</span>
+  changelogs: [
+    {
+      version: <span class="str">'1.1.0 - 01 Jan 2026'</span>,
+      type:    <span class="str">'new'</span>,  <span class="cm">// new | update | fix | improve — drives left border color</span>
+      list: [
+        <span class="str">'&lt;strong&gt;New:&lt;/strong&gt; Initial release.'</span>,
+        <span class="str">'&lt;strong&gt;Fix:&lt;/strong&gt; Minor bug fixes.'</span>,
+      ]
+    }
+  ],
+  changelogsLimit:         <span class="num">5</span>,
+  changelogsReadMoreLabel: <span class="str">'View More Changelogs'</span>, <span class="cm">// omit to hide button</span>
+
+  <span class="cm">// ── Pro feature bullets (free users only) ──────────────────────────</span>
+  proFeatures: [
+    __(<span class="str">'Premium feature one.'</span>, <span class="str">'your-plugin-slug'</span>),
+    __(<span class="str">'Premium feature two.'</span>, <span class="str">'your-plugin-slug'</span>),
+  ],
+});</pre>
+
+    <h3 id="s2c">Changelog badge color rules</h3>
+    <p>The badge is injected automatically from the <code>&lt;strong&gt;</code> text at the start of each list item. You only need to prefix items correctly.</p>
+    <table>
+      <thead><tr><th>Leading &lt;strong&gt; text</th><th>Badge color</th><th>Example</th></tr></thead>
+      <tbody>
+        <tr><td>New, Add</td><td><span class="badge badge-new">New</span> Primary / Blue</td><td><code>'&lt;strong&gt;New:&lt;/strong&gt; Feature description.'</code></td></tr>
+        <tr><td>Update</td><td><span class="badge badge-update">Update</span> Orange #FF8D28</td><td><code>'&lt;strong&gt;Update:&lt;/strong&gt; SDK updated.'</code></td></tr>
+        <tr><td>Fix, Fixing, Fixed, Remove</td><td><span class="badge badge-fix">Fix</span> Red #FF383C</td><td><code>'&lt;strong&gt;Fix:&lt;/strong&gt; Resolved the issue.'</code></td></tr>
+        <tr><td>Improve, Improvement</td><td><span class="badge badge-imp">Improvement</span> Purple #8b5cf6</td><td><code>'&lt;strong&gt;Improvement:&lt;/strong&gt; Better UX.'</code></td></tr>
+        <tr><td>Anything else</td><td><span class="badge badge-gray">Other</span> Gray #9ca3af</td><td>Rarely needed.</td></tr>
+      </tbody>
+    </table>
+    <div class="callout callout-warn">
+      <strong>Important:</strong> Colons inside the badge are stripped automatically (<code>Fix:</code> renders as "Fix"). Always include the colon — it's conventional and then removed cleanly.
+    </div>
+
+    <h3 id="s2d">demoInfo</h3>
+    <pre><span class="kw">export const</span> demoInfo = {
+  allInOneLabel: <span class="str">'See All Demos'</span>,
+  allInOneLink:  <span class="str">'https://yourdomain.com/all-demos/'</span>,
+  demos: [
+    {
+      icon:  svgIcon,
+      title: <span class="str">'Grid'</span>,
+      children: [                        <span class="cm">// sub-demos shown in a dropdown</span>
+        { title: <span class="str">'Default'</span>, type: <span class="str">'iframe'</span>, url: <span class="str">'https://...'</span> }
+      ]
+    },
+    {                                    <span class="cm">// flat demo (no children)</span>
+      icon:  svgIcon,
+      title: <span class="str">'Feature Demo'</span>,
+      type:  <span class="str">'iframe'</span>,
+      url:   <span class="str">'https://...'</span>
+    }
+  ]
+};</pre>
+
+    <h3 id="s2e">pricingInfo</h3>
+    <pre><span class="kw">export const</span> pricingInfo = {
+  logo:     <span class="str">`https://ps.w.org/${slug}/assets/icon-128x128.png`</span>,
+  pluginId: <span class="num">00000</span>,
+  planId:   <span class="num">00000</span>,
+  licenses: [<span class="num">1</span>, <span class="num">3</span>, <span class="num">null</span>],   <span class="cm">// null = unlimited</span>
+  button:   { label: <span class="str">'Buy Now ➜'</span> },
+  featured: { selected: <span class="num">3</span> }   <span class="cm">// which license to highlight</span>
+};</pre>
+  </div>
+
+  <!-- ═══ STEP 3 ══════════════════════════════════════════════════════ -->
+  <div class="section" id="s3">
+    <div class="step-header">
+      <div class="step-num">3</div>
+      <h2>Create your blocks data file</h2>
+    </div>
+    <p>Create <code>src/admin/utils/blocks.js</code>:</p>
+    <pre><span class="kw">import</span> { myBlockIcon, anotherIcon } <span class="kw">from</span> <span class="str">'./blocksIcons'</span>;
+
+<span class="kw">const</span> pluginSlug = <span class="str">'your-plugin'</span>;
+<span class="kw">const</span> demoURL    = <span class="str">'https://yourdomain.com/demo'</span>;
+<span class="kw">const</span> docsURL    = <span class="str">'https://bplugins.com/docs/your-plugin'</span>;
+
+<span class="kw">export default</span> [
+  <span class="cm">// ── Grouped block (renders with a section heading) ─────────────────</span>
+  {
+    title: <span class="str">'Layout'</span>,
+    children: [
+      {
+        name:     <span class="str">`${pluginSlug}/container`</span>,
+        title:    <span class="str">'Container'</span>,
+        icon:     myBlockIcon,
+        demo:     <span class="str">`${demoURL}/container/`</span>,
+        docs:     <span class="str">`${docsURL}/container-block/`</span>,
+        status:   <span class="str">'published'</span>,
+        required: <span class="num">true</span>     <span class="cm">// cannot be disabled; shows "Required" badge</span>
+      }
+    ]
+  },
+
+  <span class="cm">// ── Individual block ───────────────────────────────────────────────</span>
+  {
+    name:    <span class="str">`${pluginSlug}/my-block`</span>,
+    title:   <span class="str">'My Block'</span>,
+    icon:    anotherIcon,
+    demo:    <span class="str">`${demoURL}/my-block/`</span>,
+    docs:    <span class="str">`${docsURL}/my-block/`</span>,
+    status:  <span class="str">'published'</span>,
+    badge:   <span class="str">'New'</span>         <span class="cm">// optional text badge on the card</span>
+  },
+
+  <span class="cm">// ── Pro-only block ─────────────────────────────────────────────────</span>
+  {
+    name:      <span class="str">`${pluginSlug}/pro-block`</span>,
+    title:     <span class="str">'Pro Block'</span>,
+    icon:      anotherIcon,
+    status:    <span class="str">'published'</span>,
+    isPremium: <span class="num">true</span>     <span class="cm">// locks toggle, shows "Pro" badge, opens upgrade modal</span>
+  }
+];</pre>
+    <table>
+      <thead><tr><th>Field</th><th>Type</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>name</td><td>string</td><td>Gutenberg block name, e.g. <code>plugin/block-name</code></td></tr>
+        <tr><td>title</td><td>string</td><td>Display name on the card</td></tr>
+        <tr><td>icon</td><td>ReactNode</td><td>SVG rendered in the colored circle</td></tr>
+        <tr><td>demo</td><td>string</td><td>URL → demo link icon on the card</td></tr>
+        <tr><td>docs</td><td>string</td><td>URL → docs link icon on the card</td></tr>
+        <tr><td>status</td><td>string</td><td><code>'published'</code> or omit (drafts are hidden)</td></tr>
+        <tr><td>badge</td><td>string</td><td>Optional custom text badge (top-left)</td></tr>
+        <tr><td>required</td><td>boolean</td><td>Locks the toggle; shows "Required" badge</td></tr>
+        <tr><td>isPremium</td><td>boolean</td><td>Locks toggle; shows "Pro" badge; opens ProModal</td></tr>
+        <tr><td>children</td><td>array</td><td>Makes it a group with a section heading above</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ═══ STEP 4 ══════════════════════════════════════════════════════ -->
+  <div class="section" id="s4">
+    <div class="step-header">
+      <div class="step-num">4</div>
+      <h2>Build the App router</h2>
+    </div>
+    <p>Create <code>src/admin/Components/App.js</code>:</p>
+    <pre><span class="kw">import</span> { useState } <span class="kw">from</span> <span class="str">'react'</span>;
+<span class="kw">import</span> { HashRouter <span class="kw">as</span> Router, Routes, Route, Navigate } <span class="kw">from</span> <span class="str">'react-router-dom'</span>;
+
+<span class="kw">import</span> Welcome      <span class="kw">from</span> <span class="str">'../../../../bpl-tools/Admin/Welcome'</span>;
+<span class="kw">import</span> Demos        <span class="kw">from</span> <span class="str">'../../../../bpl-tools/Admin/Demos'</span>;
+<span class="kw">import</span> Pricing      <span class="kw">from</span> <span class="str">'../../../../bpl-tools/Admin/Pricing'</span>;
+<span class="kw">import</span> Activation   <span class="kw">from</span> <span class="str">'../../../../bpl-tools/Admin/Activation'</span>;
+<span class="kw">import</span> OurPlugins   <span class="kw">from</span> <span class="str">'../../../../bpl-tools/Admin/OurPlugins'</span>;
+
+<span class="kw">import</span> Layout <span class="kw">from</span> <span class="str">'./Layout'</span>;   <span class="cm">// wraps Header + nav</span>
+<span class="kw">import</span> { demoInfo, pricingInfo, welcomeInfo } <span class="kw">from</span> <span class="str">'../utils/data'</span>;
+
+<span class="kw">const</span> <span class="fn">App</span> = (<span class="key">props</span>) => {
+  <span class="kw">const</span> { isPremium, adminUrl } = props;
+
+  <span class="kw">return</span> &lt;<span class="fn">Router</span>&gt;
+    &lt;<span class="fn">Routes</span>&gt;
+      &lt;<span class="fn">Route</span> path=<span class="str">'/'</span> element={&lt;<span class="fn">Layout</span> {...props} /&gt;}&gt;
+
+        &lt;<span class="fn">Route</span> index element={&lt;<span class="fn">Welcome</span> {...props} {...<span class="fn">welcomeInfo</span>(adminUrl)} /&gt;} /&gt;
+        &lt;<span class="fn">Route</span> path=<span class="str">'welcome'</span>
+               element={&lt;<span class="fn">Welcome</span> {...props} {...<span class="fn">welcomeInfo</span>(adminUrl)} /&gt;} /&gt;
+
+        &lt;<span class="fn">Route</span> path=<span class="str">'demos'</span>
+               element={&lt;<span class="fn">Demos</span> {...props} demoInfo={demoInfo} /&gt;} /&gt;
+
+        {!isPremium &amp;&amp; &lt;<span class="fn">Route</span> path=<span class="str">'pricing'</span>
+               element={&lt;<span class="fn">Pricing</span> pricingInfo={pricingInfo} options={{}} {...props} /&gt;} /&gt;}
+
+        &lt;<span class="fn">Route</span> path=<span class="str">'activation'</span> element={&lt;<span class="fn">Activation</span> {...props} /&gt;} /&gt;
+        &lt;<span class="fn">Route</span> path=<span class="str">'our-plugins'</span> element={&lt;<span class="fn">OurPlugins</span> {...props} /&gt;} /&gt;
+
+        &lt;<span class="fn">Route</span> path=<span class="str">'*'</span> element={&lt;<span class="fn">Navigate</span> to=<span class="str">'/welcome'</span> replace /&gt;} /&gt;
+      &lt;/<span class="fn">Route</span>&gt;
+    &lt;/<span class="fn">Routes</span>&gt;
+  &lt;/<span class="fn">Router</span>&gt;;
+};
+<span class="kw">export default</span> App;</pre>
+    <div class="callout callout-info">
+      <strong>Welcome spread pattern:</strong> Always spread <code>props</code> (from <code>dashboardInfo</code>) first, then <code>welcomeInfo(adminUrl)</code>. The second spread adds <code>gettingStarted</code>, <code>changelogs</code>, <code>proFeatures</code> etc.
+    </div>
+
+    <h3>Layout.js (Header + nav wrapper)</h3>
+    <pre><span class="kw">import</span> { Outlet, NavLink } <span class="kw">from</span> <span class="str">'react-router-dom'</span>;
+<span class="kw">import</span> Header <span class="kw">from</span> <span class="str">'../../../../bpl-tools/Admin/Header'</span>;
+
+<span class="kw">const</span> <span class="fn">Layout</span> = (<span class="key">props</span>) => (
+  &lt;&gt;
+    &lt;<span class="fn">Header</span> {...props}&gt;
+      &lt;<span class="key">nav</span> className=<span class="str">'bPlDashboardNav'</span>&gt;
+        &lt;<span class="fn">NavLink</span> to=<span class="str">'welcome'</span>&gt;Home&lt;/<span class="fn">NavLink</span>&gt;
+        &lt;<span class="fn">NavLink</span> to=<span class="str">'demos'</span>&gt;Demos&lt;/<span class="fn">NavLink</span>&gt;
+        {!props.isPremium &amp;&amp; &lt;<span class="fn">NavLink</span> to=<span class="str">'pricing'</span>&gt;Pricing&lt;/<span class="fn">NavLink</span>&gt;}
+        &lt;<span class="fn">NavLink</span> to=<span class="str">'our-plugins'</span>&gt;Our Plugins&lt;/<span class="fn">NavLink</span>&gt;
+      &lt;/<span class="key">nav</span>&gt;
+    &lt;/<span class="fn">Header</span>&gt;
+    &lt;<span class="key">main</span> className=<span class="str">'bPlDashboardMain'</span>&gt;
+      &lt;<span class="key">div</span> className=<span class="str">'bPlDashboardContainer'</span>&gt;
+        &lt;<span class="fn">Outlet</span> /&gt;
+      &lt;/<span class="key">div</span>&gt;
+    &lt;/<span class="key">main</span>&gt;
+  &lt;/&gt;
+);
+<span class="kw">export default</span> Layout;</pre>
+  </div>
+
+  <!-- ═══ STEP 5 ══════════════════════════════════════════════════════ -->
+  <div class="section" id="s5">
+    <div class="step-header">
+      <div class="step-num">5</div>
+      <h2>Admin entry point</h2>
+    </div>
+    <p>Create <code>src/admin/index.js</code>:</p>
+    <pre><span class="kw">import</span> { render } <span class="kw">from</span> <span class="str">'@wordpress/element'</span>;
+<span class="kw">import</span> App <span class="kw">from</span> <span class="str">'./Components/App'</span>;
+
+<span class="kw">import</span> <span class="str">'../../../../bpl-tools/Admin/style.scss'</span>;  <span class="cm">// base dashboard styles</span>
+<span class="kw">import</span> <span class="str">'./style.scss'</span>;                            <span class="cm">// your CSS variable overrides</span>
+
+<span class="kw">const</span> root = document.<span class="fn">getElementById</span>(<span class="str">'your-plugin-admin-root'</span>);
+<span class="kw">if</span> (root) render(&lt;<span class="fn">App</span> info={window.yourPluginAdmin} /&gt;, root);</pre>
+    <div class="callout callout-info">
+      Import <code>bpl-tools/Admin/style.scss</code> first, then your own <code>style.scss</code>. This order ensures your CSS variable declarations override the fallback values in the shared stylesheet.
+    </div>
+  </div>
+
+  <!-- ═══ STEP 6 ══════════════════════════════════════════════════════ -->
+  <div class="section" id="s6">
+    <div class="step-header">
+      <div class="step-num">6</div>
+      <h2>Set CSS custom properties (theming)</h2>
+    </div>
+    <p>
+      Every component uses CSS variables for colors. Setting them once in your root SCSS instantly themes the entire dashboard — icon tints, badges, buttons, borders, and scrollbars.
+    </p>
+    <p>Create / update <code>src/admin/style.scss</code>:</p>
+    <pre><span class="cm">// Replace values with your plugin's brand colors</span>
+.bPlDashboard {
+  <span class="key">--bpl-dashboard-primary-color</span>:       <span class="num">#146EF5</span>;
+  <span class="key">--bpl-dashboard-primary-color-rgb</span>:   <span class="num">20, 110, 245</span>;  <span class="cm">// same, as R G B</span>
+  <span class="key">--bpl-dashboard-secondary-color</span>:     <span class="num">#FF7A00</span>;
+  <span class="key">--bpl-dashboard-title-color</span>:         <span class="num">#070127</span>;
+  <span class="key">--bpl-dashboard-content-color</span>:       <span class="num">#485781</span>;
+  <span class="key">--bpl-dashboard-content-color-rgb</span>:   <span class="num">72, 87, 129</span>;
+}</pre>
+    <div class="callout callout-warn">
+      <strong>The <code>-rgb</code> variants are required.</strong> They are consumed in expressions like
+      <code>rgba(var(--bpl-dashboard-primary-color-rgb, ...), 0.1)</code> to produce transparent tints.
+      CSS does not support extracting channels from a hex value at runtime.
+    </div>
+    <h4>Where each variable is used</h4>
+    <table>
+      <thead><tr><th>Variable</th><th>Used for</th></tr></thead>
+      <tbody>
+        <tr><td>--bpl-dashboard-primary-color</td><td>Block badge, "New" changelog badge, buttons, block border accents</td></tr>
+        <tr><td>--bpl-dashboard-primary-color-rgb</td><td>Icon background tint (10% opacity), block card hover border</td></tr>
+        <tr><td>--bpl-dashboard-secondary-color</td><td>Button hover fill, changelog left-border for "update" type</td></tr>
+        <tr><td>--bpl-dashboard-title-color</td><td>All heading text</td></tr>
+        <tr><td>--bpl-dashboard-content-color</td><td>Body / paragraph text</td></tr>
+        <tr><td>--bpl-dashboard-content-color-rgb</td><td>Scrollbar thumb, dimmed time text (75% opacity)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ═══ STEP 7 ══════════════════════════════════════════════════════ -->
+  <div class="section" id="s7">
+    <div class="step-header">
+      <div class="step-num">7</div>
+      <h2>PHP — register page + localize data</h2>
+    </div>
+
+    <h3>Register the admin menu page</h3>
+    <pre><span class="fn">add_action</span>(<span class="str">'admin_menu'</span>, <span class="kw">function</span> () {
+  <span class="fn">add_menu_page</span>(
+    <span class="str">'Your Plugin'</span>,
+    <span class="str">'Your Plugin'</span>,
+    <span class="str">'manage_options'</span>,
+    <span class="str">'your-plugin'</span>,
+    <span class="kw">function</span> () {
+      <span class="kw">echo</span> <span class="str">'&lt;div id="your-plugin-admin-root"&gt;&lt;/div&gt;'</span>;
+    },
+    <span class="str">'dashicons-block-default'</span>,
+    <span class="num">30</span>
+  );
+});</pre>
+
+    <h3>Enqueue scripts + localize data</h3>
+    <pre><span class="fn">add_action</span>(<span class="str">'admin_enqueue_scripts'</span>, <span class="kw">function</span> (<span class="key">$hook</span>) {
+  <span class="kw">if</span> (<span class="key">$hook</span> !== <span class="str">'toplevel_page_your-plugin'</span>) <span class="kw">return</span>;
+
+  <span class="fn">wp_enqueue_script</span>(
+    <span class="str">'your-plugin-admin'</span>,
+    <span class="fn">plugin_dir_url</span>(<span class="key">__FILE__</span>) . <span class="str">'build/admin.js'</span>,
+    [<span class="str">'wp-element'</span>, <span class="str">'wp-i18n'</span>, <span class="str">'wp-api-fetch'</span>],
+    YOUR_PLUGIN_VERSION,
+    <span class="num">true</span>
+  );
+
+  <span class="fn">wp_localize_script</span>(<span class="str">'your-plugin-admin'</span>, <span class="str">'yourPluginAdmin'</span>, [
+    <span class="str">'version'</span>            =&gt; YOUR_PLUGIN_VERSION,
+    <span class="str">'isPremium'</span>          =&gt; <span class="fn">your_is_premium_check</span>(),
+    <span class="str">'nonce'</span>              =&gt; <span class="fn">wp_create_nonce</span>(<span class="str">'wp_ajax'</span>),
+    <span class="str">'adminUrl'</span>           =&gt; <span class="fn">admin_url</span>(),
+    <span class="str">'disabledBlocks'</span>     =&gt; <span class="fn">get_option</span>(<span class="str">'bPlBlocksDisabled'</span>, []),
+    <span class="str">'licenseActiveNonce'</span> =&gt; <span class="fn">wp_create_nonce</span>(<span class="str">'your_license_nonce'</span>),
+  ]);
+});</pre>
+
+    <h3>AJAX handler — save disabled blocks</h3>
+    <pre><span class="fn">add_action</span>(<span class="str">'wp_ajax_bPlBlocksDisabled'</span>, <span class="kw">function</span> () {
+  <span class="key">$nonce</span> = <span class="fn">sanitize_text_field</span>(<span class="fn">wp_unslash</span>(<span class="key">$_POST</span>[<span class="str">'_wpnonce'</span>] ?? <span class="str">''</span>));
+  <span class="kw">if</span> (!<span class="fn">wp_verify_nonce</span>(<span class="key">$nonce</span>, <span class="str">'wp_ajax'</span>)) {
+    <span class="fn">wp_send_json_error</span>(<span class="str">'Invalid Request'</span>);
+  }
+  <span class="key">$data</span>    = <span class="fn">json_decode</span>(<span class="fn">stripslashes</span>(<span class="key">$_POST</span>[<span class="str">'data'</span>]), <span class="num">true</span>);
+  <span class="key">$db_data</span> = <span class="fn">get_option</span>(<span class="str">'bPlBlocksDisabled'</span>, []);
+
+  <span class="kw">if</span> (!isset(<span class="key">$data</span>) &amp;&amp; <span class="key">$db_data</span>) {
+    <span class="fn">wp_send_json_success</span>(<span class="key">$db_data</span>);
+  }
+  <span class="fn">update_option</span>(<span class="str">'bPlBlocksDisabled'</span>, <span class="key">$data</span>);
+  <span class="fn">wp_send_json_success</span>(<span class="key">$data</span>);
+});</pre>
+  </div>
+
+  <!-- ═══ STEP 8 ══════════════════════════════════════════════════════ -->
+  <div class="section" id="s8">
+    <div class="step-header">
+      <div class="step-num">8</div>
+      <h2>webpack / build config</h2>
+    </div>
+    <pre><span class="cm">// webpack.config.js</span>
+<span class="kw">const</span> defaultConfig = <span class="fn">require</span>(<span class="str">'@wordpress/scripts/config/webpack.config'</span>);
+
+module.exports = {
+  ...defaultConfig,
+  entry: {
+    ...defaultConfig.<span class="fn">entry</span>(),
+    admin: <span class="str">'./src/admin/index.js'</span>,   <span class="cm">// ← add this line</span>
+  }
+};</pre>
+    <p>This outputs <code>build/admin.js</code> — the file enqueued in PHP above.</p>
+  </div>
+
+  <!-- ═══ STEP 9 ══════════════════════════════════════════════════════ -->
+  <div class="section" id="s9">
+    <div class="step-header">
+      <div class="step-num">9</div>
+      <h2>Component prop quick-reference</h2>
+    </div>
+
+    <h3>Welcome</h3>
+    <pre>&lt;<span class="fn">Welcome</span> {...props} {...<span class="fn">welcomeInfo</span>(adminUrl)} /&gt;</pre>
+    <table>
+      <thead><tr><th>Prop</th><th>Type</th><th>Required</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td>name</td><td>string</td><td>yes</td><td>Plugin name in hero heading</td></tr>
+        <tr><td>version</td><td>string</td><td>yes</td><td>Shown as v{version}</td></tr>
+        <tr><td>description</td><td>string</td><td>yes</td><td>Tagline (personalised with user's first name)</td></tr>
+        <tr><td>isPremium</td><td>boolean</td><td>yes</td><td>Controls ProAds vs Info panel &amp; Upgrade button</td></tr>
+        <tr><td>slug</td><td>string</td><td>yes</td><td>WP.org slug — changelog "read more" link</td></tr>
+        <tr><td>media</td><td>object</td><td>yes</td><td>{logo, thumbnail, proThumbnail?, video?, isYoutube?}</td></tr>
+        <tr><td>pages</td><td>object</td><td>yes</td><td>{org?, docs?, pricing?, landing?}</td></tr>
+        <tr><td>startButton</td><td>object</td><td>—</td><td>{label, url} — primary CTA in hero card</td></tr>
+        <tr><td>keywords</td><td>string[]</td><td>—</td><td>Chip labels shown below tagline</td></tr>
+        <tr><td>keywordsLabel</td><td>string</td><td>—</td><td>Label before chips</td></tr>
+        <tr><td>gettingStarted</td><td>object</td><td>—</td><td>{tabs: [...]} — omit to hide the panel</td></tr>
+        <tr><td>changelogs</td><td>object[]</td><td>—</td><td>[{version, type, list}] — omit to hide</td></tr>
+        <tr><td>changelogsLimit</td><td>number</td><td>—</td><td>Max entries shown initially (default 5)</td></tr>
+        <tr><td>changelogsReadMoreLabel</td><td>string</td><td>—</td><td>"Read more" button label; omit to hide</td></tr>
+        <tr><td>proFeatures</td><td>string[]</td><td>—</td><td>Bullet list inside ProAds (free users only)</td></tr>
+        <tr><td>helpItems</td><td>object[]</td><td>—</td><td>Override Info cards: {title, description, link, linkText}</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Blocks</h3>
+    <pre>&lt;<span class="fn">Blocks</span>
+  {...props}
+  allBlocks={blocks}
+  disabledBlocks={disabledBlocks}
+  onChange={handleBlocksChange}
+  status={savingStatus}          <span class="cm">// 'loading' | 'success' | 'error' | null</span>
+  pageTitle=<span class="str">'All Blocks'</span>
+  ProModal={MyProModal}          <span class="cm">// optional — shown to free users</span>
+/&gt;</pre>
+
+    <h3>Header</h3>
+    <pre>&lt;<span class="fn">Header</span> {...props}&gt;
+  &lt;<span class="key">nav</span> className=<span class="str">'bPlDashboardNav'</span>&gt;
+    &lt;<span class="fn">NavLink</span> to=<span class="str">'welcome'</span>&gt;Home&lt;/<span class="fn">NavLink</span>&gt;
+    &lt;<span class="fn">NavLink</span> to=<span class="str">'blocks'</span>&gt;Blocks&lt;/<span class="fn">NavLink</span>&gt;
+  &lt;/<span class="key">nav</span>&gt;
+&lt;/<span class="fn">Header</span>&gt;</pre>
+    <p>The hamburger menu and mobile nav-open/close logic are built-in.</p>
+  </div>
+
+  <!-- ═══ STEP 10 ═════════════════════════════════════════════════════ -->
+  <div class="section" id="s10">
+    <div class="step-header">
+      <div class="step-num">10</div>
+      <h2>File structure summary</h2>
+    </div>
+    <div class="filetree">
+<span class="dir">your-plugin/</span>
+├── <span class="dir">src/</span>
+│   └── <span class="dir">admin/</span>
+│       ├── <span class="file">index.js</span>              <span class="note">← React entry point</span>
+│       ├── <span class="file">style.scss</span>            <span class="note">← CSS variable overrides (theming)</span>
+│       ├── <span class="dir">Components/</span>
+│       │   ├── <span class="file">App.js</span>            <span class="note">← Router + page wiring</span>
+│       │   └── <span class="file">Layout.js</span>        <span class="note">← Header + nav + Outlet wrapper</span>
+│       └── <span class="dir">utils/</span>
+│           ├── <span class="file">data.js</span>           <span class="note">← dashboardInfo + welcomeInfo + demoInfo + pricingInfo</span>
+│           ├── <span class="file">blocks.js</span>         <span class="note">← allBlocks array</span>
+│           └── <span class="file">icons.js</span>          <span class="note">← SVG icons for blocks &amp; tabs</span>
+├── <span class="dir">build/</span>
+│   └── <span class="file">admin.js</span>              <span class="note">← compiled output (gitignored)</span>
+├── <span class="file">your-plugin.php</span>           <span class="note">← admin_menu + enqueue + AJAX handler</span>
+└── <span class="file">webpack.config.js</span>         <span class="note">← adds admin entry point</span>
+    </div>
+  </div>
+
+  <!-- ═══ STEP 11 ═════════════════════════════════════════════════════ -->
+  <div class="section" id="s11">
+    <div class="step-header">
+      <div class="step-num">11</div>
+      <h2>Final checklist</h2>
+    </div>
+    <ul class="checklist">
+      <li><code>data.js</code> — <code>dashboardInfo</code> filled with real plugin name, slugs, media URLs, freemius IDs</li>
+      <li><code>data.js</code> — <code>welcomeInfo</code> has <code>gettingStarted.tabs</code> with real steps</li>
+      <li><code>data.js</code> — changelog list items all start with <code>&lt;strong&gt;New/Fix/Update:&lt;/strong&gt;</code></li>
+      <li><code>data.js</code> — <code>proFeatures</code> list filled for the ProAds panel</li>
+      <li><code>blocks.js</code> — all blocks listed with <code>name</code>, <code>title</code>, <code>icon</code>, <code>status</code></li>
+      <li><code>style.scss</code> — CSS variables set for <code>--bpl-dashboard-primary-color</code> and <code>--bpl-dashboard-primary-color-rgb</code></li>
+      <li><code>App.js</code> — <code>Welcome</code> is called with <code>{...props} {...welcomeInfo(adminUrl)}</code></li>
+      <li>PHP — <code>admin_menu</code> renders <code>&lt;div id="your-plugin-admin-root"&gt;&lt;/div&gt;</code></li>
+      <li>PHP — <code>wp_localize_script</code> passes <code>version</code>, <code>isPremium</code>, <code>nonce</code>, <code>adminUrl</code>, <code>disabledBlocks</code></li>
+      <li>PHP — <code>bPlBlocksDisabled</code> AJAX action registered and saving to <code>update_option</code></li>
+      <li><code>webpack.config.js</code> — entry <code>admin: './src/admin/index.js'</code> added</li>
+    </ul>
+  </div>
+
+  <hr />
+  <p style="text-align:center;font-size:11px;color:#9ca3af;padding:16px 0">
+    bPlugins LLC · Internal Developer Documentation · bpl-tools Admin Dashboard
+  </p>
+
+</div>
+</body>
+</html>
