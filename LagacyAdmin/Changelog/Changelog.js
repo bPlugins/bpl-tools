@@ -3,6 +3,22 @@ import { useRef, useState, useEffect } from 'react';
 import './style.scss';
 import { minusIcon, plusIcon } from '../../utils/icons';
 
+const BADGE_MAP = {
+	new: 'new', add: 'new',
+	update: 'update',
+	improve: 'improvement', improvement: 'improvement',
+	fix: 'fix', fixing: 'fix', fixed: 'fix', remove: 'fix',
+};
+
+const processItem = (html) => html.replace(
+	/^<strong>([^<]+)<\/strong>/i,
+	(_, label) => {
+		const clean = label.replace(':', '').trim();
+		const cls = BADGE_MAP[clean.toLowerCase()] || 'default';
+		return `<strong class="changelogBadge ${cls}">${clean}</strong>`;
+	}
+);
+
 const Changelog = (props) => {
 	const { changelogs } = props;
 
@@ -40,7 +56,7 @@ const Changelog = (props) => {
 							<h4>{version}</h4>
 
 							<ul className='list'>
-								{list?.map((item, token) => <li key={token}>{item}</li>)}
+								{list?.map((item, token) => <li key={token} dangerouslySetInnerHTML={{ __html: processItem(item) }} />)}
 							</ul>
 						</div>
 					})}

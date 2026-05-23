@@ -1,3 +1,4 @@
+import { useState, cloneElement, isValidElement, Children } from 'react';
 import Button from '../../Components/Button/Button';
 import { ourPluginsIcon, upgradeProIcon } from '../utils/icons';
 
@@ -16,7 +17,22 @@ import './style.scss';
  */
 const Header = (props) => {
 	const { name, media, version, isPremium, displayOurPlugins, children } = props;
-	const { logo } = media || {}
+	const { logo } = media || {};
+	const [isNavOpen, setIsNavOpen] = useState(false);
+
+	// Inject 'open' class onto the nav child and close menu on link click
+	const enhancedChildren = Children.map(children, child => {
+		if (!isValidElement(child)) return child;
+		const cls = child.props.className || '';
+		if (!cls.includes('bPlDashboardNav')) return child;
+		return cloneElement(child, {
+			className: `${cls}${isNavOpen ? ' open' : ''}`,
+			onClick: (e) => {
+				child.props.onClick?.(e);
+				setIsNavOpen(false);
+			}
+		});
+	});
 
 	return <div className='bPlDashboardHeader'>
 		<div className='pluginInfo' wrap={true}>
@@ -25,7 +41,18 @@ const Header = (props) => {
 			{version && <div className='pluginVersion'>v{version}</div>}
 		</div>
 
-		{children}
+		<button
+			className={`bplHamburger${isNavOpen ? ' open' : ''}`}
+			onClick={() => setIsNavOpen(v => !v)}
+			aria-label='Toggle navigation'
+			aria-expanded={isNavOpen}
+		>
+			<span />
+			<span />
+			<span />
+		</button>
+
+		{enhancedChildren}
 
 		<div className='navButtons'>
 			{displayOurPlugins && (

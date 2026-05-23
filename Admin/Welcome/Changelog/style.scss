@@ -4,6 +4,12 @@
 	width: 100%;
 	padding: 32px !important;
 
+	.allChangelogs {
+		max-height: 450px;
+		overflow: hidden;
+		overflow-y: auto;
+	}
+
 	h3 {
 		font-size: 18px;
 		font-weight: 600;
@@ -48,13 +54,29 @@
 
 		.list {
 			font-size: 14px;
-			font-weight: 500;
 			list-style-type: none;
 			color: var(--bpl-dashboard-content-color, $contentColor);
 			margin-bottom: 8px;
 
 			li {
 				margin-bottom: 5px;
+			}
+
+			.changelogBadge {
+				display: inline-block;
+				font-size: 11px;
+				font-weight: 600;
+				padding: 1px 9px;
+				border-radius: 20px;
+				margin-right: 5px;
+				color: #fff;
+				vertical-align: middle;
+
+				&.new { background: var(--bpl-dashboard-primary-color, $primaryColor); }
+				&.update { background: #FF8D28; }
+				&.fix { background: #FF383C; }
+				&.improvement { background: #8b5cf6; }
+				&.default { background: #9ca3af; }
 			}
 		}
 

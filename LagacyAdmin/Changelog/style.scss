@@ -53,6 +53,23 @@ $contentColor: #485781;
 			font-size: 15px;
 			font-weight: 400;
 			list-style: inside;
+
+			.changelogBadge {
+				display: inline-block;
+				font-size: 11px;
+				font-weight: 600;
+				padding: 1px 9px;
+				border-radius: 20px;
+				margin-right: 5px;
+				color: #fff;
+				vertical-align: middle;
+
+				&.new { background: $primaryColor; }
+				&.update { background: $secondaryColor; }
+				&.fix { background: #FF383C; }
+				&.improvement { background: #8b5cf6; }
+				&.default { background: #9ca3af; }
+			}
 		}
 	}
 }

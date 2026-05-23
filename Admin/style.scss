@@ -85,4 +85,21 @@ div.fs-notice.updated {
 	.bPlButton {
 		border-radius: 0 !important;
 	}
+
+	::-webkit-scrollbar {
+		width: 8px
+	}
+
+	::-webkit-scrollbar-track {
+		background: transparent
+	}
+
+	::-webkit-scrollbar-thumb {
+		background: rgba(var(--bpl-dashboard-content-color-rgb, #1B2E4B), .25);
+		border-radius: 4px
+	}
+
+	::-webkit-scrollbar-thumb:hover {
+		background: rgba(var(--bpl-dashboard-content-color-rgb, #1B2E4B), .45)
+	}
 }
