@@ -3,7 +3,7 @@
 .bPlDashboardSettings {
 	width: 100%;
 	max-width: 880px;
-	margin: 0 auto;
+	margin: 0 auto !important;
 	display: flex;
 	flex-direction: column;
 	gap: 20px;

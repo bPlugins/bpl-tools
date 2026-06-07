@@ -7,13 +7,13 @@ import './style.scss';
 /**
  * Dashboard page header — logo, plugin name, version badge, nav slot, and action buttons.
  *
- * @param {object}        props
- * @param {string}        props.name              - Plugin name displayed as <h1>
- * @param {string}        props.version           - Version string, rendered as v{version}
- * @param {boolean}       props.isPremium         - Hides "Upgrade Pro" button; switches Our Plugins to Button
- * @param {object}        [props.media]           - {logo?} — plugin logo image URL
- * @param {boolean}       [props.displayOurPlugins] - Shows the "Our Plugins" button when true
- * @param {React.ReactNode} [props.children]      - Nav links rendered between the plugin info and action buttons
+ * @param {object}	props
+ * @param {string}	props.name				- Plugin name displayed as <h1>
+ * @param {string}	props.version				- Version string, rendered as v{version}
+ * @param {boolean}	props.isPremium			- Hides "Upgrade Pro" button; switches Our Plugins to Button
+ * @param {object}	[props.media]				- {logo?} — plugin logo image URL
+ * @param {boolean}	[props.displayOurPlugins]	- Shows the "Our Plugins" button when true
+ * @param {React.ReactNode} [props.children]		- Nav links rendered between the plugin info and action buttons
  */
 const Header = (props) => {
 	const { name, media, version, isPremium, displayOurPlugins, children } = props;

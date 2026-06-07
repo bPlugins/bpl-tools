@@ -57,9 +57,9 @@ const StarRow = ({ rating = 0 }) => {
  * Single plugin card with self-contained install/activate state.
  *
  * @param {object} props
- * @param {object} props.plugin     - Plugin data from WordPress.org API
- * @param {string} [props.path]     - Installed plugin path (e.g. 'slug/slug.php')
- * @param {string} props.initStatus - 'notfound' | 'installed' | 'activated'
+ * @param {object} props.plugin		- Plugin data from WordPress.org API
+ * @param {string} [props.path]		- Installed plugin path (e.g. 'slug/slug.php')
+ * @param {string} props.initStatus	- 'notfound' | 'installed' | 'activated'
  */
 const PluginCard = ({ plugin, path, initStatus }) => {
 	const { name, slug, icons, short_description, version } = plugin;
@@ -94,12 +94,12 @@ const PluginCard = ({ plugin, path, initStatus }) => {
 	const label = (() => {
 		switch (status) {
 			case 'activated':
-			case 'success':    return __('Activated');
-			case 'installed':  return __('Activate');
+			case 'success': return __('Activated');
+			case 'installed': return __('Activate');
 			case 'activating': return __('Activating…');
 			case 'installing': return __('Installing…');
-			case 'error':      return __('Failed');
-			default:           return __('Install & Activate');
+			case 'error': return __('Failed');
+			default: return __('Install & Activate');
 		}
 	})();
 
@@ -155,9 +155,9 @@ const PluginCard = ({ plugin, path, initStatus }) => {
 /**
  * Fetches and displays other bPlugins products with search, sort, and one-click install/activate.
  *
- * @param {string}   props.slug             - Current plugin slug — excluded from the list
- * @param {string[]} [props.slugs]          - Override the default slug list
- * @param {Array}    props.installedPlugins - Injected by withSelect; locally installed plugins
+ * @param {string}		props.slug				- Current plugin slug — excluded from the list
+ * @param {string[]}	[props.slugs]			- Override the default slug list
+ * @param {Array}		props.installedPlugins	- Injected by withSelect; locally installed plugins
  */
 const OurPlugins = ({ slug, slugs: allSlugs = DEFAULT_SLUGS, installedPlugins }) => {
 	const [plugins, setPlugins] = useState([]);
@@ -189,8 +189,8 @@ const OurPlugins = ({ slug, slugs: allSlugs = DEFAULT_SLUGS, installedPlugins })
 		const q = search.trim().toLowerCase();
 		let list = plugins.filter((p) => !q || p.name.toLowerCase().includes(q) || (p.short_description || '').toLowerCase().includes(q));
 		if (sort === 'popular') list.sort((a, b) => (b.active_installs || 0) - (a.active_installs || 0));
-		if (sort === 'rating')  list.sort((a, b) => (b.rating || 0) - (a.rating || 0));
-		if (sort === 'name')    list.sort((a, b) => getDisplayName(a.name).localeCompare(getDisplayName(b.name)));
+		if (sort === 'rating') list.sort((a, b) => (b.rating || 0) - (a.rating || 0));
+		if (sort === 'name') list.sort((a, b) => getDisplayName(a.name).localeCompare(getDisplayName(b.name)));
 		return list;
 	}, [plugins, search, sort]);
 
@@ -228,8 +228,8 @@ const OurPlugins = ({ slug, slugs: allSlugs = DEFAULT_SLUGS, installedPlugins })
 			<div className='ourPlugSort' role='tablist'>
 				{[
 					{ key: 'popular', label: __('Popular') },
-					{ key: 'rating',  label: __('Top Rated') },
-					{ key: 'name',    label: __('A–Z') }
+					{ key: 'rating', label: __('Top Rated') },
+					{ key: 'name', label: __('A–Z') }
 				].map((opt) => (
 					<button
 						key={opt.key}

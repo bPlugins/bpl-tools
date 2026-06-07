@@ -6,7 +6,7 @@
 	display: flex;
 	flex-wrap: wrap;
 	gap: 32px;
-	margin: 0 auto;
+	margin: 0 auto !important;
 
 	.overviewLeft {
 		flex: 1;

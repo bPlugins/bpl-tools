@@ -11,12 +11,12 @@ import useLicense from './useLicense';
  * Communicates with the bPlugins LicenseActivation.php AJAX bridge.
  *
  * @param {object} props
- * @param {string} props.name               - Plugin name
- * @param {string} props.slug               - WordPress.org slug (Freemius recover-license + EULA links)
- * @param {string} [props.version]          - Plugin version shown in the card header
- * @param {object} [props.media]            - {logo?}
- * @param {object} props.freemius           - {product_id, public_key}
- * @param {string} props.licenseActiveNonce - wp_create_nonce('bPlLicenseActivation')
+ * @param {string} props.name				- Plugin name
+ * @param {string} props.slug				- WordPress.org slug (Freemius recover-license + EULA links)
+ * @param {string} [props.version]			- Plugin version shown in the card header
+ * @param {object} [props.media]			- {logo?}
+ * @param {object} props.freemius			- {product_id, public_key}
+ * @param {string} props.licenseActiveNonce	- wp_create_nonce('bPlLicenseActivation')
  */
 const Activation = (props) => {
 	const { name, slug, version, media, freemius, licenseActiveNonce } = props;

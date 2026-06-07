@@ -11,11 +11,11 @@ import { checkCircleIcon, closeIcon, searchIcon } from '../utils/icons';
  * Free vs Pro feature comparison table — fetches live plan data, renders plan price
  * cards, a searchable feature breakdown table, and a Pro CTA banner.
  *
- * @param {string[]} props.plans            - Plan names to compare, e.g. ['free', 'pro']
- * @param {object}   props.freemius         - {product_id, public_key} — spread from dashboardInfo via props
- * @param {object}   [props.hero]           - Override hero: {eyebrow?, title?, description?}
- * @param {object}   [props.ctaBanner]      - Override CTA banner: {title?, description?, ctaLabel?}
- * @param {object}   [props.planDescriptions] - Override plan taglines: {free?, pro?}
+ * @param {string[]} props.plans				- Plan names to compare, e.g. ['free', 'pro']
+ * @param {object}	props.freemius				- {product_id, public_key} — spread from dashboardInfo via props
+ * @param {object}	[props.hero]				- Override hero: {eyebrow?, title?, description?}
+ * @param {object}	[props.ctaBanner]			- Override CTA banner: {title?, description?, ctaLabel?}
+ * @param {object}	[props.planDescriptions]	- Override plan taglines: {free?, pro?}
  */
 const FeatureCompare = ({ plans: planNames = ['free', 'pro'], freemius, hero: heroProp, ctaBanner: ctaBannerProp, planDescriptions }) => {
 	const { product_id, public_key } = freemius || {};
