@@ -587,11 +587,18 @@ svg.bPlBlockIcon {
 
 		.components-base-control__field {
 			.components-toggle-group-control {
+				padding: 0 !important;
 				border-width: 1px !important;
 				border-color: $primaryColor !important;
 
 				&::before {
 					background: $primaryColor;
+				}
+
+				.components-toggle-group-control-option-base[aria-pressed="true"] {
+					svg {
+						fill: #fff;
+					}
 				}
 			}
 		}
