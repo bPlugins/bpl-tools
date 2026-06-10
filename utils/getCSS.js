@@ -5,7 +5,16 @@ import hexagon from '../Components/Mask/assets/shapes/hexagon.svg';
 import sketch from '../Components/Mask/assets/shapes/sketch.svg';
 import triangle from '../Components/Mask/assets/shapes/triangle.svg';
 
-import { isExist } from './common';
+import { isExist, sanitizeURL } from './common';
+
+const safeCSSUrl = (url) => {
+	const sanitized = sanitizeURL(url);
+	if (!sanitized) {
+		return 'none';
+	}
+	const cleanUrl = sanitized.replace(/['"()]/g, '');
+	return `url('${cleanUrl}')`;
+};
 import { gradient as defaultGradient, mobileBreakpoint, primaryColor300, tabBreakpoint } from './data';
 
 export const isValidCSS = (p, v) => isExist(v) ? `${p}: ${v};` : '';
@@ -15,7 +24,7 @@ export const getBackgroundCSS = (bg, isSolid = true, isGradient = true, isImage 
 
 	const styles = ('gradient' === type && isGradient) ? isValidCSS('background', gradient) :
 		('image' === type && isImage) ?
-			`background: url(${image?.url});
+			`background: ${safeCSSUrl(image?.url)};
 				${isValidCSS('background-color', overlayColor)}
 				${isValidCSS('background-position', position)}
 				${isValidCSS('background-size', size)}
@@ -241,7 +250,7 @@ const getImagePosition = (img) => {
 const getImageCSS = (img = {}) => {
 	if (img) {
 		return {
-			desktop: isExist(img.url) ? `background-image: url(${img.url}); ${getImagePosition(img?.desktop)}` : '',
+			desktop: isExist(img.url) ? `background-image: ${safeCSSUrl(img.url)}; ${getImagePosition(img?.desktop)}` : '',
 			tablet: isExist(img.url) ? getImagePosition(img?.tablet) : '',
 			mobile: isExist(img.url) ? getImagePosition(img?.mobile) : '',
 		}
@@ -261,8 +270,13 @@ const getVideoCSS = (video, selector) => {
 
 	if (!el) {
 		if (parentEl && url) {
-			videoEl.innerHTML = `<source src=${url}></source>`;
-			parentEl.appendChild(videoEl);
+			const sanitizedUrl = sanitizeURL(url);
+			if (sanitizedUrl) {
+				const sourceEl = document.createElement('source');
+				sourceEl.src = sanitizedUrl;
+				videoEl.appendChild(sourceEl);
+				parentEl.appendChild(videoEl);
+			}
 		}
 	}
 	videoEl.loop = loop;
@@ -419,7 +433,7 @@ export const getMaskCSS = (mask) => {
 
 	const getShape = (type) => svgShape.find((e) => e.type === type);
 	return isMask ?
-		`-webkit-mask-image: url(${shape.type === 'custom' ? shape.url : getShape(shape.type).svg});
+		`-webkit-mask-image: ${shape.type === 'custom' ? safeCSSUrl(shape.url) : `url(${getShape(shape.type).svg})`};
 		-webkit-mask-size: ${size.type === 'custom' ? size.scale : size.type};
 		${position.type === 'custom' ?
 			`${isValidCSS('-webkit-mask-position-x', position.x)}
