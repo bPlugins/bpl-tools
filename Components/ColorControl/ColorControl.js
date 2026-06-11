@@ -12,7 +12,7 @@ import { Button, ColorPicker, Dropdown, PanelRow } from '@wordpress/components';
 import { withSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 
-import { Label } from '../index';
+import Label from '../Label/Label';
 import './ColorControl.scss';
 import { forwardRef } from 'react';
 
@@ -23,7 +23,7 @@ const ThemeColors = withSelect((select) => {
 })(({ isOpen, onClose, onChange, themeColors }) => {
 	return themeColors.length ? <div className='bPlThemeColors'>
 		{themeColors.map(({ color }) => <div key={color} className='bPlColorButtonContainer'>
-			<button type='button' className='bPlColorButton' aria-expanded={isOpen} style={{ backgroundColor: color || 'transparent' }} onClick={() => { onChange(color); onClose; }} />
+			<button type='button' className='bPlColorButton' aria-expanded={isOpen} style={{ backgroundColor: color || 'transparent' }} onClick={() => { onChange(color); onClose(); }} />
 		</div>)}
 	</div> : null;
 });

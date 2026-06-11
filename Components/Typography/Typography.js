@@ -12,8 +12,9 @@ import { Button, Dropdown, PanelRow, SelectControl, __experimentalUnitControl as
 import { produce } from 'immer';
 
 import './Typography.scss';
-import { Label, BtnGroup } from '../index';
-import { BDevice } from '../Deprecated';
+import Label from '../Label/Label';
+import BtnGroup from '../BtnGroup/BtnGroup';
+import BDevice from '../Deprecated/BDevice/BDevice';
 import { pxUnit, perUnit, emUnit, remUnit, vwUnit } from '../../utils/options';
 import fontLists from './fontLists';
 import { fontStyles, textTransforms, textDecorations } from './options';

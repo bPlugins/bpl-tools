@@ -5,7 +5,7 @@ import { Button, withNotices, TextControl, SelectControl, PanelRow, ToolbarGroup
 import { isBlobURL } from '@wordpress/blob';
 
 import './ImageControl.scss';
-import { Label } from '../../index';
+import Label from '../../Label/Label';
 import { getImageSizes } from '../../../utils/functions';
 
 

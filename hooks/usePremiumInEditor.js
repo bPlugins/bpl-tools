@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 
-import { useWPAjax, useWPOptionQuery } from './index';
+import useWPAjax from './useWPAjax';
+import useWPOptionQuery from './useWPOptionQuery';
 
 const usePremiumInEditor = (utilsAction, pipeAction) => {
 	const { data: utils } = useWPOptionQuery(utilsAction);

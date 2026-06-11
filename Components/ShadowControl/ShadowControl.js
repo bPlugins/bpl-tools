@@ -12,7 +12,9 @@ import { __ } from '@wordpress/i18n';
 import { Dropdown, PanelRow, ToggleControl, __experimentalUnitControl as UnitControl, Button, Dashicon } from '@wordpress/components';
 import { produce } from 'immer';
 
-import { Label, ColorControl, BButtonGroup } from '../index';
+import Label from '../Label/Label';
+import BButtonGroup from '../BButtonGroup/BButtonGroup';
+import { ColorControl } from '../ColorControl/ColorControl';
 import { pxUnit, emUnit, remUnit } from '../../utils/options';
 import { gearIcon } from '../../utils/icons';
 

@@ -20,7 +20,7 @@
 
 import { Button, ButtonGroup, PanelRow } from '@wordpress/components';
 
-import { Label } from '../index';
+import Label from '../Label/Label';
 
 const BtnGroup = props => {
 	const { className, label = '', labelPosition = 'left', value, onChange, options, isIcon = false, isTextIcon = false, size = 'compact' } = props;

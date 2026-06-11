@@ -1,7 +1,7 @@
 import { __experimentalUnitControl as UnitControl } from '@wordpress/components';
 import { useState } from 'react';
 
-import { Label } from '../index';
+import Label from '../Label/Label';
 import './BoxControl.scss';
 
 /**

@@ -1,4 +1,4 @@
-import { useWPAjax } from './index';
+import useWPAjax from './useWPAjax';
 
 const usePremium = (pipeAction, nonce) => {
 	const { data = null, isLoading } = useWPAjax(pipeAction, { _wpnonce: nonce });

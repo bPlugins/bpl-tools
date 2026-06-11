@@ -1,7 +1,11 @@
 import { withSelect } from '@wordpress/data';
 import { TabPanel, PanelRow, __experimentalInputControl as InputControl, SelectControl, ToggleControl, __experimentalUnitControl as UnitControl } from '@wordpress/components';
 
-import { Device, Gradient, Label, SolidBackground, MediaArea } from '../index';
+import Label from '../Label/Label';
+import Device from '../Device/Device';
+import Gradient from '../Gradient/Gradient';
+import SolidBackground from '../SolidBackground/SolidBackground';
+import { MediaArea } from '../MediaControl/MediaControl';
 import { bgTabs, imgAttachmentOptions, imgPositionOptions, imgRepeatOptions, imgSizeOptions, unitOptions } from './utils/options';
 
 /**

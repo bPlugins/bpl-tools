@@ -3,7 +3,7 @@ import { __ } from '@wordpress/i18n';
 import { PanelRow, Flex, Button } from '@wordpress/components';
 
 import './IconLibrary.scss';
-import { Label } from '../index';
+import Label from '../Label/Label';
 import bootstrapIcons from './icons/bootstrap.json';
 import fontAwesomeIcons from './icons/font-awesome.json';
 import lucidIcons from './icons/lucidicons.json';

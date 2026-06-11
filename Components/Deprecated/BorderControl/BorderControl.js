@@ -10,7 +10,8 @@
 import { __ } from '@wordpress/i18n';
 import { Dropdown, PanelRow, SelectControl, __experimentalUnitControl as UnitControl, Button } from '@wordpress/components';
 
-import { Label, ColorControl } from '../../index';
+import Label from '../../Label/Label';
+import { ColorControl } from '../../ColorControl/ColorControl';
 import { borderStyles, pxUnit, perUnit, emUnit, remUnit, sides } from '../../../utils/options';
 
 const BorderControl = props => {

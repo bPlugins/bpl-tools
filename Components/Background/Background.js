@@ -17,7 +17,10 @@ import { withSelect } from '@wordpress/data';
 import { __experimentalGradientPicker, __experimentalAlignmentMatrixControl as AlignmentMatrixControl, Button, Dropdown, Flex, GradientPicker, PanelRow, SelectControl } from '@wordpress/components';
 const Gradient = __experimentalGradientPicker || GradientPicker;
 
-import { BtnGroup, ColorControl, InlineDetailMediaUpload, Label } from '../index';
+import Label from '../Label/Label';
+import BtnGroup from '../BtnGroup/BtnGroup';
+import { ColorControl } from '../ColorControl/ColorControl';
+import { InlineDetailMediaUpload } from '../MediaControl/MediaControl';
 import { attachments, bgTypes, repeats, sizes } from './options';
 import { gradient } from '../../utils/data';
 

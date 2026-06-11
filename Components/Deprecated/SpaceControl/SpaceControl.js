@@ -10,7 +10,7 @@ import { __ } from '@wordpress/i18n';
 import { PanelRow, __experimentalUnitControl as UnitControl, ButtonGroup, Button, Tooltip, Dashicon } from '@wordpress/components';
 
 import './SpaceControl.scss';
-import { Label } from '../../index';
+import Label from '../../Label/Label';
 import { pxUnit, perUnit, emUnit, remUnit } from '../../../utils/options';
 import { scrollIcon } from '../../../utils/icons';
 

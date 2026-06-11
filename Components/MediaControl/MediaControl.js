@@ -4,7 +4,7 @@ import { __ } from '@wordpress/i18n';
 import { useState } from 'react';
 
 import './MediaControl.scss';
-import { Label } from '../index';
+import Label from '../Label/Label';
 
 /**
  * MediaControl component

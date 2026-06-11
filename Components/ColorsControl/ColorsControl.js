@@ -15,8 +15,9 @@ import { withSelect } from '@wordpress/data';
 import { Button, PanelRow, Dropdown, __experimentalGradientPicker, GradientPicker, ColorIndicator } from '@wordpress/components';
 const Gradient = __experimentalGradientPicker || GradientPicker;
 
-// Variables
-import { Label, BtnGroup, ColorControl } from '../index';
+import Label from '../Label/Label';
+import BtnGroup from '../BtnGroup/BtnGroup';
+import { ColorControl } from '../ColorControl/ColorControl';
 import { bgTypes } from '../../utils/options';
 import { gradient } from '../../utils/data';
 

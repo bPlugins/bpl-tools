@@ -2,7 +2,9 @@ import { __ } from '@wordpress/i18n';
 import { withSelect } from '@wordpress/data';
 import { Flex, PanelBody, PanelRow, __experimentalUnitControl as UnitControl } from '@wordpress/components';
 
-import { BoxControl, Device, Label } from '../index'
+import Label from '../Label/Label';
+import BoxControl from '../BoxControl/BoxControl';
+import Device from '../Device/Device';
 import { updateData } from '../../utils/functions';
 
 const Dimension = ({ dimension, onChange, title = __('Dimension'), enabled, device }) => {

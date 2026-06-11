@@ -3,7 +3,8 @@ import { produce } from 'immer';
 import { useEffect } from 'react';
 
 import { primaryColor } from '../../utils/data';
-import { BButtonGroup, ColorControl } from '../index';
+import { ColorControl } from '../ColorControl/ColorControl';
+import BButtonGroup from '../BButtonGroup/BButtonGroup';
 import './Gradient.scss';
 import { getRandomColor, randomNumber } from '../../utils/functions';
 

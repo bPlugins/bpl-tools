@@ -2,7 +2,9 @@ import { useState } from 'react';
 import { withSelect } from '@wordpress/data';
 import { Button, Dropdown, GradientPicker } from '@wordpress/components';
 
-import { Label, BButtonGroup, ColorControl } from '../index';
+import Label from '../Label/Label';
+import BButtonGroup from '../BButtonGroup/BButtonGroup';
+import { ColorControl } from '../ColorControl/ColorControl';
 import './style.css';
 import { gradient } from '../../utils/data';
 

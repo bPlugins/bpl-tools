@@ -10,7 +10,7 @@ import { useEffect, useRef } from 'react';
 import SelectPure from 'select-pure';
 
 import './SelectPureControl.scss';
-import { Label } from '../index';
+import Label from '../Label/Label';
 
 const SelectPureControl = props => {
 	const { className = '', label = '', value, onChange, options = [] } = props;

@@ -11,7 +11,8 @@
 import { PanelBody, RangeControl, SelectControl, ToggleControl, __experimentalNumberControl as NumberControl } from '@wordpress/components';
 import { produce } from 'immer';
 
-import { AdvBackground, BoxControl } from '../index';
+import BoxControl from '../BoxControl/BoxControl';
+import AdvBackground from '../AdvBackground/AdvBackground';
 
 const blendOptions = [
 	{ label: 'Normal', value: 'normal' },

@@ -15,7 +15,7 @@ import {
 import { CSS } from '@dnd-kit/utilities';
 
 import './SortableControl.scss';
-import { Label } from '../index';
+import Label from '../Label/Label';
 
 const SortableItem = ({ id, text, className }) => {
 	const {

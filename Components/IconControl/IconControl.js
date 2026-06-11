@@ -15,7 +15,9 @@ import { PanelRow, RangeControl, Tooltip, __experimentalGradientPicker, Gradient
 const Gradient = GradientPicker || __experimentalGradientPicker;
 
 import './IconControl.scss';
-import { BtnGroup, ColorControl, Label } from '../index';
+import Label from '../Label/Label';
+import BtnGroup from '../BtnGroup/BtnGroup';
+import { ColorControl } from '../ColorControl/ColorControl';
 import { bgTypes } from '../../utils/options';
 import icons from './icons';
 import { gradient } from '../../utils/data';

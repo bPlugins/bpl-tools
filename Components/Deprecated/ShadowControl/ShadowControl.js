@@ -10,7 +10,8 @@
 import { __ } from '@wordpress/i18n';
 import { Dropdown, PanelRow, __experimentalUnitControl as UnitControl, Button, ToggleControl } from '@wordpress/components';
 
-import { Label, ColorControl } from '../../index';
+import Label from '../../Label/Label';
+import { ColorControl } from '../../ColorControl/ColorControl';
 import { pxUnit, emUnit, remUnit } from '../../../utils/options';
 
 const ShadowControl = props => {
