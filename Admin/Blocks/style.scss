@@ -87,7 +87,7 @@
 		align-items: center;
 		gap: 10px;
 		background: #fff;
-		border: 1px solid #eef0f5;
+		border: 1px solid rgba(var(--bpl-dashboard-secondary-color-rgb, $secondaryColor), 0.2);
 		padding: 12px 18px;
 		opacity: 1;
 		transition: opacity .3s ease;
@@ -250,7 +250,7 @@
 	width: 100%;
 	max-width: 1440px;
 	background: $whiteColor;
-	border: 1px solid #eef0f5;
+	border: 1px solid rgba(var(--bpl-dashboard-secondary-color-rgb, $secondaryColor), 0.2);
 	margin: 0 auto !important;
 	position: relative;
 
@@ -259,7 +259,7 @@
 		align-items: center;
 		gap: 12px;
 		padding: 20px 30px;
-		border-bottom: 1px solid #eef0f5;
+		border-bottom: 1px solid rgba(var(--bpl-dashboard-secondary-color-rgb, $secondaryColor), 0.2);
 
 		h2 {
 			font-size: 24px;
@@ -280,13 +280,13 @@
 				background: #f7f8fb;
 				color: $titleColor;
 				transition: background .15s, border-color .15s;
-				border: 1px solid #e6e8ee;
+				border: 1px solid rgba(var(--bpl-dashboard-secondary-color-rgb, $secondaryColor), 0.35);
 
 				&:focus {
 					outline: none;
 					background: $whiteColor;
-					border-color: rgba($primaryColor, .45);
-					box-shadow: 0 0 0 3px rgba($primaryColor, .12);
+					border-color: rgba(var(--bpl-dashboard-primary-color-rgb, $primaryColor), .45);
+					box-shadow: 0 0 0 3px rgba(var(--bpl-dashboard-primary-color-rgb, $primaryColor), .12);
 				}
 
 				&::placeholder {

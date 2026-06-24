@@ -19,7 +19,7 @@
 		width: 36px;
 		height: 36px;
 		border-radius: 50%;
-		border: 3px solid rgba($primaryColor, 0.18);
+		border: 3px solid rgba(var(--bpl-dashboard-primary-color-rgb, $primaryColor), 0.18);
 		border-top-color: var(--bpl-dashboard-primary-color, $primaryColor);
 		animation: bplFeatureCompareSpin 0.9s linear infinite;
 	}
@@ -40,7 +40,7 @@
 			letter-spacing: 1.5px;
 			color: var(--bpl-dashboard-primary-color, $primaryColor);
 			padding: 5px 12px;
-			background: rgba($primaryColor, 0.08);
+			background: rgba(var(--bpl-dashboard-primary-color-rgb, $primaryColor), 0.08);
 			// border-radius: 999px;
 		}
 
@@ -77,9 +77,9 @@
 		gap: 4px;
 		padding: 5px;
 		background: $whiteColor;
-		border: 1px solid #e6e8ee;
+		border: 1px solid rgba(var(--bpl-dashboard-secondary-color-rgb, $secondaryColor), 0.35);
 		// border-radius: 999px;
-		box-shadow: 0 1px 2px rgba($secondaryColor, 0.04);
+		box-shadow: 0 1px 2px rgba(var(--bpl-dashboard-secondary-color-rgb, $secondaryColor), 0.04);
 
 		button {
 			display: inline-flex;
@@ -125,15 +125,15 @@
 		gap: 16px;
 		padding: 28px;
 		background: $whiteColor;
-		border: 1px solid #eef0f5;
+		border: 1px solid rgba(var(--bpl-dashboard-secondary-color-rgb, $secondaryColor), 0.2);
 		// border-radius: 16px;
 		position: relative;
 
 		&.isPro {
-			background: linear-gradient(180deg, darken($primaryColor, 14%) 0%, $primaryColor 100%);
+			background: linear-gradient(180deg, color-mix(in srgb, var(--bpl-dashboard-primary-color, $primaryColor) 86%, black 14%) 0%, var(--bpl-dashboard-primary-color, $primaryColor) 100%);
 			color: $whiteColor;
 			border-color: transparent;
-			box-shadow: 0 14px 36px rgba($primaryColor, 0.22);
+			box-shadow: 0 14px 36px rgba(var(--bpl-dashboard-primary-color-rgb, $primaryColor), 0.22);
 
 			.fcPlanTag {
 				background: rgba($whiteColor, 0.2);
@@ -251,7 +251,7 @@
 
 		&:hover,
 		&:focus {
-			background: darken($primaryColor, 10%) !important;
+			background: color-mix(in srgb, var(--bpl-dashboard-primary-color, $primaryColor) 90%, black 10%) !important;
 			color: $whiteColor !important;
 		}
 	}
@@ -284,10 +284,10 @@
 
 	.fcTableWrap {
 		background: $whiteColor;
-		border: 1px solid #eef0f5;
+		border: 1px solid rgba(var(--bpl-dashboard-secondary-color-rgb, $secondaryColor), 0.2);
 		// border-radius: 16px;
 		overflow: hidden;
-		box-shadow: 0 1px 2px rgba($secondaryColor, 0.03);
+		box-shadow: 0 1px 2px rgba(var(--bpl-dashboard-secondary-color-rgb, $secondaryColor), 0.03);
 	}
 
 	.fcTableHead {
@@ -296,7 +296,7 @@
 		justify-content: space-between;
 		gap: 16px;
 		padding: 20px 24px;
-		border-bottom: 1px solid #eef0f5;
+		border-bottom: 1px solid rgba(var(--bpl-dashboard-secondary-color-rgb, $secondaryColor), 0.2);
 		flex-wrap: wrap;
 
 		h2 {
@@ -334,8 +334,8 @@
 
 			&:focus {
 				background: $whiteColor;
-				border-color: rgba($primaryColor, 0.45);
-				box-shadow: 0 0 0 3px rgba($primaryColor, 0.12);
+				border-color: rgba(var(--bpl-dashboard-primary-color-rgb, $primaryColor), 0.45);
+				box-shadow: 0 0 0 3px rgba(var(--bpl-dashboard-primary-color-rgb, $primaryColor), 0.12);
 			}
 
 			&::placeholder {
@@ -382,7 +382,7 @@
 			text-transform: uppercase;
 			letter-spacing: 0.5px;
 			color: var(--bpl-dashboard-content-color, $contentColor);
-			border-bottom: 1px solid #eef0f5;
+			border-bottom: 1px solid rgba(var(--bpl-dashboard-secondary-color-rgb, $secondaryColor), 0.2);
 			white-space: nowrap;
 
 			&.isProCol {
@@ -408,11 +408,11 @@
 			transition: background 0.12s ease;
 
 			&:hover {
-				background: rgba($primaryColor, 0.04);
+				background: rgba(var(--bpl-dashboard-primary-color-rgb, $primaryColor), 0.04);
 			}
 
 			&.isProOnly {
-				background: rgba($primaryColor, 0.04);
+				background: rgba(var(--bpl-dashboard-primary-color-rgb, $primaryColor), 0.04);
 			}
 		}
 
@@ -452,7 +452,7 @@
 		text-transform: uppercase;
 		letter-spacing: 0.8px;
 		color: var(--bpl-dashboard-primary-color, $primaryColor);
-		background: rgba($primaryColor, 0.1);
+		background: rgba(var(--bpl-dashboard-primary-color-rgb, $primaryColor), 0.1);
 		padding: 2px 7px;
 		// border-radius: 999px;
 		vertical-align: middle;
@@ -501,8 +501,8 @@
 		gap: 24px;
 		flex-wrap: wrap;
 		padding: 28px 32px;
-		background: linear-gradient(135deg, rgba($primaryColor, 0.08), rgba($primaryColor, 0.02));
-		border: 1px solid rgba($primaryColor, 0.18);
+		background: linear-gradient(135deg, rgba(var(--bpl-dashboard-primary-color-rgb, $primaryColor), 0.08), rgba(var(--bpl-dashboard-primary-color-rgb, $primaryColor), 0.02));
+		border: 1px solid rgba(var(--bpl-dashboard-primary-color-rgb, $primaryColor), 0.18);
 		// border-radius: 16px;
 
 		h2 {

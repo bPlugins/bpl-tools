@@ -157,9 +157,9 @@ const FeatureCompare = ({ plans: planNames = ['free', 'pro'], freemius, hero: he
 				const freeDesc = planDescriptions?.free ?? __('Free forever — all the essentials to get started.');
 				const proDesc = planDescriptions?.pro ?? __('Everything in Free, plus advanced features and priority support.');
 
-				return <div key={plan.id} className={`fcPlan ${isFree ? 'isFree' : 'isPro'}`}>
+				return <div key={plan.id} className={`fcPlan is${plan.name.charAt(0).toUpperCase() + plan.name.slice(1)}`}>
 					<div className='fcPlanHead'>
-						<div className='fcPlanTag'>{isFree ? __('Free') : __('Pro')}</div>
+						<div className='fcPlanTag'>{plan.title}</div>
 						<h3>{plan.title}</h3>
 						<p>{isFree ? freeDesc : proDesc}</p>
 					</div>

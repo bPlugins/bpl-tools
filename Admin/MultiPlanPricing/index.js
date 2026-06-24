@@ -7,21 +7,6 @@ import './style.scss';
 
 import { checkCircleIcon, chevronDownIcon, moneyBackIcon, refreshIcon, chatIcon, lockIcon } from '../utils/icons';
 
-export const getFeatures = (plans, planId) => {
-	const freeFeatures = plans.find(p => p.name === 'free')?.features?.map(f => f.title);
-	const proFeatures = plans.find(p => p.name === 'pro')?.features?.filter(f => !freeFeatures.includes(f.title)).map(f => f.title);
-
-	const features = {
-		'free': freeFeatures,
-		'pro': proFeatures
-	};
-
-	const planName = plans.find(p => parseInt(p.id) === parseInt(planId))?.name;
-	const planFeatures = features[planName] || plans.find(p => parseInt(p.id) === parseInt(planId))?.features?.map(f => f.title);
-
-	return planFeatures || [];
-};
-
 const cycleMeta = {
 	monthly: { suffix: '/mo' },
 	annual: { suffix: '/yr' },
@@ -35,18 +20,20 @@ const formatPrice = (amount) => {
 };
 
 /**
- * Freemius-powered pricing page — fetches live plan data, renders plan cards with
- * billing-cycle switcher, feature list, trust badges, and FAQ accordion.
+ * Freemius-powered multi-plan pricing page — fetches live plan data, renders
+ * multiple plan cards side-by-side with billing-cycle switcher, per-card license
+ * selector, feature list, trust badges, and FAQ accordion.
+ *
+ * Extracted from the combined Pricing component's multi-plan branch.
  *
  * @param {object} props
- * @param {object} props.pricingInfo          - {logo?, pluginId, planId, licenses, button, featured, hero?, included?, trustBadges?, faqs?}
- * @param {object} props.options              - Extra options forwarded to FS.Checkout.open() (pass {} for none)
+ * @param {object} props.pricingInfo - {logo?, pluginId, planIds, licenses, button, featured, hero?, included?, trustBadges?, faqs?}
+ * @param {object} props.options     - Extra options forwarded to FS.Checkout.open() (pass {} for none)
  */
-const Pricing = ({ pricingInfo, options }) => {
+const MultiPlanPricing = ({ pricingInfo, options }) => {
 	const {
-		pluginId, planId, licenses, button, featured, logo,
+		pluginId, planIds, licenses, button, featured, logo,
 		hero: heroProp,
-		included: includedProp,
 		trustBadges: customTrustBadges,
 		faqs: customFaqs,
 	} = pricingInfo;
@@ -56,6 +43,7 @@ const Pricing = ({ pricingInfo, options }) => {
 	const [cycles, setCycles] = useState([]);
 	const [cycle, setCycle] = useState('');
 	const [openFaq, setOpenFaq] = useState(0);
+	const [selectedLicense, setSelectedLicense] = useState(null);
 
 	useEffect(() => {
 		if (!pluginId) return;
@@ -70,10 +58,17 @@ const Pricing = ({ pricingInfo, options }) => {
 	}, [pluginId]);
 
 	useEffect(() => {
-		if (!product?.id || !planId) return;
+		if (!product?.id || !planIds?.length) return;
 		const { plans } = product;
-		const plan = plans?.find(p => parseInt(p.id) === parseInt(planId)) || plans?.[0] || {};
-		const singlePrices = plan?.pricing?.[0];
+
+		const relevantPlans = planIds.map(id =>
+			plans?.find(p => parseInt(p.id) === parseInt(id))
+		).filter(Boolean);
+
+		if (relevantPlans.length === 0) return;
+
+		const firstPlan = relevantPlans[0];
+		const singlePrices = firstPlan?.pricing?.[0];
 
 		if (singlePrices && typeof singlePrices === 'object') {
 			const c = [];
@@ -86,7 +81,11 @@ const Pricing = ({ pricingInfo, options }) => {
 			setCycles([]);
 			setCycle('');
 		}
-	}, [product, planId]);
+
+		if (licenses?.length > 0) {
+			setSelectedLicense(licenses[0]);
+		}
+	}, [product, planIds, licenses]);
 
 	if (isProductLoading) {
 		return <div className='bPlDashboardPricing bPlDashboardPricingLoading'>
@@ -98,11 +97,13 @@ const Pricing = ({ pricingInfo, options }) => {
 	if (!product?.id) return null;
 
 	const { plans } = product;
-	const plan = plans?.find(p => parseInt(p.id) === parseInt(planId)) || plans?.[0] || {};
-	const pricing = plan?.pricing || [];
-	const visiblePricing = licenses?.length > 0 ? pricing.filter(p => licenses.includes(p?.licenses ?? null)) : pricing;
+	const relevantPlans = planIds.map(id =>
+		plans?.find(p => parseInt(p.id) === parseInt(id))
+	).filter(Boolean);
 
-	const samplePrice = visiblePricing[0];
+	if (relevantPlans.length === 0) return null;
+
+	const samplePrice = relevantPlans[0]?.pricing?.[0];
 	let annualSavingsPct = 0;
 	if (samplePrice?.monthly && samplePrice?.annual) {
 		const fullYear = parseFloat(samplePrice.monthly) * 12;
@@ -110,21 +111,13 @@ const Pricing = ({ pricingInfo, options }) => {
 		if (fullYear > 0) annualSavingsPct = Math.round(((fullYear - annual) / fullYear) * 100);
 	}
 
-	const sharedFeatures = getFeatures(plans, planId);
 	const annualSavingsLabel = annualSavingsPct > 0 ? `Save ${annualSavingsPct}%` : '';
-
 	const isLifetimeOnly = cycles.length === 1 && cycles[0]?.name === 'lifetime';
 
 	const hero = {
 		eyebrow: heroProp?.eyebrow ?? __('Pricing'),
 		title: heroProp?.title ?? __('Pick the plan that fits your project'),
 		description: heroProp?.description ?? __('Same powerful features on every plan — just choose how many sites you need. Upgrade or downgrade any time.'),
-	};
-
-	const included = {
-		tag: includedProp?.tag ?? __('Same on every plan'),
-		title: includedProp?.title ?? __('Everything you get, on every license'),
-		description: includedProp?.description ?? __('Every feature is available on every license tier. The only difference is how many sites you can activate the plugin on.'),
 	};
 
 	const trustBadges = customTrustBadges || [
@@ -177,32 +170,43 @@ const Pricing = ({ pricingInfo, options }) => {
 			</div>
 		</div>}
 
-		<div className='pricingPlans'>
-			{visiblePricing.length ? visiblePricing.map((price, index) => {
-				const licensesCount = price?.licenses;
-				const isFeatured = featured?.selected === (licensesCount || 'null');
-				const amount = price?.[cycle];
+		<div className='pricingPlans isMultiPlan'>
+			{relevantPlans.map((plan, planIndex) => {
+				const pricing = plan?.pricing || [];
+				const selectedPrice = pricing.find(p => (p?.licenses ?? null) === selectedLicense);
+				const isFeatured = featured?.planId ? featured.planId === plan.id : plan.name === 'pro';
+				const amount = selectedPrice?.[cycle];
 				const cycleInfo = cycleMeta[cycle] || { suffix: '' };
 				const numericAmount = parseFloat(amount);
-				const monthlyEquivalent = cycle === 'annual' && price?.annual ? (parseFloat(price.annual) / 12) : null;
-				const perSite = licensesCount && !isNaN(numericAmount) ? (numericAmount / licensesCount) : null;
+				const monthlyEquivalent = cycle === 'annual' && selectedPrice?.annual ? (parseFloat(selectedPrice.annual) / 12) : null;
+				const perSite = selectedLicense && !isNaN(numericAmount) ? (numericAmount / selectedLicense) : null;
+				const planFeatures = plan?.features?.map(f => f.title) || [];
 
-				const planLabel = !licensesCount
-					? __('Unlimited Sites')
-					: (licensesCount === 1 ? __('Single Site') : `${licensesCount} ${__('Sites')}`);
-				const planTagline = !licensesCount
-					? __('For agencies & enterprise')
-					: (licensesCount === 1 ? __('For solo creators') : __('For freelancers'));
-
-				return <div key={index} className={`pricingPlan ${isFeatured ? 'isFeatured' : ''}`}>
+				return <div key={planIndex} className={`pricingPlan ${isFeatured ? 'isFeatured' : ''}`}>
 					{isFeatured && <div className='pricingBadge'>{featured?.text || __('Most Popular')}</div>}
 
 					<div className='pricingPlanHead'>
-						<h3>{planLabel}</h3>
-						<p>{planTagline}</p>
+						<h3>{plan.title}</h3>
+						<p>{plan.description}</p>
 					</div>
 
-					<div className='pricingPriceWrap'>
+					{licenses && licenses.length > 1 && <div className='pricingLicenseSwitcher'>
+						{licenses.map(license => {
+							const label = !license
+								? __('Unlimited Sites')
+								: (license === 1 ? __('Single Site') : `${license} ${__('Sites')}`);
+							return <button
+								key={license}
+								type='button'
+								className={`pricingLicenseBtn ${selectedLicense === license ? 'isActive' : ''}`}
+								onClick={() => setSelectedLicense(license)}
+							>
+								{label}
+							</button>;
+						})}
+					</div>}
+
+					{selectedPrice && <div className='pricingPriceWrap'>
 						<div className='pricingPrice'>
 							<span className='pricingCurrency'>$</span>
 							<span className='pricingAmount'>{formatPrice(amount)}</span>
@@ -210,53 +214,45 @@ const Pricing = ({ pricingInfo, options }) => {
 						</div>
 
 						{perSite !== null && <p className='pricingEquiv'>≈ ${formatPrice(perSite)} {__('per site')}</p>}
-						{!licensesCount && <p className='pricingEquiv'>{__('Use on every site you build.')}</p>}
+						{!selectedLicense && <p className='pricingEquiv'>{__('Use on every site you build.')}</p>}
 						{monthlyEquivalent !== null && cycle === 'annual' && <p className='pricingEquiv'>
 							{__('Billed yearly')} · ${formatPrice(monthlyEquivalent)}/mo
 						</p>}
 						{cycle === 'lifetime' && <p className='pricingEquiv'>{__('One-time payment, pay once forever.')}</p>}
 						{cycle === 'monthly' && <p className='pricingEquiv'>{__('Billed monthly, cancel anytime.')}</p>}
-					</div>
 
-					<Button
+						{planFeatures.length > 0 && <ul className='pricingMultiPlanFeatures'>
+							{planFeatures.map((f, i) => (
+								<li key={i}>
+									<span className='pricingFeatureCheck'>{checkCircleIcon}</span>
+									<span dangerouslySetInnerHTML={{ __html: f }} />
+								</li>
+							))}
+						</ul>}
+					</div>}
+
+					{selectedPrice && <Button
 						className='pricingCta'
 						onClick={e => {
 							e.preventDefault();
 							new FS.Checkout({
 								plugin_id: product.id,
-								plan_id: planId,
+								plan_id: plan.id,
 								public_key: product.public_key
 							}).open({
 								image: logo || product.icon,
 								title: product.title,
-								licenses: licensesCount,
+								licenses: selectedLicense,
 								billing_cycle: cycle,
 								...options
 							});
 						}}
 					>
 						{button.label}
-					</Button>
+					</Button>}
 				</div>;
-			}) : <p className='pricingEmpty'>{__('No plans available right now.')}</p>}
+			})}
 		</div>
-
-		{sharedFeatures.length > 0 && <section className='pricingIncluded'>
-			<header className='pricingIncludedHead'>
-				<span className='pricingIncludedTag'>{included.tag}</span>
-				<h2>{included.title}</h2>
-				<p>{included.description}</p>
-			</header>
-
-			<ul className='pricingIncludedGrid'>
-				{sharedFeatures.map((f, i) => (
-					<li key={i}>
-						<span className='pricingIncludedCheck'>{checkCircleIcon}</span>
-						<span dangerouslySetInnerHTML={{ __html: f }} />
-					</li>
-				))}
-			</ul>
-		</section>}
 
 		<section className='pricingTrust'>
 			{trustBadges.map((b, i) => (
@@ -292,4 +288,4 @@ const Pricing = ({ pricingInfo, options }) => {
 	</div>;
 };
 
-export default Pricing;
+export default MultiPlanPricing;

@@ -41,7 +41,6 @@
 			color: var(--bpl-dashboard-primary-color, $primaryColor);
 			padding: 5px 12px;
 			background: rgba(var(--bpl-dashboard-primary-color-rgb, $primaryColor), 0.08);
-			// border-radius: 999px;
 		}
 
 		h1 {
@@ -73,7 +72,6 @@
 		padding: 5px;
 		background: $whiteColor;
 		border: 1px solid rgba(var(--bpl-dashboard-secondary-color-rgb, $secondaryColor), 0.35);
-		// border-radius: 999px;
 		box-shadow: 0 1px 2px rgba(var(--bpl-dashboard-secondary-color-rgb, $secondaryColor), 0.04);
 
 		button {
@@ -87,7 +85,6 @@
 			color: var(--bpl-dashboard-content-color, $contentColor);
 			font-size: 14px;
 			font-weight: 600;
-			// border-radius: 999px;
 			cursor: pointer;
 			transition: background 0.18s ease, color 0.18s ease;
 
@@ -108,7 +105,6 @@
 			line-height: 1.6;
 			font-weight: 700;
 			padding: 2px 8px;
-			// border-radius: 999px;
 			letter-spacing: 0.3px;
 		}
 	}
@@ -118,6 +114,10 @@
 		grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
 		gap: 20px;
 		align-items: stretch;
+
+		&.isMultiPlan {
+			grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+		}
 	}
 
 	.pricingPlan {
@@ -126,7 +126,6 @@
 		flex-direction: column;
 		background: $whiteColor;
 		border: 1px solid rgba(var(--bpl-dashboard-secondary-color-rgb, $secondaryColor), 0.35);
-		// border-radius: 16px;
 		padding: 28px 26px;
 		transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 
@@ -154,10 +153,6 @@
 			.pricingPlanHead p,
 			.pricingEquiv {
 				color: rgba($whiteColor, 0.78);
-			}
-
-			.pricingPriceWrap {
-				border-color: rgba($whiteColor, 0.25);
 			}
 
 			.pricingPrice {
@@ -233,7 +228,6 @@
 		text-transform: uppercase;
 		letter-spacing: 1px;
 		padding: 6px 14px;
-		// border-radius: 999px;
 		white-space: nowrap;
 		box-shadow: 0 6px 16px rgba(245, 158, 11, 0.35);
 	}
@@ -279,9 +273,7 @@
 	}
 
 	.pricingPriceWrap {
-		padding: 0 0 22px;
 		margin-bottom: 22px;
-		border-bottom: 1px solid rgba(var(--bpl-dashboard-secondary-color-rgb, $secondaryColor), 0.2);
 	}
 
 	.pricingPrice {
@@ -329,7 +321,6 @@
 		font-size: 15px !important;
 		font-weight: 600 !important;
 		padding: 12px 20px !important;
-		// border-radius: 10px !important;
 		overflow: hidden;
 		display: inline-flex;
 		align-items: center;
@@ -362,7 +353,6 @@
 		padding: 32px 36px;
 		background: $whiteColor;
 		border: 1px solid rgba(var(--bpl-dashboard-secondary-color-rgb, $secondaryColor), 0.2);
-		// border-radius: 16px;
 		box-shadow: 0 1px 2px rgba(var(--bpl-dashboard-secondary-color-rgb, $secondaryColor), 0.03);
 	}
 
@@ -383,7 +373,6 @@
 			color: #15803d;
 			background: rgba(34, 197, 94, 0.12);
 			padding: 5px 12px;
-			// border-radius: 999px;
 		}
 
 		h2 {
@@ -434,7 +423,6 @@
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
-		// border-radius: 50%;
 		background: rgba(var(--bpl-dashboard-primary-color-rgb, $primaryColor), 0.12);
 		color: var(--bpl-dashboard-primary-color, $primaryColor);
 		margin-top: 1px;
@@ -452,7 +440,6 @@
 		padding: 24px;
 		background: $whiteColor;
 		border: 1px solid rgba(var(--bpl-dashboard-secondary-color-rgb, $secondaryColor), 0.2);
-		// border-radius: 14px;
 	}
 
 	.pricingTrustItem {
@@ -466,7 +453,6 @@
 			justify-content: center;
 			width: 38px;
 			height: 38px;
-			// border-radius: 10px;
 			background: rgba(var(--bpl-dashboard-primary-color-rgb, $primaryColor), 0.1);
 			color: var(--bpl-dashboard-primary-color, $primaryColor);
 			flex-shrink: 0;
@@ -515,7 +501,6 @@
 	.pricingFaqItem {
 		background: $whiteColor;
 		border: 1px solid rgba(var(--bpl-dashboard-secondary-color-rgb, $secondaryColor), 0.2);
-		// border-radius: 12px;
 		overflow: hidden;
 		transition: border-color 0.2s ease, box-shadow 0.2s ease;
 
@@ -560,6 +545,72 @@
 		font-size: 14px;
 		line-height: 1.6;
 		color: var(--bpl-dashboard-content-color, $contentColor);
+	}
+
+	// Multi-plan specific styles
+	.pricingLicenseSwitcher {
+		display: inline-flex;
+		align-items: center;
+		gap: 2px;
+		margin-bottom: 20px;
+		padding: 3px;
+		background: #f5f7fa;
+		border: 1px solid rgba(var(--bpl-dashboard-secondary-color-rgb, $secondaryColor), 0.35);
+		width: 100%;
+		border-radius: 8px;
+	}
+
+	.pricingLicenseBtn {
+		flex: 1;
+		padding: 10px 12px;
+		border: none;
+		background: transparent;
+		color: var(--bpl-dashboard-content-color, $contentColor);
+		font-size: 13px;
+		font-weight: 500;
+		text-align: center;
+		cursor: pointer;
+		transition: all 0.2s ease;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: 6px;
+		white-space: nowrap;
+
+		&:hover {
+			color: var(--bpl-dashboard-title-color, $titleColor);
+			background: rgba(var(--bpl-dashboard-primary-color-rgb, $primaryColor), 0.08);
+		}
+
+		&.isActive {
+			background: $whiteColor;
+			color: var(--bpl-dashboard-primary-color, $primaryColor);
+			font-weight: 600;
+			box-shadow: 0 2px 6px rgba(var(--bpl-dashboard-secondary-color-rgb, $secondaryColor), 0.08);
+		}
+	}
+
+	.pricingMultiPlanFeatures {
+		list-style: none;
+		margin: 12px 0 0;
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+
+		li {
+			display: flex;
+			align-items: flex-start;
+			gap: 12px;
+			padding: 10px 0;
+			font-size: 14px;
+			line-height: 1.5;
+			color: var(--bpl-dashboard-title-color, $titleColor);
+			border-bottom: 1px dashed rgba(var(--bpl-dashboard-secondary-color-rgb, $secondaryColor), 0.2);
+
+			&:last-child {
+				border-bottom: none;
+			}
+		}
 	}
 }
 

@@ -24,7 +24,7 @@
 			letter-spacing: 1.5px;
 			color: var(--bpl-dashboard-primary-color, $primaryColor);
 			padding: 5px 12px;
-			background: rgba($primaryColor, 0.08);
+			background: rgba(var(--bpl-dashboard-primary-color-rgb, $primaryColor), 0.08);
 			// border-radius: 999px;
 		}
 
@@ -52,7 +52,7 @@
 
 	.actCard {
 		background: $whiteColor;
-		border: 1.5px solid #eef0f5;
+		border: 1.5px solid rgba(var(--bpl-dashboard-secondary-color-rgb, $secondaryColor), 0.2);
 		// border-radius: 16px;
 		overflow: visible;
 		transition: border-color 0.2s ease;
@@ -69,7 +69,7 @@
 		gap: 16px;
 		flex-wrap: wrap;
 		padding: 20px 24px;
-		border-bottom: 1px solid #eef0f5;
+		border-bottom: 1px solid rgba(var(--bpl-dashboard-secondary-color-rgb, $secondaryColor), 0.2);
 	}
 
 	.actPluginInfo {
@@ -149,7 +149,7 @@
 		width: 32px;
 		height: 32px;
 		border-radius: 50%;
-		border: 3px solid rgba($primaryColor, 0.18);
+		border: 3px solid rgba(var(--bpl-dashboard-primary-color-rgb, $primaryColor), 0.18);
 		border-top-color: var(--bpl-dashboard-primary-color, $primaryColor);
 		animation: bplActivationSpin 0.9s linear infinite;
 	}
@@ -226,7 +226,7 @@
 		align-items: center;
 		gap: 4px;
 		background: #f7f8fb;
-		border: 1px solid #e6e8ee;
+		border: 1px solid rgba(var(--bpl-dashboard-secondary-color-rgb, $secondaryColor), 0.35);
 		// border-radius: 10px;
 		padding: 4px 4px 4px 14px;
 
@@ -259,7 +259,7 @@
 		transition: background 0.15s ease, color 0.15s ease;
 
 		&:hover {
-			background: #eef0f5;
+			background: rgba(var(--bpl-dashboard-secondary-color-rgb, $secondaryColor), 0.2);
 			color: var(--bpl-dashboard-title-color, $titleColor);
 		}
 
@@ -350,7 +350,7 @@
 			font-family: monospace;
 			padding: 12px 14px;
 			background: #f7f8fb;
-			border: 1px solid #e6e8ee;
+			border: 1px solid rgba(var(--bpl-dashboard-secondary-color-rgb, $secondaryColor), 0.35);
 			// border-radius: 10px;
 			color: var(--bpl-dashboard-title-color, $titleColor);
 			outline: none;
@@ -358,8 +358,8 @@
 
 			&:focus {
 				background: $whiteColor;
-				border-color: rgba($primaryColor, 0.45);
-				box-shadow: 0 0 0 3px rgba($primaryColor, 0.12);
+				border-color: rgba(var(--bpl-dashboard-primary-color-rgb, $primaryColor), 0.45);
+				box-shadow: 0 0 0 3px rgba(var(--bpl-dashboard-primary-color-rgb, $primaryColor), 0.12);
 			}
 
 			&::placeholder {
@@ -406,7 +406,7 @@
 		transition: background 0.18s ease;
 
 		&:hover:not(:disabled) {
-			background: darken($primaryColor, 10%);
+			background: color-mix(in srgb, var(--bpl-dashboard-primary-color, $primaryColor) 90%, black 10%);
 		}
 
 		&:disabled {
@@ -444,7 +444,7 @@
 	.actPermsBlock {
 		padding: 18px 20px;
 		background: #f7f8fb;
-		border: 1px solid #eef0f5;
+		border: 1px solid rgba(var(--bpl-dashboard-secondary-color-rgb, $secondaryColor), 0.2);
 		// border-radius: 12px;
 
 		>h4 {
@@ -490,7 +490,7 @@
 		width: 34px;
 		height: 34px;
 		// border-radius: 8px;
-		background: rgba($primaryColor, 0.1);
+		background: rgba(var(--bpl-dashboard-primary-color-rgb, $primaryColor), 0.1);
 		color: var(--bpl-dashboard-primary-color, $primaryColor);
 		display: inline-flex;
 		align-items: center;
@@ -543,7 +543,7 @@
 	.actModalBackdrop {
 		position: absolute;
 		inset: 0;
-		background: rgba($secondaryColor, 0.5);
+		background: rgba(var(--bpl-dashboard-secondary-color-rgb, $secondaryColor), 0.5);
 		backdrop-filter: blur(2px);
 	}
 
@@ -554,7 +554,7 @@
 		padding: 28px;
 		max-width: 440px;
 		width: 100%;
-		box-shadow: 0 20px 60px rgba($secondaryColor, 0.2);
+		box-shadow: 0 20px 60px rgba(var(--bpl-dashboard-secondary-color-rgb, $secondaryColor), 0.2);
 		display: flex;
 		flex-direction: column;
 		gap: 16px;
@@ -614,7 +614,7 @@
 
 	.actModalCancel {
 		padding: 10px 18px;
-		border: 1.5px solid #e6e8ee;
+		border: 1.5px solid rgba(var(--bpl-dashboard-secondary-color-rgb, $secondaryColor), 0.35);
 		background: $whiteColor;
 		// border-radius: 8px;
 		font-size: 14px;
