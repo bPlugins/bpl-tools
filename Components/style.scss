@@ -595,12 +595,22 @@ svg.bPlBlockIcon {
 					background: $primaryColor;
 				}
 
-				.components-toggle-group-control-option-base[aria-pressed="true"] {
-					svg {
-						fill: #fff;
-					}
+				.components-toggle-group-control-option-base {
 
-					color: #fff;
+					&[aria-pressed="true"],
+					&[aria-checked="true"] {
+						svg {
+							fill: #fff !important;
+						}
+
+						.dashicon {
+							color: #fff !important;
+						}
+
+						>* {
+							color: #fff !important;
+						}
+					}
 				}
 			}
 		}
