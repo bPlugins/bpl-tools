@@ -1,18 +1,112 @@
-/**
- * bpl-tools — Shared utility library for WordPress Gutenberg block plugins
- * Copyright (C) 2025 bPlugins LLC
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- */
+import { useState, useEffect } from 'react';
 
-export { default as TemplateLibrary } from './TemplateLibrary';
-export { default as Modal } from './Modal/Modal';
-export { default as Portal } from './Modal/Portal';
-export { default as Sidebar } from './Modal/Sidebar';
-export { default as Templates } from './Modal/Templates';
-export { default as useTemplates } from './hooks/useTemplates';
-export { default as useTemplatesMain } from './hooks/useTemplatesMain';
-export { default as useAccessCounts } from './hooks/useAccessCounts';
+import './style.scss';
+import Modal from './Components/Modal';
+import Portal from './Components/Portal';
+import useTemplatesMain from './hooks/useTemplatesMain';
+import useTemplates from './hooks/useTemplates';
+import useAccessCounts from './hooks/useAccessCounts';
+
+/**
+ * TemplateLibrary — Generic template library modal system for block plugins.
+ *
+ * Spread both `buttonConfig` and `ajaxConfig` as props:
+ *	<TemplateLibrary {...buttonConfig} {...ajaxConfig} />
+ *
+ * @param {object}		props
+ * @param {ReactNode}	props.logo					- Logo to display in sevaral areas
+ * @param {string}		props.buttonLabel			- Button text label
+ * @param {string}		props.modalTitle			- Modal header title (e.g. "Templates Library")
+ * @param {string}		props.nonce					- WordPress nonce for AJAX
+ * @param {boolean}		props.isPremium				- Whether user has pro access
+ * @param {object}		props.textDomain			- i18n text domain
+ * @param {string}		props.ajaxActionMain		- AJAX action for categories (default: 'prefix_templates_main')
+ * @param {string}		props.ajaxActionTemplates	- AJAX action for templates (default: 'prefix_templates')
+ * @param {string}		props.ajaxActionImport		- AJAX action for import (default: 'prefix_template_import')
+ * @param {string}		props.ajaxActionCounts		- AJAX action for counts (default: 'prefix_template_counts')
+ * @param {string}		props.pricingUrl			- URL for "Get Pro" button
+ * @param {string}		props.importButtonLabel		- Button text for import (default: 'Import')
+ * @param {array}		props.types			- Array of tab names to display (default: ['patterns', 'pages'])
+ */
+const TemplateLibrary = ({
+	logo,
+	buttonLabel,
+	modalTitle = 'Templates Library',
+	nonce,
+	isPremium = false,
+	ajaxActionMain = 'prefix_templates_main',
+	ajaxActionTemplates = 'prefix_templates',
+	ajaxActionImport = 'prefix_template_import',
+	ajaxActionCounts = 'prefix_template_counts',
+	pricingUrl = 'https://bplugins.com/pricing/',
+	types = ['patterns', 'pages']
+}) => {
+	const [show, setShow] = useState(false);
+	const [type, setType] = useState('patterns');
+	const [category, setCategory] = useState('all');
+	const [access, setAccess] = useState('all');
+	const [pageNumber, setPageNumber] = useState(1);
+	const [search, setSearch] = useState('');
+	const [templates, setTemplates] = useState([]);
+
+	const effectiveCategory = 'all' !== category ? category : ('pro' === access ? 'pro' : 'all');
+
+	const { main, isLoading: mainLoading } = useTemplatesMain(nonce, type, ajaxActionMain);
+	const { templates: fTemplates, totalCount, refetchTemplates, isLoading: templatesLoading } = useTemplates(nonce, type, effectiveCategory, pageNumber, search, ajaxActionTemplates);
+
+	const accessCounts = useAccessCounts(nonce, type, show, ajaxActionCounts);
+
+	useEffect(() => {
+		if (show && nonce) {
+			refetchTemplates({ type, category: effectiveCategory, pageNumber: 1, search: '' });
+		}
+	}, [show]);
+
+	useEffect(() => {
+		if (pageNumber === 1) {
+			setTemplates(fTemplates);
+		} else {
+			setTemplates(prev => [...prev, ...fTemplates]);
+		}
+	}, [fTemplates, pageNumber]);
+
+	return <>
+		<button className='bPlTemplateLibraryButton' onClick={() => setShow(true)}>
+			{logo}
+			{buttonLabel}
+		</button>
+
+		<Portal show={show}>
+			<Modal {...{
+				isPremium,
+				logo,
+				show,
+				setShow,
+				main,
+				mainLoading,
+				templates,
+				setTemplates,
+				totalCount,
+				templatesLoading,
+				types,
+				type,
+				refetchTemplates,
+				setType,
+				category,
+				setCategory,
+				access,
+				setAccess,
+				accessCounts,
+				pageNumber,
+				setPageNumber,
+				search,
+				setSearch,
+				nonce,
+				modalTitle,
+				ajaxActionImport,
+				pricingUrl
+			}} />
+		</Portal>
+	</>;
+};
+export default TemplateLibrary;

@@ -12,14 +12,7 @@
 	* @props pageNumber (required): Current page number (Number)
 	* @props setPageNumber (required): Page number setter (Function)
 	* @props modalTitle (optional): 'Templates Library' (String)
-	* @props patternsTabLabel (optional): 'Patterns' (String)
-	* @props pagesTabLabel (optional): 'Pages' (String)
-	* @props loadMoreButtonLabel (optional): 'Load More' (String)
-	* @props allLabel (optional): 'All' (String)
-	* @props freeLabel (optional): 'Free' (String)
-	* @props proLabel (optional): 'Pro' (String)
-	* @props categoriesHeadingLabel (optional): 'Categories' (String)
-	* @props searchPlaceholder (optional): 'Search templates…' (String)
+	* @props types (optional): Array of tab names to display - ['patterns', 'pages'] (Array)
 	*/
 
 import { useEffect, useRef } from 'react';
@@ -27,34 +20,38 @@ import { Spinner, TabPanel } from '@wordpress/components';
 
 import Sidebar from './Sidebar';
 import Templates from './Templates';
-import { closeIcon } from '../utils/icons';
+import { closeIcon } from '../../utils/icons';
 
-const perPage = 9;
+const perPage = 12;
 
 const Modal = (props) => {
 	const {
 		isPremium,
+		logo,
 		show,
 		setShow,
 		setTemplates,
 		totalCount,
 		templatesLoading,
+		types = ['patterns', 'pages'],
 		setType,
 		setCategory,
 		pageNumber,
 		setPageNumber,
-		modalTitle = 'Templates Library',
-		patternsTabLabel = 'Patterns',
-		pagesTabLabel = 'Pages',
-		loadMoreButtonLabel = 'Load More',
-		allLabel = 'All',
-		freeLabel = 'Free',
-		proLabel = 'Pro',
-		categoriesHeadingLabel = 'Categories',
-		searchPlaceholder = 'Search templates…'
+		modalTitle = 'Templates Library'
 	} = props;
 
+	const loadMoreButtonLabel = 'Load More';
+
 	const contentRef = useRef();
+
+	const tabs = types.map(tabName => ({
+		name: tabName,
+		title: (tabName || '').charAt(0).toUpperCase() + (tabName || '').slice(1)
+	}));
+
+	const initialTabName = types[0] || 'patterns';
+
 	useEffect(() => {
 		let handler = (e) => {
 			if (!contentRef.current?.contains(e.target)) {
@@ -70,19 +67,16 @@ const Modal = (props) => {
 	return <div className='bPlTemplateLibraryModalWrap' style={{ visibility: show ? 'visible' : 'hidden' }} >
 		<div ref={contentRef} style={{ marginTop: show ? '0' : '50px', transition: 'margin 0.5s ease-out' }} className='modalContainer'>
 			<header className='modalHeader'>
-				<div className='modalHeaderTitle'>
-					{modalTitle}
+				<div className='modalHeaderBrand'>
+					{logo} {modalTitle}
 				</div>
 
-				<div className='modalHeaderTypes'>
+				{types.length > 1 && <div className='modalHeaderTypes'>
 					<TabPanel
 						className='tabPanel autoTab'
 						activeClass='activeTab'
-						initialTabName='patterns'
-						tabs={[
-							{ name: 'patterns', title: patternsTabLabel },
-							{ name: 'pages', title: pagesTabLabel }
-						]}
+						initialTabName={initialTabName}
+						tabs={tabs}
 						onSelect={tabName => {
 							setType(tabName);
 							setCategory('all');
@@ -90,18 +84,18 @@ const Modal = (props) => {
 							setTemplates([]);
 						}}
 					>{() => <></>}</TabPanel>
-				</div>
+				</div>}
 
 				<div onClick={() => setShow(false)} className='modalHeaderClose'>{closeIcon}</div>
 			</header>
 
 			{show && <div className='modalBody'>
-				<Sidebar {...props} allLabel={allLabel} freeLabel={freeLabel} proLabel={proLabel} categoriesHeadingLabel={categoriesHeadingLabel} searchPlaceholder={searchPlaceholder} />
+				<Sidebar {...props} />
 
 				<Templates {...props} setShow={setShow} isPremium={isPremium}>
 					<div className='modalBodyBottom'>
-						{templatesLoading ? <div className='apbPlaceCenter'>
-							<Spinner className='apbSpinner' />
+						{templatesLoading ? <div className='bPlPlaceCenter'>
+							<Spinner className='bPlSpinner' />
 						</div> : (perPage * pageNumber) < totalCount && <button className='modalBodyTemplateLoadMore libraryBtn active' onClick={() => setPageNumber(prev => prev + 1)}>{loadMoreButtonLabel}</button>}
 					</div>
 				</Templates>

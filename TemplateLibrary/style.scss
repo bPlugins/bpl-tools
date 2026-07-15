@@ -20,31 +20,6 @@ $radius: 12px;
 		box-sizing: border-box;
 	}
 
-	/* ---- Editor toolbar button (original outlined style) -------------- */
-	.bPlTemplateLibraryButton {
-		width: max-content;
-		font-size: 13px;
-		line-height: 120%;
-		font-weight: 500;
-		color: $primaryColor;
-		background-color: #0000;
-		display: flex;
-		align-items: center;
-		gap: 5px;
-		padding: 6px 15px;
-		margin: 0 5px;
-		border: 1px solid $primaryColor;
-		border-radius: 4px;
-		transition: all 0.3s ease-in-out;
-		cursor: pointer;
-
-		svg,
-		img {
-			width: 24px;
-			height: 24px;
-		}
-	}
-
 	/* ---- Generic small button (Load More) ----------------------------- */
 	.libraryBtn {
 		font-size: 13px;
@@ -67,6 +42,31 @@ $radius: 12px;
 		&.active {
 			color: $primaryDark;
 		}
+	}
+}
+
+/* ---- Editor toolbar button (original outlined style) -------------- */
+.bPlTemplateLibraryButton {
+	width: max-content;
+	font-size: 13px;
+	line-height: 120%;
+	font-weight: 500;
+	color: $primaryColor;
+	background-color: #0000;
+	display: flex;
+	align-items: center;
+	gap: 5px;
+	padding: 6px 15px;
+	margin: 0 5px;
+	border: 1px solid $primaryColor;
+	border-radius: 4px;
+	transition: all 0.3s ease-in-out;
+	cursor: pointer;
+
+	svg,
+	img {
+		width: 24px;
+		height: 24px;
 	}
 }
 
@@ -138,21 +138,20 @@ $radius: 12px;
 			border-bottom: 1px solid $line;
 			padding: 13px 18px;
 
-			.modalHeaderLogo {
-				color: $ink;
-				font-family: 'Poppins', sans-serif;
+			.modalHeaderBrand {
+				align-items: center;
+				color: #0f1729;
+				display: inline-flex;
+				font-family: Poppins, sans-serif;
 				font-size: 17px;
 				font-weight: 700;
-				line-height: 1;
-				display: inline-flex;
-				align-items: center;
 				gap: 9px;
+				line-height: 1;
 
-				img,
 				svg {
 					width: 26px;
 					height: 26px;
-					border-radius: 6px;
+					fill: currentColor;
 				}
 			}
 
@@ -213,8 +212,14 @@ $radius: 12px;
 				color: $muted;
 				background: $bg;
 				border-radius: 8px;
+				margin-left: auto;
 				cursor: pointer;
 				transition: background 0.15s ease, color 0.15s ease;
+
+				svg {
+					width: 16px;
+					height: 16px;
+				}
 
 				&:hover {
 					background: #e9edf6;
@@ -261,15 +266,23 @@ $radius: 12px;
 						}
 					}
 
-					svg {
-						width: 15px;
-						height: 15px;
+					.searchIconWrapper {
 						position: absolute;
 						left: 12px;
 						top: 50%;
 						transform: translateY(-50%);
-						fill: $muted;
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						width: 15px;
+						height: 15px;
+						color: $muted;
 						cursor: pointer;
+
+						svg {
+							width: 15px;
+							height: 15px;
+						}
 					}
 				}
 
@@ -755,11 +768,6 @@ $radius: 12px;
 				.modalHeader {
 					padding: 15px 20px;
 					gap: 10px;
-
-					.modalHeaderLogo {
-						font-size: 16px;
-						min-width: auto;
-					}
 
 					.modalHeaderTypes {
 						flex: 1;

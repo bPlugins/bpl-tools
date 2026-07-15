@@ -1,46 +1,31 @@
 # TemplateLibrary
 
-Shared, fully dynamic template library modal component for WordPress block plugins.
+Shared, reusable template library modal component for WordPress block plugins.
 
 ## Quick Start
 
-### 1. Create plugin wrapper (src/backend/TemplateLibrary.js)
+### 1. Create plugin wrapper (src/template-library/TemplateLibrary.js)
 
 ```jsx
 import { __ } from '@wordpress/i18n';
-import { TemplateLibrary as TemplateLibraryModal } from '../../../bpl-tools/TemplateLibrary';
+import BPLTemplateLibrary from '../../../bpl-tools/TemplateLibrary';
 import { pluginIcon } from '../utils/icons';
 
 const TemplateLibrary = () => {
 	const nonce = window.yourPluginConfig?.nonce;
 	const isPremium = Boolean(window.yourPremiumCheck ?? false);
 
-	return <TemplateLibraryModal
+	return <BPLTemplateLibrary
 		// Branding
-		buttonIcon={pluginIcon}
-		buttonLabel={__('Template Library', 'your-plugin')}
-		buttonClassName='templateLibraryButton'
+		logo={pluginIcon}
+		buttonLabel={__('Template Library', 'textdomain')}
 
-		// Modal labels
-		modalTitle={__('Templates Library', 'your-plugin')}
-		patternsTabLabel={__('Patterns', 'your-plugin')}
-		pagesTabLabel={__('Pages', 'your-plugin')}
+		// Modal
+		modalTitle={__('Templates Library', 'textdomain')}
+		types={['patterns', 'pages']}
 
-		// Sidebar labels
-		allLabel={__('All', 'your-plugin')}
-		freeLabel={__('Free', 'your-plugin')}
-		proLabel={__('Pro', 'your-plugin')}
-		categoriesHeadingLabel={__('Categories', 'your-plugin')}
-		searchPlaceholder={__('Search templates…', 'your-plugin')}
-
-		// Action buttons
-		importButtonLabel={__('Import', 'your-plugin')}
-		proButtonLabel={__('Get Pro', 'your-plugin')}
-		loadMoreButtonLabel={__('Load More', 'your-plugin')}
-		noTemplatesText={__('No Templates Found!!', 'your-plugin')}
-
-		// URLs
-		proProductUrl='https://bplugins.com/products/your-plugin/'
+		// Pricing URL
+		pricingUrl='https://bplugins.com/products/your-plugin/'
 
 		// AJAX endpoints (customize if your plugin uses different action names)
 		ajaxActionMain='your_templates_main'
@@ -57,7 +42,7 @@ const TemplateLibrary = () => {
 export default TemplateLibrary;
 ```
 
-### 2. Mount in editor (src/backend/template-library.js)
+### 2. Mount in editor (src/template-library/index.js)
 
 ```jsx
 import { subscribe } from '@wordpress/data';
@@ -67,13 +52,13 @@ import TemplateLibrary from './TemplateLibrary';
 
 const mountTemplateLibrary = () => {
 	const templateLibraryWrap = document.createElement('div');
-	templateLibraryWrap.classList.add('templateLibraryWrap');
+	templateLibraryWrap.classList.add('bPlTemplateLibraryWrap');
 	createRoot(templateLibraryWrap).render(<TemplateLibrary />);
 
 	subscribe(() => {
 		setTimeout(() => {
 			const toolbar = document.querySelector('.edit-post-header-toolbar');
-			if (toolbar && !toolbar.querySelector('.templateLibraryWrap')) {
+			if (toolbar && !toolbar.querySelector('.bPlTemplateLibraryWrap')) {
 				toolbar.appendChild(templateLibraryWrap);
 			}
 		}, 1);
@@ -83,55 +68,53 @@ const mountTemplateLibrary = () => {
 domReady(mountTemplateLibrary);
 ```
 
-## All Props
+## Configuration Props
 
-### Branding
-- **buttonIcon** (ReactNode): Icon in button
-- **buttonLabel** (string): Button text
-- **buttonClassName** (string): CSS class for button (default: 'templateLibraryButton')
+### Branding (Required)
+- **logo** (ReactNode): Plugin logo to display in modal
+- **buttonLabel** (string): Text for the template library button
 
 ### Modal
 - **modalTitle** (string): Modal header text (default: 'Templates Library')
-- **patternsTabLabel** (string): First tab label (default: 'Patterns')
-- **pagesTabLabel** (string): Second tab label (default: 'Pages')
-
-### Sidebar (Filters)
-- **allLabel** (string): "All" access filter (default: 'All')
-- **freeLabel** (string): "Free" access filter (default: 'Free')
-- **proLabel** (string): "Pro" access filter (default: 'Pro')
-- **categoriesHeadingLabel** (string): Categories section title (default: 'Categories')
-- **searchPlaceholder** (string): Search input placeholder (default: 'Search templates…')
-
-### Template Actions
-- **importButtonLabel** (string): Import button text (default: 'Import')
-- **proButtonLabel** (string): "Get Pro" button text (default: 'Get Pro')
-- **loadMoreButtonLabel** (string): Load more button text (default: 'Load More')
-- **noTemplatesText** (string): Empty state message (default: 'No Templates Found!!')
+- **types** (array): Tab types to display - ['patterns'], ['pages'], or ['patterns', 'pages'] (default: ['patterns', 'pages'])
+  - If only one type, tab header is hidden
+  - Tab names are fixed: 'Patterns' and 'Pages'
 
 ### URLs
-- **proProductUrl** (string): Link for "Get Pro" button (default: 'https://bplugins.com/products/advanced-post-block/')
+- **pricingUrl** (string): Link for "Get Pro" button (required if supporting pro templates)
 
-### AJAX Endpoints
-- **ajaxActionMain** (string): Categories endpoint (default: 'apb_templates_main')
-- **ajaxActionTemplates** (string): Templates endpoint (default: 'apb_templates')
-- **ajaxActionImport** (string): Import endpoint (default: 'apb_template_import')
-- **ajaxActionCounts** (string): Counts endpoint (default: 'apb_template_counts')
+### AJAX Endpoints (Required)
+- **ajaxActionMain** (string): Categories endpoint (default: 'prefix_templates_main')
+- **ajaxActionTemplates** (string): Templates endpoint (default: 'prefix_templates')
+- **ajaxActionImport** (string): Import endpoint (default: 'prefix_template_import')
+- **ajaxActionCounts** (string): Counts endpoint (default: 'prefix_template_counts')
 
-### Authentication
-- **nonce** (string): WordPress AJAX nonce (required)
-- **isPremium** (boolean): User has pro access (default: false)
+### Authentication (Required)
+- **nonce** (string): WordPress AJAX nonce for security
+- **isPremium** (boolean): Whether user has pro access (default: false)
+
+## Hardcoded Labels
+
+The following are **not configurable** (standardized for consistency):
+
+- Modal tabs: "Patterns", "Pages"
+- Sidebar: "Categories", "All", "Free", "Pro"
+- Search: "Search templates…"
+- Actions: "Import", "Get Pro", "Load More", "No Templates Found!!"
 
 ## Features
 
-- ✅ **Fully Dynamic** — All text, URLs, and AJAX actions passed as props
-- ✅ **No Hardcoded Values** — Works for any plugin with different branding
+- ✅ **Reusable** — Share one component across all plugins
+- ✅ **Configurable** — Essential props passed by plugin wrapper
+- ✅ **Standardized UI** — Consistent labels and styling across plugins
+- ✅ **Smart Tab Display** — Hides tab header when only one type configured
 - ✅ **Plugin-Specific Filtering** — Only shows templates for that plugin
 - ✅ **Free/Pro Access** — Accurate count badges and access controls
 - ✅ **Multi-Field Search** — Title, category, and keywords
 - ✅ **Responsive Layout** — Flexbox grid with 350px minimum width
 - ✅ **Modal Portal** — Appends to body, removes on close
 - ✅ **Load More** — Infinite scroll pagination
-- ✅ **Preview URLs** — Supports custom preview_url meta field
+- ✅ **Preview Support** — Supports custom preview_url meta field
 
 ## Backend Requirements
 

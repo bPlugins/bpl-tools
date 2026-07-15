@@ -7,7 +7,7 @@ const Portal = ({ children, show }) => {
 	useEffect(() => {
 		if (!show) {
 			// Clean up when modal closes
-			const el = document.getElementById('bPl-template-library-portal');
+			const el = document.getElementById('bpl-template-library-portal');
 			if (el && document.body.contains(el)) {
 				document.body.removeChild(el);
 			}
@@ -16,10 +16,10 @@ const Portal = ({ children, show }) => {
 		}
 
 		// Create container only once when show is true
-		let el = document.getElementById('bPl-template-library-portal');
+		let el = document.getElementById('bpl-template-library-portal');
 		if (!el) {
 			el = document.createElement('div');
-			el.id = 'bPl-template-library-portal';
+			el.id = 'bpl-template-library-portal';
 			document.body.appendChild(el);
 		}
 		setContainer(el);
@@ -37,5 +37,4 @@ const Portal = ({ children, show }) => {
 
 	return createPortal(children, container);
 };
-
 export default Portal;

@@ -10,11 +10,8 @@
 	* @props access (optional): 'all' Access filter applied to templates (String)
 	* @props children (optional): Footer content rendered below the gallery (Node)
 	* @props nonce (required): Nonce for the import AJAX request (String)
-	* @props ajaxActionImport (optional): 'apb_template_import' (String)
-	* @props proProductUrl (optional): 'https://bplugins.com/products/advanced-post-block/' (String)
-	* @props importButtonLabel (optional): 'Import' (String)
-	* @props proButtonLabel (optional): 'Get Pro' (String)
-	* @props noTemplatesText (optional): 'No Templates Found!!' (String)
+	* @props ajaxActionImport (optional): 'prefix_template_import' (String)
+	* @props pricingUrl (optional): 'https://bplugins.com/pricing/' (String)
 	*/
 
 import { useState, useEffect } from 'react';
@@ -22,7 +19,7 @@ import { BlockPreview } from '@wordpress/block-editor';
 import { parse } from '@wordpress/blocks';
 import { Spinner } from '@wordpress/components';
 
-import { externalIcon } from '../utils/icons';
+import { externalIcon, plusIcon } from '../../utils/icons';
 
 const isProItem = (item) => Array.isArray(item.category) && item.category.includes('pro');
 
@@ -36,12 +33,12 @@ const Templates = ({
 	access = 'all',
 	children,
 	nonce,
-	ajaxActionImport = 'apb_template_import',
-	proProductUrl = 'https://bplugins.com/products/advanced-post-block/',
-	importButtonLabel = 'Import',
-	proButtonLabel = 'Get Pro',
-	noTemplatesText = 'No Templates Found!!'
+	ajaxActionImport,
+	pricingUrl = 'https://bplugins.com/pricing/'
 }) => {
+	const importButtonLabel = 'Import';
+	const proButtonLabel = 'Get Pro';
+	const noTemplatesText = 'No Templates Found!!';
 	const [isLoading, setIsLoading] = useState(false);
 	const [isTempLoading, setIsTempLoading] = useState(false);
 
@@ -93,17 +90,19 @@ const Templates = ({
 											wp.data.dispatch('core/block-editor').insertBlocks(blocks);
 											setShow(false);
 										} catch (error) {
+											// eslint-disable-next-line no-console
 											console.error(error);
 										}
 									}
 								})
 								.fail((error) => {
+									// eslint-disable-next-line no-console
 									console.error(error);
 									setIsLoading(false);
 								});
 						}
 					} : {
-						href: proProductUrl,
+						href: pricingUrl,
 						target: '_blank',
 						rel: 'noreferrer'
 					};
@@ -119,9 +118,7 @@ const Templates = ({
 							<div className='modalBodyTemplateItemButton'>
 								<a className={isLoading === ID ? 'disabled' : ''} {...linkProps}>
 									{hasAccess ? <>
-										<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'>
-											<path d='M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 144L48 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l144 0 0 144c0 17.7 14.3 32 32 32s32-14.3 32-32l0-144 144 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-144 0 0-144z' />
-										</svg>
+										{plusIcon}
 										{importButtonLabel}
 									</> : <>
 										{proButtonLabel}

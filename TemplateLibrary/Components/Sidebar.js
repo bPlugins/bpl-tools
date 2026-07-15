@@ -12,17 +12,14 @@
 	* @props accessCounts (optional): Precomputed counts by access and category (Object)
 	* @props setPageNumber (required): Page number setter (Function)
 	* @props setSearch (required): Search query setter (Function)
-	* @props allLabel (optional): 'All' (String)
-	* @props freeLabel (optional): 'Free' (String)
-	* @props proLabel (optional): 'Pro' (String)
-	* @props categoriesHeadingLabel (optional): 'Categories' (String)
-	* @props searchPlaceholder (optional): 'Search templates…' (String)
 	*/
 
 import { useMemo } from 'react';
+import { __ } from '@wordpress/i18n';
 import { Spinner } from '@wordpress/components';
 
 import { debounce } from '../../utils/functions';
+import { searchIcon } from '../../utils/icons';
 
 const Sidebar = ({
 	main,
@@ -36,11 +33,6 @@ const Sidebar = ({
 	accessCounts,
 	setPageNumber,
 	setSearch,
-	allLabel = 'All',
-	freeLabel = 'Free',
-	proLabel = 'Pro',
-	categoriesHeadingLabel = 'Categories',
-	searchPlaceholder = 'Search templates…'
 }) => {
 	const handleSearch = useMemo(() => debounce((sq) => {
 		setSearch(sq);
@@ -76,12 +68,12 @@ const Sidebar = ({
 		return 'all' === access ? (cats || []).find((c) => c.name === name)?.count : undefined;
 	};
 
-	const categories = [{ label: allLabel, name: 'all' }, ...contentCats];
+	const categories = [{ label: __('All'), name: 'all' }, ...contentCats];
 
 	const accessFilters = [
-		{ name: 'all', label: allLabel },
-		{ name: 'free', label: freeLabel },
-		{ name: 'pro', label: proLabel },
+		{ name: 'all', label: __('All') },
+		{ name: 'free', label: __('Free') },
+		{ name: 'pro', label: __('Pro') }
 	];
 
 	const pickCategory = (name) => {
@@ -104,11 +96,9 @@ const Sidebar = ({
 	return (
 		<aside className='modalBodySidebar'>
 			<div className='modalBodySidebarSearch'>
-				<svg onClick={handleInputChange} xmlns='http://www.w3.org/2000/svg' height='16' width='16' viewBox='0 0 512 512'>
-					<path d='M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z' />
-				</svg>
+				<div onClick={handleInputChange} className='searchIconWrapper'>{searchIcon}</div>
 
-				<input type='text' placeholder={searchPlaceholder} onChange={handleInputChange} />
+				<input type='text' placeholder='Search templates…' onChange={handleInputChange} />
 			</div>
 
 			<div className='modalBodySidebarAccess'>
@@ -125,7 +115,7 @@ const Sidebar = ({
 				))}
 			</div>
 
-			<div className='modalBodySidebarHeading'>{categoriesHeadingLabel}</div>
+			<div className='modalBodySidebarHeading'>Categories</div>
 
 			<div className='modalBodySidebarCategories'>
 				{mainLoading ? <div className='bPlPlaceCenter'>

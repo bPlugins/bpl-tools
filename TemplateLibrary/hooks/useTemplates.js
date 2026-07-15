@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useWPAjax } from '../../hooks';
 
-const useTemplates = (nonce, type = 'patterns', category = 'all', pageNumber = 1, search = '', ajaxAction = 'apb_templates') => {
+const useTemplates = (nonce, type = 'patterns', category = 'all', pageNumber = 1, search = '', ajaxAction) => {
 	const src = search.split(' ').join(',');
 
 	const { data = null, saveData, isLoading } = useWPAjax(ajaxAction, { _wpnonce: nonce, type, category, pageNumber, search: src }, true);

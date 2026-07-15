@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useWPAjax } from '../../hooks';
 
-const useTemplatesMain = (nonce, type, ajaxAction = 'apb_templates_main') => {
+const useTemplatesMain = (nonce, type, ajaxAction) => {
 	const { data = null, saveData, refetch, isLoading } = useWPAjax(ajaxAction, { _wpnonce: nonce }, false);
 
 	useEffect(() => {
