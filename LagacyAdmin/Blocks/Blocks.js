@@ -1,3 +1,10 @@
+/**
+	* Blocks Component
+	*
+	* @props info (required): Block dashboard data containing action, blocks and title (Object)
+	* @props nonce (required): WordPress AJAX security nonce (String)
+	*/
+
 import { useState, useEffect } from 'react';
 
 import { useWPAjax } from '../../hooks';

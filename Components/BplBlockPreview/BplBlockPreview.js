@@ -1,21 +1,21 @@
+/**
+	* BplBlockPreview Component
+	*
+	* @props blocks (required): Blocks to preview (Array)
+	* @props clientId (optional): The block client ID (String)
+	* @props value (optional): The current value (Object)
+	* @props minHeight (optional): '' (String)
+	* @props minWidth (optional): '200px' (String)
+	* @props viewportWidth (optional): 1600 (Number)
+	* @props replaceBlock (optional): (Function)
+	*/
+
 import { BlockPreview } from '@wordpress/block-editor';
 import { parse } from '@wordpress/blocks';
 import { Button, Popover } from '@wordpress/components';
 import { useState } from 'react';
 import { withDispatch } from '@wordpress/data';
 import "./style.scss";
-
-/**
- * BplBlockPreview Component
- * 
- * @props blocks (required): Array of block objects {label, value, content} (Array)
- * @props clientId (required): Block client ID (String)
- * @props value (required): Currently active block value (String)
- * @props minHeight (optional): '' (String)
- * @props minWidth (optional): '200px' (String)
- * @props viewportWidth (optional): 1600 (Number)
- * @props replaceBlock (optional): (Function)
- */
 
 const BplBlockPreview = ({ blocks, clientId, value, minHeight = '', minWidth = '200px', viewportWidth = 1600, replaceBlock }) => {
 	const [activeIndex, setActiveIndex] = useState(null);

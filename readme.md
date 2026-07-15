@@ -16,9 +16,9 @@ If you are a user of any bPlugins block (Advanced Post Block, B Blocks, Content 
 - [Repository Layout](#repository-layout)
 - [Installation](#installation)
 - [Usage](#usage)
-  - [Building an Admin Dashboard](#building-an-admin-dashboard)
-  - [Using Gutenberg Editor Controls](#using-gutenberg-editor-controls)
-  - [Hooks and Utilities](#hooks-and-utilities)
+	- [Building an Admin Dashboard](#building-an-admin-dashboard)
+	- [Using Gutenberg Editor Controls](#using-gutenberg-editor-controls)
+	- [Hooks and Utilities](#hooks-and-utilities)
 - [External Requests & Why They Are Made](#external-requests--why-they-are-made)
 - [Privacy](#privacy)
 - [Third-Party Libraries](#third-party-libraries)
@@ -74,18 +74,14 @@ This library does **not** ship a PHP file of its own — it is purely a frontend
 
 ```
 bpl-tools/
-├── Admin/              # Dashboard React components (Header, Blocks, Demos,
-│                         Pricing, Activation, FeatureCompare, OurPlugins, etc.)
-├── Advanced/           # Advanced block controls (Background, Transform,
-│                         BorderShadow, Animation, Mask, Visibility, ...)
-├── Components/         # Gutenberg editor controls (Dimension, Device,
-│                         ColorControl, Typography, BoxControl, Badge, ...)
-├── ProControls/        # Premium-only controls (gated behind license checks)
-├── LagacyAdmin/        # Backwards-compatible older dashboard (do not use
-│                         for new plugins — kept for old releases)
-├── hooks/              # Reusable React hooks
-├── utils/              # Pure helpers (icons, formatters, data transforms)
-├── includes/           # PHP helpers reserved for future shared logic
+├── Admin/			# Dashboard React components (Header, Blocks, Demos, Pricing, Activation, FeatureCompare, OurPlugins, etc.)
+├── Advanced/		# Advanced block controls (Background, Transform, BorderShadow, Animation, Mask, Visibility, ...)
+├── Components/		# Gutenberg editor controls (Dimension, Device, ColorControl, Typography, BoxControl, Badge, ...)
+├── ProControls/	# Premium-only controls (gated behind license checks)
+├── LagacyAdmin/	# Backwards-compatible older dashboard (do not use for new plugins — kept for old releases)
+├── hooks/			# Reusable React hooks
+├── utils/			# Pure helpers (icons, formatters, data transforms)
+├── includes/		# PHP helpers reserved for future shared logic
 ├── package.json
 ├── webpack.config.js
 └── LICENSE.md
@@ -102,8 +98,8 @@ details for the components inside it.
 
 ```
 wp-content/plugins/
-├── bpl-tools/                  ← this repository
-├── advanced-post-block/        ← consumer plugin
+├── bpl-tools/				← this repository
+├── advanced-post-block/	← consumer plugin
 ├── b-blocks/
 ├── countdown-time/
 └── ...
@@ -135,28 +131,28 @@ A consumer plugin renders an empty DOM node from PHP and mounts a React app into
 import { createRoot } from 'react-dom/client';
 import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 
-import Header     from '../../../../bpl-tools/Admin/Header';
-import Overview   from '../../../../bpl-tools/Admin/Overview';
-import Blocks     from '../../../../bpl-tools/Admin/Blocks';
-import Demos      from '../../../../bpl-tools/Admin/Demos';
-import Pricing    from '../../../../bpl-tools/Admin/Pricing';
+import Header from '../../../../bpl-tools/Admin/Header';
+import Overview from '../../../../bpl-tools/Admin/Overview';
+import Blocks from '../../../../bpl-tools/Admin/Blocks';
+import Demos from '../../../../bpl-tools/Admin/Demos';
+import Pricing from '../../../../bpl-tools/Admin/Pricing';
 import Activation from '../../../../bpl-tools/Admin/Activation';
 
 document.addEventListener('DOMContentLoaded', () => {
-    const el   = document.getElementById('myPluginDashboard');
-    const info = JSON.parse(el.dataset.info);
+	const el = document.getElementById('myPluginDashboard');
+	const info = JSON.parse(el.dataset.info);
 
-    createRoot(el).render(
-        <Router>
-            <Routes>
-                <Route path="/"            element={<Overview   {...info} />} />
-                <Route path="/blocks"      element={<Blocks     {...info} />} />
-                <Route path="/demos"       element={<Demos      {...info} />} />
-                <Route path="/pricing"     element={<Pricing    {...info} />} />
-                <Route path="/activation"  element={<Activation {...info} />} />
-            </Routes>
-        </Router>
-    );
+	createRoot(el).render(
+		<Router>
+			<Routes>
+				<Route path="/" element={<Overview {...info} />} />
+				<Route path="/blocks" element={<Blocks {...info} />} />
+				<Route path="/demos" element={<Demos {...info} />} />
+				<Route path="/pricing" element={<Pricing {...info} />} />
+				<Route path="/activation" element={<Activation {...info} />} />
+			</Routes>
+		</Router>
+	);
 });
 ```
 
@@ -167,31 +163,29 @@ The matching PHP side simply enqueues the compiled bundle and prints the host no
 Inside a block's `edit.js`, import controls just like any other module:
 
 ```jsx
-import Dimension     from '../../../bpl-tools/Components/Dimension';
-import ColorControl  from '../../../bpl-tools/Components/ColorControl';
-import Device        from '../../../bpl-tools/Components/Device';
-import BoxControl    from '../../../bpl-tools/Components/BoxControl';
+import Dimension from '../../../bpl-tools/Components/Dimension';
+import ColorControl from '../../../bpl-tools/Components/ColorControl';
+import Device from '../../../bpl-tools/Components/Device';
+import BoxControl from '../../../bpl-tools/Components/BoxControl';
 
 export default function Edit({ attributes, setAttributes }) {
-    const { padding, color } = attributes;
+	const { padding, color } = attributes;
 
-    return (
-        <>
-            <Device />
+	return <>
+		<Device />
 
-            <Dimension
-                label="Padding"
-                value={padding}
-                onChange={value => setAttributes({ padding: value })}
-            />
+		<Dimension
+			label="Padding"
+			value={padding}
+			onChange={value => setAttributes({ padding: value })}
+		/>
 
-            <ColorControl
-                label="Text Color"
-                value={color}
-                onChange={value => setAttributes({ color: value })}
-            />
-        </>
-    );
+		<ColorControl
+			label="Text Color"
+			value={color}
+			onChange={value => setAttributes({ color: value })}
+		/>
+	</>
 }
 ```
 
@@ -200,7 +194,7 @@ Each control is a thin wrapper around `@wordpress/components` that adds responsi
 ### Hooks and Utilities
 
 ```js
-import { useDeviceType }  from '../../../bpl-tools/hooks/useDeviceType';
+import { useDeviceType } from '../../../bpl-tools/hooks/useDeviceType';
 import { getDeviceValue } from '../../../bpl-tools/utils/getDeviceValue';
 ```
 
@@ -219,9 +213,9 @@ Transparency about network activity is important — both for plugin reviewers a
 - **What is sent:** Only the public `pluginId` in the URL path. No site URL, no admin email, no user identifier, no nonce, no request body.
 - **What is received:** A JSON document describing the product's plans, license tiers, monthly / annual / lifetime pricing, and the feature list for each plan.
 - **Why this exists:**
-  1. Pricing and feature lists change frequently (promos, new tiers, regional discounts). Hard-coding them inside every plugin would require us to ship a new release of every plugin every time a price changes — and to leave users on outdated information until they update.
-  2. Keeping the source of truth on `api.bplugins.com` lets the dashboard always show the **current** prices and feature list without the user having to update the plugin.
-  3. The dashboard is admin-only, so this request never runs for site visitors and has no performance impact on the public site.
+	1. Pricing and feature lists change frequently (promos, new tiers, regional discounts). Hard-coding them inside every plugin would require us to ship a new release of every plugin every time a price changes — and to leave users on outdated information until they update.
+	2. Keeping the source of truth on `api.bplugins.com` lets the dashboard always show the **current** prices and feature list without the user having to update the plugin.
+	3. The dashboard is admin-only, so this request never runs for site visitors and has no performance impact on the public site.
 - **Endpoint type:** Public, read-only WordPress REST route. No authentication required. Returns JSON.
 - **Failure behavior:** If the request fails the component renders nothing — the rest of the dashboard keeps working normally. The error is logged to the browser console for the site owner; nothing is sent back to our servers.
 

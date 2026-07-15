@@ -1,3 +1,11 @@
+/**
+	* Info Component
+	*
+	* @props slug (required): plugin slug - builds the review link (String)
+	* @props pages (required): pages config (Object)
+	* @props helpItems (optional): override default help cards; each {image?, titleIcon?, title, description, link, linkText} (Array)
+	*/
+
 import Button from '../../../Components/Button/Button';
 import { facebookIcon } from '../../utils/icons';
 
@@ -31,14 +39,6 @@ const defaultHelpItems = (slug, pages) => [
 	}
 ];
 
-/**
- * Info — help cards row shown at the bottom of the Welcome page.
- *
- * @param {object}    props
- * @param {string}    props.slug
- * @param {object}    props.pages
- * @param {object[]}  [props.helpItems] - Override default items. Each: {image?, titleIcon?, title, description, link, linkText}
- */
 const Info = ({ slug, pages, helpItems }) => {
 	const items = helpItems || defaultHelpItems(slug, pages);
 

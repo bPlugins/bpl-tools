@@ -1,3 +1,10 @@
+/**
+	* CustomCSS Component
+	*
+	* @props css (optional): '' - custom CSS code string (String)
+	* @props onChange (required): handler called with updated css value (Function)
+	*/
+
 import { PanelBody } from '@wordpress/components';
 
 import CustomCodeEditor from '../Components/CustomCodeEditor/CustomCodeEditor';

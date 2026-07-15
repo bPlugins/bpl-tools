@@ -1,3 +1,10 @@
+/**
+	* Pricing Component
+	*
+	* @props pricingInfo (required): pricing configuration {pluginId, planId, licenses, logo, button, featured} (Object)
+	* @props options (required): additional Freemius checkout options (Object)
+	*/
+
 import { useEffect, useState } from 'react';
 
 import Button from '../../Components/Button/Button';

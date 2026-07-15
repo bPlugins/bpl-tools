@@ -1,3 +1,11 @@
+/**
+	* Transform Component
+	*
+	* @props transform (optional): {} - transform settings with normal, hover and transition (Object)
+	* @props onChange (optional): () => {} - handler called with updated transform data (Function)
+	* @props device (required): current editor device type (String)
+	*/
+
 import { PanelBody, RangeControl, TabPanel } from '@wordpress/components';
 
 import AdvTransform from '../Components/AdvTransform/AdvTransform';

@@ -1,3 +1,10 @@
+/**
+	* FilterDemos Component
+	*
+	* @props demoInfo (required): Demo data containing categories and demos (Object)
+	* @props children (optional): Extra content rendered in the header and modal (Node)
+	*/
+
 import { useState } from 'react';
 
 import BButtonGroup from '../../Components/BButtonGroup/BButtonGroup';

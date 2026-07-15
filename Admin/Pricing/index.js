@@ -1,3 +1,10 @@
+/**
+	* Pricing Component
+	*
+	* @props pricingInfo (required): {pluginId, planId, licenses, button, featured, logo?, hero?, included?, trustBadges?, faqs?} plan config (Object)
+	* @props options (required): extra options forwarded to FS.Checkout.open() (Object)
+	*/
+
 import { useEffect, useState } from 'react';
 import { __ } from '@wordpress/i18n';
 
@@ -34,14 +41,6 @@ const formatPrice = (amount) => {
 	return Number.isInteger(num) ? String(num) : num.toFixed(2);
 };
 
-/**
- * Freemius-powered pricing page — fetches live plan data, renders plan cards with
- * billing-cycle switcher, feature list, trust badges, and FAQ accordion.
- *
- * @param {object} props
- * @param {object} props.pricingInfo          - {logo?, pluginId, planId, licenses, button, featured, hero?, included?, trustBadges?, faqs?}
- * @param {object} props.options              - Extra options forwarded to FS.Checkout.open() (pass {} for none)
- */
 const Pricing = ({ pricingInfo, options }) => {
 	const {
 		pluginId, planId, licenses, button, featured, logo,

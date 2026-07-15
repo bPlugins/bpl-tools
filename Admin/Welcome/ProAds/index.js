@@ -6,10 +6,10 @@ import './style.scss';
 /**
  * ProAds — upgrade prompt shown to free users on the Welcome page.
  *
- * @param {object}   props
- * @param {string}   props.name
- * @param {object}   props.media        - {proThumbnail}
- * @param {string[]} props.proFeatures
+ * @param {object}		props
+ * @param {string}		props.name
+ * @param {object}		props.media			- {proThumbnail}
+ * @param {string[]}	props.proFeatures
  */
 const ProAds = (props) => {
 	const { name, media, proFeatures } = props;

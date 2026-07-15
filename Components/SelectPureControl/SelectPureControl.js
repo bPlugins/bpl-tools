@@ -1,10 +1,12 @@
 /**
- * @props className (optional): 'mt20' (String)
- * @props value: selectedOptions (Array)
- * @props onChange: (Function)
- * @props defaults (optional): { width, height, style, color } (Array)
- * @return Separator Properties (Object)
- */
+	* SelectPureControl Component
+	*
+	* @props className (optional): '' (String)
+	* @props label (optional): '' (String)
+	* @props value (required): Selected option value(s) (String|Array)
+	* @props onChange (required): (Function)
+	* @props options (optional): [] Available options (Array)
+	*/
 
 import { useEffect, useRef } from 'react';
 import SelectPure from 'select-pure';

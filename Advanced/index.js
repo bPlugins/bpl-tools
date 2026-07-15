@@ -1,3 +1,13 @@
+/**
+	* Advanced Component
+	*
+	* @props advanced (required): combined advanced settings object for all sub-sections (Object)
+	* @props onChange (required): handler called with updated advanced data (Function)
+	* @props enabled (optional): defEnabled - map of enabled sections and their features (Object)
+	* @props id (optional): null - DOM id passed to the Animation section (String)
+	* @props isPremium (optional): false - whether premium sections are available (Boolean)
+	*/
+
 import { Notice, PanelBody } from '@wordpress/components';
 import Dimension from '../Components/Dimension/Dimension';
 import Mask from '../Components/Mask/Mask';

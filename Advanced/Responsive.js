@@ -1,3 +1,10 @@
+/**
+	* Responsive Component
+	*
+	* @props responsive (required): object with desktop, tablet and mobile visibility flags (Object)
+	* @props onChange (required): handler called with updated responsive data (Function)
+	*/
+
 import { __ } from '@wordpress/i18n';
 import { PanelBody, ToggleControl } from '@wordpress/components';
 

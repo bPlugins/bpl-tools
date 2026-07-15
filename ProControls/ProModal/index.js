@@ -1,3 +1,14 @@
+/**
+	* ProModal Component
+	*
+	* @props isProModalOpen (required): Controls modal visibility (Boolean)
+	* @props setIsProModalOpen (required): Modal open state setter (Function)
+	* @props link (optional): '' Upgrade link URL (String)
+	* @props title (optional): Modal title, supports HTML (String)
+	* @props description (optional): Modal description, supports HTML (String)
+	* @props features (optional): List of feature strings (max 6 shown) (Array)
+	*/
+
 import { Modal } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 

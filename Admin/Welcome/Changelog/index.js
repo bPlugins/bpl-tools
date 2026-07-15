@@ -1,3 +1,12 @@
+/**
+	* Changelog Component
+	*
+	* @props slug (required): WordPress.org slug - builds the read-more link (String)
+	* @props changelogs (required): [{type, version, list}] changelog entries (Array)
+	* @props limit (optional): 5 - max entries shown (Number)
+	* @props loadMoreLabel (optional): read-more button text; omit to hide (String)
+	*/
+
 import Button from '../../../Components/Button/Button';
 import './style.scss';
 
@@ -17,15 +26,6 @@ const processItem = (html) => html.replace(
 	}
 );
 
-/**
- * Release notes panel — renders changelog entries with a configurable display limit.
- *
- * @param {object}   props
- * @param {string}   props.slug              - WordPress.org slug — builds the read-more link
- * @param {object[]} props.changelogs        - [{type: 'new'|'update'|'fix', version: string, list: string[]}]
- * @param {number}   [props.limit]           - Max entries shown (default 5). Pass as changelogsLimit via Welcome.
- * @param {string}   [props.loadMoreLabel]   - "Read more" button text; omit to hide. Pass as changelogsReadMoreLabel via Welcome.
- */
 const Changelog = (props) => {
 	const { slug, changelogs, limit = 5, loadMoreLabel } = props;
 

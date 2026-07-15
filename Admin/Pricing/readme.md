@@ -32,22 +32,22 @@ import { pricingInfo } from '../utils/data';
 ```js
 // Single plan mode
 export const pricingInfo = {
-    logo:     'https://ps.w.org/my-plugin/assets/icon-128x128.png', // shown in checkout overlay
-    pluginId: 14262,
-    planId:   '23856',  // string = single plan
-    licenses: [1, 3, null],   // site counts; null = Unlimited Sites
-    button:   { label: 'Buy Now ➜' },
-    featured: { selected: 3 } // license count to highlight as "Most Popular"
+	logo: 'https://ps.w.org/my-plugin/assets/icon-128x128.png', // shown in checkout overlay
+	pluginId: 14262,
+	planId: '23856', // string = single plan
+	licenses: [1, 3, null], // site counts; null = Unlimited Sites
+	button: { label: 'Buy Now ➜' },
+	featured: { selected: 3 } // license count to highlight as "Most Popular"
 }
 
 // Multi-plan mode
 export const pricingInfo = {
-    logo:     'https://ps.w.org/my-plugin/assets/icon-128x128.png',
-    pluginId: 14262,
-    planId:   ['23856', '23857', '23858'],  // array = multiple plans
-    licenses: [1, 3, null],
-    button:   { label: 'Buy Now ➜' },
-    featured: { selected: 3 }
+	logo: 'https://ps.w.org/my-plugin/assets/icon-128x128.png',
+	pluginId: 14262,
+	planId: ['23856', '23857', '23858'], // array = multiple plans
+	licenses: [1, 3, null],
+	button: { label: 'Buy Now ➜' },
+	featured: { selected: 3 }
 }
 ```
 
@@ -101,12 +101,12 @@ On mount, fetches `https://api.bplugins.com/wp-json/bpl/v1/products/{pluginId}`.
 import Pricing from 'bpl-tools/Admin/Pricing';
 
 export const pricingInfo = {
-    logo: 'https://s3-us-west-2.amazonaws.com/freemius/plugins/8795/icons/8b48bbb7a8453157c40438b56e77a408.png',
-    pluginId: '8795',
-    planId: '14970',  // Pro plan ID
-    licenses: [1, 3, null],
-    button: { label: 'Buy Now ➜' },
-    featured: { selected: 3, text: 'Most Popular' }
+	logo: 'https://s3-us-west-2.amazonaws.com/freemius/plugins/8795/icons/8b48bbb7a8453157c40438b56e77a408.png',
+	pluginId: '8795',
+	planId: '14970', // Pro plan ID
+	licenses: [1, 3, null],
+	button: { label: 'Buy Now ➜' },
+	featured: { selected: 3, text: 'Most Popular' }
 }
 
 <Pricing pricingInfo={pricingInfo} options={{}} />
@@ -115,15 +115,15 @@ export const pricingInfo = {
 ### Multiple Plans (Pro, Max)
 ```js
 export const pricingInfo = {
-    logo: 'https://s3-us-west-2.amazonaws.com/freemius/plugins/8795/icons/8b48bbb7a8453157c40438b56e77a408.png',
-    pluginId: '8795',
-    planId: ['14970', '52950'],  // [Pro, Max]
-    licenses: [1, 3, null],
-    button: { label: 'Buy Now ➜' },
-    featured: { 
-        planId: '14970',  // Which plan to feature (Pro). Omit to default to 'pro'
-        text: 'Most Popular' 
-    }
+	logo: 'https://s3-us-west-2.amazonaws.com/freemius/plugins/8795/icons/8b48bbb7a8453157c40438b56e77a408.png',
+	pluginId: '8795',
+	planId: ['14970', '52950'], // [Pro, Max]
+	licenses: [1, 3, null],
+	button: { label: 'Buy Now ➜' },
+	featured: { 
+		planId: '14970', // Which plan to feature (Pro). Omit to default to 'pro'
+		text: 'Most Popular' 
+	}
 }
 
 <Pricing pricingInfo={pricingInfo} options={{}} />
@@ -137,23 +137,23 @@ Override the hero, features header, trust badges, or FAQs via `pricingInfo` opti
 
 ```js
 export const pricingInfo = {
-    // ...required fields...
-    hero: {
-        eyebrow:     'Plans',
-        title:       'Simple, transparent pricing',
-        description: 'All features on every plan. Choose your site count.'
-    },
-    included: {
-        tag:         'What\'s included',
-        title:       'Everything in every license',
-        description: 'No feature is locked per tier.'
-    },
-    trustBadges: [
-        { title: '30-day refund',    body: 'No questions asked', icon: moneyBackIcon },
-        { title: 'Lifetime updates', body: 'On every plan',      icon: refreshIcon   },
-    ],
-    faqs: [
-        { q: 'Can I upgrade later?', a: 'Yes, from your dashboard.' }
-    ]
+	// ...required fields...
+	hero: {
+		eyebrow: 'Plans',
+		title: 'Simple, transparent pricing',
+		description: 'All features on every plan. Choose your site count.'
+	},
+	included: {
+		tag: 'What\'s included',
+		title: 'Everything in every license',
+		description: 'No feature is locked per tier.'
+	},
+	trustBadges: [
+		{ title: '30-day refund', body: 'No questions asked', icon: moneyBackIcon },
+		{ title: 'Lifetime updates', body: 'On every plan', icon: refreshIcon },
+	],
+	faqs: [
+		{ q: 'Can I upgrade later?', a: 'Yes, from your dashboard.' }
+	]
 }
 ```

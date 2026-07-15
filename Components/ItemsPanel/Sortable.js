@@ -1,3 +1,14 @@
+/**
+	* Sortable Component
+	*
+	* @props value (optional): Array of items used when attributes is not provided (Array)
+	* @props onChange (optional): Change handler used when attributes is not provided (Function)
+	* @props attributes (optional): Block attributes object holding the items array (Object)
+	* @props setAttributes (optional): Block attributes setter used with attributes (Function)
+	* @props arrKey (optional): Key of the items array within attributes (String)
+	* @props activeIndex (optional): Initially active item index (Number)
+	*/
+
 // import { useEffect, useState } from 'react';
 // import { SortableContainer, SortableElement, SortableHandle, arrayMove } from 'react-sortable-hoc';
 

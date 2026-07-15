@@ -1,22 +1,22 @@
+/**
+	* BoxControl Component
+	*
+	* @props className (optional): '' (String)
+	* @props label (optional): (String)
+	* @props values (optional): { top, right, bottom, left } (Object)
+	* @props onChange (optional): (Function)
+	* @props resetValues (optional): Values used when resetting (Object)
+	* @props units (optional): Available units (Array)
+	* @props sides (optional): Sides to display (Array)
+	* @props style (optional): Inline style object (Object)
+	* @props disableUnits (optional): false (Boolean)
+	*/
+
 import { __experimentalUnitControl as UnitControl } from '@wordpress/components';
 import { useState } from 'react';
 
 import Label from '../Label/Label';
 import './BoxControl.scss';
-
-/**
- * BoxControl Component
- * @param {Object} props
- * @param {string} [props.label] - Label text for the control
- * @param {Object} [props.values={}] - Values object containing top, right, bottom, left measurements
- * @param {Function} [props.onChange=()=>{}] - Callback function when values change
- * @param {Object} [props.resetValues] - Default values to reset to
- * @param {Array} [props.units] - Array of unit objects [{label: string, value: string}]
- * @param {Array} [props.sides] - Array of sides to show ('horizontal', 'vertical' or ['top', 'right', 'bottom', 'left'])
- * @param {Object} [props.style] - Custom styles for the container
- * @param {string} [props.className=''] - Additional CSS classes
- * @param {boolean} [props.disableUnits=false] - Whether to disable unit selection
- */
 
 const BoxControl = (props) => {
 	const { label, values = {}, onChange = () => { }, resetValues, units, sides, style, className = '', disableUnits = false } = props;

@@ -1,3 +1,11 @@
+/**
+	* OurPlugins Component
+	*
+	* @props slug (required): current plugin slug, excluded from the list (String)
+	* @props slugs (optional): DEFAULT_SLUGS - override the default slug list (Array)
+	* @props installedPlugins (required): injected by withSelect; locally installed plugins (Array)
+	*/
+
 import { useEffect, useMemo, useState } from 'react';
 import { withSelect } from '@wordpress/data';
 import apiFetch from '@wordpress/api-fetch';

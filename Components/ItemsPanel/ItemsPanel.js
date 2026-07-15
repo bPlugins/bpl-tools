@@ -1,3 +1,26 @@
+/**
+	* ItemsPanel Component
+	*
+	* @props value (optional): Array of items (used when attributes is not provided) (Array)
+	* @props onChange (optional): (Function)
+	* @props attributes (optional): Block attributes (Object)
+	* @props setAttributes (optional): (Function)
+	* @props clientId (optional): The block client ID (String)
+	* @props arrKey (optional): Attribute key holding the items array (String)
+	* @props newItem (optional): Template for a new item (Object)
+	* @props ItemSettings (optional): Component to render each item's settings (Component)
+	* @props itemLabel (optional): 'Item' (String)
+	* @props activeIndex (optional): Currently active item index (Number)
+	* @props setActiveIndex (optional): (Function)
+	* @props design (optional): 'single' | 'all' (String)
+	* @props title (optional): '' (String)
+	* @props premiumProps (optional): Props for premium features (Object)
+	* @props minItem (optional): 1 (Number)
+	* @props handleCopy (optional): (Function)
+	* @props handleDelete (optional): (Function)
+	* @props handleAdd (optional): (Function)
+	*/
+
 import { Button, Dashicon, Flex, PanelBody, PanelRow } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 

@@ -1,3 +1,12 @@
+/**
+	* MultiSelectControl Component
+	*
+	* @props value (optional): [] Selected items (Array)
+	* @props onChange (required): (Function)
+	* @props limit (optional): 10 (Number)
+	* @props options (optional): [] Available options (Array)
+	*/
+
 import { useRef, useEffect, useState } from 'react';
 import { Popover, Dashicon } from '@wordpress/components';
 import { produce } from 'immer';

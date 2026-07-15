@@ -1,3 +1,11 @@
+/**
+	* AdvTransform Component
+	*
+	* @props value (required): The transform values object (Object)
+	* @props onChange (required): (Function)
+	* @props device (optional): The device type (e.g., 'desktop', 'tablet', 'mobile') (String)
+	*/
+
 import { PanelRow, RangeControl, ToggleControl, __experimentalUnitControl as UnitControl } from '@wordpress/components';
 import { withSelect } from '@wordpress/data';
 
@@ -6,16 +14,6 @@ import Device from '../Device/Device';
 import Label from '../Label/Label';
 import { offsetResetValue, rotateResetValue, scaleResetValue, skewResetValue } from './utils/options';
 
-/**
- * @function
- * @name AdvTransform
- * @description A wrapper for the transform control.
- * @param {Object} props Component props
- * @param {Object} [props.value] The current value of the transform.
- * @param {function} [props.onChange] The function to call when the value changes.
- * @param {string} [props.device] The device type.
- * @returns {ReactElement} A React element.
- */
 const AdvTransform = ({ value = {}, onChange = () => { }, device }) => {
 	const { rotate = {}, offset = {}, scale = {}, skew = {}, flipX = false, flipY = false } = value || {};
 

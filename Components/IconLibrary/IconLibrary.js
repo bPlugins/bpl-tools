@@ -1,3 +1,12 @@
+/**
+	* IconLibrary Component
+	*
+	* @props className (optional): '' (String)
+	* @props label (optional): __('Icon Library') (String)
+	* @props value (required): The selected icon (String)
+	* @props onChange (optional): (Function)
+	*/
+
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { __ } from '@wordpress/i18n';
 import { PanelRow, Flex, Button } from '@wordpress/components';

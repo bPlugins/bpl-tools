@@ -16,10 +16,10 @@ import Changelog from 'bpl-tools/Admin/Welcome/Changelog';
 
 ```js
 <Changelog
-    slug='my-plugin'
-    changelogs={changelogs}
-    limit={2}
-    loadMoreLabel='View More Changelogs'
+	slug='my-plugin'
+	changelogs={changelogs}
+	limit={2}
+	loadMoreLabel='View More Changelogs'
 />
 ```
 
@@ -44,24 +44,24 @@ import Changelog from 'bpl-tools/Admin/Welcome/Changelog';
 
 ```js
 export const welcomeInfo = (adminUrl) => ({
-    changelogs: [
-        {
-            version: '1.3.0 - 17 May 2026',
-            type: 'update',
-            list: [
-                'Update: Freemius SDK to v2.13.1',
-                'Fix: Minor bug fixes'
-            ]
-        },
-        {
-            version: '1.2.0 - 01 Feb 2026',
-            type: 'new',
-            list: [
-                'New: Added interactivity support'
-            ]
-        }
-    ],
-    changelogsLimit: 2,
-    changelogsReadMoreLabel: 'View More Changelogs',
+	changelogs: [
+		{
+			version: '1.3.0 - 17 May 2026',
+			type: 'update',
+			list: [
+				'Update: Freemius SDK to v2.13.1',
+				'Fix: Minor bug fixes'
+			]
+		},
+		{
+			version: '1.2.0 - 01 Feb 2026',
+			type: 'new',
+			list: [
+				'New: Added interactivity support'
+			]
+		}
+	],
+	changelogsLimit: 2,
+	changelogsReadMoreLabel: 'View More Changelogs',
 })
 ```

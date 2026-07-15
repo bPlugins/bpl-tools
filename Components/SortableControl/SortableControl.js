@@ -1,3 +1,13 @@
+/**
+	* SortableControl Component
+	*
+	* @props className (optional): '' (String)
+	* @props label (optional): __('Sort:') (String)
+	* @props value (optional): [] Array of items to sort (Array)
+	* @props property (optional): The item property used as display text (String)
+	* @props onChange (required): (Function)
+	*/
+
 import { __ } from '@wordpress/i18n';
 import {
 	DndContext,

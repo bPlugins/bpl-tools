@@ -1,3 +1,9 @@
+/**
+	* HelpTooltip Component
+	*
+	* @props text (required): Tooltip text to display (String)
+	*/
+
 import { Tooltip } from '@wordpress/components';
 
 const HelpTooltip = props => {

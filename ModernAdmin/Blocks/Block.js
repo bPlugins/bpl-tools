@@ -1,3 +1,14 @@
+/**
+	* Block Component
+	*
+	* @props block (required): block data object {name, title, icon, demo, docs, badge, required, isPremium} (Object)
+	* @props isPremium (required): whether the current plugin is premium (Boolean)
+	* @props disableBlockName (required): array of disabled block names (Array)
+	* @props handleCheckboxChange (required): toggle handler called with (name, isChecked) (Function)
+	* @props isSaving (required): whether a save is currently in progress (Boolean)
+	* @props isLinks (optional): true (Boolean)
+	*/
+
 import { demoIcon, docsIcon } from '../../utils/icons';
 
 const Block = ({ block, isPremium, disableBlockName, handleCheckboxChange, isSaving, isLinks = true }) => {

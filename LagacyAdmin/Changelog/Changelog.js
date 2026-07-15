@@ -1,3 +1,9 @@
+/**
+	* Changelog Component
+	*
+	* @props changelogs (required): List of release notes, each with version and list (Array)
+	*/
+
 import { useRef, useState, useEffect } from 'react';
 
 import './style.scss';

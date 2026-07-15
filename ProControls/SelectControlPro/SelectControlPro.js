@@ -1,3 +1,14 @@
+/**
+	* SelectControlPro Component
+	*
+	* @props className (optional): Additional CSS classes (String)
+	* @props onChange (required): Change handler invoked for allowed selections (Function)
+	* @props isPremium (optional): false (Boolean)
+	* @props setIsProModalOpen (optional): () => {} Opens the pro modal for gated values (Function)
+	* @props options (optional): [] Select options (Array)
+	* @props proValues (optional): [] Option values that require pro access (Array)
+	*/
+
 import { SelectControl } from '@wordpress/components';
 import { useEffect, useRef } from 'react';
 

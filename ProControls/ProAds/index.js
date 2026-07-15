@@ -1,3 +1,11 @@
+/**
+	* ProAds Component
+	*
+	* @props isPremium (required): Hides the ads when true (Boolean)
+	* @props list (optional): Feature list rendered by the membership ad variant (Array)
+	* @props link (required): Upgrade link URL (String)
+	*/
+
 import { __ } from '@wordpress/i18n';
 import { useMemo } from '@wordpress/element';
 

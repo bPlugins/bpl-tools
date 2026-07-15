@@ -1,3 +1,16 @@
+/**
+	* BlocksCard Component
+	*
+	* @props isPremium (required): whether the current plugin is premium (Boolean)
+	* @props disabledBlocks (required): initial list of disabled block names (Array)
+	* @props onChange (optional): called with the updated disabled block names (Function)
+	* @props allBlocks (required): all available blocks (Array)
+	* @props status (required): save status ('loading'|'success'|'error') (String)
+	* @props ProModal (optional): null (Function)
+	* @props cardTitle (optional): 'Blocks' (String)
+	* @props seeAllLink (optional): '#blocks' (String)
+	*/
+
 import { useEffect, useState } from 'react';
 
 import './card.scss';

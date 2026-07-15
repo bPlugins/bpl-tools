@@ -1,3 +1,16 @@
+/**
+	* VideoPlayer Component
+	*
+	* @props src (required): Video source URL, or YouTube URL when isYoutube is true (String)
+	* @props width (optional): '100%' - player width (String)
+	* @props height (optional): 'auto' - player height (String)
+	* @props autoPlay (optional): false - autoplay the video (Boolean)
+	* @props muted (optional): false - mute the video (Boolean)
+	* @props loop (optional): false - loop the video (Boolean)
+	* @props poster (optional): null - poster image URL (String)
+	* @props isYoutube (optional): false - render as a YouTube embed (Boolean)
+	*/
+
 import { useEffect, useRef, useState } from 'react'
 import './VideoPlayer.scss'
 

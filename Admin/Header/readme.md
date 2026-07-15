@@ -16,9 +16,9 @@ import Header from 'bpl-tools/Admin/Header';
 import Header from '../../../../bpl-tools/Admin/Header';
 
 <Header {...props}>
-    <nav className='bPlDashboardNav'>
-        {/* Link items */}
-    </nav>
+	<nav className='bPlDashboardNav'>
+		{/* Link items */}
+	</nav>
 </Header>
 ```
 
@@ -37,7 +37,7 @@ import Header from '../../../../bpl-tools/Admin/Header';
 
 ```
 ┌────────────────────────────────────────────────────────────┐
-│ [logo] Plugin Name  v1.0.0 │ [nav children] │ [Our Plugins] [Upgrade Pro] │
+│ [logo] Plugin Name v1.0.0 │ [nav children] │ [Our Plugins] [Upgrade Pro] │
 └────────────────────────────────────────────────────────────┘
 ```
 

@@ -7,15 +7,15 @@ import './MediaControl.scss';
 import Label from '../Label/Label';
 
 /**
- * MediaControl component
- * @param {string} className - The class name of the component
- * @param {string} label - The label of the component
- * @param {string} value - The value of the component
- * @param {Array} types - The allowed types of media
- * @param {function} onChange - The function to handle changes in the component value
- * @param {string} placeholder - The placeholder text of the component
- * @returns {JSX.Element} - The MediaUpload component
- */
+	* InlineMediaUpload component
+	* @param {string} className - The class name of the component
+	* @param {string} label - The label of the component
+	* @param {string} value - The value of the component
+	* @param {Array} types - The allowed types of media
+	* @param {function} onChange - The function to handle changes in the component value
+	* @param {string} placeholder - The placeholder text of the component
+	* @returns {JSX.Element} - The MediaUpload component
+	*/
 export const InlineMediaUpload = props => {
 	const { className, label = '', value, types = ['image'], onChange, placeholder = __('Enter URL') } = props;
 
@@ -41,15 +41,25 @@ export const InlineMediaUpload = props => {
 }
 
 /**
- * InlineMediaUpload component props
- * @typedef {Object} InlineMediaUploadProps
- * @property {string} [className] - The class name of the component
- * @property {string} [label] - The label of the component
- * @property {string} [value] - The value of the component
- * @property {Array<string>} [types=['image']] - The allowed types of media
- * @property {(val: string) => void} [onChange] - The function to handle changes in the component value
- * @property {string} [placeholder=__('Enter URL')] - The placeholder text of the component
- */
+	* InlineMediaUpload component props
+	* @typedef {Object} InlineMediaUploadProps
+	* @property {string} [className] - The class name of the component
+	* @property {string} [label] - The label of the component
+	* @property {string} [value] - The value of the component
+	* @property {Array<string>} [types=['image']] - The allowed types of media
+	* @property {(val: string) => void} [onChange] - The function to handle changes in the component value
+	* @property {string} [placeholder=__('Enter URL')] - The placeholder text of the component
+	*/
+/**
+	* InlineDetailMediaUpload component
+	* @param {string} className - The class name of the component
+	* @param {string} label - The label of the component
+	* @param {Object} value - The current media value ({ id, url, alt, title, caption })
+	* @param {Array} types - The allowed types of media
+	* @param {function} onChange - The function to handle changes in the component value
+	* @param {string} placeholder - The placeholder text of the URL input
+	* @returns {JSX.Element} - The inline detail media upload component
+	*/
 export const InlineDetailMediaUpload = props => {
 	const { className, label = '', value = {}, types = ['image'], onChange, placeholder = __('Enter URL') } = props;
 
@@ -71,18 +81,33 @@ export const InlineDetailMediaUpload = props => {
 }
 
 /**
- * MediaArea component props
- * @typedef {Object} MediaAreaProps
- * @property {string} [className] - The class name of the component
- * @property {string} [label='Choose'] - The label of the component
- * @property {Object} [value] - The value of the component
- * @property {Array<string>} [types=['image']] - The allowed types of media
- * @property {(val: Object) => void} [onChange] - The function to handle changes in the component value
- * @property {string} [default=''] - The default value of the component
- * @property {string} [height='50px'] - The height of the component
- * @property {string} [width='50px'] - The width of the component
- * @property {Object} [style] - The style of the component
- */
+	* MediaArea component props
+	* @typedef {Object} MediaAreaProps
+	* @property {string} [className] - The class name of the component
+	* @property {string} [label='Choose'] - The label of the component
+	* @property {Object} [value] - The value of the component
+	* @property {Array<string>} [types=['image']] - The allowed types of media
+	* @property {(val: Object) => void} [onChange] - The function to handle changes in the component value
+	* @property {string} [default=''] - The default value of the component
+	* @property {string} [height='50px'] - The height of the component
+	* @property {string} [width='50px'] - The width of the component
+	* @property {Object} [style] - The style of the component
+	*/
+/**
+	* MediaArea component
+	* @param {string} className - The class name of the component
+	* @param {string} label - The label / call-to-action text
+	* @param {Object} value - The current media value
+	* @param {Array} types - The allowed types of media
+	* @param {function} onChange - The function to handle changes in the component value
+	* @param {string} default - The fallback media used when no value is set
+	* @param {string} height - The height of the media area
+	* @param {string} width - The width of the media area
+	* @param {Object} style - Inline style object
+	* @param {function} onClick - Click handler for the media area
+	* @param {boolean} isSvgEnabled - Whether SVG uploads are allowed
+	* @returns {JSX.Element} - The clickable media area component
+	*/
 export const MediaArea = (props) => {
 	const { className = '', label = 'Choose', value, types = ['image/*'], onChange = () => { }, default: defaults = '', height = '50px', width = '50px', style, onClick = () => { }, isSvgEnabled = false } = props;
 	// const [validationError, setValidationError] = useState([])
@@ -150,17 +175,27 @@ export const MediaArea = (props) => {
 };
 
 /**
- * MediaArea component props:
- * @param {string} className optional: for customizing the component's outermost element
- * @param {string} label optional: for customizing the button label
- * @param {string|array} types optional: for customizing the types of files accepted
- * @param {func} onChange required: for handling the selected media
- * @param {string} default optional: for providing a default image URL
- * @param {string} height optional: for customizing the height of the image
- * @param {string} width optional: for customizing the width of the image
- * @param {object} style optional: for customizing the component's style
- */
+	* MediaArea component props:
+	* @param {string} className optional: for customizing the component's outermost element
+	* @param {string} label optional: for customizing the button label
+	* @param {string|array} types optional: for customizing the types of files accepted
+	* @param {func} onChange required: for handling the selected media
+	* @param {string} default optional: for providing a default image URL
+	* @param {string} height optional: for customizing the height of the image
+	* @param {string} width optional: for customizing the width of the image
+	* @param {object} style optional: for customizing the component's style
+	*/
 
+/**
+	* MediaPlaceholder component
+	* @param {string} className - The class name of the component
+	* @param {function} onChange - The function to handle changes in the component value
+	* @param {string} icon - The placeholder icon
+	* @param {string} type - The media type (e.g. 'image')
+	* @param {string} typeName - Display name for the media type
+	* @param {string} placeholder - The placeholder text of the URL input
+	* @returns {JSX.Element} - The media placeholder component
+	*/
 export const MediaPlaceholder = props => {
 	const { className = '', onChange, icon = 'format-image', type = 'image', typeName = '', placeholder = __('Paste or type a image URL') } = props;
 
@@ -196,14 +231,14 @@ export const MediaPlaceholder = props => {
 }
 
 /**
- * MediaEditControl component props:
- * @param {string} [label] - The label of the component
- * @param {string} [icon] - The icon of the component
- * @param {Array<string>} [types=['image']] - The allowed types of media
- * @param {Object} [value] - The value of the component
- * @param {(val: Object) => void} [onChange] - The function to handle changes in the component value
- * @param {boolean} [isMultiple=false] - Whether the component is for multiple media or not
- */
+	* MediaEditControl component props:
+	* @param {string} [label] - The label of the component
+	* @param {string} [icon] - The icon of the component
+	* @param {Array<string>} [types=['image']] - The allowed types of media
+	* @param {Object} [value] - The value of the component
+	* @param {(val: Object) => void} [onChange] - The function to handle changes in the component value
+	* @param {boolean} [isMultiple=false] - Whether the component is for multiple media or not
+	*/
 export const MediaEditControl = props => {
 	const { label = __('Edit Image:'), icon = 'format-image', types = ['image'], value = {}, onChange, isMultiple = false } = props;
 

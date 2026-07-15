@@ -1,3 +1,10 @@
+/**
+	* Demos Component
+	*
+	* @props demoInfo (required): Demo data with title, description, allInOneLabel, allInOneLink and demos (Object)
+	* @props children (optional): Extra content rendered in the header button areas (Node)
+	*/
+
 import { useEffect, useRef, useState } from 'react';
 
 import Button from '../../Components/Button/Button';

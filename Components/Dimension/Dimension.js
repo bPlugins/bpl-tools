@@ -1,3 +1,13 @@
+/**
+	* Dimension Component
+	*
+	* @props dimension (required): The dimension values (Object)
+	* @props onChange (required): (Function)
+	* @props title (optional): __('Dimension') (String)
+	* @props enabled (optional): Enabled sides (Array|Object)
+	* @props device (optional): The device type (String)
+	*/
+
 import { __ } from '@wordpress/i18n';
 import { withSelect } from '@wordpress/data';
 import { Flex, PanelBody, PanelRow, __experimentalUnitControl as UnitControl } from '@wordpress/components';

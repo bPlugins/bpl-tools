@@ -1,3 +1,18 @@
+/**
+	* Overview Component
+	*
+	* @props name (required): plugin name (String)
+	* @props version (required): plugin version (String)
+	* @props description (required): tagline text (String)
+	* @props isPremium (required): whether the plugin is premium (Boolean)
+	* @props media (required): {thumbnail?, video?, isYoutube?} (Object)
+	* @props pages (required): {landing?} - enables "View Demos" button (Object)
+	* @props startButton (required): {label, url} - primary CTA button (Object)
+	* @props keywords (required): chip labels shown below the tagline (Array)
+	* @props keywordsLabel (required): label before keyword chips (String)
+	* @props currentUser (required): injected by withSelect from the WP core store (Object)
+	*/
+
 import { useState } from 'react';
 import { withSelect } from '@wordpress/data';
 
@@ -14,21 +29,6 @@ const getYoutubeEmbedSrc = (url) => {
 };
 
 
-/**
- * Welcome overview card — hero section of the plugin dashboard.
- *
- * @param {object}   props
- * @param {string}   props.name
- * @param {string}   props.version
- * @param {string}   props.description
- * @param {boolean}  props.isPremium
- * @param {object}   props.media          - {thumbnail?, video?, isYoutube?}
- * @param {object}   props.pages          - {landing?} — enables "View Demos" button
- * @param {object}   props.startButton    - {label, url} — primary CTA button
- * @param {string[]} props.keywords       - chip labels shown below the tagline (e.g. ['Grid', 'Masonry'])
- * @param {string}   props.keywordsLabel  - label before keyword chips (e.g. 'Layouts')
- * @param {object}   props.currentUser    - injected by withSelect from the WP core store
- */
 const Overview = (props) => {
 	const { name, version, description, isPremium, media, pages, startButton, currentUser, keywords, keywordsLabel } = props;
 	const { thumbnail, video, isYoutube } = media || {};

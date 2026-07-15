@@ -521,24 +521,24 @@
 
 				<p>Reference — final <code>dashboardInfo</code> for Advanced Post Block Pro:</p>
 				<pre><span class="kw">export const</span> <span class="fn">dashboardInfo</span> = (<span class="key">info</span>) => {
-  <span class="kw">const</span> {
-    version, isPremium, adminUrl = <span class="str">''</span>, licenseActiveNonce,
-    deleteDataOnUninstall = <span class="num">false</span>,  <span class="cm">// ← add if your plugin has Settings cleanup</span>
-    uninstallNonce = <span class="str">''</span>             <span class="cm">// ← add if your plugin has Settings cleanup</span>
-  } = info;
+	<span class="kw">const</span> {
+		version, isPremium, adminUrl = <span class="str">''</span>, licenseActiveNonce,
+		deleteDataOnUninstall = <span class="num">false</span>,	<span class="cm">// ← add if your plugin has Settings cleanup</span>
+		uninstallNonce = <span class="str">''</span>						 <span class="cm">// ← add if your plugin has Settings cleanup</span>
+	} = info;
 
-  <span class="kw">return</span> {
-    <span class="cm">// ... (name, slug, media, pages, freemius unchanged) ...</span>
+	<span class="kw">return</span> {
+		<span class="cm">// ... (name, slug, media, pages, freemius unchanged) ...</span>
 
-    licenseActiveNonce,
-    deleteDataOnUninstall,  <span class="cm">// ← new</span>
-    uninstallNonce,         <span class="cm">// ← new</span>
+		licenseActiveNonce,
+		deleteDataOnUninstall,	<span class="cm">// ← new</span>
+		uninstallNonce,				 <span class="cm">// ← new</span>
 
-    startButton: {          <span class="cm">// ← new — drives the primary CTA button in the hero card</span>
-      label: <span class="str">'Start Now'</span>,
-      url:   <span class="str">`${adminUrl}/post-new.php?post_type=apb`</span>
-    }
-  };
+		startButton: {					<span class="cm">// ← new — drives the primary CTA button in the hero card</span>
+			label: <span class="str">'Start Now'</span>,
+			url:	 <span class="str">`${adminUrl}/post-new.php?post_type=apb`</span>
+		}
+	};
 };</pre>
 
 				<!-- 1B: welcomeInfo — the main change -->
@@ -559,59 +559,59 @@
 				<h4>Full welcomeInfo structure</h4>
 				<pre><span class="kw">export const</span> <span class="fn">welcomeInfo</span> = (<span class="key">adminUrl</span>) => ({
 
-  <span class="cm">// ── Hero card keywords chips ───────────────────────────────────────</span>
-  keywords:      [<span class="str">'Grid'</span>, <span class="str">'Masonry'</span>, <span class="str">'Slider'</span>, <span class="str">'Ticker'</span>, <span class="str">'Post Section'</span>],
-  keywordsLabel: <span class="str">'Layouts'</span>,
+	<span class="cm">// ── Hero card keywords chips ───────────────────────────────────────</span>
+	keywords:			[<span class="str">'Grid'</span>, <span class="str">'Masonry'</span>, <span class="str">'Slider'</span>, <span class="str">'Ticker'</span>, <span class="str">'Post Section'</span>],
+	keywordsLabel: <span class="str">'Layouts'</span>,
 
-  <span class="cm">// ── Getting Started tabbed steps ───────────────────────────────────</span>
-  <span class="cm">// Each tab has a key, label, optional icon, and an array of steps.</span>
-  <span class="cm">// step.body is rendered as HTML — use &lt;strong&gt;, &lt;code&gt;, &amp;rsaquo; freely.</span>
-  gettingStarted: {
-    tabs: [
-      {
-        key:   <span class="str">'gutenberg'</span>,
-        label: <span class="str">'Gutenberg'</span>,
-        icon:  gutenbergTabIcon,
-        steps: [
-          {
-            num:   <span class="num">1</span>,
-            title: <span class="str">'Add the APB Block'</span>,
-            body:  <span class="str">'Open the block editor. Click &lt;strong&gt;+&lt;/strong&gt; or type &lt;strong&gt;/Advanced Posts&lt;/strong&gt;.'</span>,
-            link:  { url: <span class="str">`${adminUrl}/post-new.php`</span>, label: <span class="str">'Open Editor'</span> }
-          },
-          { num: <span class="num">2</span>, title: <span class="str">'Choose a Layout'</span>, body: <span class="str">'Select Grid, Masonry, Slider...'</span> },
-          { num: <span class="num">3</span>, title: <span class="str">'Configure Query'</span>, body: <span class="str">'Set post type, filters, and order.'</span> },
-          { num: <span class="num">4</span>, title: <span class="str">'Style &amp; Publish'</span>,  body: <span class="str">'Adjust colors, typography, then publish.'</span> }
-        ]
-      },
-      <span class="cm">// Add shortcode, elementor, php tabs as needed ...</span>
-    ]
-  },
+	<span class="cm">// ── Getting Started tabbed steps ───────────────────────────────────</span>
+	<span class="cm">// Each tab has a key, label, optional icon, and an array of steps.</span>
+	<span class="cm">// step.body is rendered as HTML — use &lt;strong&gt;, &lt;code&gt;, &amp;rsaquo; freely.</span>
+	gettingStarted: {
+		tabs: [
+			{
+				key:	 <span class="str">'gutenberg'</span>,
+				label: <span class="str">'Gutenberg'</span>,
+				icon:	gutenbergTabIcon,
+				steps: [
+					{
+						num:	 <span class="num">1</span>,
+						title: <span class="str">'Add the APB Block'</span>,
+						body:	<span class="str">'Open the block editor. Click &lt;strong&gt;+&lt;/strong&gt; or type &lt;strong&gt;/Advanced Posts&lt;/strong&gt;.'</span>,
+						link:	{ url: <span class="str">`${adminUrl}/post-new.php`</span>, label: <span class="str">'Open Editor'</span> }
+					},
+					{ num: <span class="num">2</span>, title: <span class="str">'Choose a Layout'</span>, body: <span class="str">'Select Grid, Masonry, Slider...'</span> },
+					{ num: <span class="num">3</span>, title: <span class="str">'Configure Query'</span>, body: <span class="str">'Set post type, filters, and order.'</span> },
+					{ num: <span class="num">4</span>, title: <span class="str">'Style &amp; Publish'</span>,	body: <span class="str">'Adjust colors, typography, then publish.'</span> }
+				]
+			},
+			<span class="cm">// Add shortcode, elementor, php tabs as needed ...</span>
+		]
+	},
 
-  <span class="cm">// ── Changelogs ─────────────────────────────────────────────────────</span>
-  <span class="cm">// REQUIRED FORMAT: each list item must start with &lt;strong&gt;Type:&lt;/strong&gt;</span>
-  <span class="cm">// Supported types: New, Update, Fix, Fixing, Fixed, Remove, Improve, Improvement</span>
-  changelogs: [
-    {
-      version: <span class="str">'2.2.0 - 06 May 2026'</span>,
-      type:    <span class="str">'new'</span>,
-      list: [
-        <span class="str">'&lt;strong&gt;New:&lt;/strong&gt; Advanced Image Controls: custom width, lazy loading...'</span>,
-        <span class="str">'&lt;strong&gt;New:&lt;/strong&gt; Post Title Customization: SEO title tags...'</span>,
-        <span class="str">'&lt;strong&gt;Fix:&lt;/strong&gt; Critical performance improvements.'</span>,
-      ]
-    },
-    <span class="cm">// ... more versions ...</span>
-  ],
-  changelogsLimit:         <span class="num">6</span>,                    <span class="cm">// how many entries to show before "read more"</span>
-  changelogsReadMoreLabel: <span class="str">'View More Changelogs'</span>, <span class="cm">// omit to hide the button</span>
+	<span class="cm">// ── Changelogs ─────────────────────────────────────────────────────</span>
+	<span class="cm">// REQUIRED FORMAT: each list item must start with &lt;strong&gt;Type:&lt;/strong&gt;</span>
+	<span class="cm">// Supported types: New, Update, Fix, Fixing, Fixed, Remove, Improve, Improvement</span>
+	changelogs: [
+		{
+			version: <span class="str">'2.2.0 - 06 May 2026'</span>,
+			type:		<span class="str">'new'</span>,
+			list: [
+				<span class="str">'&lt;strong&gt;New:&lt;/strong&gt; Advanced Image Controls: custom width, lazy loading...'</span>,
+				<span class="str">'&lt;strong&gt;New:&lt;/strong&gt; Post Title Customization: SEO title tags...'</span>,
+				<span class="str">'&lt;strong&gt;Fix:&lt;/strong&gt; Critical performance improvements.'</span>,
+			]
+		},
+		<span class="cm">// ... more versions ...</span>
+	],
+	changelogsLimit:				 <span class="num">6</span>,										<span class="cm">// how many entries to show before "read more"</span>
+	changelogsReadMoreLabel: <span class="str">'View More Changelogs'</span>, <span class="cm">// omit to hide the button</span>
 
-  <span class="cm">// ── Pro upsell bullets (free users only) ──────────────────────────</span>
-  proFeatures: [
-    <span class="str">'More Layouts: Grid 1, Magazine 1, and Magazine 2.'</span>,
-    <span class="str">'Advanced Query: Presets, Tags, and Filters.'</span>,
-    <span class="str">'Flexible pagination and infinity loading.'</span>,
-  ],
+	<span class="cm">// ── Pro upsell bullets (free users only) ──────────────────────────</span>
+	proFeatures: [
+		<span class="str">'More Layouts: Grid 1, Magazine 1, and Magazine 2.'</span>,
+		<span class="str">'Advanced Query: Presets, Tags, and Filters.'</span>,
+		<span class="str">'Flexible pagination and infinity loading.'</span>,
+	],
 });</pre>
 
 				<!-- 1C: changelog badge format -->
@@ -673,24 +673,24 @@
 				<h4>Full before/after for a real changelog entry</h4>
 				<pre><span class="cm">// ✗ Before — no badges</span>
 {
-  version: <span class="str">'2.0.5 - 22 Feb 2026'</span>,
-  type:    <span class="str">'update'</span>,
-  list: [
-<span class="del">    'ShortCode feature for free users.',</span>
-<span class="del">    'Admin Dashboard - Improved UI.',</span>
-<span class="del">    'Critical performance improvements.'</span>
-  ]
+	version: <span class="str">'2.0.5 - 22 Feb 2026'</span>,
+	type:		<span class="str">'update'</span>,
+	list: [
+<span class="del">		'ShortCode feature for free users.',</span>
+<span class="del">		'Admin Dashboard - Improved UI.',</span>
+<span class="del">		'Critical performance improvements.'</span>
+	]
 }
 
 <span class="cm">// ✓ After — all items prefixed with &lt;strong&gt;Type:&lt;/strong&gt;</span>
 {
-  version: <span class="str">'2.0.5 - 22 Feb 2026'</span>,
-  type:    <span class="str">'update'</span>,
-  list: [
-<span class="add">    '&lt;strong&gt;New:&lt;/strong&gt; ShortCode feature for free users.',</span>
-<span class="add">    '&lt;strong&gt;Update:&lt;/strong&gt; Admin Dashboard - Improved UI.',</span>
-<span class="add">    '&lt;strong&gt;Fix:&lt;/strong&gt; Critical performance improvements.'</span>
-  ]
+	version: <span class="str">'2.0.5 - 22 Feb 2026'</span>,
+	type:		<span class="str">'update'</span>,
+	list: [
+<span class="add">		'&lt;strong&gt;New:&lt;/strong&gt; ShortCode feature for free users.',</span>
+<span class="add">		'&lt;strong&gt;Update:&lt;/strong&gt; Admin Dashboard - Improved UI.',</span>
+<span class="add">		'&lt;strong&gt;Fix:&lt;/strong&gt; Critical performance improvements.'</span>
+	]
 }</pre>
 			</div>
 
@@ -739,45 +739,45 @@
 				<p>Complete final file for reference:</p>
 				<pre><span class="kw">import</span> { HashRouter <span class="kw">as</span> Router, Routes, Route, Navigate } <span class="kw">from</span> <span class="str">'react-router-dom'</span>;
 
-<span class="kw">import</span> Welcome       <span class="kw">from</span> <span class="str">'../../../../bpl-tools/Admin/Welcome'</span>;
-<span class="kw">import</span> Demos         <span class="kw">from</span> <span class="str">'../../../../bpl-tools/Admin/Demos'</span>;
-<span class="kw">import</span> Pricing       <span class="kw">from</span> <span class="str">'../../../../bpl-tools/Admin/Pricing'</span>;
+<span class="kw">import</span> Welcome			 <span class="kw">from</span> <span class="str">'../../../../bpl-tools/Admin/Welcome'</span>;
+<span class="kw">import</span> Demos				 <span class="kw">from</span> <span class="str">'../../../../bpl-tools/Admin/Demos'</span>;
+<span class="kw">import</span> Pricing			 <span class="kw">from</span> <span class="str">'../../../../bpl-tools/Admin/Pricing'</span>;
 <span class="kw">import</span> FeatureCompare <span class="kw">from</span> <span class="str">'../../../../bpl-tools/Admin/FeatureCompare'</span>;
-<span class="kw">import</span> Activation    <span class="kw">from</span> <span class="str">'../../../../bpl-tools/Admin/Activation'</span>;
-<span class="kw">import</span> OurPlugins    <span class="kw">from</span> <span class="str">'../../../../bpl-tools/Admin/OurPlugins'</span>;
-<span class="kw">import</span> { Settings }  <span class="kw">from</span> <span class="str">'../../../../bpl-tools/Admin'</span>;
+<span class="kw">import</span> Activation		<span class="kw">from</span> <span class="str">'../../../../bpl-tools/Admin/Activation'</span>;
+<span class="kw">import</span> OurPlugins		<span class="kw">from</span> <span class="str">'../../../../bpl-tools/Admin/OurPlugins'</span>;
+<span class="kw">import</span> { Settings }	<span class="kw">from</span> <span class="str">'../../../../bpl-tools/Admin'</span>;
 
 <span class="kw">import</span> Layout <span class="kw">from</span> <span class="str">'./Layout'</span>;
-<span class="kw">import</span> { demoInfo, pricingInfo, settingsInfo, welcomeInfo } <span class="kw">from</span> <span class="str">'../utils/data'</span>;  <span class="cm">// ← added welcomeInfo</span>
+<span class="kw">import</span> { demoInfo, pricingInfo, settingsInfo, welcomeInfo } <span class="kw">from</span> <span class="str">'../utils/data'</span>;	<span class="cm">// ← added welcomeInfo</span>
 
 <span class="kw">const</span> <span class="fn">App</span> = (<span class="key">props</span>) => {
-  <span class="kw">const</span> { isPremium, adminUrl } = props;
+	<span class="kw">const</span> { isPremium, adminUrl } = props;
 
-  <span class="kw">return</span> &lt;<span class="fn">Router</span>&gt;
-    &lt;<span class="fn">Routes</span>&gt;
-      &lt;<span class="fn">Route</span> path=<span class="str">'/'</span> element={&lt;<span class="fn">Layout</span> {...props} /&gt;}&gt;
+	<span class="kw">return</span> &lt;<span class="fn">Router</span>&gt;
+		&lt;<span class="fn">Routes</span>&gt;
+			&lt;<span class="fn">Route</span> path=<span class="str">'/'</span> element={&lt;<span class="fn">Layout</span> {...props} /&gt;}&gt;
 
-        <span class="cm">/* ← spread welcomeInfo on both index and welcome routes */</span>
-        &lt;<span class="fn">Route</span> index   element={&lt;<span class="fn">Welcome</span> {...props} {...<span class="fn">welcomeInfo</span>(adminUrl)} /&gt;} /&gt;
-        &lt;<span class="fn">Route</span> path=<span class="str">'welcome'</span> element={&lt;<span class="fn">Welcome</span> {...props} {...<span class="fn">welcomeInfo</span>(adminUrl)} /&gt;} /&gt;
+				<span class="cm">/* ← spread welcomeInfo on both index and welcome routes */</span>
+				&lt;<span class="fn">Route</span> index	 element={&lt;<span class="fn">Welcome</span> {...props} {...<span class="fn">welcomeInfo</span>(adminUrl)} /&gt;} /&gt;
+				&lt;<span class="fn">Route</span> path=<span class="str">'welcome'</span> element={&lt;<span class="fn">Welcome</span> {...props} {...<span class="fn">welcomeInfo</span>(adminUrl)} /&gt;} /&gt;
 
-        <span class="cm">/* ← demoInfo as named prop, not spread */</span>
-        &lt;<span class="fn">Route</span> path=<span class="str">'demos'</span> element={&lt;<span class="fn">Demos</span> {...props} demoInfo={demoInfo} /&gt;} /&gt;
+				<span class="cm">/* ← demoInfo as named prop, not spread */</span>
+				&lt;<span class="fn">Route</span> path=<span class="str">'demos'</span> element={&lt;<span class="fn">Demos</span> {...props} demoInfo={demoInfo} /&gt;} /&gt;
 
-        {!isPremium &amp;&amp; &lt;<span class="fn">Route</span> path=<span class="str">'pricing'</span>
-          element={&lt;<span class="fn">Pricing</span> pricingInfo={pricingInfo} options={{}} {...props} /&gt;} /&gt;}
+				{!isPremium &amp;&amp; &lt;<span class="fn">Route</span> path=<span class="str">'pricing'</span>
+					element={&lt;<span class="fn">Pricing</span> pricingInfo={pricingInfo} options={{}} {...props} /&gt;} /&gt;}
 
-        {!isPremium &amp;&amp; &lt;<span class="fn">Route</span> path=<span class="str">'feature-comparison'</span>
-          element={&lt;<span class="fn">FeatureCompare</span> plans={[<span class="str">'free'</span>, <span class="str">'pro'</span>]} {...props} /&gt;} /&gt;}
+				{!isPremium &amp;&amp; &lt;<span class="fn">Route</span> path=<span class="str">'feature-comparison'</span>
+					element={&lt;<span class="fn">FeatureCompare</span> plans={[<span class="str">'free'</span>, <span class="str">'pro'</span>]} {...props} /&gt;} /&gt;}
 
-        &lt;<span class="fn">Route</span> path=<span class="str">'activation'</span>  element={&lt;<span class="fn">Activation</span> {...props} /&gt;} /&gt;
-        &lt;<span class="fn">Route</span> path=<span class="str">'settings'</span>    element={&lt;<span class="fn">Settings</span> {...props} {...settingsInfo} /&gt;} /&gt;
-        &lt;<span class="fn">Route</span> path=<span class="str">'our-plugins'</span> element={&lt;<span class="fn">OurPlugins</span> {...props} /&gt;} /&gt;
+				&lt;<span class="fn">Route</span> path=<span class="str">'activation'</span>	element={&lt;<span class="fn">Activation</span> {...props} /&gt;} /&gt;
+				&lt;<span class="fn">Route</span> path=<span class="str">'settings'</span>		element={&lt;<span class="fn">Settings</span> {...props} {...settingsInfo} /&gt;} /&gt;
+				&lt;<span class="fn">Route</span> path=<span class="str">'our-plugins'</span> element={&lt;<span class="fn">OurPlugins</span> {...props} /&gt;} /&gt;
 
-        &lt;<span class="fn">Route</span> path=<span class="str">'*'</span> element={&lt;<span class="fn">Navigate</span> to=<span class="str">'/welcome'</span> replace /&gt;} /&gt;
-      &lt;/<span class="fn">Route</span>&gt;
-    &lt;/<span class="fn">Routes</span>&gt;
-  &lt;/<span class="fn">Router</span>&gt;;
+				&lt;<span class="fn">Route</span> path=<span class="str">'*'</span> element={&lt;<span class="fn">Navigate</span> to=<span class="str">'/welcome'</span> replace /&gt;} /&gt;
+			&lt;/<span class="fn">Route</span>&gt;
+		&lt;/<span class="fn">Routes</span>&gt;
+	&lt;/<span class="fn">Router</span>&gt;;
 };
 <span class="kw">export default</span> App;</pre>
 			</div>
@@ -792,19 +792,19 @@
 				</p>
 				<pre><span class="cm">// Automatically applied to every item — no changes needed in bpl-tools</span>
 <span class="kw">const</span> BADGE_MAP = {
-  new: <span class="str">'new'</span>, add: <span class="str">'new'</span>,
-  update: <span class="str">'update'</span>,
-  improve: <span class="str">'improvement'</span>, improvement: <span class="str">'improvement'</span>,
-  fix: <span class="str">'fix'</span>, fixing: <span class="str">'fix'</span>, fixed: <span class="str">'fix'</span>, remove: <span class="str">'fix'</span>,
+	new: <span class="str">'new'</span>, add: <span class="str">'new'</span>,
+	update: <span class="str">'update'</span>,
+	improve: <span class="str">'improvement'</span>, improvement: <span class="str">'improvement'</span>,
+	fix: <span class="str">'fix'</span>, fixing: <span class="str">'fix'</span>, fixed: <span class="str">'fix'</span>, remove: <span class="str">'fix'</span>,
 };
 
 <span class="kw">const</span> <span class="fn">processItem</span> = (<span class="key">html</span>) => html.<span class="fn">replace</span>(
-  <span class="str">/^&lt;strong&gt;([^&lt;]+)&lt;\/strong&gt;/i</span>,
-  (_, label) => {
-    <span class="kw">const</span> clean = label.<span class="fn">replace</span>(<span class="str">':'</span>, <span class="str">''</span>).<span class="fn">trim</span>();
-    <span class="kw">const</span> cls   = BADGE_MAP[clean.<span class="fn">toLowerCase</span>()] || <span class="str">'default'</span>;
-    <span class="kw">return</span> <span class="str">`&lt;strong class="changelogBadge ${cls}"&gt;${clean}&lt;/strong&gt;`</span>;
-  }
+	<span class="str">/^&lt;strong&gt;([^&lt;]+)&lt;\/strong&gt;/i</span>,
+	(_, label) => {
+		<span class="kw">const</span> clean = label.<span class="fn">replace</span>(<span class="str">':'</span>, <span class="str">''</span>).<span class="fn">trim</span>();
+		<span class="kw">const</span> cls	 = BADGE_MAP[clean.<span class="fn">toLowerCase</span>()] || <span class="str">'default'</span>;
+		<span class="kw">return</span> <span class="str">`&lt;strong class="changelogBadge ${cls}"&gt;${clean}&lt;/strong&gt;`</span>;
+	}
 );</pre>
 				<p>
 					Your only responsibility is to ensure the list item string starts with

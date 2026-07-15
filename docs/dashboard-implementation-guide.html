@@ -512,15 +512,15 @@
 					<h2>Understand the exported components</h2>
 				</div>
 				<p>File: <code>bpl-tools/Admin/index.js</code></p>
-				<pre><span class="kw">export</span> { <span class="kw">default</span> <span class="kw">as</span> <span class="fn">Header</span>          } <span class="kw">from</span> <span class="str">'./Header'</span>;
-<span class="kw">export</span> { <span class="kw">default</span> <span class="kw">as</span> <span class="fn">Welcome</span>         } <span class="kw">from</span> <span class="str">'./Welcome'</span>;
-<span class="kw">export</span> { <span class="kw">default</span> <span class="kw">as</span> <span class="fn">Blocks</span>          } <span class="kw">from</span> <span class="str">'./Blocks'</span>;
-<span class="kw">export</span> { <span class="kw">default</span> <span class="kw">as</span> <span class="fn">Demos</span>           } <span class="kw">from</span> <span class="str">'./Demos'</span>;
-<span class="kw">export</span> { <span class="kw">default</span> <span class="kw">as</span> <span class="fn">Pricing</span>         } <span class="kw">from</span> <span class="str">'./Pricing'</span>;
-<span class="kw">export</span> { <span class="kw">default</span> <span class="kw">as</span> <span class="fn">Settings</span>        } <span class="kw">from</span> <span class="str">'./Settings'</span>;
-<span class="kw">export</span> { <span class="kw">default</span> <span class="kw">as</span> <span class="fn">OurPlugins</span>      } <span class="kw">from</span> <span class="str">'./OurPlugins'</span>;
-<span class="kw">export</span> { <span class="kw">default</span> <span class="kw">as</span> <span class="fn">Activation</span>      } <span class="kw">from</span> <span class="str">'./Activation'</span>;
-<span class="kw">export</span> { <span class="kw">default</span> <span class="kw">as</span> <span class="fn">FeatureCompare</span>  } <span class="kw">from</span> <span class="str">'./FeatureCompare'</span>;</pre>
+				<pre><span class="kw">export</span> { <span class="kw">default</span> <span class="kw">as</span> <span class="fn">Header</span>					} <span class="kw">from</span> <span class="str">'./Header'</span>;
+<span class="kw">export</span> { <span class="kw">default</span> <span class="kw">as</span> <span class="fn">Welcome</span>				 } <span class="kw">from</span> <span class="str">'./Welcome'</span>;
+<span class="kw">export</span> { <span class="kw">default</span> <span class="kw">as</span> <span class="fn">Blocks</span>					} <span class="kw">from</span> <span class="str">'./Blocks'</span>;
+<span class="kw">export</span> { <span class="kw">default</span> <span class="kw">as</span> <span class="fn">Demos</span>					 } <span class="kw">from</span> <span class="str">'./Demos'</span>;
+<span class="kw">export</span> { <span class="kw">default</span> <span class="kw">as</span> <span class="fn">Pricing</span>				 } <span class="kw">from</span> <span class="str">'./Pricing'</span>;
+<span class="kw">export</span> { <span class="kw">default</span> <span class="kw">as</span> <span class="fn">Settings</span>				} <span class="kw">from</span> <span class="str">'./Settings'</span>;
+<span class="kw">export</span> { <span class="kw">default</span> <span class="kw">as</span> <span class="fn">OurPlugins</span>			} <span class="kw">from</span> <span class="str">'./OurPlugins'</span>;
+<span class="kw">export</span> { <span class="kw">default</span> <span class="kw">as</span> <span class="fn">Activation</span>			} <span class="kw">from</span> <span class="str">'./Activation'</span>;
+<span class="kw">export</span> { <span class="kw">default</span> <span class="kw">as</span> <span class="fn">FeatureCompare</span>	} <span class="kw">from</span> <span class="str">'./FeatureCompare'</span>;</pre>
 				<p>Most plugins use: <strong>Header, Welcome, Blocks, Demos, Pricing</strong>. Import only what you need.</p>
 			</div>
 
@@ -535,100 +535,100 @@
 				<h3 id="s2a">dashboardInfo(info)</h3>
 				<p>Consumed by <strong>Header, Overview, Pricing, OurPlugins, Activation</strong>. <code>info</code> comes from <code>wp_localize_script</code>.</p>
 				<pre><span class="kw">export const</span> <span class="fn">dashboardInfo</span> = (<span class="key">info</span>) => {
-  <span class="kw">const</span> { version, isPremium, nonce, adminUrl = <span class="str">''</span>, licenseActiveNonce } = info;
-  <span class="kw">const</span> proSuffix = isPremium ? <span class="str">' Pro'</span> : <span class="str">''</span>;
+	<span class="kw">const</span> { version, isPremium, nonce, adminUrl = <span class="str">''</span>, licenseActiveNonce } = info;
+	<span class="kw">const</span> proSuffix = isPremium ? <span class="str">' Pro'</span> : <span class="str">''</span>;
 
-  <span class="kw">return</span> {
-    name:            <span class="str">`Your Plugin<span class="kw">${proSuffix}</span>`</span>,
-    displayName:     <span class="str">`Your Plugin<span class="kw">${proSuffix}</span> - Short tagline`</span>,
-    description:     <span class="str">'One-two sentences describing what the plugin does.'</span>,
-    slug,           <span class="cm">// WordPress.org slug</span>
-    version,
-    isPremium,
-    adminUrl,
-    displayOurPlugins: <span class="num">true</span>,
+	<span class="kw">return</span> {
+		name:						<span class="str">`Your Plugin<span class="kw">${proSuffix}</span>`</span>,
+		displayName:		 <span class="str">`Your Plugin<span class="kw">${proSuffix}</span> - Short tagline`</span>,
+		description:		 <span class="str">'One-two sentences describing what the plugin does.'</span>,
+		slug,					 <span class="cm">// WordPress.org slug</span>
+		version,
+		isPremium,
+		adminUrl,
+		displayOurPlugins: <span class="num">true</span>,
 
-    media: {
-      logo:         <span class="str">`https://ps.w.org/${slug}/assets/icon-128x128.png`</span>,
-      banner:       <span class="str">`https://ps.w.org/${slug}/assets/banner-772x250.png`</span>,
-      thumbnail:    <span class="str">`https://bplugins.com/.../products/${slug}.png`</span>,
-      proThumbnail: <span class="str">`https://bplugins.com/.../products/${slug}-pro.png`</span>,
-      video:        <span class="str">''</span>,         <span class="cm">// YouTube URL or ''. Leave '' to hide.</span>
-      isYoutube:    <span class="num">true</span>
-    },
+		media: {
+			logo:				 <span class="str">`https://ps.w.org/${slug}/assets/icon-128x128.png`</span>,
+			banner:			 <span class="str">`https://ps.w.org/${slug}/assets/banner-772x250.png`</span>,
+			thumbnail:		<span class="str">`https://bplugins.com/.../products/${slug}.png`</span>,
+			proThumbnail: <span class="str">`https://bplugins.com/.../products/${slug}-pro.png`</span>,
+			video:				<span class="str">''</span>,				 <span class="cm">// YouTube URL or ''. Leave '' to hide.</span>
+			isYoutube:		<span class="num">true</span>
+		},
 
-    pages: {
-      org:     <span class="str">`https://wordpress.org/plugins/${slug}/`</span>,
-      docs:    <span class="str">`https://bplugins.com/docs/${webSlug}/`</span>,
-      pricing: <span class="str">`https://bplugins.com/products/${webSlug}/pricing/`</span>,
-      <span class="cm">// landing: `...`  ← add to enable "View Demos" button in hero</span>
-    },
+		pages: {
+			org:		 <span class="str">`https://wordpress.org/plugins/${slug}/`</span>,
+			docs:		<span class="str">`https://bplugins.com/docs/${webSlug}/`</span>,
+			pricing: <span class="str">`https://bplugins.com/products/${webSlug}/pricing/`</span>,
+			<span class="cm">// landing: `...`	← add to enable "View Demos" button in hero</span>
+		},
 
-    freemius: {
-      product_id: <span class="num">00000</span>,
-      plan_id:    <span class="num">00000</span>,
-      public_key: <span class="str">'pk_...'</span>
-    },
+		freemius: {
+			product_id: <span class="num">00000</span>,
+			plan_id:		<span class="num">00000</span>,
+			public_key: <span class="str">'pk_...'</span>
+		},
 
-    licenseActiveNonce,
+		licenseActiveNonce,
 
-    startButton: {
-      label: <span class="str">'Start Now'</span>,
-      url:   <span class="str">`${adminUrl}/post-new.php?...&amp;nonce=${nonce}`</span>
-    }
-  };
+		startButton: {
+			label: <span class="str">'Start Now'</span>,
+			url:	 <span class="str">`${adminUrl}/post-new.php?...&amp;nonce=${nonce}`</span>
+		}
+	};
 };</pre>
 
 				<h3 id="s2b">welcomeInfo(adminUrl)</h3>
 				<p>Consumed by the <strong>Welcome</strong> page only. Spread directly onto the component.</p>
 				<pre><span class="kw">export const</span> <span class="fn">welcomeInfo</span> = (<span class="key">adminUrl</span>) => ({
 
-  keywords:      [<span class="str">'Keyword1'</span>, <span class="str">'Keyword2'</span>],
-  keywordsLabel: <span class="str">'Features'</span>,
+	keywords:			[<span class="str">'Keyword1'</span>, <span class="str">'Keyword2'</span>],
+	keywordsLabel: <span class="str">'Features'</span>,
 
-  <span class="cm">// ── Getting Started tabs ──────────────────────────────────────────</span>
-  <span class="cm">// Omit gettingStarted entirely to hide the panel.</span>
-  gettingStarted: {
-    tabs: [
-      {
-        key:   <span class="str">'gutenberg'</span>,
-        label: <span class="str">'Gutenberg'</span>,
-        icon:  gutenbergTabIcon,     <span class="cm">// ReactNode — import from your icons file</span>
-        steps: [
-          {
-            num:   <span class="num">1</span>,
-            title: <span class="str">'Add the Block'</span>,
-            body:  <span class="str">'Click &lt;strong&gt;+&lt;/strong&gt; and search for your block.'</span>,
-            link:  { url: <span class="str">`${adminUrl}/post-new.php`</span>, label: <span class="str">'Open Editor'</span> }
-          },
-          { num: <span class="num">2</span>, title: <span class="str">'Configure'</span>, body: <span class="str">'Adjust settings in the sidebar.'</span> },
-          { num: <span class="num">3</span>, title: <span class="str">'Publish'</span>,   body: <span class="str">'Hit Publish when ready.'</span> }
-        ]
-      }
-      <span class="cm">// Add more tabs (shortcode, elementor, php…) as needed</span>
-    ]
-  },
+	<span class="cm">// ── Getting Started tabs ──────────────────────────────────────────</span>
+	<span class="cm">// Omit gettingStarted entirely to hide the panel.</span>
+	gettingStarted: {
+		tabs: [
+			{
+				key:	 <span class="str">'gutenberg'</span>,
+				label: <span class="str">'Gutenberg'</span>,
+				icon:	gutenbergTabIcon,		 <span class="cm">// ReactNode — import from your icons file</span>
+				steps: [
+					{
+						num:	 <span class="num">1</span>,
+						title: <span class="str">'Add the Block'</span>,
+						body:	<span class="str">'Click &lt;strong&gt;+&lt;/strong&gt; and search for your block.'</span>,
+						link:	{ url: <span class="str">`${adminUrl}/post-new.php`</span>, label: <span class="str">'Open Editor'</span> }
+					},
+					{ num: <span class="num">2</span>, title: <span class="str">'Configure'</span>, body: <span class="str">'Adjust settings in the sidebar.'</span> },
+					{ num: <span class="num">3</span>, title: <span class="str">'Publish'</span>,	 body: <span class="str">'Hit Publish when ready.'</span> }
+				]
+			}
+			<span class="cm">// Add more tabs (shortcode, elementor, php…) as needed</span>
+		]
+	},
 
-  <span class="cm">// ── Changelogs ─────────────────────────────────────────────────────</span>
-  <span class="cm">// Omit changelogs entirely to hide the panel.</span>
-  changelogs: [
-    {
-      version: <span class="str">'1.1.0 - 01 Jan 2026'</span>,
-      type:    <span class="str">'new'</span>,  <span class="cm">// new | update | fix | improve — drives left border color</span>
-      list: [
-        <span class="str">'&lt;strong&gt;New:&lt;/strong&gt; Initial release.'</span>,
-        <span class="str">'&lt;strong&gt;Fix:&lt;/strong&gt; Minor bug fixes.'</span>,
-      ]
-    }
-  ],
-  changelogsLimit:         <span class="num">5</span>,
-  changelogsReadMoreLabel: <span class="str">'View More Changelogs'</span>, <span class="cm">// omit to hide button</span>
+	<span class="cm">// ── Changelogs ─────────────────────────────────────────────────────</span>
+	<span class="cm">// Omit changelogs entirely to hide the panel.</span>
+	changelogs: [
+		{
+			version: <span class="str">'1.1.0 - 01 Jan 2026'</span>,
+			type:		<span class="str">'new'</span>,	<span class="cm">// new | update | fix | improve — drives left border color</span>
+			list: [
+				<span class="str">'&lt;strong&gt;New:&lt;/strong&gt; Initial release.'</span>,
+				<span class="str">'&lt;strong&gt;Fix:&lt;/strong&gt; Minor bug fixes.'</span>,
+			]
+		}
+	],
+	changelogsLimit:				 <span class="num">5</span>,
+	changelogsReadMoreLabel: <span class="str">'View More Changelogs'</span>, <span class="cm">// omit to hide button</span>
 
-  <span class="cm">// ── Pro feature bullets (free users only) ──────────────────────────</span>
-  proFeatures: [
-    __(<span class="str">'Premium feature one.'</span>, <span class="str">'your-plugin-slug'</span>),
-    __(<span class="str">'Premium feature two.'</span>, <span class="str">'your-plugin-slug'</span>),
-  ],
+	<span class="cm">// ── Pro feature bullets (free users only) ──────────────────────────</span>
+	proFeatures: [
+		__(<span class="str">'Premium feature one.'</span>, <span class="str">'your-plugin-slug'</span>),
+		__(<span class="str">'Premium feature two.'</span>, <span class="str">'your-plugin-slug'</span>),
+	],
 });</pre>
 
 				<h3 id="s2c">Changelog badge color rules</h3>
@@ -675,33 +675,33 @@
 
 				<h3 id="s2d">demoInfo</h3>
 				<pre><span class="kw">export const</span> demoInfo = {
-  allInOneLabel: <span class="str">'See All Demos'</span>,
-  allInOneLink:  <span class="str">'https://yourdomain.com/all-demos/'</span>,
-  demos: [
-    {
-      icon:  svgIcon,
-      title: <span class="str">'Grid'</span>,
-      children: [                        <span class="cm">// sub-demos shown in a dropdown</span>
-        { title: <span class="str">'Default'</span>, type: <span class="str">'iframe'</span>, url: <span class="str">'https://...'</span> }
-      ]
-    },
-    {                                    <span class="cm">// flat demo (no children)</span>
-      icon:  svgIcon,
-      title: <span class="str">'Feature Demo'</span>,
-      type:  <span class="str">'iframe'</span>,
-      url:   <span class="str">'https://...'</span>
-    }
-  ]
+	allInOneLabel: <span class="str">'See All Demos'</span>,
+	allInOneLink:	<span class="str">'https://yourdomain.com/all-demos/'</span>,
+	demos: [
+		{
+			icon:	svgIcon,
+			title: <span class="str">'Grid'</span>,
+			children: [												<span class="cm">// sub-demos shown in a dropdown</span>
+				{ title: <span class="str">'Default'</span>, type: <span class="str">'iframe'</span>, url: <span class="str">'https://...'</span> }
+			]
+		},
+		{																		<span class="cm">// flat demo (no children)</span>
+			icon:	svgIcon,
+			title: <span class="str">'Feature Demo'</span>,
+			type:	<span class="str">'iframe'</span>,
+			url:	 <span class="str">'https://...'</span>
+		}
+	]
 };</pre>
 
 				<h3 id="s2e">pricingInfo</h3>
 				<pre><span class="kw">export const</span> pricingInfo = {
-  logo:     <span class="str">`https://ps.w.org/${slug}/assets/icon-128x128.png`</span>,
-  pluginId: <span class="num">00000</span>,
-  planId:   <span class="num">00000</span>,
-  licenses: [<span class="num">1</span>, <span class="num">3</span>, <span class="num">null</span>],   <span class="cm">// null = unlimited</span>
-  button:   { label: <span class="str">'Buy Now ➜'</span> },
-  featured: { selected: <span class="num">3</span> }   <span class="cm">// which license to highlight</span>
+	logo:		 <span class="str">`https://ps.w.org/${slug}/assets/icon-128x128.png`</span>,
+	pluginId: <span class="num">00000</span>,
+	planId:	 <span class="num">00000</span>,
+	licenses: [<span class="num">1</span>, <span class="num">3</span>, <span class="num">null</span>],	 <span class="cm">// null = unlimited</span>
+	button:	 { label: <span class="str">'Buy Now ➜'</span> },
+	featured: { selected: <span class="num">3</span> }	 <span class="cm">// which license to highlight</span>
 };</pre>
 			</div>
 
@@ -715,45 +715,45 @@
 				<pre><span class="kw">import</span> { myBlockIcon, anotherIcon } <span class="kw">from</span> <span class="str">'./blocksIcons'</span>;
 
 <span class="kw">const</span> pluginSlug = <span class="str">'your-plugin'</span>;
-<span class="kw">const</span> demoURL    = <span class="str">'https://yourdomain.com/demo'</span>;
-<span class="kw">const</span> docsURL    = <span class="str">'https://bplugins.com/docs/your-plugin'</span>;
+<span class="kw">const</span> demoURL		= <span class="str">'https://yourdomain.com/demo'</span>;
+<span class="kw">const</span> docsURL		= <span class="str">'https://bplugins.com/docs/your-plugin'</span>;
 
 <span class="kw">export default</span> [
-  <span class="cm">// ── Grouped block (renders with a section heading) ─────────────────</span>
-  {
-    title: <span class="str">'Layout'</span>,
-    children: [
-      {
-        name:     <span class="str">`${pluginSlug}/container`</span>,
-        title:    <span class="str">'Container'</span>,
-        icon:     myBlockIcon,
-        demo:     <span class="str">`${demoURL}/container/`</span>,
-        docs:     <span class="str">`${docsURL}/container-block/`</span>,
-        status:   <span class="str">'published'</span>,
-        required: <span class="num">true</span>     <span class="cm">// cannot be disabled; shows "Required" badge</span>
-      }
-    ]
-  },
+	<span class="cm">// ── Grouped block (renders with a section heading) ─────────────────</span>
+	{
+		title: <span class="str">'Layout'</span>,
+		children: [
+			{
+				name:		 <span class="str">`${pluginSlug}/container`</span>,
+				title:		<span class="str">'Container'</span>,
+				icon:		 myBlockIcon,
+				demo:		 <span class="str">`${demoURL}/container/`</span>,
+				docs:		 <span class="str">`${docsURL}/container-block/`</span>,
+				status:	 <span class="str">'published'</span>,
+				required: <span class="num">true</span>		 <span class="cm">// cannot be disabled; shows "Required" badge</span>
+			}
+		]
+	},
 
-  <span class="cm">// ── Individual block ───────────────────────────────────────────────</span>
-  {
-    name:    <span class="str">`${pluginSlug}/my-block`</span>,
-    title:   <span class="str">'My Block'</span>,
-    icon:    anotherIcon,
-    demo:    <span class="str">`${demoURL}/my-block/`</span>,
-    docs:    <span class="str">`${docsURL}/my-block/`</span>,
-    status:  <span class="str">'published'</span>,
-    badge:   <span class="str">'New'</span>         <span class="cm">// optional text badge on the card</span>
-  },
+	<span class="cm">// ── Individual block ───────────────────────────────────────────────</span>
+	{
+		name:		<span class="str">`${pluginSlug}/my-block`</span>,
+		title:	 <span class="str">'My Block'</span>,
+		icon:		anotherIcon,
+		demo:		<span class="str">`${demoURL}/my-block/`</span>,
+		docs:		<span class="str">`${docsURL}/my-block/`</span>,
+		status:	<span class="str">'published'</span>,
+		badge:	 <span class="str">'New'</span>				 <span class="cm">// optional text badge on the card</span>
+	},
 
-  <span class="cm">// ── Pro-only block ─────────────────────────────────────────────────</span>
-  {
-    name:      <span class="str">`${pluginSlug}/pro-block`</span>,
-    title:     <span class="str">'Pro Block'</span>,
-    icon:      anotherIcon,
-    status:    <span class="str">'published'</span>,
-    isPremium: <span class="num">true</span>     <span class="cm">// locks toggle, shows "Pro" badge, opens upgrade modal</span>
-  }
+	<span class="cm">// ── Pro-only block ─────────────────────────────────────────────────</span>
+	{
+		name:			<span class="str">`${pluginSlug}/pro-block`</span>,
+		title:		 <span class="str">'Pro Block'</span>,
+		icon:			anotherIcon,
+		status:		<span class="str">'published'</span>,
+		isPremium: <span class="num">true</span>		 <span class="cm">// locks toggle, shows "Pro" badge, opens upgrade modal</span>
+	}
 ];</pre>
 				<table>
 					<thead>
@@ -828,39 +828,39 @@
 				<pre><span class="kw">import</span> { useState } <span class="kw">from</span> <span class="str">'react'</span>;
 <span class="kw">import</span> { HashRouter <span class="kw">as</span> Router, Routes, Route, Navigate } <span class="kw">from</span> <span class="str">'react-router-dom'</span>;
 
-<span class="kw">import</span> Welcome      <span class="kw">from</span> <span class="str">'../../../../bpl-tools/Admin/Welcome'</span>;
-<span class="kw">import</span> Demos        <span class="kw">from</span> <span class="str">'../../../../bpl-tools/Admin/Demos'</span>;
-<span class="kw">import</span> Pricing      <span class="kw">from</span> <span class="str">'../../../../bpl-tools/Admin/Pricing'</span>;
-<span class="kw">import</span> Activation   <span class="kw">from</span> <span class="str">'../../../../bpl-tools/Admin/Activation'</span>;
-<span class="kw">import</span> OurPlugins   <span class="kw">from</span> <span class="str">'../../../../bpl-tools/Admin/OurPlugins'</span>;
+<span class="kw">import</span> Welcome			<span class="kw">from</span> <span class="str">'../../../../bpl-tools/Admin/Welcome'</span>;
+<span class="kw">import</span> Demos				<span class="kw">from</span> <span class="str">'../../../../bpl-tools/Admin/Demos'</span>;
+<span class="kw">import</span> Pricing			<span class="kw">from</span> <span class="str">'../../../../bpl-tools/Admin/Pricing'</span>;
+<span class="kw">import</span> Activation	 <span class="kw">from</span> <span class="str">'../../../../bpl-tools/Admin/Activation'</span>;
+<span class="kw">import</span> OurPlugins	 <span class="kw">from</span> <span class="str">'../../../../bpl-tools/Admin/OurPlugins'</span>;
 
-<span class="kw">import</span> Layout <span class="kw">from</span> <span class="str">'./Layout'</span>;   <span class="cm">// wraps Header + nav</span>
+<span class="kw">import</span> Layout <span class="kw">from</span> <span class="str">'./Layout'</span>;	 <span class="cm">// wraps Header + nav</span>
 <span class="kw">import</span> { demoInfo, pricingInfo, welcomeInfo } <span class="kw">from</span> <span class="str">'../utils/data'</span>;
 
 <span class="kw">const</span> <span class="fn">App</span> = (<span class="key">props</span>) => {
-  <span class="kw">const</span> { isPremium, adminUrl } = props;
+	<span class="kw">const</span> { isPremium, adminUrl } = props;
 
-  <span class="kw">return</span> &lt;<span class="fn">Router</span>&gt;
-    &lt;<span class="fn">Routes</span>&gt;
-      &lt;<span class="fn">Route</span> path=<span class="str">'/'</span> element={&lt;<span class="fn">Layout</span> {...props} /&gt;}&gt;
+	<span class="kw">return</span> &lt;<span class="fn">Router</span>&gt;
+		&lt;<span class="fn">Routes</span>&gt;
+			&lt;<span class="fn">Route</span> path=<span class="str">'/'</span> element={&lt;<span class="fn">Layout</span> {...props} /&gt;}&gt;
 
-        &lt;<span class="fn">Route</span> index element={&lt;<span class="fn">Welcome</span> {...props} {...<span class="fn">welcomeInfo</span>(adminUrl)} /&gt;} /&gt;
-        &lt;<span class="fn">Route</span> path=<span class="str">'welcome'</span>
-               element={&lt;<span class="fn">Welcome</span> {...props} {...<span class="fn">welcomeInfo</span>(adminUrl)} /&gt;} /&gt;
+				&lt;<span class="fn">Route</span> index element={&lt;<span class="fn">Welcome</span> {...props} {...<span class="fn">welcomeInfo</span>(adminUrl)} /&gt;} /&gt;
+				&lt;<span class="fn">Route</span> path=<span class="str">'welcome'</span>
+							 element={&lt;<span class="fn">Welcome</span> {...props} {...<span class="fn">welcomeInfo</span>(adminUrl)} /&gt;} /&gt;
 
-        &lt;<span class="fn">Route</span> path=<span class="str">'demos'</span>
-               element={&lt;<span class="fn">Demos</span> {...props} demoInfo={demoInfo} /&gt;} /&gt;
+				&lt;<span class="fn">Route</span> path=<span class="str">'demos'</span>
+							 element={&lt;<span class="fn">Demos</span> {...props} demoInfo={demoInfo} /&gt;} /&gt;
 
-        {!isPremium &amp;&amp; &lt;<span class="fn">Route</span> path=<span class="str">'pricing'</span>
-               element={&lt;<span class="fn">Pricing</span> pricingInfo={pricingInfo} options={{}} {...props} /&gt;} /&gt;}
+				{!isPremium &amp;&amp; &lt;<span class="fn">Route</span> path=<span class="str">'pricing'</span>
+							 element={&lt;<span class="fn">Pricing</span> pricingInfo={pricingInfo} options={{}} {...props} /&gt;} /&gt;}
 
-        &lt;<span class="fn">Route</span> path=<span class="str">'activation'</span> element={&lt;<span class="fn">Activation</span> {...props} /&gt;} /&gt;
-        &lt;<span class="fn">Route</span> path=<span class="str">'our-plugins'</span> element={&lt;<span class="fn">OurPlugins</span> {...props} /&gt;} /&gt;
+				&lt;<span class="fn">Route</span> path=<span class="str">'activation'</span> element={&lt;<span class="fn">Activation</span> {...props} /&gt;} /&gt;
+				&lt;<span class="fn">Route</span> path=<span class="str">'our-plugins'</span> element={&lt;<span class="fn">OurPlugins</span> {...props} /&gt;} /&gt;
 
-        &lt;<span class="fn">Route</span> path=<span class="str">'*'</span> element={&lt;<span class="fn">Navigate</span> to=<span class="str">'/welcome'</span> replace /&gt;} /&gt;
-      &lt;/<span class="fn">Route</span>&gt;
-    &lt;/<span class="fn">Routes</span>&gt;
-  &lt;/<span class="fn">Router</span>&gt;;
+				&lt;<span class="fn">Route</span> path=<span class="str">'*'</span> element={&lt;<span class="fn">Navigate</span> to=<span class="str">'/welcome'</span> replace /&gt;} /&gt;
+			&lt;/<span class="fn">Route</span>&gt;
+		&lt;/<span class="fn">Routes</span>&gt;
+	&lt;/<span class="fn">Router</span>&gt;;
 };
 <span class="kw">export default</span> App;</pre>
 				<div class="callout callout-info">
@@ -872,21 +872,21 @@
 <span class="kw">import</span> Header <span class="kw">from</span> <span class="str">'../../../../bpl-tools/Admin/Header'</span>;
 
 <span class="kw">const</span> <span class="fn">Layout</span> = (<span class="key">props</span>) => (
-  &lt;&gt;
-    &lt;<span class="fn">Header</span> {...props}&gt;
-      &lt;<span class="key">nav</span> className=<span class="str">'bPlDashboardNav'</span>&gt;
-        &lt;<span class="fn">NavLink</span> to=<span class="str">'welcome'</span>&gt;Home&lt;/<span class="fn">NavLink</span>&gt;
-        &lt;<span class="fn">NavLink</span> to=<span class="str">'demos'</span>&gt;Demos&lt;/<span class="fn">NavLink</span>&gt;
-        {!props.isPremium &amp;&amp; &lt;<span class="fn">NavLink</span> to=<span class="str">'pricing'</span>&gt;Pricing&lt;/<span class="fn">NavLink</span>&gt;}
-        &lt;<span class="fn">NavLink</span> to=<span class="str">'our-plugins'</span>&gt;Our Plugins&lt;/<span class="fn">NavLink</span>&gt;
-      &lt;/<span class="key">nav</span>&gt;
-    &lt;/<span class="fn">Header</span>&gt;
-    &lt;<span class="key">main</span> className=<span class="str">'bPlDashboardMain'</span>&gt;
-      &lt;<span class="key">div</span> className=<span class="str">'bPlDashboardContainer'</span>&gt;
-        &lt;<span class="fn">Outlet</span> /&gt;
-      &lt;/<span class="key">div</span>&gt;
-    &lt;/<span class="key">main</span>&gt;
-  &lt;/&gt;
+	&lt;&gt;
+		&lt;<span class="fn">Header</span> {...props}&gt;
+			&lt;<span class="key">nav</span> className=<span class="str">'bPlDashboardNav'</span>&gt;
+				&lt;<span class="fn">NavLink</span> to=<span class="str">'welcome'</span>&gt;Home&lt;/<span class="fn">NavLink</span>&gt;
+				&lt;<span class="fn">NavLink</span> to=<span class="str">'demos'</span>&gt;Demos&lt;/<span class="fn">NavLink</span>&gt;
+				{!props.isPremium &amp;&amp; &lt;<span class="fn">NavLink</span> to=<span class="str">'pricing'</span>&gt;Pricing&lt;/<span class="fn">NavLink</span>&gt;}
+				&lt;<span class="fn">NavLink</span> to=<span class="str">'our-plugins'</span>&gt;Our Plugins&lt;/<span class="fn">NavLink</span>&gt;
+			&lt;/<span class="key">nav</span>&gt;
+		&lt;/<span class="fn">Header</span>&gt;
+		&lt;<span class="key">main</span> className=<span class="str">'bPlDashboardMain'</span>&gt;
+			&lt;<span class="key">div</span> className=<span class="str">'bPlDashboardContainer'</span>&gt;
+				&lt;<span class="fn">Outlet</span> /&gt;
+			&lt;/<span class="key">div</span>&gt;
+		&lt;/<span class="key">main</span>&gt;
+	&lt;/&gt;
 );
 <span class="kw">export default</span> Layout;</pre>
 			</div>
@@ -901,8 +901,8 @@
 				<pre><span class="kw">import</span> { render } <span class="kw">from</span> <span class="str">'@wordpress/element'</span>;
 <span class="kw">import</span> App <span class="kw">from</span> <span class="str">'./Components/App'</span>;
 
-<span class="kw">import</span> <span class="str">'../../../../bpl-tools/Admin/style.scss'</span>;  <span class="cm">// base dashboard styles</span>
-<span class="kw">import</span> <span class="str">'./style.scss'</span>;                            <span class="cm">// your CSS variable overrides</span>
+<span class="kw">import</span> <span class="str">'../../../../bpl-tools/Admin/style.scss'</span>;	<span class="cm">// base dashboard styles</span>
+<span class="kw">import</span> <span class="str">'./style.scss'</span>;														<span class="cm">// your CSS variable overrides</span>
 
 <span class="kw">const</span> root = document.<span class="fn">getElementById</span>(<span class="str">'your-plugin-admin-root'</span>);
 <span class="kw">if</span> (root) render(&lt;<span class="fn">App</span> info={window.yourPluginAdmin} /&gt;, root);</pre>
@@ -923,12 +923,12 @@
 				<p>Create / update <code>src/admin/style.scss</code>:</p>
 				<pre><span class="cm">// Replace values with your plugin's brand colors</span>
 .bPlDashboard {
-  <span class="key">--bpl-dashboard-primary-color</span>:       <span class="num">#146EF5</span>;
-  <span class="key">--bpl-dashboard-primary-color-rgb</span>:   <span class="num">20, 110, 245</span>;  <span class="cm">// same, as R G B</span>
-  <span class="key">--bpl-dashboard-secondary-color</span>:     <span class="num">#FF7A00</span>;
-  <span class="key">--bpl-dashboard-title-color</span>:         <span class="num">#070127</span>;
-  <span class="key">--bpl-dashboard-content-color</span>:       <span class="num">#485781</span>;
-  <span class="key">--bpl-dashboard-content-color-rgb</span>:   <span class="num">72, 87, 129</span>;
+	<span class="key">--bpl-dashboard-primary-color</span>:			 <span class="num">#146EF5</span>;
+	<span class="key">--bpl-dashboard-primary-color-rgb</span>:	 <span class="num">20, 110, 245</span>;	<span class="cm">// same, as R G B</span>
+	<span class="key">--bpl-dashboard-secondary-color</span>:		 <span class="num">#FF7A00</span>;
+	<span class="key">--bpl-dashboard-title-color</span>:				 <span class="num">#070127</span>;
+	<span class="key">--bpl-dashboard-content-color</span>:			 <span class="num">#485781</span>;
+	<span class="key">--bpl-dashboard-content-color-rgb</span>:	 <span class="num">72, 87, 129</span>;
 }</pre>
 				<div class="callout callout-warn">
 					<strong>The <code>-rgb</code> variants are required.</strong> They are consumed in expressions like
@@ -981,55 +981,55 @@
 
 				<h3>Register the admin menu page</h3>
 				<pre><span class="fn">add_action</span>(<span class="str">'admin_menu'</span>, <span class="kw">function</span> () {
-  <span class="fn">add_menu_page</span>(
-    <span class="str">'Your Plugin'</span>,
-    <span class="str">'Your Plugin'</span>,
-    <span class="str">'manage_options'</span>,
-    <span class="str">'your-plugin'</span>,
-    <span class="kw">function</span> () {
-      <span class="kw">echo</span> <span class="str">'&lt;div id="your-plugin-admin-root"&gt;&lt;/div&gt;'</span>;
-    },
-    <span class="str">'dashicons-block-default'</span>,
-    <span class="num">30</span>
-  );
+	<span class="fn">add_menu_page</span>(
+		<span class="str">'Your Plugin'</span>,
+		<span class="str">'Your Plugin'</span>,
+		<span class="str">'manage_options'</span>,
+		<span class="str">'your-plugin'</span>,
+		<span class="kw">function</span> () {
+			<span class="kw">echo</span> <span class="str">'&lt;div id="your-plugin-admin-root"&gt;&lt;/div&gt;'</span>;
+		},
+		<span class="str">'dashicons-block-default'</span>,
+		<span class="num">30</span>
+	);
 });</pre>
 
 				<h3>Enqueue scripts + localize data</h3>
 				<pre><span class="fn">add_action</span>(<span class="str">'admin_enqueue_scripts'</span>, <span class="kw">function</span> (<span class="key">$hook</span>) {
-  <span class="kw">if</span> (<span class="key">$hook</span> !== <span class="str">'toplevel_page_your-plugin'</span>) <span class="kw">return</span>;
+	<span class="kw">if</span> (<span class="key">$hook</span> !== <span class="str">'toplevel_page_your-plugin'</span>) <span class="kw">return</span>;
 
-  <span class="fn">wp_enqueue_script</span>(
-    <span class="str">'your-plugin-admin'</span>,
-    <span class="fn">plugin_dir_url</span>(<span class="key">__FILE__</span>) . <span class="str">'build/admin.js'</span>,
-    [<span class="str">'wp-element'</span>, <span class="str">'wp-i18n'</span>, <span class="str">'wp-api-fetch'</span>],
-    YOUR_PLUGIN_VERSION,
-    <span class="num">true</span>
-  );
+	<span class="fn">wp_enqueue_script</span>(
+		<span class="str">'your-plugin-admin'</span>,
+		<span class="fn">plugin_dir_url</span>(<span class="key">__FILE__</span>) . <span class="str">'build/admin.js'</span>,
+		[<span class="str">'wp-element'</span>, <span class="str">'wp-i18n'</span>, <span class="str">'wp-api-fetch'</span>],
+		YOUR_PLUGIN_VERSION,
+		<span class="num">true</span>
+	);
 
-  <span class="fn">wp_localize_script</span>(<span class="str">'your-plugin-admin'</span>, <span class="str">'yourPluginAdmin'</span>, [
-    <span class="str">'version'</span>            =&gt; YOUR_PLUGIN_VERSION,
-    <span class="str">'isPremium'</span>          =&gt; <span class="fn">your_is_premium_check</span>(),
-    <span class="str">'nonce'</span>              =&gt; <span class="fn">wp_create_nonce</span>(<span class="str">'wp_ajax'</span>),
-    <span class="str">'adminUrl'</span>           =&gt; <span class="fn">admin_url</span>(),
-    <span class="str">'disabledBlocks'</span>     =&gt; <span class="fn">get_option</span>(<span class="str">'bPlBlocksDisabled'</span>, []),
-    <span class="str">'licenseActiveNonce'</span> =&gt; <span class="fn">wp_create_nonce</span>(<span class="str">'your_license_nonce'</span>),
-  ]);
+	<span class="fn">wp_localize_script</span>(<span class="str">'your-plugin-admin'</span>, <span class="str">'yourPluginAdmin'</span>, [
+		<span class="str">'version'</span>						=&gt; YOUR_PLUGIN_VERSION,
+		<span class="str">'isPremium'</span>					=&gt; <span class="fn">your_is_premium_check</span>(),
+		<span class="str">'nonce'</span>							=&gt; <span class="fn">wp_create_nonce</span>(<span class="str">'wp_ajax'</span>),
+		<span class="str">'adminUrl'</span>					 =&gt; <span class="fn">admin_url</span>(),
+		<span class="str">'disabledBlocks'</span>		 =&gt; <span class="fn">get_option</span>(<span class="str">'bPlBlocksDisabled'</span>, []),
+		<span class="str">'licenseActiveNonce'</span> =&gt; <span class="fn">wp_create_nonce</span>(<span class="str">'your_license_nonce'</span>),
+	]);
 });</pre>
 
 				<h3>AJAX handler — save disabled blocks</h3>
 				<pre><span class="fn">add_action</span>(<span class="str">'wp_ajax_bPlBlocksDisabled'</span>, <span class="kw">function</span> () {
-  <span class="key">$nonce</span> = <span class="fn">sanitize_text_field</span>(<span class="fn">wp_unslash</span>(<span class="key">$_POST</span>[<span class="str">'_wpnonce'</span>] ?? <span class="str">''</span>));
-  <span class="kw">if</span> (!<span class="fn">wp_verify_nonce</span>(<span class="key">$nonce</span>, <span class="str">'wp_ajax'</span>)) {
-    <span class="fn">wp_send_json_error</span>(<span class="str">'Invalid Request'</span>);
-  }
-  <span class="key">$data</span>    = <span class="fn">json_decode</span>(<span class="fn">stripslashes</span>(<span class="key">$_POST</span>[<span class="str">'data'</span>]), <span class="num">true</span>);
-  <span class="key">$db_data</span> = <span class="fn">get_option</span>(<span class="str">'bPlBlocksDisabled'</span>, []);
+	<span class="key">$nonce</span> = <span class="fn">sanitize_text_field</span>(<span class="fn">wp_unslash</span>(<span class="key">$_POST</span>[<span class="str">'_wpnonce'</span>] ?? <span class="str">''</span>));
+	<span class="kw">if</span> (!<span class="fn">wp_verify_nonce</span>(<span class="key">$nonce</span>, <span class="str">'wp_ajax'</span>)) {
+		<span class="fn">wp_send_json_error</span>(<span class="str">'Invalid Request'</span>);
+	}
+	<span class="key">$data</span>		= <span class="fn">json_decode</span>(<span class="fn">stripslashes</span>(<span class="key">$_POST</span>[<span class="str">'data'</span>]), <span class="num">true</span>);
+	<span class="key">$db_data</span> = <span class="fn">get_option</span>(<span class="str">'bPlBlocksDisabled'</span>, []);
 
-  <span class="kw">if</span> (!isset(<span class="key">$data</span>) &amp;&amp; <span class="key">$db_data</span>) {
-    <span class="fn">wp_send_json_success</span>(<span class="key">$db_data</span>);
-  }
-  <span class="fn">update_option</span>(<span class="str">'bPlBlocksDisabled'</span>, <span class="key">$data</span>);
-  <span class="fn">wp_send_json_success</span>(<span class="key">$data</span>);
+	<span class="kw">if</span> (!isset(<span class="key">$data</span>) &amp;&amp; <span class="key">$db_data</span>) {
+		<span class="fn">wp_send_json_success</span>(<span class="key">$db_data</span>);
+	}
+	<span class="fn">update_option</span>(<span class="str">'bPlBlocksDisabled'</span>, <span class="key">$data</span>);
+	<span class="fn">wp_send_json_success</span>(<span class="key">$data</span>);
 });</pre>
 			</div>
 
@@ -1043,11 +1043,11 @@
 <span class="kw">const</span> defaultConfig = <span class="fn">require</span>(<span class="str">'@wordpress/scripts/config/webpack.config'</span>);
 
 module.exports = {
-  ...defaultConfig,
-  entry: {
-    ...defaultConfig.<span class="fn">entry</span>(),
-    admin: <span class="str">'./src/admin/index.js'</span>,   <span class="cm">// ← add this line</span>
-  }
+	...defaultConfig,
+	entry: {
+		...defaultConfig.<span class="fn">entry</span>(),
+		admin: <span class="str">'./src/admin/index.js'</span>,	 <span class="cm">// ← add this line</span>
+	}
 };</pre>
 				<p>This outputs <code>build/admin.js</code> — the file enqueued in PHP above.</p>
 			</div>
@@ -1172,21 +1172,21 @@ module.exports = {
 
 				<h3>Blocks</h3>
 				<pre>&lt;<span class="fn">Blocks</span>
-  {...props}
-  allBlocks={blocks}
-  disabledBlocks={disabledBlocks}
-  onChange={handleBlocksChange}
-  status={savingStatus}          <span class="cm">// 'loading' | 'success' | 'error' | null</span>
-  pageTitle=<span class="str">'All Blocks'</span>
-  ProModal={MyProModal}          <span class="cm">// optional — shown to free users</span>
+	{...props}
+	allBlocks={blocks}
+	disabledBlocks={disabledBlocks}
+	onChange={handleBlocksChange}
+	status={savingStatus}					<span class="cm">// 'loading' | 'success' | 'error' | null</span>
+	pageTitle=<span class="str">'All Blocks'</span>
+	ProModal={MyProModal}					<span class="cm">// optional — shown to free users</span>
 /&gt;</pre>
 
 				<h3>Header</h3>
 				<pre>&lt;<span class="fn">Header</span> {...props}&gt;
-  &lt;<span class="key">nav</span> className=<span class="str">'bPlDashboardNav'</span>&gt;
-    &lt;<span class="fn">NavLink</span> to=<span class="str">'welcome'</span>&gt;Home&lt;/<span class="fn">NavLink</span>&gt;
-    &lt;<span class="fn">NavLink</span> to=<span class="str">'blocks'</span>&gt;Blocks&lt;/<span class="fn">NavLink</span>&gt;
-  &lt;/<span class="key">nav</span>&gt;
+	&lt;<span class="key">nav</span> className=<span class="str">'bPlDashboardNav'</span>&gt;
+		&lt;<span class="fn">NavLink</span> to=<span class="str">'welcome'</span>&gt;Home&lt;/<span class="fn">NavLink</span>&gt;
+		&lt;<span class="fn">NavLink</span> to=<span class="str">'blocks'</span>&gt;Blocks&lt;/<span class="fn">NavLink</span>&gt;
+	&lt;/<span class="key">nav</span>&gt;
 &lt;/<span class="fn">Header</span>&gt;</pre>
 				<p>The hamburger menu and mobile nav-open/close logic are built-in.</p>
 			</div>

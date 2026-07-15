@@ -1,3 +1,15 @@
+/**
+	* RadioControlPro Component
+	*
+	* @props label (required): Control label (Node)
+	* @props onChange (required): Change handler invoked for premium users (Function)
+	* @props className (optional): Additional CSS classes (String)
+	* @props isPremium (optional): false (Boolean)
+	* @props setIsProModalOpen (optional): Opens the pro modal for non-premium users (Function)
+	* @props gap (optional): '130px' (String)
+	* @props direction (optional): 'row' (String)
+	*/
+
 import { Flex, RadioControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import Label from "../../Components/Label/Label";

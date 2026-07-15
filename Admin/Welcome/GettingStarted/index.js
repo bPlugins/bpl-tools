@@ -6,10 +6,10 @@ import './style.scss';
 /**
  * Tabbed getting-started guide. Renders tab buttons and a sliding step list.
  *
- * @param {object}   props
- * @param {object[]} props.tabs    - Tab definitions: [{key, label, icon?, steps: [{num, title, body, link?: {url, label}}]}]
- *                                   `body` is rendered as HTML via dangerouslySetInnerHTML.
- * @param {object}   [props.pages] - {docs?} — URL for the "Open Documentation" link at the bottom
+ * @param {object}		props
+ * @param {object[]}	props.tabs		- Tab definitions: [{key, label, icon?, steps: [{num, title, body, link?: {url, label}}]}]
+ * `body` is rendered as HTML via dangerouslySetInnerHTML.
+ * @param {object}		[props.pages]	- {docs?} — URL for the "Open Documentation" link at the bottom
  */
 const GettingStarted = ({ tabs = [], pages }) => {
 	const [active, setActive] = useState(0);

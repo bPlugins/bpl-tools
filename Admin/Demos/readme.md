@@ -29,9 +29,9 @@ import { demoInfo } from '../utils/data';
 
 ```js
 export const demoInfo = {
-    allInOneLabel: 'See All Demos',    // optional: button label in the header
-    allInOneLink:  'https://...',       // optional: link for the "all in one" button
-    demos: [ /* Demo items */ ]
+	allInOneLabel: 'See All Demos', // optional: button label in the header
+	allInOneLink: 'https://...', // optional: link for the "all in one" button
+	demos: [/* Demo items */]
 }
 ```
 
@@ -39,11 +39,11 @@ export const demoInfo = {
 
 ```js
 {
-    icon:     <svg>...</svg>,  // JSX element or raw SVG string
-    title:    'Default Player',
-    type:     'iframe',        // 'iframe' | 'image'
-    url:      'https://my-plugin.com/demo/default/',
-    category: 'Player'         // optional filter label (auto-generated from title if absent)
+	icon: <svg>...</svg>, // JSX element or raw SVG string
+	title: 'Default Player',
+	type: 'iframe', // 'iframe' | 'image'
+	url: 'https://my-plugin.com/demo/default/',
+	category: 'Player' // optional filter label (auto-generated from title if absent)
 }
 ```
 
@@ -51,12 +51,12 @@ export const demoInfo = {
 
 ```js
 {
-    icon:  <svg>...</svg>,
-    title: 'Grid',
-    children: [
-        { title: 'Default',    type: 'iframe', url: 'https://...' },
-        { title: 'Overlay',    type: 'iframe', url: 'https://...' },
-    ]
+	icon: <svg>...</svg>,
+	title: 'Grid',
+	children: [
+		{ title: 'Default', type: 'iframe', url: 'https://...' },
+		{ title: 'Overlay', type: 'iframe', url: 'https://...' },
+	]
 }
 ```
 

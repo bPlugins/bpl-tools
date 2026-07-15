@@ -12,16 +12,16 @@ import MultiPlanPricing from 'bpl-tools/Admin/MultiPlanPricing';
 
 ```js
 <MultiPlanPricing
-  plans={[plan1, plan2, plan3]}
-  licenses={[1, 3, null]}
-  cycle="annual"
-  selectedLicense={3}
-  onLicenseChange={(license) => setSelectedLicense(license)}
-  featured={{ planId: '14970', text: 'Most Popular' }}
-  logo="https://..."
-  product={product}
-  button={{ label: 'Buy Now ➜' }}
-  options={{}}
+	plans={[plan1, plan2, plan3]}
+	licenses={[1, 3, null]}
+	cycle="annual"
+	selectedLicense={3}
+	onLicenseChange={(license) => setSelectedLicense(license)}
+	featured={{ planId: '14970', text: 'Most Popular' }}
+	logo="https://..."
+	product={product}
+	button={{ label: 'Buy Now ➜' }}
+	options={{}}
 />
 ```
 
@@ -44,19 +44,19 @@ import MultiPlanPricing from 'bpl-tools/Admin/MultiPlanPricing';
 
 ```js
 {
-  id: '14970',
-  name: 'pro',
-  title: 'Pro',
-  description: 'Included Some Awesome Premium Features.',
-  pricing: [
-    { licenses: 1, monthly: 5.99, annual: 59.99, lifetime: 179.99 },
-    { licenses: 3, monthly: 10.99, annual: 107.99, lifetime: 329.99 },
-    { licenses: null, monthly: 39.99, annual: 383.99, lifetime: 699 }
-  ],
-  features: [
-    { title: 'Feature 1' },
-    { title: 'Feature 2' }
-  ]
+	id: '14970',
+	name: 'pro',
+	title: 'Pro',
+	description: 'Included Some Awesome Premium Features.',
+	pricing: [
+		{ licenses: 1, monthly: 5.99, annual: 59.99, lifetime: 179.99 },
+		{ licenses: 3, monthly: 10.99, annual: 107.99, lifetime: 329.99 },
+		{ licenses: null, monthly: 39.99, annual: 383.99, lifetime: 699 }
+	],
+	features: [
+		{ title: 'Feature 1' },
+		{ title: 'Feature 2' }
+	]
 }
 ```
 

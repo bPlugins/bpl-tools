@@ -1,3 +1,10 @@
+/**
+	* DynamicPricing Component
+	*
+	* @props pricingInfo (required): Pricing config with pluginId, planId and licenses (Object)
+	* @props options (required): Extra options passed to the Freemius checkout (Object)
+	*/
+
 import { useEffect, useState } from 'react';
 
 import Button from '../../Components/Button/Button';

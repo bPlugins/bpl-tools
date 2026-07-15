@@ -1,3 +1,13 @@
+/**
+	* Background Component
+	*
+	* @props background (required): background settings keyed by tab name (Object)
+	* @props onChange (required): handler called with updated background data (Function)
+	* @props enabled (required): list of enabled tabs/features e.g. normal, hover, overlay (Array)
+	* @props isPremium (required): whether premium features such as video are available (Boolean)
+	* @props device (injected via withSelect): current editor device type, lowercased (String)
+	*/
+
 import { withSelect } from '@wordpress/data';
 import { PanelBody, TabPanel, RangeControl } from '@wordpress/components';
 

@@ -1,3 +1,10 @@
+/**
+	* HelpPanel Component
+	*
+	* @props slug (optional): The plugin/block slug (String)
+	* @props docsLink (optional): URL to the documentation (String)
+	*/
+
 import { __ } from '@wordpress/i18n';
 import { PanelBody } from '@wordpress/components';
 

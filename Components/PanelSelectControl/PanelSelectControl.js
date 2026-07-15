@@ -1,3 +1,12 @@
+/**
+	* PanelSelectControl Component
+	*
+	* @props className (optional): (String)
+	* @props value (optional): [] Selected values (Array)
+	* @props options (required): Available options (Array)
+	* @props onChange (optional): (Function)
+	*/
+
 import { useEffect, useRef, useState } from 'react';
 import { Popover } from '@wordpress/components';
 

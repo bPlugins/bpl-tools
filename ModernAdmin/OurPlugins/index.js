@@ -1,3 +1,11 @@
+/**
+	* OurPlugins Component
+	*
+	* @props slug (required): current plugin slug to exclude from the list (String)
+	* @props slugs (optional): list of bPlugins slugs to display (Array)
+	* @props installedPlugins (required): installed plugins provided by withSelect (Array)
+	*/
+
 import { useEffect, useState } from 'react';
 import { withSelect } from '@wordpress/data';
 import apiFetch from '@wordpress/api-fetch';
@@ -94,16 +102,6 @@ const handleInstall = async (slug, path, status, setStatus) => {
 	}
 };
 
-/**
- * OurPlugins Component
- * Fetches and displays a list of other bPlugins products with install/activate functionality.
- *
- * @param {object} props - Component props
- * @param {string} props.slug - Current plugin slug (to exclude from list)
- * @param {Array} [props.slugs] - List of specific plugin slugs to display
- * @param {Array} props.installedPlugins - Provided by withSelect, list of locally installed plugins
- * @returns {JSX.Element}
- */
 const OurPlugins = ({ slug, slugs: allSlugs = ['3d-viewer', 'html5-video-player', 'html5-audio-player', 'pdf-poster', 'document-emberdder', 'advanced-post-block', 'advance-custom-html', 'b-carousel-block', 'b-blocks', 'html5-video-player', 'embed-lottie-player', 'b-slider'], installedPlugins } = {}) => {
 	const [plugins, setPlugins] = useState([]);
 	const [isLoading, setIsLoading] = useState(false);

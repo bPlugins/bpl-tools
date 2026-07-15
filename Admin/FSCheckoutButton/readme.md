@@ -12,11 +12,11 @@ import FSCheckoutButton from 'bpl-tools/Admin/FSCheckoutButton';
 
 ```js
 <FSCheckoutButton
-    freemius={{ product_id: 14262, plan_id: 23856, public_key: 'pk_...' }}
-    options={{ licenses: 1, billing_cycle: 'annual' }}
-    buttonProps={{ className: 'myPurchaseBtn' }}
+	freemius={{ product_id: 14262, plan_id: 23856, public_key: 'pk_...' }}
+	options={{ licenses: 1, billing_cycle: 'annual' }}
+	buttonProps={{ className: 'myPurchaseBtn' }}
 >
-    Buy Now ➜
+	Buy Now ➜
 </FSCheckoutButton>
 ```
 

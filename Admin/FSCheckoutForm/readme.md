@@ -12,8 +12,8 @@ import FSCheckoutForm from 'bpl-tools/Admin/FSCheckoutForm';
 
 ```js
 <FSCheckoutForm
-    freemius={{ product_id: 14262, plan_id: 23856 }}
-    options={{ licenses: 1, billing_cycle: 'annual', hide_licenses: true }}
+	freemius={{ product_id: 14262, plan_id: 23856 }}
+	options={{ licenses: 1, billing_cycle: 'annual', hide_licenses: true }}
 />
 ```
 

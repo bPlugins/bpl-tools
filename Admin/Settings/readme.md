@@ -35,11 +35,11 @@ import { settingsInfo } from '../utils/data';
 
 ```js
 export const settingsInfo = {
-    ajaxAction:   'myPluginSaveUninstallOption',
-    cleanupItems: [
-        __('All shortcode posts (myplugin post type)', 'my-plugin'),
-        __('Plugin settings and options',              'my-plugin'),
-    ]
+	ajaxAction: 'myPluginSaveUninstallOption',
+	cleanupItems: [
+		__('All shortcode posts (myplugin post type)', 'my-plugin'),
+		__('Plugin settings and options', 'my-plugin'),
+	]
 }
 ```
 
@@ -49,7 +49,7 @@ export const settingsInfo = {
 
 ```php
 'deleteDataOnUninstall' => (bool) get_option( 'my_plugin_delete_data_on_uninstall', false ),
-'uninstallNonce'        => wp_create_nonce( 'bPlLicenseActivation' ),
+'uninstallNonce' => wp_create_nonce( 'bPlLicenseActivation' ),
 ```
 
 ### 2. Register the AJAX handler
@@ -60,20 +60,20 @@ The action name must match `settingsInfo.ajaxAction`.
 add_action( 'wp_ajax_myPluginSaveUninstallOption', [ $this, 'saveUninstallOption' ] );
 
 public function saveUninstallOption() {
-    $nonce = isset( $_POST['nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['nonce'] ) ) : '';
-    if ( ! wp_verify_nonce( $nonce, 'bPlLicenseActivation' ) ) {
-        wp_send_json_error( 'Invalid nonce' );
-    }
+	$nonce = isset( $_POST['nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['nonce'] ) ) : '';
+	if ( ! wp_verify_nonce( $nonce, 'bPlLicenseActivation' ) ) {
+		wp_send_json_error( 'Invalid nonce' );
+	}
 
-    $enabled = isset( $_POST['enabled'] ) && 'true' === sanitize_text_field( wp_unslash( $_POST['enabled'] ) );
-    update_option( 'my_plugin_delete_data_on_uninstall', $enabled );
+	$enabled = isset( $_POST['enabled'] ) && 'true' === sanitize_text_field( wp_unslash( $_POST['enabled'] ) );
+	update_option( 'my_plugin_delete_data_on_uninstall', $enabled );
 
-    wp_send_json_success( [
-        'enabled' => $enabled,
-        'message' => $enabled
-            ? 'Data deletion enabled.'
-            : 'Data will be preserved on uninstall.'
-    ] );
+	wp_send_json_success( [
+		'enabled' => $enabled,
+		'message' => $enabled
+			? 'Data deletion enabled.'
+			: 'Data will be preserved on uninstall.'
+	] );
 }
 ```
 

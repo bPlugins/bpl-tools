@@ -1,3 +1,10 @@
+/**
+	* Toast Component
+	*
+	* @props message (required): toast text (String)
+	* @props type (required): 'loading' | 'success' | 'error' (String)
+	*/
+
 import { Spinner } from '@wordpress/components';
 
 const Toast = ({ message, type }) => {

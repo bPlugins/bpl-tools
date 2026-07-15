@@ -1,3 +1,10 @@
+/**
+	* Gradient Component
+	*
+	* @props value (required): { type, radialType, colors, centerPositions, angel } (Object)
+	* @props onChange (required): (Function)
+	*/
+
 import { Button, Dashicon, __experimentalNumberControl as NumberControl, RangeControl, Tooltip } from '@wordpress/components';
 import { produce } from 'immer';
 import { useEffect } from 'react';
@@ -7,15 +14,6 @@ import { ColorControl } from '../ColorControl/ColorControl';
 import BButtonGroup from '../BButtonGroup/BButtonGroup';
 import './Gradient.scss';
 import { getRandomColor, randomNumber } from '../../utils/functions';
-
-/**
- * BGradient Component
- *
- * @param {object} props - The props object
- * @param {object} props.value - The value of the gradient
- * @param {function} props.onChange - The function to handle changes in the gradient value
- * @returns {JSX.Element} React component
- */
 
 const Gradient = (props) => {
 	const { value = {}, onChange } = props;

@@ -1,3 +1,12 @@
+/**
+	* AdvertiseCard Component
+	*
+	* @props className (optional): '' (String)
+	* @props isPremium (optional): false (Boolean)
+	* @props planLink (optional): 'https://bplugins.com/pricing/' (String)
+	* @props supportLink (optional): 'https://bplugins.com/support/' (String)
+	*/
+
 import { __ } from '@wordpress/i18n';
 
 import Button from '../../Components/Button/Button';

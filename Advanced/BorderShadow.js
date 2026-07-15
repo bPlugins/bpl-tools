@@ -1,3 +1,11 @@
+/**
+	* BorderShadow Component
+	*
+	* @props borderShadow (required): border, radius and shadow settings keyed by tab name (Object)
+	* @props onChange (required): handler called with updated borderShadow data (Function)
+	* @props enabled (required): list of enabled tabs/features e.g. normal, hover, border, shadow (Array)
+	*/
+
 import { __ } from '@wordpress/i18n';
 import { PanelBody, TabPanel, PanelRow, RangeControl, __experimentalBorderBoxControl as BorderBoxControl } from '@wordpress/components';
 

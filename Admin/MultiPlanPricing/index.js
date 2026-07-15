@@ -1,3 +1,10 @@
+/**
+	* MultiPlanPricing Component
+	*
+	* @props pricingInfo (required): {pluginId, planIds, licenses, button, featured, logo?, hero?, trustBadges?, faqs?} plan config (Object)
+	* @props options (required): extra options forwarded to FS.Checkout.open() (Object)
+	*/
+
 import { useEffect, useState } from 'react';
 import { __ } from '@wordpress/i18n';
 
@@ -19,17 +26,6 @@ const formatPrice = (amount) => {
 	return Number.isInteger(num) ? String(num) : num.toFixed(2);
 };
 
-/**
- * Freemius-powered multi-plan pricing page — fetches live plan data, renders
- * multiple plan cards side-by-side with billing-cycle switcher, per-card license
- * selector, feature list, trust badges, and FAQ accordion.
- *
- * Extracted from the combined Pricing component's multi-plan branch.
- *
- * @param {object} props
- * @param {object} props.pricingInfo - {logo?, pluginId, planIds, licenses, button, featured, hero?, included?, trustBadges?, faqs?}
- * @param {object} props.options     - Extra options forwarded to FS.Checkout.open() (pass {} for none)
- */
 const MultiPlanPricing = ({ pricingInfo, options }) => {
 	const {
 		pluginId, planIds, licenses, button, featured, logo,

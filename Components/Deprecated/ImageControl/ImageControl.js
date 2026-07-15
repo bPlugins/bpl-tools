@@ -1,3 +1,12 @@
+/**
+	* ImageHolderControl Component
+	*
+	* @props className (optional): Wrapper CSS class (String)
+	* @props label (optional): __('Image:') (String)
+	* @props value (optional): {} Selected image data (Object)
+	* @props onChange (required): Change handler receiving the updated image data (Function)
+	*/
+
 import { __ } from '@wordpress/i18n';
 import { withSelect } from '@wordpress/data';
 import { MediaUpload, MediaUploadCheck, MediaPlaceholder } from '@wordpress/block-editor';

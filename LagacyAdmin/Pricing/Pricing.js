@@ -1,3 +1,10 @@
+/**
+	* Pricing Component
+	*
+	* @props pricingInfo (required): Pricing config with cycles and plans (Object)
+	* @props children (optional): Extra content rendered above the billing cycles (Node)
+	*/
+
 import { useState } from 'react';
 
 import Button from '../../Components/Button/Button';

@@ -16,12 +16,12 @@ import ProAds from 'bpl-tools/Admin/Welcome/ProAds';
 
 ```js
 <ProAds
-    name='My Plugin'
-    media={{ proThumbnail: 'https://...' }}
-    proFeatures={[
-        'Feature one available in Pro.',
-        'Feature two available in Pro.',
-    ]}
+	name='My Plugin'
+	media={{ proThumbnail: 'https://...' }}
+	proFeatures={[
+		'Feature one available in Pro.',
+		'Feature two available in Pro.',
+	]}
 />
 ```
 

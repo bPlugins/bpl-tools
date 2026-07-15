@@ -1,3 +1,14 @@
+/**
+	* Device Component
+	*
+	* @props className (optional): (String)
+	* @props style (optional): Inline style object (Object)
+	* @props position (optional): 'horizontal' (String)
+	* @props device (optional): The active device type (String)
+	* @props setDevice (optional): (Function)
+	* @props onChange (optional): (Function)
+	*/
+
 import { compose } from '@wordpress/compose';
 import { withDispatch, withSelect } from '@wordpress/data';
 

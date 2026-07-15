@@ -1,12 +1,15 @@
-import { useEffect, useState } from 'react';
-
 /**
- * @props {string} value - The initial content of the editor
- * @props {function} onChange - The function to call when the content changes
- * @props {boolean} media_button - Whether to show the media button or not
- * @props {boolean} quicktags - Whether to show the quicktags button or not
- * @props {string} height - The height of the editor
- */
+	* TinyEditor Component
+	*
+	* @props value (optional): '' The editor content (String)
+	* @props onChange (required): (Function)
+	* @props media_button (optional): true (Boolean)
+	* @props quicktags (optional): true (Boolean)
+	* @props height (optional): '180px' (String)
+	* @props className (optional): (String)
+	*/
+
+import { useEffect, useState } from 'react';
 
 const TinyEditor = ({ value = '', onChange, media_button = true, quicktags = true, height = '180px', className }) => {
 	const [randomId, setEditorId] = useState(null);

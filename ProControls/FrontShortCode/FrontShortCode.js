@@ -1,3 +1,11 @@
+/**
+	* FrontShortCode Component
+	*
+	* @props postType (required): Post type this shortcode belongs to (String)
+	* @props shortCode (required): Shortcode string to display and copy (String)
+	* @props currentPostType (required): Current editor post type, injected via withSelect (String)
+	*/
+
 import { useRef } from 'react';
 import { __ } from '@wordpress/i18n';
 import { withSelect } from '@wordpress/data';

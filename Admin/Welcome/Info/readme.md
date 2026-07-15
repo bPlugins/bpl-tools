@@ -20,12 +20,12 @@ import Info from 'bpl-tools/Admin/Welcome/Info';
 
 // Custom cards:
 <Info helpItems={[
-    {
-        title: 'Need Assistance?',
-        description: 'Our support team is here to help.',
-        link: 'https://bplugins.com/support',
-        linkText: 'Contact Support'
-    }
+	{
+		title: 'Need Assistance?',
+		description: 'Our support team is here to help.',
+		link: 'https://bplugins.com/support',
+		linkText: 'Contact Support'
+	}
 ]} />
 ```
 

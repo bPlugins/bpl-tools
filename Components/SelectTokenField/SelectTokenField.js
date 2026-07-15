@@ -1,18 +1,16 @@
+/**
+	* SelectTokenField Component
+	*
+	* @props multiple (optional): true (Boolean)
+	* @props defaultValue (optional): Default selected value(s) (String|Array)
+	* @props value (required): Selected value(s) (String|Array)
+	* @props onChange (optional): (Function)
+	* @props options (optional): [] Available options (Array)
+	*/
+
 import { useEffect, useRef, useState } from 'react';
 import './style.scss';
 
-/**
- * SelectTokenField Component
- * @param {Object} props
- * @param {boolean} props.multiple - Enable multiple selection mode. Default: false
- * @param {string|string[]} props.defaultValue - Initial selected value(s). For multiple mode, use array of strings
- * @param {string|string[]} props.value - Controlled value(s). Takes precedence over defaultValue
- * @param {Function} props.onChange - Callback function when selection changes. Receives selected value(s)
- * @param {Array<{value: string, label: string}>} props.options - Array of options to display
- *		Each option should have:
- *		- value: unique identifier
- *		- label: display text
- */
 const SelectTokenField = ({ multiple = true, defaultValue, value, onChange = () => { }, options = [] }) => {
 	const [inputVal, setInputVal] = useState('');
 	const [toggle, setToggle] = useState(false);

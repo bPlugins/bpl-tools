@@ -1,3 +1,12 @@
+/**
+	* Visibility Component
+	*
+	* @props visibility (required): object providing zIndex (per device) and overflow (Object)
+	* @props onChange (required): handler called with updated visibility data (Function)
+	* @props enabled (required): list of enabled features e.g. zIndex, overflow (Array)
+	* @props device (injected via withSelect): current editor device type, lowercased (String)
+	*/
+
 import { __ } from '@wordpress/i18n';
 import { withSelect } from '@wordpress/data';
 import { PanelBody, PanelRow, SelectControl, __experimentalNumberControl as NumberControl } from '@wordpress/components';

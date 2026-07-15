@@ -1,3 +1,10 @@
+/**
+	* Mask Component
+	*
+	* @props mask (required): The mask settings (Object)
+	* @props onChange (required): (Function)
+	*/
+
 import { PanelBody, PanelRow, SelectControl, ToggleControl, __experimentalUnitControl as UnitControl } from '@wordpress/components';
 
 import Label from '../Label/Label';

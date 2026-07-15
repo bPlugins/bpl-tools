@@ -1,3 +1,11 @@
+/**
+	* Demos Component
+	*
+	* @props name (required): plugin name shown in the page heading (String)
+	* @props isPremium (required): whether the plugin is premium (Boolean)
+	* @props demoInfo (required): {demos, allInOneLabel?, allInOneLink?} demo data (Object)
+	*/
+
 import { __, sprintf } from '@wordpress/i18n';
 import { useEffect, useMemo, useState } from 'react';
 
@@ -16,15 +24,6 @@ const CATEGORY_COLORS = [
 	'#14b8a6', // teal
 ];
 
-/**
- * Live-demo browser — category filter chips, search, and iframe/image preview modal.
- *
- * @param {object} props
- * @param {string} props.name		- Plugin name shown in the page heading
- * @param {object} props.demoInfo	- {allInOneLabel?, allInOneLink?, demos: DemoItem[]}
- *	DemoItem (flat): {icon?, title, type: 'iframe'|'image', url, category?}
- *	DemoItem (grouped): {icon?, title, children: FlatDemoItem[]}
- */
 const Demos = ({ name, isPremium, demoInfo }) => {
 	const { demos } = demoInfo;
 

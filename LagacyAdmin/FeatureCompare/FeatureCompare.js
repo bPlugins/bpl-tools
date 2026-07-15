@@ -1,3 +1,10 @@
+/**
+	* FeatureCompare Component
+	*
+	* @props featureCompareInfo (required): Comparison data with title, plans and features (Object)
+	* @props isPremium (optional): false - hides the Buy Now row when true (Boolean)
+	*/
+
 import { checkIcon, closeIcon } from '../../utils/icons'
 import Button from "../../Components/Button/Button"
 

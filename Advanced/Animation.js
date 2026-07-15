@@ -1,3 +1,11 @@
+/**
+	* Animation Component
+	*
+	* @props animation (required): source object providing type, duration and delay (Object)
+	* @props onChange (required): handler called with updated animation data (Function)
+	* @props id (required): DOM id of the target element (String)
+	*/
+
 import { __ } from '@wordpress/i18n';
 import { PanelBody, SelectControl, RangeControl } from '@wordpress/components';
 

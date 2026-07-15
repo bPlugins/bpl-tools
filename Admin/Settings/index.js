@@ -11,13 +11,13 @@ import { trashIcon, alertIcon, shieldIcon, checkCircleIcon, closeIcon } from '..
  * Uninstall-data management page — toggle to permanently delete plugin data on uninstall.
  * Requires a PHP AJAX handler whose action name matches `ajaxAction`.
  *
- * @param {object}   props
- * @param {string}   props.name                  - Plugin name shown in description text
- * @param {boolean}  props.deleteDataOnUninstall  - Current setting value (from PHP option)
- * @param {string}   props.uninstallNonce         - wp_create_nonce('bPlLicenseActivation')
- * @param {string}   props.ajaxAction             - WP Ajax action to call on toggle (e.g. 'apbSaveUninstallOption')
- * @param {string}   [props.version]              - Plugin version shown in the status strip
- * @param {string[]} [props.cleanupItems]         - Overrides default list of items deleted on uninstall
+ * @param {object}	props
+ * @param {string} props.name					- Plugin name shown in description text
+ * @param {boolean} props.deleteDataOnUninstall - Current setting value (from PHP option)
+ * @param {string} props.uninstallNonce			- wp_create_nonce('bPlLicenseActivation')
+ * @param {string} props.ajaxAction				- WP Ajax action to call on toggle (e.g. 'apbSaveUninstallOption')
+ * @param {string} [props.version]				- Plugin version shown in the status strip
+ * @param {string[]} [props.cleanupItems]		- Overrides default list of items deleted on uninstall
  */
 const Settings = ({ name, deleteDataOnUninstall, uninstallNonce, version, ajaxAction = '', cleanupItems }) => {
 	const [enabled, setEnabled] = useState(deleteDataOnUninstall);

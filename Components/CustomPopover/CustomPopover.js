@@ -1,3 +1,15 @@
+/**
+	* CustomPopover Component
+	*
+	* @props icon (optional): Icon element for the toggle button (Node)
+	* @props btnText (optional): Toggle button text (String)
+	* @props children (required): Popover content (Node)
+	* @props value (optional): The current value (Any)
+	* @props label (optional): (String)
+	* @props resetValues (optional): {} (Object)
+	* @props onClick (optional): (Function)
+	*/
+
 import { useEffect, useRef, useState } from 'react';
 import { Button, Flex, Popover, Tooltip } from '@wordpress/components';
 

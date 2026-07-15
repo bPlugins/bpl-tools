@@ -1,3 +1,12 @@
+/**
+	* ImageModal Component
+	*
+	* @props filteredItems (required): Gallery items to navigate, each with url and title (Array)
+	* @props activeIdx (required): Index of the initially shown item (Number)
+	* @props handleModalClose (required): Callback to close the modal (Function)
+	* @props children (optional): Extra content rendered in the modal footer (Node)
+	*/
+
 import { useEffect, useState } from 'react';
 
 import { closeIcon, nextIcon, prevIcon } from '../../utils/icons';

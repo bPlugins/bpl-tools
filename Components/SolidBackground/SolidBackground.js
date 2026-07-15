@@ -1,3 +1,13 @@
+/**
+	* SolidBackground Component
+	*
+	* @props className (optional): '' (String)
+	* @props label (optional): 'Color' (String)
+	* @props value (required): The color/background value (String|Object)
+	* @props onChange (optional): (Function)
+	* @props gradients (optional): Array of gradients (Array)
+	*/
+
 import { useState } from 'react';
 import { withSelect } from '@wordpress/data';
 import { Button, Dropdown, GradientPicker } from '@wordpress/components';

@@ -16,8 +16,8 @@ import GettingStarted from 'bpl-tools/Admin/Welcome/GettingStarted';
 
 ```js
 <GettingStarted
-    tabs={[...]}
-    pages={{ docs: 'https://bplugins.com/docs/my-plugin/' }}
+	tabs={[...]}
+	pages={{ docs: 'https://bplugins.com/docs/my-plugin/' }}
 />
 ```
 
@@ -50,32 +50,32 @@ import GettingStarted from 'bpl-tools/Admin/Welcome/GettingStarted';
 
 ```js
 export const welcomeInfo = (adminUrl) => ({
-    gettingStarted: {
-        tabs: [
-            {
-                key: 'gutenberg',
-                label: 'Gutenberg',
-                icon: gutenbergTabIcon,
-                steps: [
-                    {
-                        num: 1,
-                        title: 'Insert the Block',
-                        body: 'Click the <strong>+</strong> icon and search for your block.',
-                        link: { url: `${adminUrl}/post-new.php`, label: 'Open Editor' }
-                    },
-                    {
-                        num: 2,
-                        title: 'Configure',
-                        body: 'Use the sidebar to set options.'
-                    },
-                    {
-                        num: 3,
-                        title: 'Publish',
-                        body: 'Click Publish when done.'
-                    }
-                ]
-            }
-        ]
-    }
+	gettingStarted: {
+		tabs: [
+			{
+				key: 'gutenberg',
+				label: 'Gutenberg',
+				icon: gutenbergTabIcon,
+				steps: [
+					{
+						num: 1,
+						title: 'Insert the Block',
+						body: 'Click the <strong>+</strong> icon and search for your block.',
+						link: { url: `${adminUrl}/post-new.php`, label: 'Open Editor' }
+					},
+					{
+						num: 2,
+						title: 'Configure',
+						body: 'Use the sidebar to set options.'
+					},
+					{
+						num: 3,
+						title: 'Publish',
+						body: 'Click Publish when done.'
+					}
+				]
+			}
+		]
+	}
 })
 ```
