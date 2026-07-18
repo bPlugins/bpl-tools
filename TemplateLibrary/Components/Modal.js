@@ -38,7 +38,9 @@ const Modal = (props) => {
 		setCategory,
 		pageNumber,
 		setPageNumber,
-		modalTitle = 'Templates Library'
+		modalTitle = 'Templates Library',
+		perPage = 12,
+		accessCounts
 	} = props;
 
 	const loadMoreButtonLabel = 'Load More';
@@ -92,11 +94,11 @@ const Modal = (props) => {
 			{show && <div className='modalBody'>
 				<Sidebar {...props} />
 
-				<Templates {...props} setShow={setShow} isPremium={isPremium}>
+				<Templates {...props} setShow={setShow} isPremium={isPremium} perPage={perPage}>
 					<div className='modalBodyBottom'>
-						{templatesLoading ? <div className='bPlPlaceCenter'>
-							<Spinner className='bPlSpinner' />
-						</div> : (perPage * pageNumber) < totalCount && <button className='modalBodyTemplateLoadMore libraryBtn active' onClick={() => setPageNumber(prev => prev + 1)}>{loadMoreButtonLabel}</button>}
+						{(perPage * pageNumber) < (accessCounts?.all || totalCount) && <button className='modalBodyTemplateLoadMore libraryBtn active' disabled={templatesLoading} onClick={() => setPageNumber(prev => prev + 1)}>
+							{templatesLoading ? <Spinner className='bPlSpinner' /> : loadMoreButtonLabel}
+						</button>}
 					</div>
 				</Templates>
 			</div>}

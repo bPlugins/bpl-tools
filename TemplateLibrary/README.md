@@ -23,6 +23,7 @@ const TemplateLibrary = () => {
 		// Modal
 		modalTitle={__('Templates Library', 'textdomain')}
 		types={['patterns', 'pages']}
+		perPage={12}
 
 		// Pricing URL
 		pricingUrl='https://bplugins.com/products/your-plugin/'
@@ -79,6 +80,7 @@ domReady(mountTemplateLibrary);
 - **types** (array): Tab types to display - ['patterns'], ['pages'], or ['patterns', 'pages'] (default: ['patterns', 'pages'])
   - If only one type, tab header is hidden
   - Tab names are fixed: 'Patterns' and 'Pages'
+- **perPage** (number): Templates per page for pagination (default: 12)
 
 ### URLs
 - **pricingUrl** (string): Link for "Get Pro" button (required if supporting pro templates)
@@ -121,9 +123,10 @@ The following are **not configurable** (standardized for consistency):
 Your plugin's backend AJAX endpoints must:
 
 1. Accept `plugin` parameter to filter by plugin taxonomy
-2. Support search across title, category, and keywords
-3. Return proper data structure (patterns array, count, etc.)
-4. Verify nonce and user permissions
+2. Accept `perPage` parameter for pagination limit
+3. Support search across title, category, and keywords
+4. Return proper data structure (patterns array, count, etc.)
+5. Verify nonce and user permissions
 
 See [@bblocks-sites/includes/Rest/PatternsController.php](../../../bblocks-sites/includes/Rest/PatternsController.php) for reference implementation.
 
@@ -131,17 +134,17 @@ See [@bblocks-sites/includes/Rest/PatternsController.php](../../../bblocks-sites
 
 ```
 bpl-tools/TemplateLibrary/
-├── TemplateLibrary.js		(Main component - fully generic)
-├── TemplateLibrary.scss	(Shared styles)
-├── Modal/
-│	├── Modal.js			(Modal header & tabs)
-│	├── Portal.js			(React Portal wrapper)
-│	├── Sidebar.js			(Filters & search)
-│	└── Templates.js		(Template grid & import)
+├── index.js					(Main component - fully generic)
+├── style.scss				(Shared styles)
+├── Components/
+│	├── Modal.js				(Modal header & tabs)
+│	├── Portal.js				(React Portal wrapper)
+│	├── Sidebar.js				(Filters & search)
+│	└── Templates.js			(Template grid & import)
 ├── hooks/
-│	├── useTemplates.js		(Fetch & paginate templates)
-│	├── useTemplatesMain.js	(Fetch categories)
-│	└── useAccessCounts.js	(Fetch Free/Pro counts)
+│	├── useTemplates.js			(Fetch & paginate templates)
+│	├── useTemplatesMain.js		(Fetch categories)
+│	└── useAccessCounts.js		(Fetch Free/Pro counts)
 └── utils/
-	└── icons.js			(Generic UI icons)
+	└── icons.js				(Generic UI icons)
 ```

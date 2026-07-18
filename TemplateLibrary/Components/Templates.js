@@ -62,8 +62,10 @@ const Templates = ({
 		{templates?.length ? <>
 			{visible.length ? <div className='modalBodyTemplatesGallery'>
 				{visible.map((item, index) => {
-					const { ID, original_content, category, thumbnail } = item;
+					const { ID, category, original_content, thumbnail, preview_url, title } = item;
 					const isPro = category?.includes('pro');
+
+					!preview_url && console.log(title);
 
 					const hasAccess = isPremium || !isPro;
 
@@ -110,9 +112,9 @@ const Templates = ({
 					return <div className={`modalBodyTemplateItem ${type === 'pages' ? 'isPages' : ''}`} key={index}>
 						<div className='modalBodyTemplateItemPreviewWrap'>
 							<div className='modalBodyTemplateItemPreview'>
-								{item.preview_url && <img src={item.preview_url} alt={item.name} className='modalBodyTemplateItemPreviewImg' />}
-								{!item.preview_url && thumbnail && <img src={thumbnail} alt={item.name} className='modalBodyTemplateItemPreviewImg' />}
-								{!item.preview_url && !thumbnail && <BlockPreview blocks={parse(original_content)} viewportWidth={1600} />}
+								{thumbnail ?
+									<img src={thumbnail} alt={item.name} className='modalBodyTemplateItemPreviewImg' /> :
+									<BlockPreview blocks={parse(original_content)} viewportWidth={1600} />}
 							</div>
 
 							<div className='modalBodyTemplateItemButton'>
@@ -126,11 +128,26 @@ const Templates = ({
 									</>}
 								</a>
 
+								{preview_url && <a href={preview_url} target='_blank' rel='noreferrer'>
+									Preview
+									{externalIcon}
+								</a>}
+
 								{isLoading === ID && <Spinner className='bPlSpinner' />}
 							</div>
 						</div>
 
-						{item.title && <div className='modalBodyTemplateItemTitle' dangerouslySetInnerHTML={{ __html: item.title }} />}
+						{title && <>
+							{preview_url ?
+								<a className='modalBodyTemplateItemTitle' href={preview_url} target='_blank' rel='noreferrer'>
+									<span className='hasLink'>{title}</span>
+									{externalIcon}
+								</a> :
+								<div className='modalBodyTemplateItemTitle'>
+									<span>{title}</span>
+								</div>
+							}
+						</>}
 					</div>
 				})}
 			</div> : <>

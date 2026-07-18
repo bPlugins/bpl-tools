@@ -604,8 +604,25 @@ $radius: 12px;
 						color: $ink;
 						text-align: left;
 						white-space: nowrap;
-						overflow: hidden;
-						text-overflow: ellipsis;
+						text-decoration: none;
+						display: flex;
+						align-items: center;
+						justify-content: start;
+						gap: 8px;
+
+						span {
+							overflow: hidden;
+							text-overflow: ellipsis;
+
+							&.hasLink {
+								max-width: calc(100% - 8px - 1em);
+							}
+						}
+
+						svg {
+							width: 1em;
+							height: 1em;
+						}
 					}
 
 					&:hover {

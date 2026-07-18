@@ -39,7 +39,8 @@ const TemplateLibrary = ({
 	ajaxActionImport = 'prefix_template_import',
 	ajaxActionCounts = 'prefix_template_counts',
 	pricingUrl = 'https://bplugins.com/pricing/',
-	types = ['patterns', 'pages']
+	types = ['patterns', 'pages'],
+	perPage = 12
 }) => {
 	const [show, setShow] = useState(false);
 	const [type, setType] = useState('patterns');
@@ -52,23 +53,27 @@ const TemplateLibrary = ({
 	const effectiveCategory = 'all' !== category ? category : ('pro' === access ? 'pro' : 'all');
 
 	const { main, isLoading: mainLoading } = useTemplatesMain(nonce, type, ajaxActionMain);
-	const { templates: fTemplates, totalCount, refetchTemplates, isLoading: templatesLoading } = useTemplates(nonce, type, effectiveCategory, pageNumber, search, ajaxActionTemplates);
+	const { templates: fTemplates, totalCount, refetchTemplates, isLoading: templatesLoading } = useTemplates(nonce, type, effectiveCategory, pageNumber, search, ajaxActionTemplates, perPage);
 
 	const accessCounts = useAccessCounts(nonce, type, show, ajaxActionCounts);
 
 	useEffect(() => {
 		if (show && nonce) {
 			refetchTemplates({ type, category: effectiveCategory, pageNumber: 1, search: '' });
+		} else {
+			// Reset state when modal closes
+			setTemplates([]);
+			setPageNumber(1);
 		}
 	}, [show]);
 
 	useEffect(() => {
 		if (pageNumber === 1) {
 			setTemplates(fTemplates);
-		} else {
+		} else if (fTemplates.length > 0) {
 			setTemplates(prev => [...prev, ...fTemplates]);
 		}
-	}, [fTemplates, pageNumber]);
+	}, [fTemplates]);
 
 	return <>
 		<button className='bPlTemplateLibraryButton' onClick={() => setShow(true)}>
@@ -104,7 +109,8 @@ const TemplateLibrary = ({
 				nonce,
 				modalTitle,
 				ajaxActionImport,
-				pricingUrl
+				pricingUrl,
+				perPage
 			}} />
 		</Portal>
 	</>;
