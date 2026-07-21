@@ -1,17 +1,17 @@
 import { useState, useEffect } from 'react';
 import { useWPAjax } from '../../hooks';
 
-const useTemplates = (nonce, type = 'patterns', category = 'all', pageNumber = 1, search = '', ajaxAction, perPage = 12) => {
+const useTemplates = (nonce, type = 'patterns', category = 'all', pageNumber = 1, search = '', ajaxAction, perPage = 9) => {
 	const src = search.split(' ').join(',');
 
 	const { data = null, saveData, isLoading } = useWPAjax(ajaxAction, { _wpnonce: nonce, type, category, pageNumber, search: src, perPage }, true);
 
 	const [templates, setTemplates] = useState([]);
-	const [totalCount, setTotalCount] = useState([]);
+	const [totalCount, setTotalCount] = useState(0);
 
-	// Fetch templates when dependencies change
+	// Fetch templates when dependencies change ('favorites' is a client-side tab)
 	useEffect(() => {
-		if (nonce && type && category !== undefined && pageNumber) {
+		if (nonce && type && 'favorites' !== type && category !== undefined && pageNumber) {
 			saveData({ type, category, pageNumber, search: src, perPage });
 		}
 	}, [type, category, pageNumber, search, nonce, perPage]);

@@ -14,12 +14,13 @@
 	* @props pricingUrl (optional): 'https://bplugins.com/pricing/' (String)
 	*/
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import { __ } from '@wordpress/i18n';
 import { BlockPreview } from '@wordpress/block-editor';
 import { parse } from '@wordpress/blocks';
 import { Spinner } from '@wordpress/components';
 
-import { externalIcon, plusIcon } from '../../utils/icons';
+import { externalIcon, plusIcon, heartIcon, heartFillIcon, crownIcon } from '../../utils/icons';
 
 const isProItem = (item) => Array.isArray(item.category) && item.category.includes('pro');
 
@@ -34,13 +35,11 @@ const Templates = ({
 	children,
 	nonce,
 	ajaxActionImport,
-	pricingUrl = 'https://bplugins.com/pricing/'
+	pricingUrl = 'https://bplugins.com/pricing/',
+	favorites,
+	toggleFavorite
 }) => {
-	const importButtonLabel = 'Import';
-	const proButtonLabel = 'Get Pro';
-	const noTemplatesText = 'No Templates Found!!';
 	const [isLoading, setIsLoading] = useState(false);
-	const [isTempLoading, setIsTempLoading] = useState(false);
 
 	const visible = (templates || []).filter((item) => {
 		if ('pro' === access) return isProItem(item);
@@ -48,24 +47,23 @@ const Templates = ({
 		return true;
 	});
 
-	useEffect(() => {
-		if (templatesLoading) {
-			setTimeout(() => {
-				setIsTempLoading(true);
-			}, 1000);
-		} else {
-			setIsTempLoading(false);
-		}
-	}, [templatesLoading]);
+	// Show the spinner only while a fetch is in flight AND nothing is on screen
+	// yet — never when items already exist (e.g. Load More), so the gallery
+	// stays put, and never fall through to "Not Found" during that window.
+	const isBusy = (templatesLoading || mainLoading) && !templates?.length;
 
 	return <div className='modalBodyTemplates'>
-		{templates?.length ? <>
-			{visible.length ? <div className='modalBodyTemplatesGallery'>
-				{visible.map((item, index) => {
+		{isBusy ? <div className='bPlPlaceCenter'>
+			<Spinner className='bPlSpinner' />
+		</div> : visible.length ? <>
+			<div className='bPlTemplatesGallery'>
+				{visible.map((item) => {
 					const { ID, category, original_content, thumbnail, preview_url, title } = item;
 					const isPro = category?.includes('pro');
 
-					!preview_url && console.log(title);
+					// On the Favorites tab items carry their own type via __type
+					const itemType = item.__type || type;
+					const isFav = (favorites?.[itemType] || []).includes(ID);
 
 					const hasAccess = isPremium || !isPro;
 
@@ -109,56 +107,62 @@ const Templates = ({
 						rel: 'noreferrer'
 					};
 
-					return <div className={`modalBodyTemplateItem ${type === 'pages' ? 'isPages' : ''}`} key={index}>
-						<div className='modalBodyTemplateItemPreviewWrap'>
-							<div className='modalBodyTemplateItemPreview'>
-								{thumbnail ?
-									<img src={thumbnail} alt={item.name} className='modalBodyTemplateItemPreviewImg' /> :
-									<BlockPreview blocks={parse(original_content)} viewportWidth={1600} />}
-							</div>
-
-							<div className='modalBodyTemplateItemButton'>
-								<a className={isLoading === ID ? 'disabled' : ''} {...linkProps}>
-									{hasAccess ? <>
-										{plusIcon}
-										{importButtonLabel}
-									</> : <>
-										{proButtonLabel}
-										{externalIcon}
-									</>}
-								</a>
-
-								{preview_url && <a href={preview_url} target='_blank' rel='noreferrer'>
-									Preview
+					return <div className={`template ${itemType === 'pages' ? 'isPages' : ''}`} key={`${itemType}-${ID}`}>
+						<div className='templatePreview'>
+							<div className='templateActions'>
+								{preview_url && <a className='templatePreviewBtn' href={preview_url} target='_blank' rel='noreferrer'>
+									{__('Preview')}
 									{externalIcon}
 								</a>}
 
-								{isLoading === ID && <Spinner className='bPlSpinner' />}
+								<button
+									className={`templateFavoriteBtn ${isFav ? 'isFav' : ''}`}
+									aria-pressed={isFav}
+									aria-label={isFav ? __('Remove from favorites') : __('Add to favorites')}
+									onClick={() => toggleFavorite(itemType, ID)}
+								>
+									{isFav ? heartFillIcon : heartIcon}
+								</button>
+							</div>
+
+							<div className='templateMedia'>
+								{thumbnail ?
+									<img src={thumbnail} alt={title} className='templateThumbnail' /> :
+									<BlockPreview blocks={parse(original_content)} viewportWidth={1600} />}
 							</div>
 						</div>
 
-						{title && <>
-							{preview_url ?
-								<a className='modalBodyTemplateItemTitle' href={preview_url} target='_blank' rel='noreferrer'>
-									<span className='hasLink'>{title}</span>
-									{externalIcon}
-								</a> :
-								<div className='modalBodyTemplateItemTitle'>
-									<span>{title}</span>
-								</div>
-							}
-						</>}
+						<div className='templateFooter'>
+							{title && <>
+								{preview_url ?
+									<a className='templateTitle' href={preview_url} target='_blank' rel='noreferrer'>
+										<span>{title}</span>
+										{externalIcon}
+									</a> :
+									<div className='templateTitle'>
+										<span>{title}</span>
+									</div>
+								}
+							</>}
+
+							<a className={`templateImportBtn ${hasAccess ? '' : 'isPro'} ${isLoading === ID ? 'disabled' : ''}`} {...linkProps}>
+								{isLoading === ID ? <Spinner className='bPlSpinner' /> : hasAccess ? <>
+									{plusIcon}
+									{__('Import')}
+								</> : <>
+									{crownIcon}
+									{__('Get Pro')}
+								</>}
+							</a>
+						</div>
 					</div>
 				})}
-			</div> : <>
-				<div className='bPlPlaceCenter modalBodyTemplateNotFound'>{noTemplatesText}</div>
-			</>}
+			</div>
+
 			{children}
-		</> : <>
-			{mainLoading || isTempLoading ? <div className='bPlPlaceCenter'>
-				<Spinner className='bPlSpinner' />
-			</div> : <div className='bPlPlaceCenter modalBodyTemplateNotFound'>{noTemplatesText}</div>}
-		</>}
+		</> : <div className='bPlPlaceCenter templatesNotFound'>
+			{__('No Templates Found!!')}
+		</div>}
 	</div>;
 };
 export default Templates;

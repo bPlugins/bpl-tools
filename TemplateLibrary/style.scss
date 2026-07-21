@@ -1,52 +1,23 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
 
-$primaryColor: #146ef5;
-$primaryDark: #0b53c7;
-$ink: #0f1729;
-$muted: #64748b;
-$line: #e6e9f2;
-$bg: #f6f8fc;
-$borderColor: #e0e0e0;
-$radius: 12px;
+// Themeable color system — plugins override the --bpl-template-* CSS
+// variables from their own stylesheet (see README "Theming").
+// The hex/triplet values below are the shared defaults.
+$primaryColor: var(--bpl-template-primary-color, #146ef5);
+$primaryColorRGB: var(--bpl-template-primary-color-rgb, 20, 110, 245);
+$primaryDark: var(--bpl-template-primary-dark-color, #0b53c7);
+$inkColor: #0f1729;
+$mutedColor: #64748b;
+$lineColor: #e6e9f2;
+$bgColor: #f6f8fc;
 
-* {
-	margin: 0;
-	box-sizing: border-box;
-}
-
-.bPlTemplateLibraryWrap {
-	* {
-		margin: 0;
-		box-sizing: border-box;
-	}
-
-	/* ---- Generic small button (Load More) ----------------------------- */
-	.libraryBtn {
-		font-size: 13px;
-		font-weight: 600;
-		color: $primaryDark;
-		background: #fff;
-		display: inline-flex;
-		align-items: center;
-		gap: 6px;
-		padding: 10px 22px;
-		border: 1px solid $primaryColor;
-		border-radius: 9px;
-		cursor: pointer;
-		transition: background 0.14s ease;
-
-		&:hover {
-			background: rgba($primaryColor, 0.08);
-		}
-
-		&.active {
-			color: $primaryDark;
-		}
-	}
-}
+$greanColor: #15803d;
+$greanBG: #16a34a;
+$orangeColor: #b45309;
+$orangeBG: #d97706;
 
 /* ---- Editor toolbar button (original outlined style) -------------- */
-.bPlTemplateLibraryButton {
+.bPlTemplatesButton {
 	width: max-content;
 	font-size: 13px;
 	line-height: 120%;
@@ -70,7 +41,7 @@ $radius: 12px;
 	}
 }
 
-.bPlTemplateLibraryModalWrap {
+.bPlTemplatesModal {
 	width: 100%;
 	height: 100dvh;
 	backdrop-filter: blur(4px);
@@ -135,7 +106,7 @@ $radius: 12px;
 			display: flex;
 			align-items: center;
 			gap: 18px;
-			border-bottom: 1px solid $line;
+			border-bottom: 1px solid $lineColor;
 			padding: 13px 18px;
 
 			.modalHeaderBrand {
@@ -147,6 +118,7 @@ $radius: 12px;
 				font-weight: 700;
 				gap: 9px;
 				line-height: 1;
+				margin-right: auto;
 
 				svg {
 					width: 26px;
@@ -163,7 +135,7 @@ $radius: 12px;
 					display: inline-flex;
 					gap: 4px;
 					padding: 4px;
-					background: $bg;
+					background: $bgColor;
 					border-radius: 10px;
 				}
 
@@ -176,7 +148,7 @@ $radius: 12px;
 					border-radius: 7px;
 					font-size: 13px;
 					font-weight: 600;
-					color: $muted;
+					color: $mutedColor;
 					cursor: pointer;
 					box-shadow: none;
 					transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
@@ -187,7 +159,7 @@ $radius: 12px;
 					}
 
 					&:hover {
-						color: $ink;
+						color: $inkColor;
 					}
 
 					&.activeTab {
@@ -209,8 +181,8 @@ $radius: 12px;
 				width: 34px;
 				height: 34px;
 				font-size: 18px;
-				color: $muted;
-				background: $bg;
+				color: $mutedColor;
+				background: $bgColor;
 				border-radius: 8px;
 				margin-left: auto;
 				cursor: pointer;
@@ -223,7 +195,7 @@ $radius: 12px;
 
 				&:hover {
 					background: #e9edf6;
-					color: $ink;
+					color: $inkColor;
 				}
 			}
 		}
@@ -234,480 +206,552 @@ $radius: 12px;
 			display: flex;
 			overflow: hidden;
 
-			.modalBodySidebar {
-				flex: 0 0 248px;
+
+		}
+	}
+}
+
+// ModalSidebar
+.bPlTemplatesModal {
+	.modalBodySidebar {
+		flex: 0 0 248px;
+		display: flex;
+		flex-direction: column;
+		padding: 16px;
+		border-right: 1px solid $lineColor;
+		background: #fcfdff;
+		overflow: hidden;
+
+		.sidebarSearch {
+			position: relative;
+			display: flex;
+			align-items: center;
+			margin-bottom: 16px;
+
+			input {
+				width: 100%;
+				height: 38px;
+				border: 1px solid $lineColor;
+				border-radius: 9px;
+				padding: 0 12px 0 36px;
+				font-size: 13px;
+				background: #fff;
+				transition: border-color 0.15s ease, box-shadow 0.15s ease;
+
+				&:focus {
+					outline: none;
+					border-color: $primaryColor;
+					box-shadow: 0 0 0 3px rgba($primaryColorRGB, 0.16);
+				}
+			}
+
+			.searchIconWrapper {
+				position: absolute;
+				left: 12px;
+				top: 50%;
+				transform: translateY(-50%);
 				display: flex;
-				flex-direction: column;
-				padding: 16px;
-				border-right: 1px solid $line;
-				background: #fcfdff;
-				overflow: hidden;
+				align-items: center;
+				justify-content: center;
+				width: 15px;
+				height: 15px;
+				color: $mutedColor;
+				cursor: pointer;
 
-				.modalBodySidebarSearch {
+				svg {
+					width: 15px;
+					height: 15px;
+				}
+			}
+		}
+
+		.sidebarAccess {
+			display: flex;
+			gap: 6px;
+			margin-bottom: 16px;
+
+			button {
+				flex: 1 1 0;
+				min-width: 0;
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				gap: 6px;
+				padding: 9px 6px;
+				border: 1px solid $lineColor;
+				border-radius: 9px;
+				background: #fff;
+				font-size: 13px;
+				font-weight: 600;
+				color: $mutedColor;
+				cursor: pointer;
+				transition: border-color 0.14s ease, color 0.14s ease, background 0.14s ease;
+
+				.tick {
 					position: relative;
-					display: flex;
-					align-items: center;
-					margin-bottom: 16px;
+					width: 15px;
+					height: 15px;
+					flex: 0 0 auto;
+					border: 1.5px solid #cbd2e0;
+					border-radius: 4px;
+					background: #fff;
+					transition: border-color 0.14s ease, background 0.14s ease;
 
-					input {
-						width: 100%;
-						height: 38px;
-						border: 1px solid $line;
-						border-radius: 9px;
-						padding: 0 12px 0 36px;
-						font-size: 13px;
-						background: #fff;
-						transition: border-color 0.15s ease, box-shadow 0.15s ease;
-
-						&:focus {
-							outline: none;
-							border-color: $primaryColor;
-							box-shadow: 0 0 0 3px rgba($primaryColor, 0.16);
-						}
-					}
-
-					.searchIconWrapper {
+					&::after {
+						content: '';
 						position: absolute;
-						left: 12px;
-						top: 50%;
-						transform: translateY(-50%);
-						display: flex;
-						align-items: center;
-						justify-content: center;
-						width: 15px;
-						height: 15px;
-						color: $muted;
-						cursor: pointer;
-
-						svg {
-							width: 15px;
-							height: 15px;
-						}
+						left: 4px;
+						top: 1px;
+						width: 4px;
+						height: 8px;
+						border: solid #fff;
+						border-width: 0 2px 2px 0;
+						transform: rotate(45deg) scale(0);
+						transition: transform 0.14s ease;
 					}
 				}
 
-				.modalBodySidebarAccess {
-					display: flex;
-					gap: 6px;
-					margin-bottom: 16px;
-
-					button {
-						flex: 1 1 0;
-						min-width: 0;
-						display: inline-flex;
-						align-items: center;
-						justify-content: center;
-						gap: 6px;
-						padding: 9px 6px;
-						border: 1px solid $line;
-						border-radius: 9px;
-						background: #fff;
-						font-size: 13px;
-						font-weight: 600;
-						color: $muted;
-						cursor: pointer;
-						transition: border-color 0.14s ease, color 0.14s ease, background 0.14s ease;
-
-						.tick {
-							position: relative;
-							width: 15px;
-							height: 15px;
-							flex: 0 0 auto;
-							border: 1.5px solid #cbd2e0;
-							border-radius: 4px;
-							background: #fff;
-							transition: border-color 0.14s ease, background 0.14s ease;
-
-							&::after {
-								content: '';
-								position: absolute;
-								left: 4px;
-								top: 1px;
-								width: 4px;
-								height: 8px;
-								border: solid #fff;
-								border-width: 0 2px 2px 0;
-								transform: rotate(45deg) scale(0);
-								transition: transform 0.14s ease;
-							}
-						}
-
-						.catCount {
-							padding: 1px 6px;
-							font-size: 11px;
-							font-weight: 700;
-							color: $muted;
-							background: $bg;
-							border-radius: 20px;
-						}
-
-						&:hover {
-							border-color: rgba($primaryColor, 0.5);
-							color: $ink;
-						}
-
-						&.active .tick::after {
-							transform: rotate(45deg) scale(1);
-						}
-
-						&.is-all.active {
-							border-color: $primaryColor;
-							background: rgba($primaryColor, 0.08);
-							color: $primaryDark;
-
-							.tick {
-								border-color: $primaryColor;
-								background: $primaryColor;
-							}
-						}
-
-						&.is-free.active {
-							border-color: #16a34a;
-							background: rgba(22, 163, 74, 0.08);
-							color: #15803d;
-
-							.tick {
-								border-color: #16a34a;
-								background: #16a34a;
-							}
-
-							.catCount {
-								color: #15803d;
-								background: rgba(22, 163, 74, 0.14);
-							}
-						}
-
-						&.is-pro.active {
-							border-color: #d97706;
-							background: rgba(217, 119, 6, 0.08);
-							color: #b45309;
-
-							.tick {
-								border-color: #d97706;
-								background: #d97706;
-							}
-
-							.catCount {
-								color: #b45309;
-								background: rgba(217, 119, 6, 0.16);
-							}
-						}
-					}
-				}
-
-				.modalBodySidebarHeading {
+				.catCount {
+					padding: 1px 6px;
 					font-size: 11px;
 					font-weight: 700;
-					letter-spacing: 0.06em;
-					text-transform: uppercase;
-					color: #9aa3b5;
-					margin: 0 0 8px 4px;
+					color: $mutedColor;
+					background: $bgColor;
+					border-radius: 20px;
 				}
 
-				.modalBodySidebarCategories {
-					flex: 1;
-					list-style: none;
-					display: flex;
-					flex-direction: column;
-					gap: 2px;
-					overflow-y: auto;
-					padding-right: 4px;
+				&:hover {
+					border-color: rgba($primaryColorRGB, 0.5);
+					color: $inkColor;
+				}
 
-					button {
-						width: 100%;
-						display: flex;
-						align-items: center;
-						justify-content: space-between;
-						gap: 8px;
-						text-align: left;
-						border: 0;
-						background: transparent;
-						padding: 9px 12px;
-						border-radius: 8px;
-						font-size: 13px;
-						font-weight: 500;
-						color: $muted;
-						cursor: pointer;
-						transition: background 0.13s ease, color 0.13s ease;
+				&.active .tick::after {
+					transform: rotate(45deg) scale(1);
+				}
 
-						.catLabel {
-							overflow: hidden;
-							text-overflow: ellipsis;
-							white-space: nowrap;
-						}
+				&.is-all.active {
+					border-color: $primaryColor;
+					background: rgba($primaryColorRGB, 0.08);
+					color: $primaryDark;
 
-						.catCount {
-							flex: 0 0 auto;
-							padding: 1px 7px;
-							font-size: 11px;
-							font-weight: 700;
-							color: $muted;
-							background: $bg;
-							border-radius: 20px;
-						}
+					.tick {
+						border-color: $primaryColor;
+						background: $primaryColor;
+					}
+				}
 
-						&:hover {
-							background: $bg;
-							color: $ink;
-						}
+				&.is-free.active {
+					border-color: $greanBG;
+					background: rgba($greanBG, 0.08);
+					color: $greanColor;
 
-						&.active {
-							background: rgba($primaryColor, 0.1);
-							color: $primaryDark;
-							font-weight: 600;
+					.tick {
+						border-color: $greanBG;
+						background: $greanBG;
+					}
 
-							.catCount {
-								color: $primaryDark;
-								background: rgba($primaryColor, 0.16);
-							}
-						}
+					.catCount {
+						color: $greanColor;
+						background: rgba($greanBG, 0.14);
+					}
+				}
+
+				&.is-pro.active {
+					border-color: $orangeBG;
+					background: rgba($orangeBG, 0.08);
+					color: $orangeColor;
+
+					.tick {
+						border-color: $orangeBG;
+						background: $orangeBG;
+					}
+
+					.catCount {
+						color: $orangeColor;
+						background: rgba($orangeBG, 0.16);
+					}
+				}
+			}
+		}
+
+		.sidebarHeading {
+			font-size: 11px;
+			font-weight: 700;
+			letter-spacing: 0.06em;
+			text-transform: uppercase;
+			color: #9aa3b5;
+			margin: 0 0 8px 4px;
+		}
+
+		.sidebarCategories {
+			min-height: 100px;
+			flex: 1;
+			list-style: none;
+			display: flex;
+			flex-direction: column;
+			gap: 2px;
+			overflow-y: auto;
+			padding-right: 4px;
+
+			button {
+				width: 100%;
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				gap: 8px;
+				text-align: left;
+				border: 0;
+				background: transparent;
+				padding: 9px 12px;
+				border-radius: 8px;
+				font-size: 13px;
+				font-weight: 500;
+				color: $mutedColor;
+				cursor: pointer;
+				transition: background 0.13s ease, color 0.13s ease;
+
+				.catLabel {
+					overflow: hidden;
+					text-overflow: ellipsis;
+					white-space: nowrap;
+				}
+
+				.catCount {
+					flex: 0 0 auto;
+					padding: 1px 7px;
+					font-size: 11px;
+					font-weight: 700;
+					color: $mutedColor;
+					background: $bgColor;
+					border-radius: 20px;
+				}
+
+				&:hover {
+					background: $bgColor;
+					color: $inkColor;
+				}
+
+				&.active {
+					background: rgba($primaryColorRGB, 0.1);
+					color: $primaryDark;
+					font-weight: 600;
+
+					.catCount {
+						color: $primaryDark;
+						background: rgba($primaryColorRGB, 0.16);
+					}
+				}
+			}
+		}
+	}
+}
+
+// ModalTemplates
+.bPlTemplatesModal {
+	.modalBodyTemplates {
+		flex: 1 1 auto;
+		min-width: 0;
+		position: relative;
+		padding: 18px;
+		overflow-y: auto;
+		overflow-x: hidden;
+		background: $bgColor;
+		display: flex;
+		flex-direction: column;
+
+		.bPlTemplatesGallery {
+			width: 100%;
+			display: flex;
+			flex-wrap: wrap;
+			gap: 18px;
+			justify-content: center;
+		}
+
+		.template {
+			display: flex;
+			flex-direction: column;
+			position: relative;
+			background: #fff;
+			border: 1px solid $lineColor;
+			border-radius: 12px;
+			overflow: hidden;
+			transition: transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease;
+			min-width: 450px;
+			max-width: 688px;
+			flex: 1 1 450px;
+			aspect-ratio: 16/9;
+
+			.templatePreview {
+				flex: 1;
+				position: relative;
+				overflow: hidden;
+				background: #fff;
+				border-bottom: 1px solid $lineColor;
+			}
+
+			.templateMedia {
+				width: 100%;
+				height: 100%;
+				overflow: hidden;
+				container-type: size;
+
+				.block-editor-block-preview__container,
+				>div {
+					pointer-events: none;
+				}
+
+				/* Media keeps its natural height; when taller than the preview area it scrolls to the bottom on card hover. */
+				.templateThumbnail,
+				.block-editor-block-preview__container {
+					width: 100%;
+					max-width: 100%;
+					height: auto;
+					display: block;
+					transform: translateY(0);
+					transition: transform 0.75s ease;
+					will-change: transform;
+				}
+			}
+
+			/* Pro badge */
+			.templateProBadge {
+				position: absolute;
+				top: 10px;
+				left: 10px;
+				z-index: 3;
+				display: inline-flex;
+				align-items: center;
+				gap: 4px;
+				padding: 3px 10px;
+				font-size: 11px;
+				font-weight: 700;
+				letter-spacing: 0.02em;
+				color: #fff;
+				background: linear-gradient(135deg, #f59e0b, #d97706);
+				border-radius: 20px;
+				box-shadow: 0 2px 6px rgba(217, 119, 6, 0.4);
+			}
+
+			/* Top-right actions: Preview link + Favorite — revealed on card hover */
+			.templateActions {
+				position: absolute;
+				top: 10px;
+				right: 10px;
+				z-index: 3;
+				display: flex;
+				align-items: center;
+				gap: 8px;
+
+				.templatePreviewBtn {
+					display: inline-flex;
+					align-items: center;
+					gap: 5px;
+					padding: 5px 12px;
+					font-size: 12px;
+					font-weight: 600;
+					text-decoration: none;
+					color: #fff;
+					background: linear-gradient(135deg, $primaryColor, $primaryDark);
+					border-radius: 5px;
+					box-shadow: 0 2px 8px rgba(15, 23, 41, 0.18);
+					opacity: 0;
+					cursor: pointer;
+					transition: opacity 0.15s ease, filter 0.15s ease, transform 0.15s ease;
+
+					svg {
+						width: 1em;
+						height: 1em;
+						fill: currentColor;
+					}
+
+					&:hover {
+						filter: brightness(1.1)
+					}
+				}
+
+				.templateFavoriteBtn {
+					display: inline-flex;
+					align-items: center;
+					justify-content: center;
+					width: 30px;
+					height: 30px;
+					padding: 0;
+					border: 0;
+					border-radius: 50%;
+					background: rgba(255, 255, 255, 0.92);
+					color: $mutedColor;
+					cursor: pointer;
+					opacity: 0;
+					box-shadow: 0 2px 8px rgba(15, 23, 41, 0.18);
+					transition: opacity 0.15s ease, color 0.15s ease, transform 0.15s ease;
+
+					svg {
+						width: 16px;
+						height: 16px;
+						fill: currentColor;
+					}
+
+					&:hover {
+						color: #ef4444;
+						transform: scale(1.1);
+					}
+
+					&.isFav {
+						opacity: 1;
+						color: #ef4444;
 					}
 				}
 			}
 
-			.modalBodyTemplates {
-				flex: 1 1 auto;
-				min-width: 0;
-				position: relative;
-				padding: 18px;
-				overflow-y: auto;
-				overflow-x: hidden;
-				background: $bg;
+			/* Bottom bar: title left, Import / Get Pro right */
+			.templateFooter {
 				display: flex;
-				flex-direction: column;
+				align-items: center;
+				justify-content: space-between;
+				gap: 10px;
+				padding: 8px 14px;
 
-				.modalBodyTemplatesGallery {
-					width: 100%;
+				.templateTitle {
+					flex: 1;
+					min-width: 0;
+					font-size: 13px;
+					font-weight: 600;
+					color: $inkColor;
+					text-align: left;
+					white-space: nowrap;
+					text-decoration: none;
 					display: flex;
-					flex-wrap: wrap;
-					gap: 18px;
-					justify-content: center;
+					align-items: center;
+					justify-content: start;
+					gap: 8px;
+
+					span {
+						overflow: hidden;
+						text-overflow: ellipsis;
+					}
+
+					svg {
+						flex: 0 0 auto;
+						width: 1em;
+						height: 1em;
+					}
 				}
 
-				.modalBodyTemplateItem {
-					display: flex;
-					flex-direction: column;
-					background: #fff;
-					border: 1px solid $line;
-					border-radius: $radius;
-					overflow: hidden;
-					transition: transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease;
-					min-width: 335px;
-					max-width: 688px;
-					flex: 1 1 335px;
-					aspect-ratio: 16/9;
+				.templateImportBtn {
+					flex: 0 0 auto;
+					display: inline-flex;
+					align-items: center;
+					justify-content: center;
+					gap: 5px;
+					padding: 5px 12px;
+					font-size: 12px;
+					font-weight: 600;
+					text-decoration: none;
+					color: #fff;
+					background: $greanBG;
+					border-radius: 5px;
+					cursor: pointer;
+					transition: filter 0.13s ease;
 
-					.modalBodyTemplateItemPreviewWrap {
-						flex: 1;
-						position: relative;
-						overflow: hidden;
-						background: #fff;
-						border-bottom: 1px solid $line;
-					}
-
-					.modalBodyTemplateItemPreview {
-						width: 100%;
-						height: 100%;
-						overflow: hidden;
-
-						.block-editor-block-preview__container,
-						>div {
-							pointer-events: none;
-						}
-
-						.modalBodyTemplateItemPreviewImg {
-							width: 100%;
-							height: 100%;
-							object-fit: cover;
-							object-position: top;
-							display: block;
-						}
-					}
-
-					/* Pro badge */
-					.modalBodyTemplateItemProBadge {
-						position: absolute;
-						top: 10px;
-						left: 10px;
-						z-index: 3;
-						display: inline-flex;
-						align-items: center;
-						gap: 4px;
-						padding: 3px 10px;
-						font-size: 11px;
-						font-weight: 700;
-						letter-spacing: 0.02em;
-						color: #fff;
-						background: linear-gradient(135deg, #f59e0b, #d97706);
-						border-radius: 20px;
-						box-shadow: 0 2px 6px rgba(217, 119, 6, 0.4);
-					}
-
-					/* Hover scrim + centered Import button (patterns) */
-					.modalBodyTemplateItemButton {
-						position: absolute;
-						inset: 0;
-						display: flex;
-						align-items: center;
-						justify-content: center;
-						gap: 10px;
-						background: rgba(15, 23, 41, 0.42);
-						opacity: 0;
-						visibility: hidden;
-						z-index: 2;
-						transition: opacity 0.2s ease;
-
-						a {
-							font-size: 13px;
-							font-weight: 600;
-							text-decoration: none;
-							color: #fff;
-							background: linear-gradient(135deg, $primaryColor, $primaryDark);
-							display: inline-flex;
-							align-items: center;
-							justify-content: center;
-							gap: 7px;
-							padding: 9px 18px;
-							border-radius: 9px;
-							box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
-							transition: transform 0.13s ease, filter 0.13s ease;
-							cursor: pointer;
-
-							&:hover {
-								filter: brightness(1.06);
-								transform: translateY(-1px);
-							}
-
-							&.disabled {
-								pointer-events: none;
-								opacity: 0.6;
-							}
-						}
-
-						svg {
-							width: 1em;
-							height: 1em;
-							fill: currentColor;
-						}
-
-						.bPlSpinner {
-							width: 18px !important;
-							height: 18px !important;
-							color: #fff !important;
-						}
-					}
-
-					.modalBodyTemplateItemTitle {
-						padding: 8px 14px;
-						font-size: 13px;
-						font-weight: 600;
-						color: $ink;
-						text-align: left;
-						white-space: nowrap;
-						text-decoration: none;
-						display: flex;
-						align-items: center;
-						justify-content: start;
-						gap: 8px;
-
-						span {
-							overflow: hidden;
-							text-overflow: ellipsis;
-
-							&.hasLink {
-								max-width: calc(100% - 8px - 1em);
-							}
-						}
-
-						svg {
-							width: 1em;
-							height: 1em;
-						}
+					svg {
+						width: 1em;
+						height: 1em;
+						fill: currentColor;
 					}
 
 					&:hover {
-						transform: translateY(-3px);
-						border-color: rgba($primaryColor, 0.5);
-						box-shadow: 0 12px 28px rgba(15, 23, 41, 0.14);
-
-						.modalBodyTemplateItemButton {
-							opacity: 1;
-							visibility: visible;
-						}
+						filter: brightness(1.08);
 					}
 
-					&.isPages {
-						.modalBodyTemplateItemPreviewWrap {
-							height: 360px;
-						}
+					/* Get Pro — orange */
+					&.isPro {
+						background: $orangeBG;
+					}
 
-						.modalBodyTemplateItemPreview {
-							.modalBodyTemplateItemPreviewImg {
-								height: auto;
-								object-fit: cover;
-								transform: translateY(0);
-								transition: transform 0.45s ease;
-								will-change: transform;
-							}
-						}
+					&.disabled {
+						pointer-events: none;
+						opacity: 0.6;
+					}
 
-						/* Keep the scrolling screenshot visible: button sits in a bottom gradient bar instead of a full scrim. */
-						.modalBodyTemplateItemButton {
-							inset: auto 0 0 0;
-							height: auto;
-							justify-content: flex-end;
-							padding: 28px 12px 12px;
-							background: linear-gradient(to top, rgba(15, 23, 41, 0.78), transparent);
-						}
+					.bPlSpinner {
+						width: 14px !important;
+						height: 14px !important;
+						color: #fff !important;
+					}
+				}
+			}
 
-						&:hover .modalBodyTemplateItemPreview .modalBodyTemplateItemPreviewImg {
-							transform: translateY(calc(360px - 100%));
-							transition: transform 4s ease-in-out;
-						}
+			&:hover {
+				transform: translateY(-3px);
+				border-color: rgba($primaryColorRGB, 0.5);
+				box-shadow: 0 12px 28px rgba(15, 23, 41, 0.14);
+
+				/* Reveal the Preview link & Favorite toggle — no overlay */
+				.templateActions {
+
+					.templatePreviewBtn,
+					.templateFavoriteBtn {
+						opacity: 1;
 					}
 				}
 
-				.modalBodyTemplateNotFound {
-					flex: 1;
-					display: flex;
-					align-items: center;
-					justify-content: center;
-					font-size: 15px;
-					font-weight: 500;
-					color: $muted;
-				}
+				/* min() keeps short media in place (positive offset clamped to 0); tall media slides up to reveal the bottom. */
+				.templateMedia {
 
-				.bPlPlaceCenter {
-					flex: 1;
-					display: flex;
-					align-items: center;
-					justify-content: center;
-				}
-
-				.modalBodyBottom {
-					display: flex;
-					justify-content: center;
-					gap: 20px;
-					padding: 20px 0;
-					margin-top: auto;
-
-					.modalBodyTemplateLoadMore {
-						padding: 10px 24px;
-						border: 1px solid $primaryColor;
-						background: white;
-						color: $primaryColor;
-						font-size: 13px;
-						font-weight: 600;
-						border-radius: 6px;
-						cursor: pointer;
-						transition: all 0.2s;
-						font-family: 'Poppins', sans-serif;
-
-						&:hover {
-							background: $primaryColor;
-							color: white;
-						}
+					.templateThumbnail,
+					.block-editor-block-preview__container {
+						transform: translateY(min(0px, calc(100cqh - 100%)));
+						transition: transform 2.5s ease-in-out;
 					}
+				}
+			}
+
+			&.isPages {
+				.templatePreview {
+					height: 360px;
+				}
+			}
+		}
+
+		.templatesNotFound {
+			flex: 1;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 15px;
+			font-weight: 500;
+			color: $mutedColor;
+		}
+
+		.bPlPlaceCenter {
+			flex: 1;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.modalBodyBottom {
+			display: flex;
+			justify-content: center;
+			gap: 20px;
+			padding: 20px 0;
+			margin-top: auto;
+
+			.templatesLoadMore {
+				padding: 10px 24px;
+				border: 1px solid $primaryColor;
+				background: white;
+				color: $primaryColor;
+				font-size: 13px;
+				font-weight: 600;
+				border-radius: 6px;
+				cursor: pointer;
+				transition: all 0.2s;
+				font-family: 'Poppins', sans-serif;
+
+				&:hover {
+					background: $primaryColor;
+					color: white;
 				}
 			}
 		}
@@ -733,39 +777,30 @@ $radius: 12px;
 
 /* Responsive Design */
 @media (max-width: 1400px) {
-	.bPlTemplateLibraryWrap {
-		.templateLibraryModalWrap {
-			.modalContainer {
-				width: 92vw;
-				height: 80vh;
-			}
+	.bPlTemplatesModal {
+		.modalContainer {
+			width: 92vw;
+			height: 80vh;
 		}
 	}
 }
 
 @media (max-width: 1024px) {
-	.bPlTemplateLibraryWrap {
-		.templateLibraryModalWrap {
-			padding: 15px;
+	.bPlTemplatesModal {
+		padding: 15px;
 
-			.modalContainer {
-				width: 94vw;
-				height: 82vh;
+		.modalContainer {
+			width: 94vw;
+			height: 82vh;
 
-				.modalBody {
-					.modalBodySidebar {
-						width: 240px;
-						padding: 15px;
-					}
+			.modalBody {
+				.modalBodySidebar {
+					flex-basis: 240px;
+					padding: 15px;
+				}
 
-					.modalBodyTemplates {
-						padding: 20px;
-
-						.grid {
-							grid-template-columns: repeat(2, 1fr);
-							gap: 15px;
-						}
-					}
+				.modalBodyTemplates {
+					padding: 20px;
 				}
 			}
 		}
@@ -773,107 +808,108 @@ $radius: 12px;
 }
 
 @media (max-width: 768px) {
-	.bPlTemplateLibraryWrap {
-		.templateLibraryModalWrap {
-			padding: 10px;
+	.bPlTemplatesModal {
+		padding: 10px;
 
-			.modalContainer {
-				width: 96vw;
-				height: 85vh;
-				border-radius: 10px;
+		.modalContainer {
+			width: 96vw;
+			height: 85vh;
+			border-radius: 10px;
 
-				.modalHeader {
-					padding: 15px 20px;
-					gap: 10px;
+			.modalHeader {
+				padding: 15px 20px;
+				gap: 10px;
 
-					.modalHeaderTypes {
-						flex: 1;
+				.modalHeaderTypes {
+					flex: 1;
 
-						.components-tab-panel__tabs {
-							button {
-								padding: 6px 12px;
-								font-size: 12px;
-							}
+					.components-tab-panel__tabs {
+						button {
+							padding: 6px 12px;
+							font-size: 12px;
 						}
-					}
-
-					.modalHeaderClose {
-						width: 28px;
-						height: 28px;
 					}
 				}
 
-				.modalBody {
-					flex-direction: column;
-					gap: 0;
+				.modalHeaderClose {
+					width: 28px;
+					height: 28px;
+				}
+			}
 
-					.modalBodySidebar {
-						width: 100%;
-						border-right: none;
-						border-bottom: 1px solid $borderColor;
-						max-height: 35%;
-						padding: 12px;
+			.modalBody {
+				flex-direction: column;
+				gap: 0;
 
-						.modalBodySidebarSearch {
-							margin-bottom: 12px;
-						}
+				.modalBodySidebar {
+					flex-basis: auto;
+					width: 100%;
+					border-right: none;
+					border-bottom: 1px solid $lineColor;
+					max-height: 35%;
+					padding: 12px;
 
-						.modalBodySidebarAccess {
-							margin-bottom: 12px;
+					.sidebarSearch {
+						margin-bottom: 12px;
+					}
 
-							button {
-								font-size: 11px;
-								padding: 0 8px;
-							}
-						}
+					.sidebarAccess {
+						margin-bottom: 12px;
 
-						.modalBodySidebarHeading {
-							margin: 8px 0 8px 0;
-							font-size: 10px;
-						}
-
-						.modalBodySidebarCategories {
-							display: grid;
-							grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-							gap: 4px;
-
-							button {
-								padding: 6px;
-								font-size: 11px;
-
-								.catCount {
-									font-size: 10px;
-									padding: 1px 4px;
-									margin-left: 4px;
-								}
-							}
+						button {
+							font-size: 11px;
+							padding: 0 8px;
 						}
 					}
 
-					.modalBodyTemplates {
-						flex: 1;
-						padding: 12px;
-						overflow-y: auto;
+					.sidebarHeading {
+						margin: 8px 0 8px 0;
+						font-size: 10px;
+					}
 
-						.grid {
-							grid-template-columns: repeat(2, 1fr);
-							gap: 12px;
-						}
+					.sidebarCategories {
+						display: grid;
+						grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+						gap: 4px;
 
-						.modalBodyTemplateItem {
-							.modalBodyTemplateItemPreviewWrap {
-								aspect-ratio: 4 / 3;
+						button {
+							padding: 6px;
+							font-size: 11px;
+
+							.catCount {
+								font-size: 10px;
+								padding: 1px 4px;
+								margin-left: 4px;
 							}
 						}
+					}
+				}
 
-						.modalBodyTemplateNotFound {
-							font-size: 16px;
-						}
+				.modalBodyTemplates {
+					flex: 1;
+					padding: 12px;
+					overflow-y: auto;
 
-						.modalBodyBottom {
-							padding: 12px 0;
-							margin-top: auto;
+					.bPlTemplatesGallery {
+						gap: 12px;
+					}
+
+					.template {
+						min-width: 100%;
+						flex-basis: 100%;
+
+						.templatePreview {
+							aspect-ratio: 4 / 3;
 						}
+					}
+
+					.templatesNotFound {
+						font-size: 16px;
+					}
+
+					.modalBodyBottom {
+						padding: 12px 0;
+						margin-top: auto;
 					}
 				}
 			}

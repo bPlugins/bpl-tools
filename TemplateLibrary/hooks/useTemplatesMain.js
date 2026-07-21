@@ -9,7 +9,9 @@ const useTemplatesMain = (nonce, type, ajaxAction) => {
 	}, [nonce]);
 
 	useEffect(() => {
-		saveData({ type })
+		if ('favorites' !== type) {
+			saveData({ type })
+		}
 	}, [type]);
 
 	const [main, setMain] = useState([]);

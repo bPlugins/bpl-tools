@@ -77,6 +77,8 @@ const Sidebar = ({
 	];
 
 	const pickCategory = (name) => {
+		if (name === category) return; // already active — avoid clearing without a refetch
+
 		setCategory(name);
 		setPageNumber(1);
 		setTemplates([]);
@@ -93,46 +95,42 @@ const Sidebar = ({
 
 	const renderCount = (count) => (Number.isFinite(count) && count > 0 ? <span className='catCount'>{count}</span> : null);
 
-	return (
-		<aside className='modalBodySidebar'>
-			<div className='modalBodySidebarSearch'>
-				<div onClick={handleInputChange} className='searchIconWrapper'>{searchIcon}</div>
+	return <aside className='modalBodySidebar'>
+		<div className='sidebarSearch'>
+			<div onClick={handleInputChange} className='searchIconWrapper'>{searchIcon}</div>
 
-				<input type='text' placeholder='Search templates…' onChange={handleInputChange} />
-			</div>
+			<input type='text' placeholder={__('Search templates…')} onChange={handleInputChange} />
+		</div>
 
-			<div className='modalBodySidebarAccess'>
-				{accessFilters.map(({ name, label }) => (
+		<div className='sidebarAccess'>
+			{accessFilters.map(({ name, label }) => <button
+				key={name}
+				className={`is-${name} ${access === name ? 'active' : ''}`}
+				onClick={() => toggleAccess(name)}
+				aria-pressed={access === name}
+			>
+				<span className='tick' aria-hidden='true' />
+				<span>{label}</span>
+			</button>)}
+		</div>
+
+		<div className='sidebarHeading'>{__('Categories')}</div>
+
+		<div className='sidebarCategories'>
+			{mainLoading ? <div className='bPlPlaceCenter'>
+				<Spinner className='bPlSpinner' />
+			</div> :
+				categories.map(({ name, label }, i) => (
 					<button
-						key={name}
-						className={`is-${name} ${access === name ? 'active' : ''}`}
-						onClick={() => toggleAccess(name)}
-						aria-pressed={access === name}
+						key={i}
+						className={name === category ? 'active' : ''}
+						onClick={() => pickCategory(name)}
 					>
-						<span className='tick' aria-hidden='true' />
-						<span>{label}</span>
+						<span className='catLabel' dangerouslySetInnerHTML={{ __html: label }} />
+						{renderCount(name === 'all' ? allCount : catCount(name))}
 					</button>
 				))}
-			</div>
-
-			<div className='modalBodySidebarHeading'>Categories</div>
-
-			<div className='modalBodySidebarCategories'>
-				{mainLoading ? <div className='bPlPlaceCenter'>
-					<Spinner className='bPlSpinner' />
-				</div> :
-					categories.map(({ name, label }, i) => (
-						<button
-							key={i}
-							className={name === category ? 'active' : ''}
-							onClick={() => pickCategory(name)}
-						>
-							<span className='catLabel' dangerouslySetInnerHTML={{ __html: label }} />
-							{renderCount(name === 'all' ? allCount : catCount(name))}
-						</button>
-					))}
-			</div>
-		</aside>
-	);
+		</div>
+	</aside>
 };
 export default Sidebar;
