@@ -1,7 +1,7 @@
 /**
 	* MultiPlanPricing Component
 	*
-	* @props pricingInfo (required): {pluginId, planIds, licenses, button, featured, logo?, hero?, trustBadges?, faqs?} plan config (Object)
+	* @props pricingInfo (required): {pluginId, planIds, licenses, cycles?, button, featured, logo?, hero?, trustBadges?, faqs?} plan config (Object). cycles: which billing cycle tabs to show, e.g. ['monthly', 'annual', 'lifetime'] (default all)
 	* @props options (required): extra options forwarded to FS.Checkout.open() (Object)
 	*/
 
@@ -28,7 +28,7 @@ const formatPrice = (amount) => {
 
 const MultiPlanPricing = ({ pricingInfo, options }) => {
 	const {
-		pluginId, planIds, licenses, button, featured, logo,
+		pluginId, planIds, licenses, cycles: enabledCycles = ['monthly', 'annual', 'lifetime'], button, featured, logo,
 		hero: heroProp,
 		trustBadges: customTrustBadges,
 		faqs: customFaqs,
@@ -67,10 +67,13 @@ const MultiPlanPricing = ({ pricingInfo, options }) => {
 		const singlePrices = firstPlan?.pricing?.[0];
 
 		if (singlePrices && typeof singlePrices === 'object') {
-			const c = [];
-			if (singlePrices.monthly !== undefined) c.push({ name: 'monthly', label: __('Monthly') });
-			if (singlePrices.annual !== undefined) c.push({ name: 'annual', label: __('Yearly'), isDefault: true });
-			if (singlePrices.lifetime !== undefined) c.push({ name: 'lifetime', label: __('Lifetime') });
+			const all = [];
+			if (singlePrices.monthly !== undefined) all.push({ name: 'monthly', label: __('Monthly') });
+			if (singlePrices.annual !== undefined) all.push({ name: 'annual', label: __('Yearly'), isDefault: true });
+			if (singlePrices.lifetime !== undefined) all.push({ name: 'lifetime', label: __('Lifetime') });
+
+			const filtered = all.filter(cc => enabledCycles.includes(cc.name));
+			const c = filtered.length ? filtered : all; // fall back to all if config filters everything out
 			setCycles(c);
 			setCycle(c.find(cc => cc.isDefault)?.name || c[0]?.name || '');
 		} else {

@@ -15,13 +15,13 @@
 	* @props types (optional): Array of tab names to display - ['patterns', 'pages'] (Array)
 	*/
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { __ } from '@wordpress/i18n';
 import { Spinner, TabPanel } from '@wordpress/components';
 
 import Sidebar from './Sidebar';
 import Templates from './Templates';
-import { closeIcon } from '../../utils/icons';
+import { closeIcon, filterIcon } from '../../utils/icons';
 
 const Modal = (props) => {
 	const {
@@ -44,6 +44,10 @@ const Modal = (props) => {
 		perPage = 9,
 		accessCounts
 	} = props;
+
+	// Mobile-only: the sidebar collapses into an overlay behind a toggle bar
+	const [sidebarOpen, setSidebarOpen] = useState(false);
+	const closeSidebar = () => setSidebarOpen(false);
 
 	const contentRef = useRef();
 
@@ -72,7 +76,10 @@ const Modal = (props) => {
 	const initialTabName = types[0] || 'patterns';
 
 	useEffect(() => {
-		if (!show) return undefined;
+		if (!show) {
+			setSidebarOpen(false);
+			return undefined;
+		}
 
 		const onMouseDown = (e) => {
 			if (!contentRef.current?.contains(e.target)) {
@@ -109,6 +116,7 @@ const Modal = (props) => {
 							setCategory('all');
 							setPageNumber(1);
 							setTemplates([]);
+							closeSidebar();
 						}}
 					>{() => <></>}</TabPanel>
 				</div>}
@@ -119,7 +127,18 @@ const Modal = (props) => {
 			</header>
 
 			{show && <div className='modalBody'>
-				<Sidebar {...props} />
+				<button
+					className='sidebarToggle'
+					onClick={() => setSidebarOpen(prev => !prev)}
+					aria-expanded={sidebarOpen}
+				>
+					{filterIcon}
+					{__('Filters & Categories')}
+				</button>
+
+				<Sidebar {...props} {...{ sidebarOpen, closeSidebar }} />
+
+				{sidebarOpen && <div className='sidebarBackdrop' onClick={closeSidebar} />}
 
 				<Templates {...props} {...{ setShow, isPremium, perPage }}>
 					{'favorites' !== type && (templatesLoading || (perPage * pageNumber) < getFilteredTotal()) ?

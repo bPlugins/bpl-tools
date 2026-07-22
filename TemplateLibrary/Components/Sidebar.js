@@ -33,6 +33,7 @@ const Sidebar = ({
 	accessCounts,
 	setPageNumber,
 	setSearch,
+	sidebarOpen,
 }) => {
 	const handleSearch = useMemo(() => debounce((sq) => {
 		setSearch(sq);
@@ -95,7 +96,7 @@ const Sidebar = ({
 
 	const renderCount = (count) => (Number.isFinite(count) && count > 0 ? <span className='catCount'>{count}</span> : null);
 
-	return <aside className='modalBodySidebar'>
+	return <aside className={`modalBodySidebar ${sidebarOpen ? 'isOpen' : ''}`}>
 		<div className='sidebarSearch'>
 			<div onClick={handleInputChange} className='searchIconWrapper'>{searchIcon}</div>
 
