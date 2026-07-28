@@ -162,6 +162,10 @@
 		border: 1px solid rgba(97, 85, 245, 0.18);
 		flex-wrap: wrap;
 
+		>div:first-child {
+			flex: 1;
+		}
+
 		h3 {
 			color: var(--bpl-dashboard-title-color, $titleColor);
 			font-size: 16px;
@@ -174,6 +178,14 @@
 			font-size: 14px;
 			margin: 0;
 		}
+	}
+
+	.docsActions {
+		flex: 0 0 auto;
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		overflow: hidden;
 	}
 
 	.docsBtn {
@@ -191,5 +203,70 @@
 			color: #fff;
 			opacity: 0.92;
 		}
+	}
+
+	// Shown only when the active tab has a video — re-mounted on tab change so it slides in again,
+	// from the right when moving to a later tab and from the left when moving back
+	.videoBtn {
+		animation: bPlVideoBtnSlideInRight 0.3s cubic-bezier(0.4, 0, 0.2, 1) both;
+
+		&.fromLeft {
+			animation-name: bPlVideoBtnSlideInLeft;
+		}
+
+		border: none;
+		// border-radius: 50%;
+		// width: 39px;
+		height: 39px;
+		font-weight: bold;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		cursor: pointer;
+		gap: 8px;
+		z-index: 2;
+		color: var(--bpl-dashboard-primary-color, $primaryColor);
+		// background: var(--bpl-dashboard-primary-color, $primaryColor);
+		background: rgba(var(--bpl-dashboard-primary-color-rgb, #6155F5), 0.1);
+		// background: #CD201F;
+		border: 1px solid rgba(var(--bpl-dashboard-primary-color-rgb, #6155F5), 0.5);
+		transition: transform 0.2s ease;
+		padding: 0 10px;
+
+		svg {
+			width: 22px;
+			height: 22px;
+			// fill: #fff;
+			// fill: #ff0333;
+			margin-left: 2px;
+		}
+
+		// &:hover {
+		// 	transform: scale(1.05);
+		// }
+	}
+}
+
+@keyframes bPlVideoBtnSlideInRight {
+	from {
+		transform: translateX(120%);
+		opacity: 0;
+	}
+
+	to {
+		transform: translateX(0);
+		opacity: 1;
+	}
+}
+
+@keyframes bPlVideoBtnSlideInLeft {
+	from {
+		transform: translateX(-120%);
+		opacity: 0;
+	}
+
+	to {
+		transform: translateX(0);
+		opacity: 1;
 	}
 }

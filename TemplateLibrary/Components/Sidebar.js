@@ -121,16 +121,18 @@ const Sidebar = ({
 			{mainLoading ? <div className='bPlPlaceCenter'>
 				<Spinner className='bPlSpinner' />
 			</div> :
-				categories.map(({ name, label }, i) => (
-					<button
+				categories.map(({ name, label }, i) => {
+					const count = renderCount(name === 'all' ? allCount : catCount(name));
+
+					return count && <button
 						key={i}
 						className={name === category ? 'active' : ''}
 						onClick={() => pickCategory(name)}
 					>
 						<span className='catLabel' dangerouslySetInnerHTML={{ __html: label }} />
-						{renderCount(name === 'all' ? allCount : catCount(name))}
+						{count}
 					</button>
-				))}
+				})}
 		</div>
 	</aside>
 };

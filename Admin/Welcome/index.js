@@ -23,7 +23,7 @@ import Info from './Info';
  * @param {object}		[props.startButton]				- {label, url}
  * @param {string[]}	[props.keywords]				- Chip labels in the hero card (e.g. ['Grid', 'Masonry'])
  * @param {string}		[props.keywordsLabel]			- Label before keyword chips (e.g. 'Layouts')
- * @param {object}		[props.gettingStarted]			- {tabs: [{key, label, icon?, steps}]} — omit to hide
+ * @param {object}		[props.gettingStarted]			- {tabs: [{key, label, icon?, video?, isYoutube?, videoLabel?, steps}]} — omit to hide
  * @param {object[]}	[props.changelogs]				- [{version, type, list}] — omit to hide Changelog panel
  * @param {number}		[props.changelogsLimit]			- Max entries shown initially (default 5)
  * @param {string}		[props.changelogsReadMoreLabel]	- "Read more" button text; omit to hide

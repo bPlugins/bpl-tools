@@ -37,7 +37,7 @@ import { welcomeInfo } from '../utils/data';
 | `startButton` | object | — | `{label, url}` — primary CTA in the hero card |
 | `keywords` | string[] | — | Chip labels shown below the tagline (e.g. `['Grid', 'Masonry']`) |
 | `keywordsLabel` | string | — | Label before the chips (e.g. `'Layouts'`) |
-| `gettingStarted` | object | — | `{tabs: [...]}` — omit to hide the GettingStarted panel |
+| `gettingStarted` | object | — | `{tabs: [...]}` — omit to hide the GettingStarted panel. A tab may carry `video`/`isYoutube`/`videoLabel` for a per-tab walkthrough popup |
 | `changelogs` | object[] | — | `[{version, type, list}]` — omit to hide the Changelog panel |
 | `changelogsLimit` | number | — | How many changelog entries to show initially (default 5) |
 | `changelogsReadMoreLabel` | string | — | "Read more" button label; omit to hide the button |

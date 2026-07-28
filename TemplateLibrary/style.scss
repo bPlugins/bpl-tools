@@ -628,33 +628,34 @@ $orangeBG: #d97706;
 			align-items: center;
 			gap: 8px;
 
-			.templatePreviewBtn {
-				display: inline-flex;
-				align-items: center;
-				gap: 5px;
-				padding: 5px 12px;
-				font-size: 12px;
-				font-weight: 600;
-				text-decoration: none;
-				color: #fff;
-				background: linear-gradient(135deg, $primaryColor, $primaryDark);
-				border-radius: 5px;
-				box-shadow: 0 2px 8px rgba(15, 23, 41, 0.18);
-				opacity: 0;
-				cursor: pointer;
-				transition: opacity 0.15s ease, filter 0.15s ease, transform 0.15s ease;
+			// .templatePreviewBtn {
+			// 	display: inline-flex;
+			// 	align-items: center;
+			// 	gap: 5px;
+			// 	padding: 5px 12px;
+			// 	font-size: 12px;
+			// 	font-weight: 600;
+			// 	text-decoration: none;
+			// 	color: #fff;
+			// 	background: linear-gradient(135deg, $primaryColor, $primaryDark);
+			// 	border-radius: 5px;
+			// 	box-shadow: 0 2px 8px rgba(15, 23, 41, 0.18);
+			// 	opacity: 0;
+			// 	cursor: pointer;
+			// 	transition: opacity 0.15s ease, filter 0.15s ease, transform 0.15s ease;
 
-				svg {
-					width: 1em;
-					height: 1em;
-					fill: currentColor;
-				}
+			// 	svg {
+			// 		width: 1em;
+			// 		height: 1em;
+			// 		fill: currentColor;
+			// 	}
 
-				&:hover {
-					filter: brightness(1.1)
-				}
-			}
+			// 	&:hover {
+			// 		filter: brightness(1.1)
+			// 	}
+			// }
 
+			.templatePreviewBtn,
 			.templateFavoriteBtn {
 				display: inline-flex;
 				align-items: center;
@@ -685,6 +686,15 @@ $orangeBG: #d97706;
 				&.isFav {
 					opacity: 1;
 					color: #ef4444;
+				}
+			}
+
+			.templatePreviewBtn {
+				color: $primaryColor;
+
+				&:hover {
+					opacity: 1;
+					color: $primaryDark;
 				}
 			}
 		}

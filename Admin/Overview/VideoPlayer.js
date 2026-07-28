@@ -9,14 +9,15 @@
 	* @props loop (optional): false (Boolean)
 	* @props poster (optional): null - poster image URL (String)
 	* @props isYoutube (optional): false (Boolean)
+	* @props title (optional): 'Video' - iframe title, used for YouTube sources (String)
 	*/
 
 import { useEffect, useRef, useState } from 'react';
 
-import './VideoPlayer.scss';
 import { playFillIcon, pauseFillIcon, playPauseIcon, playIcon, volumeMutedIcon, volumeOnIcon, fullscreenIcon } from '../utils/icons';
+import { getYoutubeEmbedSrc } from '../utils/video';
 
-const VideoPlayer = ({ src, width = '100%', height = 'auto', autoPlay = false, muted = false, loop = false, poster = null, isYoutube = false, }) => {
+const VideoPlayer = ({ src, width = '100%', height = 'auto', autoPlay = false, muted = false, loop = false, poster = null, isYoutube = false, title = 'Video' }) => {
 	const videoRef = useRef(null)
 	const previewVideoRef = useRef(null)
 	const progressBarRef = useRef(null)
@@ -59,11 +60,17 @@ const VideoPlayer = ({ src, width = '100%', height = 'auto', autoPlay = false, m
 			setIsPlaying(false)
 		}
 
+		// keep the overlay in sync when playback is driven by autoPlay or native controls
+		const handlePlay = () => setIsPlaying(true)
+		const handlePause = () => setIsPlaying(false)
+
 		video.addEventListener('loadstart', handleLoadStart)
 		video.addEventListener('canplay', handleCanPlay)
 		video.addEventListener('loadedmetadata', handleLoadedMetadata)
 		video.addEventListener('timeupdate', handleTimeUpdate)
 		video.addEventListener('ended', handleEnded)
+		video.addEventListener('play', handlePlay)
+		video.addEventListener('pause', handlePause)
 
 		return () => {
 			video.removeEventListener('loadstart', handleLoadStart)
@@ -71,6 +78,8 @@ const VideoPlayer = ({ src, width = '100%', height = 'auto', autoPlay = false, m
 			video.removeEventListener('loadedmetadata', handleLoadedMetadata)
 			video.removeEventListener('timeupdate', handleTimeUpdate)
 			video.removeEventListener('ended', handleEnded)
+			video.removeEventListener('play', handlePlay)
+			video.removeEventListener('pause', handlePause)
 		}
 	}, [isDragging, src])
 
@@ -218,32 +227,6 @@ const VideoPlayer = ({ src, width = '100%', height = 'auto', autoPlay = false, m
 		}
 	}, [isDragging])
 
-	function getYouTubeEmbedSrc(youtubeUrl) {
-		// Regular expressions to match different YouTube URL formats
-		const regExpRegular = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\\&v=)([^#\\&\\?]*).*/;
-		const regExpShort = /youtu.be\/([^#\\&\\?]+)/;
-
-		let videoId = '';
-
-		// Try to match regular YouTube URLs
-		const match = youtubeUrl.match(regExpRegular);
-		if (match && match[2].length === 11) {
-			videoId = match[2];
-		} else {
-			// Try to match short YouTube URLs
-			const shortMatch = youtubeUrl.match(regExpShort);
-			if (shortMatch && shortMatch[1].length === 11) {
-				videoId = shortMatch[1];
-			} else {
-				// If no match found, return null or throw an error
-				return null;
-			}
-		}
-
-		// Return the embed src URL
-		return `https://www.youtube.com/embed/${videoId}`;
-	}
-
 	return <div
 		ref={containerRef}
 		className="bPlVideoPlayer"
@@ -252,11 +235,12 @@ const VideoPlayer = ({ src, width = '100%', height = 'auto', autoPlay = false, m
 		onMouseLeave={() => setShowControls(!isPlaying)}
 	>
 		{isYoutube ? <div className='bPlVideoPlayerYoutube'>
-			<iframe src={getYouTubeEmbedSrc(src)}
+			<iframe src={getYoutubeEmbedSrc(src, { autoplay: autoPlay })}
 				frameBorder="0"
+				allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 				allowFullScreen
 				style={{ width, height }}
-				title="YouTube Video" />
+				title={title} />
 		</div> : <>
 			<video
 				ref={videoRef}
@@ -307,11 +291,7 @@ const VideoPlayer = ({ src, width = '100%', height = 'auto', autoPlay = false, m
 			{/* Video Controls */}
 			<div className={`video-controls ${showControls ? 'visible' : ''}`}>
 				<button className="control-btn play-pause-btn" onClick={togglePlay}>
-					{isPlaying ? (
-						{playPauseIcon}
-					) : (
-						{playIcon}
-					)}
+					{isPlaying ? playPauseIcon : playIcon}
 				</button>
 
 				<div className="time-display">
@@ -368,11 +348,7 @@ const VideoPlayer = ({ src, width = '100%', height = 'auto', autoPlay = false, m
 
 				<div className="volume-container">
 					<button className="control-btn volume-btn" onClick={toggleMute}>
-						{isMuted || volume === 0 ? (
-							{volumeMutedIcon}
-						) : (
-							{volumeOnIcon}
-						)}
+						{isMuted || volume === 0 ? volumeMutedIcon : volumeOnIcon}
 					</button>
 					<div className="volume-slider">
 						<div

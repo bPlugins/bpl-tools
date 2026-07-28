@@ -17,17 +17,10 @@ import { useState } from 'react';
 import { withSelect } from '@wordpress/data';
 
 import Button from '../../../Components/Button/Button';
+import VideoPlayer from '../../Overview/VideoPlayer';
 import { closeIcon, playIcon, crownIcon, plusIcon, gridIcon, arrowRightIcon } from '../../utils/icons';
 
 import './style.scss';
-
-const getYoutubeEmbedSrc = (url) => {
-	const match = url.match(/^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/);
-	const short = url.match(/youtu\.be\/([^#&?]+)/);
-	const id = (match && match[2]?.length === 11) ? match[2] : (short && short[1]?.length === 11 ? short[1] : '');
-	return id ? `https://www.youtube.com/embed/${id}?autoplay=1&rel=0&modestbranding=1` : url;
-};
-
 
 const Overview = (props) => {
 	const { name, version, description, isPremium, media, pages, startButton, currentUser, keywords, keywordsLabel } = props;
@@ -107,10 +100,13 @@ const Overview = (props) => {
 					{closeIcon}
 				</button>
 
-				{isYoutube
-					? <iframe key={video} src={getYoutubeEmbedSrc(video)} title='Product walkthrough' frameBorder={0} allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share' allowFullScreen />
-					: <video key={video} src={video} autoPlay controls playsInline />
-				}
+				<VideoPlayer
+					key={video}
+					src={video}
+					isYoutube={isYoutube}
+					autoPlay={true}
+					title={`${name} walkthrough`}
+				/>
 			</div>
 
 			<div className='bPlVideoModalOverlay' onClick={() => setShowVideo(false)} />
