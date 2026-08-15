@@ -67,6 +67,8 @@ const Overview = (props) => {
 
 						{startButton?.url && startButton?.label && <Button href={`${site?.url}/${startButton.url}`} target='_blank' rel='noopener noreferrer'>{startButton.label}</Button>}
 
+						{pages?.docs && <Button href={pages.docs} target='_blank' rel='noopener noreferrer'>Read Documentation</Button>}
+
 						{pages?.landing && <Button href={pages.landing} target='_blank' rel='noopener noreferrer'>Learn More</Button>}
 					</div>
 				</div>

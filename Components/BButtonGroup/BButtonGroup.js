@@ -25,7 +25,7 @@ import { useEffect, useRef, useState } from 'react';
 import { primaryColor } from '../../utils/data';
 
 const BButtonGroup = (props) => {
-	const { className = '', options = [], label = 'Button Group', value, onChange = () => { }, borderRadius = '30px', height, paddingX = '8px', paddingY = '4px', fontSize = '12px', fontWeight = 400, activeBg, activeColor = '#fff', inactiveColor = '#000', hoverBg, hoverColor, style, } = props;
+	const { className = '', options = [], label = 'Button Group', value, defaultValue = '', onChange = () => { }, borderRadius = '30px', height, paddingX = '8px', paddingY = '4px', fontSize = '12px', fontWeight = 400, activeBg, activeColor = '#fff', inactiveColor = '#000', hoverBg, hoverColor, style, } = props;
 	const [activeButton, setActiveButton] = useState(0);
 
 	const btnOptions = options.length > 0 ? options : [1, 2];
@@ -60,8 +60,11 @@ const BButtonGroup = (props) => {
 	}, [activeButton, options, value]);
 
 	const handleSetValue = (e, option, i) => {
-		setActiveButton(i);
-		onChange(option.value);
+		const newValue = value === option.value ? defaultValue : option.value;
+		const newIndex = btnOptions.findIndex(v => v.value === newValue);
+
+		setActiveButton(newIndex > -1 ? newIndex : i);
+		onChange(newValue);
 	}
 
 	return <div className={className} style={{ marginBottom: '10px', ...style }}>

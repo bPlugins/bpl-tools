@@ -3,6 +3,8 @@
  * 
  * @props className (optional): '' (String)
  * @props label (optional): 'NEW' (String)
+ * @props icon (optional): null (Element)
+ * @props size (optional): 'small' | 'regular' | 'medium' (String)
  * @props color (optional): '#ff7a00' (String)
  * @props background (optional): '#ff7a0020' (String)
  * @props borderColor (optional): '#ff7a0030' (String)

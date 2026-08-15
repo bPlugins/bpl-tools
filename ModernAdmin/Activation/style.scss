@@ -1,4 +1,4 @@
-@import '../__variables.scss';
+@use '../__variables.scss' as *;
 
 .bPlDashboardActivation {
 	max-width: 1200px;

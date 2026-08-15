@@ -1,4 +1,4 @@
-@import '../__variables.scss';
+@use '../__variables.scss' as *;
 
 $primary: #ff6b6b;
 $black: #000;

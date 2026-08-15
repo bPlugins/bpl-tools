@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 
 import VideoPlayer from '../../Overview/VideoPlayer';
 import { closeIcon } from '../../utils/icons';
@@ -10,9 +10,10 @@ import './style.scss';
  * Tabbed getting-started guide. Renders tab buttons and a sliding step list.
  *
  * @param {object}		props
- * @param {object[]}	props.tabs		- Tab definitions: [{key, label, icon?, video?, isYoutube?, steps: [{num, title, body, link?: {url, label}}]}]
+ * @param {object[]}	props.tabs		- Tab definitions: [{key, label, icon?, video?, isYoutube?, docs?, steps: [{num, title, body, link?: {url, label}}]}]
  * `body` is rendered as HTML via dangerouslySetInnerHTML.
  * A tab with `video` gets a "Watch Video" button that slides in next to the docs link and opens the video in a modal.
+ * A tab with `docs` overrides the bottom documentation link with its own tab-specific URL and heading.
  * @param {object}		[props.pages]	- {docs?} — URL for the "Open Documentation" link at the bottom
  */
 const GettingStarted = ({ tabs = [], pages }) => {
@@ -22,10 +23,10 @@ const GettingStarted = ({ tabs = [], pages }) => {
 
 	if (!tabs?.length) return null;
 
-	const docsUrl = pages?.docs || 'https://bplugins.com/docs/';
-
 	const activeTab = tabs[active] || {};
-	const { video } = activeTab;
+	const { video, docs: tabDocs, label } = activeTab;
+
+	const docsUrl = tabDocs || pages?.docs || 'https://bplugins.com/docs/';
 
 	const changeTab = index => {
 		if (index === active) return;
@@ -80,12 +81,12 @@ const GettingStarted = ({ tabs = [], pages }) => {
 
 		<div className='docs'>
 			<div>
-				<h3>{__('Read the Full Documentation')}</h3>
-				<p>{__('Browse guides, settings reference, and examples for every feature.')}</p>
+				<h3>{tabDocs ? sprintf(__('Read the %s Documentation'), label) : __('Read the Full Documentation')}</h3>
+				{!tabDocs && <p>{__('Browse guides, settings reference, and examples for every feature.')}</p>}
 			</div>
 
 			<div className='docsActions'>
-				<a className='docsBtn' href={docsUrl} target='_blank' rel='noopener noreferrer'>{__('Open Documentation →')}</a>
+				<a className='docsBtn' href={docsUrl} target='_blank' rel='noopener noreferrer'>{__('Read Documentation →')}</a>
 
 				{video && <button
 					key={activeTab.key}

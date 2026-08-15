@@ -22,6 +22,7 @@ If you are a user of any bPlugins block (Advanced Post Block, B Blocks, Content 
 - [External Requests & Why They Are Made](#external-requests--why-they-are-made)
 - [Privacy](#privacy)
 - [Third-Party Libraries](#third-party-libraries)
+- [Changelog](#changelog)
 - [Contributing](#contributing)
 - [Support](#support)
 
@@ -79,11 +80,13 @@ bpl-tools/
 ├── Components/		# Gutenberg editor controls (Dimension, Device, ColorControl, Typography, BoxControl, Badge, ...)
 ├── ProControls/	# Premium-only controls (gated behind license checks)
 ├── LagacyAdmin/	# Backwards-compatible older dashboard (do not use for new plugins — kept for old releases)
+├── TemplateLibrary/# Template picker shown inside the editor and the dashboard
 ├── hooks/			# Reusable React hooks
 ├── utils/			# Pure helpers (icons, formatters, data transforms)
 ├── includes/		# PHP helpers reserved for future shared logic
 ├── package.json
 ├── webpack.config.js
+├── CHANGELOG.md
 └── LICENSE.md
 ```
 
@@ -288,6 +291,26 @@ Each library's own license file is preserved inside `node_modules/` after `npm i
 
 ---
 
+## Changelog
+
+Changes are tracked **by date** in [CHANGELOG.md](./CHANGELOG.md), not by release number. Because consumer plugins import this library by relative path from a sibling folder, there is nothing to pin a version against — each plugin builds against whatever checkout sits next to it. The useful question is therefore *when* a component or prop landed: look up its date in the changelog, and if your clone predates it, pull.
+
+Recent highlights:
+
+| Date | Change |
+|---|---|
+| 2026-07-29 | `defaultValue` prop on `BtnGroup` and `BButtonGroup` |
+| 2026-07-15 | Template Library (`TemplateLibrary/`) |
+| 2026-06-24 | Multi-plan pricing on the dashboard |
+| 2026-06-10 | Generated CSS is sanitised before injection |
+| 2026-05-22 | Rebuilt modern dashboard (`ModernAdmin/`) |
+| 2026-05-04 | `PremiumPanel` and `PremiumBadge` |
+| 2026-04-28 | `Notice` and `Badge` components |
+| 2026-02-24 | `HelpTooltip` component |
+| 2025-09-06 | Lucide icon library |
+
+---
+
 ## Contributing
 
 Issues and pull requests are welcome. Because this library is consumed by many plugins simultaneously, please keep the following in mind:
@@ -296,6 +319,7 @@ Issues and pull requests are welcome. Because this library is consumed by many p
 2. **No new dependencies without discussion.** Every byte added here ships inside every consumer plugin.
 3. **Keep components presentational.** Business logic belongs in the consumer plugin, not in `bpl-tools`.
 4. **Run `npm run lint` before submitting.**
+5. **Add a dated entry to [CHANGELOG.md](./CHANGELOG.md)** at the top, under today's date. Consumer plugins have no version to pin to, so the date is the only way another developer can tell whether their checkout already has your change.
 
 ---
 

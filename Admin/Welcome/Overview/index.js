@@ -14,11 +14,12 @@
 	*/
 
 import { useState } from 'react';
+import { __ } from '@wordpress/i18n';
 import { withSelect } from '@wordpress/data';
 
 import Button from '../../../Components/Button/Button';
 import VideoPlayer from '../../Overview/VideoPlayer';
-import { closeIcon, playIcon, crownIcon, plusIcon, gridIcon, arrowRightIcon } from '../../utils/icons';
+import { closeIcon, playIcon, crownIcon, plusIcon, gridIcon, arrowRightIcon, questionIcon } from '../../utils/icons';
 
 import './style.scss';
 
@@ -75,6 +76,16 @@ const Overview = (props) => {
 			>
 				{plusIcon}
 				{startButton.label}
+			</Button>}
+
+			{pages?.docs && <Button
+				className='secondaryBtn'
+				href={pages.docs}
+				target='_blank'
+				rel='noopener noreferrer'
+			>
+				{questionIcon}
+				{__('Read Documentation')}
 			</Button>}
 
 			{pages?.landing && <Button
