@@ -58,9 +58,10 @@
 
 		.scrollIcon,
 		.sideScrollIcon,
-		.dashicons {
-			width: 14px;
-			height: 14px;
+		.dashicons,
+		svg {
+			width: 14px !important;
+			height: 14px !important;
 			font-size: 14px;
 		}
 	}
