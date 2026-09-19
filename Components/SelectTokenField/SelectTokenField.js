@@ -1,16 +1,18 @@
-/**
-	* SelectTokenField Component
-	*
-	* @props multiple (optional): true (Boolean)
-	* @props defaultValue (optional): Default selected value(s) (String|Array)
-	* @props value (required): Selected value(s) (String|Array)
-	* @props onChange (optional): (Function)
-	* @props options (optional): [] Available options (Array)
-	*/
-
 import { useEffect, useRef, useState } from 'react';
 import './style.scss';
 
+/**
+ * SelectTokenField Component
+ * @param {Object} props
+ * @param {boolean} props.multiple - Enable multiple selection mode. Default: false
+ * @param {string|string[]} props.defaultValue - Initial selected value(s). For multiple mode, use array of strings
+ * @param {string|string[]} props.value - Controlled value(s). Takes precedence over defaultValue
+ * @param {Function} props.onChange - Callback function when selection changes. Receives selected value(s)
+ * @param {Array<{value: string, label: string}>} props.options - Array of options to display
+ *		Each option should have:
+ *		- value: unique identifier
+ *		- label: display text
+ */
 const SelectTokenField = ({ multiple = true, defaultValue, value, onChange = () => { }, options = [] }) => {
 	const [inputVal, setInputVal] = useState('');
 	const [toggle, setToggle] = useState(false);
@@ -20,7 +22,11 @@ const SelectTokenField = ({ multiple = true, defaultValue, value, onChange = () 
 
 	const activeItem = options && options.find((option) => option.value === defaultWithValue);
 
-	const activeMultipleItem = options && options.filter((option) => defaultWithValue?.includes(option.value));
+	// Multiple mode always works off an array: spreading a bare string would scatter
+	// it into one entry per character, and `includes` on one would match substrings.
+	const selectedValues = Array.isArray(defaultWithValue) ? defaultWithValue : defaultWithValue ? [defaultWithValue] : [];
+
+	const activeMultipleItem = options && options.filter((option) => selectedValues.includes(option.value));
 
 	useEffect(() => {
 		const handle = (e) => {
@@ -85,7 +91,7 @@ const SelectTokenField = ({ multiple = true, defaultValue, value, onChange = () 
 									}`}
 								style={{ cursor: 'text' }}
 							>
-								{!toggle && !defaultWithValue?.length > 0 && (
+								{!toggle && !selectedValues.length && (
 									<div className='bPl-empty-token-field'>
 										<span>Select an option</span>
 									</div>
@@ -96,7 +102,7 @@ const SelectTokenField = ({ multiple = true, defaultValue, value, onChange = () 
 											{item.label}
 										</span>
 
-										<span onClick={() => onChange(defaultWithValue?.filter((val) => val !== item.value))} className='bPl-xMark-icon'>
+										<span onClick={() => onChange(selectedValues.filter((val) => val !== item.value))} className='bPl-xMark-icon'>
 											<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 384 512' height='14px' >
 												<path d='M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z' />
 											</svg>
@@ -125,16 +131,12 @@ const SelectTokenField = ({ multiple = true, defaultValue, value, onChange = () 
 										}`}
 									onClick={() => {
 										if (multiple) {
-											if (defaultWithValue) {
-												onChange([...defaultWithValue, option.value]);
-											} else {
-												onChange([option.value]);
-											}
-											if (defaultWithValue?.includes(option.value)) {
-												setToggle(true);
-											} else {
-												setToggle(false);
-											}
+											// An already selected option is greyed out in the list, so
+											// clicking it keeps the dropdown open and changes nothing.
+											const isSelected = selectedValues.includes(option.value);
+
+											!isSelected && onChange([...selectedValues, option.value]);
+											setToggle(isSelected);
 										} else {
 											onChange(option.value);
 											setToggle(false);

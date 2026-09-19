@@ -19,10 +19,17 @@ import CustomCSS from './CustomCSS';
 import Responsive from './Responsive';
 import Transform from './Transform';
 import Visibility from './Visibility';
+import AdvMotionEffects from '../Components/AdvMotionEffects/AdvMotionEffects';
+import AdvFloating from '../Components/AdvFloating/AdvFloating';
+import AdvPosition from '../Components/AdvPosition/AdvPosition';
+import AdvertiseCard from '../ProControls/AdvertiseCard';
 
 const defEnabled = {
 	dimension: ['padding', 'margin', 'width'],
 	// dimension: ['padding', 'margin', 'width', 'minWidth', 'maxWidth', 'height', 'minHeight', 'maxHeight'],
+	floating: true,
+	motion: true,
+	position: true,
 	transform: true,
 	background: ['normal', 'hover', 'overlay'],
 	borderShadow: ['normal', 'hover', 'border', 'shadow'],
@@ -34,7 +41,7 @@ const defEnabled = {
 }
 
 const Advanced = ({ advanced, onChange, enabled = defEnabled, id = null, isPremium = false }) => {
-	const { dimension = {}, transform = {}, background = {}, borderShadow = {}, mask = {}, animation = {}, visibility = {}, responsive = {}, css = '' } = advanced || {};
+	const { dimension = {}, transform = {}, background = {}, borderShadow = {}, mask = {}, animation = {}, visibility = {}, responsive = {}, position = {}, floating = {}, motion = {}, css = '' } = advanced || {};
 
 	const isEnabled = (which) => Object.prototype.hasOwnProperty.call(enabled, which);
 
@@ -44,6 +51,19 @@ const Advanced = ({ advanced, onChange, enabled = defEnabled, id = null, isPremi
 		</PanelBody>
 
 		{isEnabled('dimension') && <Dimension dimension={dimension} onChange={val => onChange(updateData(advanced, val, 'dimension'))} enabled={enabled.dimension} />}
+
+		{
+			isEnabled('motion') && isPremium && <AdvMotionEffects motion={motion} onChange={val => onChange(updateData(advanced, val, 'motion'))} />
+		}
+
+		{
+			isEnabled('floating') && isPremium && <AdvFloating floating={floating} onChange={val => onChange(updateData(advanced, val, 'floating'))} />
+		}
+
+		{
+			isEnabled('position') && isPremium
+			&& <AdvPosition position={position} onChange={val => onChange(updateData(advanced, val, 'position'))} />
+		}
 
 		{(isEnabled('transform') && isPremium) && <Transform transform={transform} onChange={val => onChange(updateData(advanced, val, 'transform'))} />}
 

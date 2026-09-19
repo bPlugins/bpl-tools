@@ -1,6 +1,5 @@
 $primaryColor: #146EF5;
 
-
 .bPl-token-field-main-wrapper .bPl-single-token-field-wrapper {
 	width: fit-content;
 	position: relative;
@@ -98,13 +97,13 @@ $primaryColor: #146EF5;
 	.bPl-token-multiple-filed-wrapper {
 		.bPl-token-multiple-filed-wrapper-item {
 			display: flex;
+			flex-wrap: wrap;
 			align-items: center;
 			gap: 5px;
 			border: 1px solid #ccc;
-			padding: 0px 10px;
+			padding: 4px 10px;
 			position: relative;
-			height: 30px;
-			overflow: hidden;
+			// min-height: 30px;
 
 			&:focus {
 				border-color: $primaryColor;
@@ -114,6 +113,11 @@ $primaryColor: #146EF5;
 				border: none;
 				outline: none;
 				min-width: 10px;
+				// Takes up whatever is left of the current row, and drops to the next
+				// one once the tokens leave it less than 60px.
+				flex: 1 1 60px;
+				background: transparent;
+				min-height: 20px !important;
 
 				&:focus {
 					border: none !important;

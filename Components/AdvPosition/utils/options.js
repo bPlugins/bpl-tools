@@ -1,0 +1,1 @@
+export const positionType = [{ label: 'Default', value: '' }, { label: 'Absolute', value: 'absolute' }, { label: 'Fixed', value: 'fixed' }, { label: 'Relative', value: 'relative' }];
