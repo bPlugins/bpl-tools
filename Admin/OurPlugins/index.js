@@ -11,6 +11,7 @@ import { withSelect } from '@wordpress/data';
 import apiFetch from '@wordpress/api-fetch';
 import { __ } from '@wordpress/i18n';
 
+import { sanitizeHTML } from '../../utils/common';
 import Button from '../../Components/Button/Button';
 import './style.scss';
 
@@ -48,7 +49,9 @@ const getDisplayName = (name) => {
 	return decoded.split(/\s*[–\-—]\s*/)[0].trim();
 };
 
-const stripTags = (s) => (s || '').replace(/<[^>]+>/g, '');
+// A regex tag stripper is single-pass, so overlapping tags survive it
+// (`<<a>img src=x onerror=...>` leaves a live <img> behind). This markup
+// comes from wordpress.org, so it is parsed and filtered properly instead.
 
 const StarRow = ({ rating = 0 }) => {
 	const stars = Math.round(rating / 20);
@@ -119,7 +122,7 @@ const PluginCard = ({ plugin, path, initStatus }) => {
 			<img className='ourPlugIcon' src={icons?.['1x'] || icons?.['2x'] || ''} alt={name} />
 
 			<div className='ourPlugCardId'>
-				<h3 dangerouslySetInnerHTML={{ __html: getDisplayName(name) }} />
+				<h3 dangerouslySetInnerHTML={{ __html: sanitizeHTML(getDisplayName(name)) }} />
 				{version && <span className='ourPlugVer'>v{version}</span>}
 			</div>
 
@@ -131,7 +134,7 @@ const PluginCard = ({ plugin, path, initStatus }) => {
 			</span>}
 		</div>
 
-		<p className='ourPlugDesc' dangerouslySetInnerHTML={{ __html: stripTags(short_description) }} />
+		<p className='ourPlugDesc' dangerouslySetInnerHTML={{ __html: sanitizeHTML(short_description) }} />
 
 		<div className='ourPlugStats'>
 			<span className='ourPlugStat'>

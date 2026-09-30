@@ -241,7 +241,7 @@ const FeatureCompare = ({ plans: planNames = ['free', 'pro'], freemius, hero: he
 								const isProOnly = proPlan && feature.plans.length === 1 && feature.plans[0] === proPlan.id;
 								return <tr key={i} className={isProOnly ? 'isProOnly' : ''}>
 									<td>
-										<span dangerouslySetInnerHTML={{ __html: feature.title }} />
+										<span>{feature.title}</span>
 										{isProOnly && <span className='fcRowTag'>{__('Pro only')}</span>}
 									</td>
 									{visiblePlans.map(plan => {

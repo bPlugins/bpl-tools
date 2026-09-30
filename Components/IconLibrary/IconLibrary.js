@@ -13,13 +13,38 @@ import { PanelRow, Flex, Button } from '@wordpress/components';
 
 import './IconLibrary.scss';
 import Label from '../Label/Label';
-import bootstrapIcons from './icons/bootstrap.json';
-import fontAwesomeIcons from './icons/font-awesome.json';
-import lucidIcons from './icons/lucidicons.json';
+import Loading from '../Loading/Loading';
 import { debounce } from '../../utils/functions';
 import { LogoSmall, MagnifyingGlass, XMarkIcon } from './utils/icons';
 
 const prefix = 'bPlIconLibrary';
+
+// The three icon sets are ~3.2MB of JSON. Importing them statically put all of
+// it in the consuming plugin's main editor bundle, where it was downloaded on
+// every editor page load even though the picker is only opened occasionally.
+// They are fetched with import() on first open instead, so webpack emits them
+// as separate chunks. Resolved once per page, then reused by every instance.
+let iconSetsPromise = null;
+
+const loadIconSets = () => {
+	if (!iconSetsPromise) {
+		iconSetsPromise = Promise.all([
+			import(/* webpackChunkName: "bpl-icons-fontawesome" */ './icons/font-awesome.json'),
+			import(/* webpackChunkName: "bpl-icons-bootstrap" */ './icons/bootstrap.json'),
+			import(/* webpackChunkName: "bpl-icons-lucid" */ './icons/lucidicons.json'),
+		]).then(([fontAwesome, bootstrap, lucid]) => ({
+			fontawesome: fontAwesome.default || fontAwesome,
+			bootstrap: bootstrap.default || bootstrap,
+			lucid: lucid.default || lucid,
+		})).catch((err) => {
+			// Let a failed load be retried the next time the modal is opened.
+			iconSetsPromise = null;
+			throw err;
+		});
+	}
+
+	return iconSetsPromise;
+};
 
 const IconLibrary = ({ className = '', label = __('Icon Library'), value, onChange = () => { } }) => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -28,6 +53,8 @@ const IconLibrary = ({ className = '', label = __('Icon Library'), value, onChan
 	const [searchedIcons, setSearchedIcons] = useState({});
 	const [selectIcon, setSelectIcon] = useState(value || '');
 	const [currentPage, setCurrentPage] = useState(1);
+	const [iconSets, setIconSets] = useState(null);
+	const [loadError, setLoadError] = useState(false);
 
 	const iconRef = useRef(null);
 	const scrollRef = useRef(null);
@@ -39,28 +66,56 @@ const IconLibrary = ({ className = '', label = __('Icon Library'), value, onChan
 		{ label: 'Lucid Icons', value: 'lucid' },
 	];
 
-	const library = {
+	useEffect(() => {
+		if (!isOpen || iconSets) {
+			return;
+		}
+
+		let cancelled = false;
+
+		setLoadError(false);
+		loadIconSets().then((sets) => {
+			if (!cancelled) {
+				setIconSets(sets);
+			}
+		}).catch(() => {
+			if (!cancelled) {
+				setLoadError(true);
+			}
+		});
+
+		return () => {
+			cancelled = true;
+		};
+	}, [isOpen]);
+
+	const library = useMemo(() => iconSets ? {
 		fontawesome: {
 			label: 'Font Awesome',
 			styles: ['regular', 'solid', 'brands'],
-			icons: fontAwesomeIcons,
+			icons: iconSets.fontawesome,
 		},
 		bootstrap: {
 			label: 'Bootstrap',
 			styles: ['regular', 'fill'],
-			icons: bootstrapIcons,
+			icons: iconSets.bootstrap,
 		},
 		lucid: {
 			label: 'Lucid Icons',
 			styles: ['regular'],
-			icons: lucidIcons,
+			icons: iconSets.lucid,
 		},
-	};
+	} : {}, [iconSets]);
 
-	const icons =
-		iconLibrary !== 'all'
+	const icons = useMemo(() => {
+		if (!iconSets) {
+			return { label: 'All Icons', icons: [] };
+		}
+
+		return iconLibrary !== 'all'
 			? library[iconLibrary]
-			: { label: 'All Icons', icons: [...fontAwesomeIcons, ...bootstrapIcons, ...lucidIcons] };
+			: { label: 'All Icons', icons: [...iconSets.fontawesome, ...iconSets.bootstrap, ...iconSets.lucid] };
+	}, [iconSets, iconLibrary, library]);
 
 	const handleSearch = useMemo(() => debounce((sq) => {
 		const filteredIcons = searchQuery
@@ -76,7 +131,7 @@ const IconLibrary = ({ className = '', label = __('Icon Library'), value, onChan
 			})
 			: icons.icons;
 		setSearchedIcons({ icons: filteredIcons });
-	}, 600), [searchQuery, currentPage]);
+	}, 600), [searchQuery, currentPage, icons]);
 
 	const handleInputChange = (e) => {
 		const sq = e.target.value;
@@ -86,7 +141,7 @@ const IconLibrary = ({ className = '', label = __('Icon Library'), value, onChan
 
 	useEffect(() => {
 		setSearchedIcons({ icons: icons.icons });
-	}, [iconLibrary]);
+	}, [iconLibrary, iconSets]);
 
 	useEffect(() => {
 		setSelectIcon(value);
@@ -117,7 +172,7 @@ const IconLibrary = ({ className = '', label = __('Icon Library'), value, onChan
 		if (scrollRef?.current) {
 			observer.observe(scrollRef?.current);
 		}
-	}, [scrollRef, isOpen, currentPage]);
+	}, [scrollRef, isOpen, currentPage, iconSets]);
 
 	return <div className={prefix}>
 		<PanelRow className={className}>
@@ -156,13 +211,17 @@ const IconLibrary = ({ className = '', label = __('Icon Library'), value, onChan
 
 					<div className={`${prefix}Main`}>
 						<div className={`${prefix}Search`}>
-							<input value={searchQuery} onChange={handleInputChange} type='text' className={`${prefix}SearchInput`} placeholder='Filter by name...' />
+							<input value={searchQuery} onChange={handleInputChange} type='text' className={`${prefix}SearchInput`} placeholder='Filter by name...' disabled={!iconSets} />
 
 							<MagnifyingGlass className={`${prefix}SearchIcon`} />
 						</div>
 
 						<div className={`${prefix}IconsWrapper`}>
-							<div className={`${prefix}Icons`}>
+							{loadError && <p className={`${prefix}LoadError`}>{__('Could not load the icons. Please close and reopen the library to try again.')}</p>}
+
+							{!iconSets && !loadError && <Loading text={__('Loading icons...')} orientation='vertical' />}
+
+							{iconSets && <div className={`${prefix}Icons`}>
 								{searchedIcons?.icons?.filter((_, i) => i < currentPage * 100).map(icon => {
 									const svgIcons = icon.svg;
 
@@ -179,7 +238,7 @@ const IconLibrary = ({ className = '', label = __('Icon Library'), value, onChan
 										</div>
 									</div>);
 								})}
-							</div>
+							</div>}
 						</div>
 					</div>
 				</div>

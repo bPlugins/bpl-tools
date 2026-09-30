@@ -22,7 +22,6 @@ import Visibility from './Visibility';
 import AdvMotionEffects from '../Components/AdvMotionEffects/AdvMotionEffects';
 import AdvFloating from '../Components/AdvFloating/AdvFloating';
 import AdvPosition from '../Components/AdvPosition/AdvPosition';
-import AdvertiseCard from '../ProControls/AdvertiseCard';
 
 const defEnabled = {
 	dimension: ['padding', 'margin', 'width'],

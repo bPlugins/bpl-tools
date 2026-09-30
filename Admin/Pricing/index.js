@@ -254,7 +254,7 @@ const Pricing = ({ pricingInfo, options }) => {
 				{sharedFeatures.map((f, i) => (
 					<li key={i}>
 						<span className='pricingIncludedCheck'>{checkCircleIcon}</span>
-						<span dangerouslySetInnerHTML={{ __html: f }} />
+						<span>{f}</span>
 					</li>
 				))}
 			</ul>

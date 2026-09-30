@@ -224,7 +224,7 @@ const MultiPlanPricing = ({ pricingInfo, options }) => {
 							{planFeatures.map((f, i) => (
 								<li key={i}>
 									<span className='pricingFeatureCheck'>{checkCircleIcon}</span>
-									<span dangerouslySetInnerHTML={{ __html: f }} />
+									<span>{f}</span>
 								</li>
 							))}
 						</ul>}

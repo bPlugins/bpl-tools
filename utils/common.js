@@ -112,7 +112,6 @@ export const sanitizeInput = (input) => {
 	return input.replace(/[<>]/g, '').replace(/javascript:/gi, '').replace(/on\w+=/gi, '').trim();
 };
 
-
 //-------- Sanitize SVG ----------//
 export class SVGSanitizer {
 	constructor(options = {}) {
@@ -123,11 +122,30 @@ export class SVGSanitizer {
 				'radialGradient', 'stop', 'style', 'title', 'desc'
 			],
 			allowedAttributes: [
-				'id', 'class', 'style', 'transform', 'd', 'x', 'y', 'width', 'height',
-				'cx', 'cy', 'r', 'rx', 'ry', 'points', 'x1', 'y1', 'x2', 'y2',
-				'fill', 'stroke', 'stroke-width', 'stroke-linecap', 'stroke-linejoin',
-				'opacity', 'fill-opacity', 'stroke-opacity', 'viewBox', 'preserveAspectRatio',
-				'xmlns', 'xmlns:xlink'
+				// Core
+				'id', 'class', 'style', 'transform', 'xmlns', 'xmlns:xlink', 'version',
+				'baseProfile', 'xml:space',
+				// Geometry
+				'd', 'x', 'y', 'width', 'height', 'cx', 'cy', 'r', 'rx', 'ry', 'points',
+				'x1', 'y1', 'x2', 'y2', 'viewBox', 'preserveAspectRatio', 'overflow',
+				// Paint
+				'fill', 'fill-opacity', 'fill-rule', 'stroke', 'stroke-width',
+				'stroke-linecap', 'stroke-linejoin', 'stroke-opacity', 'stroke-dasharray',
+				'stroke-dashoffset', 'stroke-miterlimit', 'opacity', 'color',
+				'paint-order', 'vector-effect', 'shape-rendering', 'display', 'visibility',
+				// Clipping and masking
+				'clip-path', 'clip-rule', 'clipPathUnits', 'mask', 'maskUnits',
+				'maskContentUnits',
+				// Gradients
+				'offset', 'stop-color', 'stop-opacity', 'gradientUnits',
+				'gradientTransform', 'spreadMethod', 'fx', 'fy', 'fr',
+				// Text
+				'dx', 'dy', 'text-anchor', 'dominant-baseline', 'alignment-baseline',
+				'font-family', 'font-size', 'font-style', 'font-weight',
+				'letter-spacing', 'word-spacing', 'textLength', 'lengthAdjust',
+				// Accessibility
+				'role', 'focusable', 'aria-hidden', 'aria-label', 'aria-labelledby',
+				'aria-describedby'
 			],
 			allowedProtocols: ['http', 'https', 'data'],
 			removeScripts: true,
@@ -137,51 +155,67 @@ export class SVGSanitizer {
 		};
 
 		this.options = { ...this.defaultOptions, ...options };
+
+		// The markup is parsed as XML, which is case sensitive, but the markup this
+		// output is injected into (innerHTML) is not. Names are therefore matched
+		// lower-cased, so `onLoad` is caught the same way `onload` is - it would
+		// otherwise survive here and turn back into a live handler in the page.
+		this.allowedTagSet = new Set(this.options.allowedTags.map(tag => tag.toLowerCase()));
+		this.allowedAttributeSet = new Set(this.options.allowedAttributes.map(attr => attr.toLowerCase()));
 	}
 
 	sanitize(svgString) {
-		const parser = new DOMParser();
-		const doc = parser.parseFromString(svgString, 'image/svg+xml');
+		if ('string' !== typeof svgString || '' === svgString.trim()) {
+			return '';
+		}
+
+		const doc = new DOMParser().parseFromString(svgString, 'image/svg+xml');
+		const root = doc.documentElement;
+
+		// Malformed markup does not throw: the parser hands back a <parsererror>
+		// tree, which would otherwise be serialised straight into the page.
+		if (!root || 'svg' !== root.localName.toLowerCase() || doc.getElementsByTagName('parsererror').length) {
+			return '';
+		}
 
 		this.removeScripts(doc);
 		this.sanitizeElements(doc);
 
-		const serializer = new XMLSerializer();
-		return serializer.serializeToString(doc.documentElement);
+		return new XMLSerializer().serializeToString(doc.documentElement);
 	}
 
-	// ✅ New method: sanitize from File object
+	// Sanitize from a File object / URL
 	async sanitizeFile(file) {
 		const response = await fetch(file);
 		const svgText = await response.text();
-		// console.log(svgText)
+
 		return this.sanitize(`${svgText}`);
-		// return "";
 	}
 
 	removeScripts(doc) {
-		if (this.options.removeScripts) {
-			const scripts = doc.querySelectorAll('script');
-			scripts.forEach(script => script.remove());
-
-			const allElements = doc.querySelectorAll('*');
-			allElements.forEach(el => {
-				if (el.tagName.toLowerCase().includes('script')) {
-					el.remove();
-				}
-			});
+		if (!this.options.removeScripts) {
+			return;
 		}
+
+		Array.from(doc.querySelectorAll('*')).forEach(element => {
+			if (element.localName.toLowerCase().includes('script')) {
+				element.remove();
+			}
+		});
 	}
 
 	sanitizeElements(doc) {
-		const allElements = doc.querySelectorAll('*');
+		Array.from(doc.querySelectorAll('*')).forEach(element => {
+			const tagName = element.localName.toLowerCase();
 
-		allElements.forEach(element => {
-			const tagName = element.tagName.toLowerCase();
-
-			if (!this.options.allowedTags.includes(tagName)) {
+			if (!this.allowedTagSet.has(tagName)) {
 				element.remove();
 				return;
+			}
+
+			// A <style> element's CSS is never seen by sanitizeAttributes().
+			if ('style' === tagName && this.options.sanitizeStyle) {
+				element.textContent = this.sanitizeCss(element.textContent);
 			}
 
 			this.sanitizeAttributes(element);
@@ -189,56 +223,84 @@ export class SVGSanitizer {
 	}
 
 	sanitizeAttributes(element) {
-		const attributes = Array.from(element.attributes);
+		Array.from(element.attributes).forEach(attr => {
+			// The case-preserved name: removeAttribute() is case sensitive on an XML
+			// document, so removing by a lower-cased name silently does nothing.
+			const name = attr.name;
+			const lowerName = name.toLowerCase();
+			const value = attr.value;
 
-		attributes.forEach(attr => {
-			const attrName = attr.name.toLowerCase();
-			const attrValue = attr.value;
-
-			if (this.options.removeEvents && attrName.startsWith('on')) {
-				element.removeAttribute(attrName);
+			if (this.options.removeEvents && lowerName.startsWith('on')) {
+				element.removeAttribute(name);
 				return;
 			}
 
-			if (this.options.removeExternalResources) {
-				if ((attrName === 'href' || attrName === 'xlink:href') &&
-					!this.isAllowedUrl(attrValue)) {
-					element.removeAttribute(attrName);
-					return;
-				}
-			}
-
-			const baseAttrName = attrName.replace('xlink:', '');
-			if (!this.options.allowedAttributes.includes(baseAttrName)) {
-				element.removeAttribute(attrName);
+			if (this.options.removeExternalResources && ('href' === lowerName || lowerName.endsWith(':href')) && !this.isAllowedUrl(value)) {
+				element.removeAttribute(name);
 				return;
 			}
 
-			if (attrName === 'style' && this.options.sanitizeStyle) {
-				this.sanitizeStyleAttribute(element, attrValue);
+			const baseName = lowerName.replace('xlink:', '');
+			if (!this.allowedAttributeSet.has(lowerName) && !this.allowedAttributeSet.has(baseName)) {
+				element.removeAttribute(name);
+				return;
+			}
+
+			// url() may only reference a fragment of this same document; anything
+			// else - fill, clip-path, mask, style - is an external reference.
+			if (this.options.removeExternalResources && this.hasExternalUrl(value)) {
+				element.removeAttribute(name);
+				return;
+			}
+
+			if ('style' === lowerName && this.options.sanitizeStyle) {
+				element.setAttribute(name, this.sanitizeCss(value));
 			}
 		});
 	}
 
+	hasExternalUrl(value) {
+		if ('string' !== typeof value || !/url\s*\(/i.test(value)) {
+			return false;
+		}
+
+		return Array.from(value.matchAll(/url\s*\(\s*['"]?([^'")]*)/gi))
+			.some(([, target]) => !target.trim().startsWith('#'));
+	}
+
 	isAllowedUrl(url) {
-		if (url.startsWith('data:') || url.startsWith('#')) {
+		const value = String(url || '').trim();
+
+		if (value.startsWith('#')) {
 			return true;
 		}
 
+		if (/^data:/i.test(value)) {
+			// Inline images only - never data:text/html and friends.
+			return this.options.allowedProtocols.includes('data') && /^data:image\/(png|jpe?g|gif|webp);base64,/i.test(value);
+		}
+
 		try {
-			const parsedUrl = new URL(url);
-			return this.options.allowedProtocols.includes(parsedUrl.protocol.replace(':', ''));
+			return this.options.allowedProtocols.includes(new URL(value).protocol.replace(':', ''));
 		} catch {
 			return false;
 		}
 	}
 
-	sanitizeStyleAttribute(element, styleValue) {
-		const safeStyle = styleValue
-			.replace(/expression\(|javascript:|url\(javascript:/gi, '')
+	sanitizeCss(css) {
+		return String(css || '')
+			.replace(/expression\s*\(/gi, '')
+			.replace(/javascript:/gi, '')
 			.replace(/behavior\s*:/gi, '')
-			.replace(/binding\s*:/gi, '');
-
-		element.setAttribute('style', safeStyle);
+			.replace(/binding\s*:/gi, '')
+			.replace(/@import[^;]*;?/gi, '')
+			.replace(/url\s*\(\s*(['"]?)(?!#)[^)]*\)/gi, 'none');
 	}
 }
+
+// Shared instance: rebuilding the allow lists on every render is wasted work,
+// and a render sink can run this hundreds of times on one page. Memoise the
+// result at the call site (useMemo on the raw markup) rather than re-sanitizing.
+export const svgSanitizer = new SVGSanitizer();
+
+export const sanitizeSVG = (svg) => svgSanitizer.sanitize(svg);
