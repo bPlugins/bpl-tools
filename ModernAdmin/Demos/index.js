@@ -6,6 +6,7 @@
 	*/
 
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { __, sprintf } from '@wordpress/i18n';
 
 import Button from '../../Components/Button/Button';
 import Loading from '../../Components/Loading/Loading';
@@ -152,16 +153,16 @@ const Demos = (props) => {
 	return <div className='bPlDashboardDemos bPlDashboardCard'>
 		<div className='sidebar'>
 			<div className='sidebarHeader'>
-				<p>Search</p>
+				<p>{__('Search')}</p>
 
 				<div className='search'>
 					{searchIcon}
 
-					<input type='text' placeholder='Search demo...' value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
+					<input type='text' placeholder={__('Search demo...')} value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
 				</div>
 
 				<div className='bPlDashboardButtons'>
-					{!isPremium && <Button href='#pricing'>Buy Now</Button>}
+					{!isPremium && <Button href='#pricing'>{__('Buy Now')}</Button>}
 
 					{allInOneLabel && <Button href={allInOneLink} target='_blank' variant='secondary'>{allInOneLabel}</Button>}
 				</div>
@@ -226,7 +227,7 @@ const Demos = (props) => {
 					}) :
 					<div className='notFound'>
 						{warningIcon}
-						<p className='text-sm text-gray-500'>No matching results</p>
+						<p className='text-sm text-gray-500'>{__('No matching results')}</p>
 					</div>
 				}
 			</div>
@@ -241,7 +242,7 @@ const Demos = (props) => {
 				</div>
 
 				<div className='bPlDashboardButtons'>
-					{!isPremium && <Button href='#pricing'>Buy Now</Button>}
+					{!isPremium && <Button href='#pricing'>{__('Buy Now')}</Button>}
 
 					{allInOneLabel && <Button href={allInOneLink} target='_blank' variant='secondary'>{allInOneLabel}</Button>}
 				</div>
@@ -249,17 +250,25 @@ const Demos = (props) => {
 
 			{/* Demo Preview */}
 			<div className='canvas'>
-				{isLoading && <Loading text='Demo Loading...' orientation='vertical' />}
+				{isLoading && <Loading text={__('Demo Loading...')} orientation='vertical' />}
 
 				{activeItem.type === 'iframe' ?
 					<iframe
 						src={activeItem.url}
-						title={`${activeItem.title} Demo`}
+						title={sprintf(
+							/* translators: %s: Demo title. */
+							__('%s Demo'),
+							activeItem.title
+						)}
 						onLoad={() => setIsLoading(false)}
 						sandbox='allow-scripts allow-same-origin allow-popups allow-forms'
 					/> :
 					<div className='canvasImg' ref={imgWrapRef}>
-						<img src={activeItem.url} alt={`${activeItem.title} Demo`} onLoad={() => setIsLoading(false)} ref={imgRef} />
+						<img src={activeItem.url} alt={sprintf(
+							/* translators: %s: Demo title. */
+							__('%s Demo'),
+							activeItem.title
+						)} onLoad={() => setIsLoading(false)} ref={imgRef} />
 					</div>
 				}
 			</div>

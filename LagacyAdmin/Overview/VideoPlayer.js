@@ -12,6 +12,7 @@
 	*/
 
 import { useEffect, useRef, useState } from 'react'
+import { __ } from '@wordpress/i18n'
 import './VideoPlayer.scss'
 
 const VideoPlayer = ({ src, width = '100%', height = 'auto', autoPlay = false, muted = false, loop = false, poster = null, isYoutube = false, }) => {
@@ -254,7 +255,7 @@ const VideoPlayer = ({ src, width = '100%', height = 'auto', autoPlay = false, m
 				frameBorder="0"
 				allowFullScreen
 				style={{ width, height }}
-				title="YouTube Video" />
+				title={__('YouTube Video')} />
 		</div> : <>
 			<video
 				ref={videoRef}
@@ -267,7 +268,7 @@ const VideoPlayer = ({ src, width = '100%', height = 'auto', autoPlay = false, m
 				onClick={togglePlay}
 				preload="metadata"
 			>
-				Your browser does not support the video tag.
+				{__('Your browser does not support the video tag.')}
 			</video>
 
 			{/* Hidden preview video for generating thumbnails */}

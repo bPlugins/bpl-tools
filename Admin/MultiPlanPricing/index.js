@@ -6,7 +6,7 @@
 	*/
 
 import { useEffect, useState } from 'react';
-import { __ } from '@wordpress/i18n';
+import { __, _n, sprintf } from '@wordpress/i18n';
 
 import Button from '../../Components/Button/Button';
 import FS from '../lib/fs';
@@ -14,11 +14,11 @@ import './style.scss';
 
 import { checkCircleIcon, chevronDownIcon, moneyBackIcon, refreshIcon, chatIcon, lockIcon } from '../utils/icons';
 
-const cycleMeta = {
-	monthly: { suffix: '/mo' },
-	annual: { suffix: '/yr' },
+const getCycleMeta = () => ({
+	monthly: { suffix: __('/mo') },
+	annual: { suffix: __('/yr') },
 	lifetime: { suffix: '' }
-};
+});
 
 const formatPrice = (amount) => {
 	const num = typeof amount === 'string' ? parseFloat(amount) : amount;
@@ -110,7 +110,11 @@ const MultiPlanPricing = ({ pricingInfo, options }) => {
 		if (fullYear > 0) annualSavingsPct = Math.round(((fullYear - annual) / fullYear) * 100);
 	}
 
-	const annualSavingsLabel = annualSavingsPct > 0 ? `Save ${annualSavingsPct}%` : '';
+	const annualSavingsLabel = annualSavingsPct > 0 ? sprintf(
+		/* translators: %d: Annual savings percentage. */
+		__('Save %d%%'),
+		annualSavingsPct
+	) : '';
 	const isLifetimeOnly = cycles.length === 1 && cycles[0]?.name === 'lifetime';
 
 	const hero = {
@@ -175,7 +179,7 @@ const MultiPlanPricing = ({ pricingInfo, options }) => {
 				const selectedPrice = pricing.find(p => (p?.licenses ?? null) === selectedLicense);
 				const isFeatured = featured?.planId ? featured.planId === plan.id : plan.name === 'pro';
 				const amount = selectedPrice?.[cycle];
-				const cycleInfo = cycleMeta[cycle] || { suffix: '' };
+				const cycleInfo = getCycleMeta()[cycle] || { suffix: '' };
 				const numericAmount = parseFloat(amount);
 				const monthlyEquivalent = cycle === 'annual' && selectedPrice?.annual ? (parseFloat(selectedPrice.annual) / 12) : null;
 				const perSite = selectedLicense && !isNaN(numericAmount) ? (numericAmount / selectedLicense) : null;
@@ -193,7 +197,11 @@ const MultiPlanPricing = ({ pricingInfo, options }) => {
 						{licenses.map(license => {
 							const label = !license
 								? __('Unlimited Sites')
-								: (license === 1 ? __('Single Site') : `${license} ${__('Sites')}`);
+								: (license === 1 ? __('Single Site') : sprintf(
+									/* translators: %d: Number of sites. */
+									_n('%d Site', '%d Sites', license),
+									license
+								));
 							return <button
 								key={license}
 								type='button'
@@ -212,10 +220,18 @@ const MultiPlanPricing = ({ pricingInfo, options }) => {
 							{cycleInfo.suffix && <span className='pricingSuffix'>{cycleInfo.suffix}</span>}
 						</div>
 
-						{perSite !== null && <p className='pricingEquiv'>≈ ${formatPrice(perSite)} {__('per site')}</p>}
+						{perSite !== null && <p className='pricingEquiv'>{sprintf(
+							/* translators: %s: Price per site. */
+							__('≈ $%s per site'),
+							formatPrice(perSite)
+						)}</p>}
 						{!selectedLicense && <p className='pricingEquiv'>{__('Use on every site you build.')}</p>}
 						{monthlyEquivalent !== null && cycle === 'annual' && <p className='pricingEquiv'>
-							{__('Billed yearly')} · ${formatPrice(monthlyEquivalent)}/mo
+							{sprintf(
+								/* translators: %s: Monthly equivalent price. */
+								__('Billed yearly · $%s/mo'),
+								formatPrice(monthlyEquivalent)
+							)}
 						</p>}
 						{cycle === 'lifetime' && <p className='pricingEquiv'>{__('One-time payment, pay once forever.')}</p>}
 						{cycle === 'monthly' && <p className='pricingEquiv'>{__('Billed monthly, cancel anytime.')}</p>}
@@ -224,7 +240,7 @@ const MultiPlanPricing = ({ pricingInfo, options }) => {
 							{planFeatures.map((f, i) => (
 								<li key={i}>
 									<span className='pricingFeatureCheck'>{checkCircleIcon}</span>
-									<span>{f}</span>
+									<span dangerouslySetInnerHTML={{ __html: f }} />
 								</li>
 							))}
 						</ul>}
@@ -286,5 +302,4 @@ const MultiPlanPricing = ({ pricingInfo, options }) => {
 		</section>
 	</div>;
 };
-
 export default MultiPlanPricing;

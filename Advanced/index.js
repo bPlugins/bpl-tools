@@ -8,6 +8,7 @@
 	* @props isPremium (optional): false - whether premium sections are available (Boolean)
 	*/
 
+import { __ } from '@wordpress/i18n';
 import { Notice, PanelBody } from '@wordpress/components';
 import Dimension from '../Components/Dimension/Dimension';
 import Mask from '../Components/Mask/Mask';
@@ -46,7 +47,7 @@ const Advanced = ({ advanced, onChange, enabled = defEnabled, id = null, isPremi
 
 	return <>
 		<PanelBody>
-			<Notice status='info' isDismissible={false}>Leave blank if you don&apos;t want to use/apply this option.</Notice>
+			<Notice status='info' isDismissible={false}>{__('Leave blank if you don\'t want to use/apply this option.')}</Notice>
 		</PanelBody>
 
 		{isEnabled('dimension') && <Dimension dimension={dimension} onChange={val => onChange(updateData(advanced, val, 'dimension'))} enabled={enabled.dimension} />}

@@ -13,11 +13,12 @@
 	*/
 
 import { useEffect, useRef, useState } from 'react';
+import { __ } from '@wordpress/i18n';
 
 import { playFillIcon, pauseFillIcon, playPauseIcon, playIcon, volumeMutedIcon, volumeOnIcon, fullscreenIcon } from '../utils/icons';
 import { getYoutubeEmbedSrc } from '../utils/video';
 
-const VideoPlayer = ({ src, width = '100%', height = 'auto', autoPlay = false, muted = false, loop = false, poster = null, isYoutube = false, title = 'Video' }) => {
+const VideoPlayer = ({ src, width = '100%', height = 'auto', autoPlay = false, muted = false, loop = false, poster = null, isYoutube = false, title = __('Video') }) => {
 	const videoRef = useRef(null)
 	const previewVideoRef = useRef(null)
 	const progressBarRef = useRef(null)
@@ -253,7 +254,7 @@ const VideoPlayer = ({ src, width = '100%', height = 'auto', autoPlay = false, m
 				onClick={togglePlay}
 				preload="metadata"
 			>
-				Your browser does not support the video tag.
+				{__('Your browser does not support the video tag.')}
 			</video>
 
 			{/* Hidden preview video for generating thumbnails */}

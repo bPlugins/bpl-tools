@@ -9,6 +9,8 @@
 	* @props isLinks (optional): true (Boolean)
 	*/
 
+import { __ } from '@wordpress/i18n';
+
 import { demoIcon, docsIcon } from '../../utils/icons';
 
 const Block = ({ block, isPremium, disableBlockName, handleCheckboxChange, isSaving, isLinks = true }) => {
@@ -21,7 +23,7 @@ const Block = ({ block, isPremium, disableBlockName, handleCheckboxChange, isSav
 		<div className='icon'>{icon}</div>
 
 		<div className='name'>
-			<p className='blockTitle'>{title}</p>{isBlockPremium && <a href='#pricing'>Get Pro</a>}
+			<p className='blockTitle'>{title}</p>{isBlockPremium && <a href='#pricing'>{__('Get Pro')}</a>}
 		</div>
 
 		{isLinks && <>
@@ -36,9 +38,9 @@ const Block = ({ block, isPremium, disableBlockName, handleCheckboxChange, isSav
 
 		{badge && <p className='blockBadge'>{badge}</p>}
 
-		{isBlockPremium && <p className='blockBadge blockProBadge'>Pro</p>}
+		{isBlockPremium && <p className='blockBadge blockProBadge'>{__('Pro')}</p>}
 
-		{isRequired && <p className='blockBadge blockRequiredBadge'>Required</p>}
+		{isRequired && <p className='blockBadge blockRequiredBadge'>{__('Required')}</p>}
 
 		<label className='toggleSwitch' {...((isBlockPremium || isRequired) ? { htmlFor: 'b-blocks-admin-pro-modal-toggle' } : {})}>
 			<input

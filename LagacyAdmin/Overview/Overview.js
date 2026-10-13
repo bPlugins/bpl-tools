@@ -1,3 +1,5 @@
+import { __, _x, sprintf } from '@wordpress/i18n';
+
 import Button from '../../Components/Button/Button';
 
 import './style.scss';
@@ -26,36 +28,44 @@ const Overview = (props) => {
 
 	const helpInfo = [
 		{
-			title: 'Need any Assistance?',
-			description: 'Our Expert Support Team is always ready to help you out promptly.',
+			title: __('Need any Assistance?'),
+			description: __('Our Expert Support Team is always ready to help you out promptly.'),
 			link: 'https://bplugins.com/support',
-			linkText: 'Contact Support'
+			linkText: __('Contact Support')
 		},
 		{
-			title: 'Looking for Documentation?',
-			description: 'We have detailed documentation on every aspects of the plugin.',
+			title: __('Looking for Documentation?'),
+			description: __('We have detailed documentation on every aspects of the plugin.'),
 			link: pages?.docs,
-			linkText: 'Documentation'
+			linkText: __('Documentation')
 		},
 		{
-			title: 'Liked This Plugin?',
-			description: 'Glad to know that, you can support us by leaving a 5 ⭐ rating.',
+			title: __('Liked This Plugin?'),
+			description: __('Glad to know that, you can support us by leaving a 5 ⭐ rating.'),
 			link: `https://wordpress.org/support/plugin/${slug}/reviews#new-post`,
-			linkText: 'Rate the Plugin'
+			linkText: __('Rate the Plugin')
 		}
 	];
 
 	return <div className='bPlDashboardOverview bPlDashboardBox'>
 		<div className='overviewLeft'>
 			<div className='overviewLeftTop'>
-				{name && <h2 className='overviewTitle'>Welcome to {name}</h2>}
+				{name && <h2 className='overviewTitle'>{sprintf(
+					/* translators: %s: Plugin name. */
+					__('Welcome to %s'),
+					name
+				)}</h2>}
 
 				{description && <p className='overviewDescription'>{description}</p>}
 
 				<div className='overviewBanner'>
 					{video ?
 						<VideoPlayer src={video} width='100%' height='100%' isYoutube={isYoutube} /> :
-						(banner ? <img src={banner} alt={`${name} Banner`} /> : null)
+						(banner ? <img src={banner} alt={sprintf(
+							/* translators: %s: Plugin name. */
+							__('%s Banner'),
+							name
+						)} /> : null)
 					}
 				</div>
 
@@ -65,7 +75,7 @@ const Overview = (props) => {
 					<div>
 						{displayName && <h3>{displayName}</h3>}
 
-						<span>by</span>
+						<span>{_x('by', 'plugin author, followed by bPlugins')}</span>
 
 						<a href='https://bplugins.com' target='_blank' rel='noopener noreferrer'>
 							bPlugins
@@ -77,7 +87,7 @@ const Overview = (props) => {
 			{(children || pages?.landing) && <div className='overviewLeftBottom bPlDashboardButtons'>
 				{children}
 
-				{pages?.landing && <Button href={pages.landing} target='_blank' rel='noopener noreferrer' variant='primary'>Learn More</Button>}
+				{pages?.landing && <Button href={pages.landing} target='_blank' rel='noopener noreferrer' variant='primary'>{__('Learn More')}</Button>}
 			</div>}
 		</div>
 

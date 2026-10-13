@@ -6,6 +6,7 @@
 	*/
 
 import { useState } from 'react';
+import { __, sprintf } from '@wordpress/i18n';
 
 import Button from '../../Components/Button/Button';
 
@@ -32,12 +33,16 @@ const Pricing = (props) => {
 		{cycles?.length > 1 && <div className='cycles'>
 			{cycles.map(c => {
 				return <button key={c.cycle} className={c.cycle === cycle ? 'active' : ''} onClick={() => setCycle(c.cycle)}>
-					{c.label} {'annual' === c.cycle && <span>{`upto ${calculateMaxAnnualDiscount()}% off`}</span>}
+					{c.label} {'annual' === c.cycle && <span>{sprintf(
+						/* translators: %s: Maximum annual discount percentage. */
+						__('upto %s%% off'),
+						calculateMaxAnnualDiscount()
+					)}</span>}
 				</button>;
 			})}
 		</div>}
 
-		{cycles?.length === 1 && cycles[0]?.cycle === 'lifetime' && <h2 className='pricingTitle'>One-time payment, lifetime access</h2>}
+		{cycles?.length === 1 && cycles[0]?.cycle === 'lifetime' && <h2 className='pricingTitle'>{__('One-time payment, lifetime access')}</h2>}
 
 		<div className='plans'>
 			{plans.map((plan, index) => <Plan key={index} {...props} plan={plan} cycle={cycle} />)}

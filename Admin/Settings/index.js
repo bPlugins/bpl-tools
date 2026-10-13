@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
+import { createInterpolateElement } from '@wordpress/element';
 
 import useWPAjax from '../../hooks/useWPAjax';
 
@@ -72,7 +73,11 @@ const Settings = ({ name, deleteDataOnUninstall, uninstallNonce, version, ajaxAc
 		<header className='settingsHero'>
 			<span className='settingsEyebrow'>{__('Settings')}</span>
 			<h1>{__('Manage plugin preferences')}</h1>
-			<p>{__(`Control how ${name} behaves on your site. Destructive options live in their own clearly-marked zone.`)}</p>
+			<p>{sprintf(
+				/* translators: %s: Plugin name. */
+				__('Control how %s behaves on your site. Destructive options live in their own clearly-marked zone.'),
+				name
+			)}</p>
 		</header>
 
 		<section className='settingsStatus'>
@@ -101,7 +106,11 @@ const Settings = ({ name, deleteDataOnUninstall, uninstallNonce, version, ajaxAc
 
 				<div>
 					<h2>{__('Delete plugin data on uninstall')}</h2>
-					<p>{__(`When enabled, every piece of ${name} data is wiped from your database the moment the plugin is uninstalled.`)}</p>
+					<p>{sprintf(
+						/* translators: %s: Plugin name. */
+						__('When enabled, every piece of %s data is wiped from your database the moment the plugin is uninstalled.'),
+						name
+					)}</p>
 				</div>
 			</header>
 
@@ -173,7 +182,11 @@ const Settings = ({ name, deleteDataOnUninstall, uninstallNonce, version, ajaxAc
 					</div>
 
 					<label className='confirmField'>
-						<span>{__('Type')} <code>DELETE</code> {__('to confirm')}</span>
+						<span>{createInterpolateElement(
+							/* translators: Keep <code>DELETE</code> untranslated, the user has to type that exact word. */
+							__('Type <code>DELETE</code> to confirm'),
+							{ code: <code /> }
+						)}</span>
 						<input
 							type='text'
 							value={confirmInput}

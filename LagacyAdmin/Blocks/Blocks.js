@@ -6,6 +6,7 @@
 	*/
 
 import { useState, useEffect } from 'react';
+import { __ } from '@wordpress/i18n';
 
 import { useWPAjax } from '../../hooks';
 
@@ -16,7 +17,7 @@ import "./style.scss"
 const dataFetched = new CustomEvent('dataFetched');
 
 const Blocks = ({ info, nonce }) => {
-	const { action, blocks = [], title = 'All Blocks' } = info || {};
+	const { action, blocks = [], title = __('All Blocks') } = info || {};
 	const [isSaving, setIsSaving] = useState(false);
 	const [disableBlockName, setDisableBlockName] = useState([]);
 	const [searchTerm, setSearchTerm] = useState(''); // State to store the search term
@@ -79,30 +80,30 @@ const Blocks = ({ info, nonce }) => {
 
 	return <>
 		<div className='bPlblocksPage'>
-			{isSaving && <div className='bPlSavingNotice'>Saving changes...</div>}
+			{isSaving && <div className='bPlSavingNotice'>{__('Saving changes...')}</div>}
 			<div className='blocksTop'>
 				<h2>{title}</h2>
 
 				<div className='bPlDashboardSearch'>
 					{searchIcon}
 
-					<input type='text' placeholder='Search blocks...' value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className='search-input' />
+					<input type='text' placeholder={__('Search blocks...')} value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className='search-input' />
 
 					{searchTerm && <span onClick={() => setSearchTerm('')}>{closeIcon}</span>}
 				</div>
 
 				<button className='bPlDashboardBtn actionBtn activeAllBtn' onClick={handleActivateAll}>
-					Activate All
+					{__('Activate All')}
 				</button>
 
 				<button className='bPlDashboardBtn actionBtn secondary' onClick={handleDeactivateAll}>
-					Deactivate All
+					{__('Deactivate All')}
 				</button>
 			</div>
 
 			{searchedBlocks.length === 0 ?
 				<h3 className='noBlocksFound'>
-					No blocks found matching your search...
+					{__('No blocks found matching your search...')}
 				</h3> :
 				<div className='blocks'>
 					{searchedBlocks.map(block => {

@@ -1,5 +1,6 @@
 
 import { useState, useEffect } from 'react';
+import { __ } from '@wordpress/i18n';
 
 import './style.scss';
 
@@ -24,7 +25,7 @@ import Toast from './Toast';
  * @returns {JSX.Element}
  */
 const Blocks = (props) => {
-	const { isPremium, disabledBlocks, onChange, allBlocks, status, ProModal = null, pageTitle = 'All Blocks' } = props;
+	const { isPremium, disabledBlocks, onChange, allBlocks, status, ProModal = null, pageTitle = __('All Blocks') } = props;
 	const publishedBlocks = allBlocks.filter(b => 'published' === b.status || !b.status);
 
 	const [isSaving, setIsSaving] = useState(false);
@@ -42,14 +43,14 @@ const Blocks = (props) => {
 	// Update toast based on status prop
 	useEffect(() => {
 		if (status === 'loading') {
-			setToast({ message: 'Loading...', type: 'loading' });
+			setToast({ message: __('Loading...'), type: 'loading' });
 			setIsSaving(true);
 		} else if (status === 'success') {
-			setToast({ message: 'Saved successfully!', type: 'success' });
+			setToast({ message: __('Saved successfully!'), type: 'success' });
 			setIsSaving(false);
 			setTimeout(() => setToast(null), 3000);
 		} else if (status === 'error') {
-			setToast({ message: 'Failed to save', type: 'error' });
+			setToast({ message: __('Failed to save'), type: 'error' });
 			setIsSaving(false);
 			setTimeout(() => setToast(null), 3000);
 		}
@@ -62,14 +63,14 @@ const Blocks = (props) => {
 
 		setDisableBlockName(updatedBlocksName);
 		onChange?.(updatedBlocksName);
-		setToast({ message: 'Saving changes...', type: 'loading' });
+		setToast({ message: __('Saving changes...'), type: 'loading' });
 		setIsSaving(true);
 	};
 
 	const handleActivateAll = () => {
 		setDisableBlockName([]);
 		onChange?.([]);
-		setToast({ message: 'Saving changes...', type: 'loading' });
+		setToast({ message: __('Saving changes...'), type: 'loading' });
 		setIsSaving(true);
 	};
 
@@ -87,7 +88,7 @@ const Blocks = (props) => {
 			});
 		setDisableBlockName(allBlockNames);
 		onChange?.(allBlockNames);
-		setToast({ message: 'Saving changes...', type: 'loading' });
+		setToast({ message: __('Saving changes...'), type: 'loading' });
 		setIsSaving(true);
 	};
 
@@ -136,23 +137,23 @@ const Blocks = (props) => {
 			<div className='blocksSearch'>
 				{searchIcon}
 
-				<input type='text' placeholder='Search...' value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className='search-input' />
+				<input type='text' placeholder={__('Search...')} value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className='search-input' />
 
 				{searchTerm && <span onClick={() => setSearchTerm('')}>{closeIcon}</span>}
 			</div>
 
 			<Button className='bBlocksDashboardBtn actionBtn activeAllBtn' onClick={handleActivateAll}>
-				Activate All
+				{__('Activate All')}
 			</Button>
 
 			<Button className='bBlocksDashboardBtn actionBtn deActiveAllBtn' onClick={handleDeactivateAll}>
-				Deactivate All
+				{__('Deactivate All')}
 			</Button>
 		</div>
 
 		{!hasResults ?
 			<h3 className='noBlocksFound'>
-				No blocks found matching your search...
+				{__('No blocks found matching your search...')}
 			</h3> :
 			<div className='blocksContent'>
 				{/* Render grouped blocks */}

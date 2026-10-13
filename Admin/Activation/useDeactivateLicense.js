@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { __ } from '@wordpress/i18n';
 
 /**
  * Hook to manage license deactivation.
@@ -21,7 +22,7 @@ const useDeactivateLicense = ({ product_id, licenseActiveNonce }) => {
 				})
 				.fail((err) => {
 					setIsLoading(false);
-					const message = err?.message || 'Deactivation failed';
+					const message = err?.message || __('Deactivation failed');
 					setError(message);
 					reject(err);
 				});
@@ -34,5 +35,4 @@ const useDeactivateLicense = ({ product_id, licenseActiveNonce }) => {
 		error
 	};
 };
-
 export default useDeactivateLicense;

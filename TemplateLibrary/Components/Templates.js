@@ -74,7 +74,8 @@ const Templates = ({
 								setIsLoading(ID);
 
 								wp.ajax
-									.post(ajaxActionImport, { _wpnonce: nonce, original_content })
+									// id and type let the plugin report the import to the pattern library
+									.post(ajaxActionImport, { _wpnonce: nonce, original_content, id: ID, type: itemType })
 									.done((res) => {
 										setIsLoading(false);
 

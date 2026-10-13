@@ -5,6 +5,8 @@
 	* @props isPremium (optional): false - hides the Buy Now row when true (Boolean)
 	*/
 
+import { __ } from '@wordpress/i18n'
+
 import { checkIcon, closeIcon } from '../../utils/icons'
 import Button from "../../Components/Button/Button"
 
@@ -47,7 +49,7 @@ const FeatureCompare = (props) => {
 					<td />
 					<td />
 					<td>
-						<Button href='#pricing'>Buy Now</Button>
+						<Button href='#pricing'>{__('Buy Now')}</Button>
 					</td>
 				</tr>}
 			</tbody>

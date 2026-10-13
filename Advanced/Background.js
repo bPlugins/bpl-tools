@@ -8,30 +8,32 @@
 	* @props device (injected via withSelect): current editor device type, lowercased (String)
 	*/
 
+import { __ } from '@wordpress/i18n';
 import { withSelect } from '@wordpress/data';
 import { PanelBody, TabPanel, RangeControl } from '@wordpress/components';
 
 import AdvBackground from '../Components/AdvBackground/AdvBackground';
 import OverlayControl from '../Components/OverlayControl/OverlayControl';
 import { updateData } from '../utils/functions';
+import { normalHoverTabs } from '../utils/options';
 
 const Background = ({ background, onChange, enabled, isPremium }) => {
-	const tabs = enabled?.filter(e => 'overlay' !== e)?.map(e => ({ title: e, name: e }));
+	const tabs = enabled?.filter(e => 'overlay' !== e)?.map(e => ({ title: normalHoverTabs.find(t => t.name === e)?.title || e, name: e }));
 
 	const isEnabled = (which) => enabled.includes(which);
 
-	return <PanelBody className='bPlPanelBody' title='Background' initialOpen={false}>
+	return <PanelBody className='bPlPanelBody' title={__('Background')} initialOpen={false}>
 		<TabPanel className='bPlTabPanel small' activeClass='activeTab' tabs={tabs}>{tab => <>
 			{'normal' === tab.name && <>
-				<AdvBackground name={'Background Type'} value={background?.[tab.name]} onChange={(val) => onChange(updateData(background, val, tab.name))} isVideo={isPremium} />
+				<AdvBackground name={__('Background Type')} value={background?.[tab.name]} onChange={(val) => onChange(updateData(background, val, tab.name))} isVideo={isPremium} />
 
 				{isEnabled('overlay') && <OverlayControl value={background?.overlay} onChange={(val) => onChange(updateData(background, val, 'overlay'))} />}
 			</>}
 
 			{'hover' === tab.name && <>
-				<RangeControl className='mt10 mb10' label='Hover Transition' value={background?.transition || 0.4} onChange={val => onChange(updateData(background, val, 'transition'))} min={0} max={10} step={0.05} />
+				<RangeControl className='mt10 mb10' label={__('Hover Transition')} value={background?.transition || 0.4} onChange={val => onChange(updateData(background, val, 'transition'))} min={0} max={10} step={0.05} />
 
-				<AdvBackground name={'Hover Background Type'} value={background?.[tab.name]} onChange={(val) => onChange(updateData(background, val, tab.name))} isVideo={false} isHover={true} />
+				<AdvBackground name={__('Hover Background Type')} value={background?.[tab.name]} onChange={(val) => onChange(updateData(background, val, tab.name))} isVideo={false} isHover={true} />
 
 				{isEnabled('overlay') && <OverlayControl value={background?.hoverOverlay} onChange={(val) => onChange(updateData(background, val, 'hoverOverlay'))} />}
 			</>}

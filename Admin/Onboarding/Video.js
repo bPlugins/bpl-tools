@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 
 import useModalDismiss from './useModalDismiss';
 import { playFillIcon, closeIcon } from '../utils/icons';
@@ -100,7 +100,11 @@ const Video = ({ video, name = '' }) => {
 	}
 
 	const { url, isYoutube, poster, title } = video;
-	const label = title || (name ? `${name} — video tutorial` : __('Video tutorial'));
+	const label = title || (name ? sprintf(
+		/* translators: %s: Plugin name. */
+		__('%s — video tutorial'),
+		name
+	) : __('Video tutorial'));
 	const id = isYoutube ? youtubeId(url) : '';
 
 	// An unrecognised YouTube URL would build a broken embed — better to drop
@@ -118,7 +122,11 @@ const Video = ({ video, name = '' }) => {
 				ref={triggerRef}
 				className={`videoFacade ${thumbnail ? '' : 'noPoster'}`}
 				onClick={() => setIsOpen(true)}
-				aria-label={`${label} — ${__('play video')}`}
+				aria-label={sprintf(
+					/* translators: %s: Video title. */
+					__('%s — play video'),
+					label
+				)}
 			>
 				{thumbnail && <img src={thumbnail} alt={label} loading='lazy' />}
 				<span className='videoPlay'>{playFillIcon}</span>

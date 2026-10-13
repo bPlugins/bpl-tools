@@ -1,3 +1,5 @@
+import { __, sprintf } from '@wordpress/i18n';
+
 import { checkIcon } from '../utils/icons';
 
 /**
@@ -16,7 +18,7 @@ const Progress = ({ total = 0, current = 0, onGoTo }) => {
 		return null;
 	}
 
-	return <ol className='bPlOnboardingProgress' aria-label='Setup progress'>
+	return <ol className='bPlOnboardingProgress' aria-label={__('Setup progress')}>
 		{Array.from({ length: total }, (_, i) => {
 			const isDone = i < current;
 			const isActive = i === current;
@@ -28,7 +30,12 @@ const Progress = ({ total = 0, current = 0, onGoTo }) => {
 					className='progressDot'
 					disabled={!isDone}
 					aria-current={isActive ? 'step' : undefined}
-					aria-label={`Step ${i + 1} of ${total}`}
+					aria-label={sprintf(
+						/* translators: 1: Step number, 2: Total number of steps. */
+						__('Step %1$d of %2$d'),
+						i + 1,
+						total
+					)}
 					onClick={() => isDone && onGoTo?.(i)}
 				>
 					{isDone ? checkIcon : i + 1}

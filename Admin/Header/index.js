@@ -1,4 +1,5 @@
 import { useState, cloneElement, isValidElement, Children } from 'react';
+import { __ } from '@wordpress/i18n';
 import Button from '../../Components/Button/Button';
 import { ourPluginsIcon, upgradeProIcon } from '../utils/icons';
 
@@ -36,7 +37,7 @@ const Header = (props) => {
 
 	return <div className='bPlDashboardHeader'>
 		<div className='pluginInfo' wrap={true}>
-			{logo && <img src={logo} alt={name || 'Plugin from bPlugins'} />}
+			{logo && <img src={logo} alt={name || __('Plugin from bPlugins')} />}
 			{name && <h1>{name}</h1>}
 			{version && <div className='pluginVersion'>v{version}</div>}
 		</div>
@@ -44,7 +45,7 @@ const Header = (props) => {
 		<button
 			className={`bplHamburger${isNavOpen ? ' open' : ''}`}
 			onClick={() => setIsNavOpen(v => !v)}
-			aria-label='Toggle navigation'
+			aria-label={__('Toggle navigation')}
 			aria-expanded={isNavOpen}
 		>
 			<span />
@@ -59,14 +60,14 @@ const Header = (props) => {
 				isPremium ?
 					<Button href='#our-plugins'>
 						{ourPluginsIcon}
-						Our Plugins
+						{__('Our Plugins')}
 					</Button> :
-					<a className='linkButton' href='#our-plugins'>Our Plugins</a>
+					<a className='linkButton' href='#our-plugins'>{__('Our Plugins')}</a>
 			)}
 
 			{!isPremium && <Button className='upgrade' href='#pricing'>
 				{upgradeProIcon}
-				Upgrade Pro
+				{__('Upgrade Pro')}
 			</Button>}
 		</div>
 	</div>

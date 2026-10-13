@@ -12,6 +12,7 @@
 	*/
 
 import { useEffect, useState } from 'react';
+import { __ } from '@wordpress/i18n';
 
 import './card.scss';
 
@@ -19,7 +20,7 @@ import Block from './Block';
 import Toast from './Toast';
 
 const BlocksCard = (props) => {
-	const { isPremium, disabledBlocks, onChange, allBlocks, status, ProModal = null, cardTitle = 'Blocks', seeAllLink = '#blocks' } = props;
+	const { isPremium, disabledBlocks, onChange, allBlocks, status, ProModal = null, cardTitle = __('Blocks'), seeAllLink = '#blocks' } = props;
 	const publishedBlocks = allBlocks.filter(b => 'published' === b.status || !b.status);
 
 	const [isSaving, setIsSaving] = useState(false);
@@ -36,14 +37,14 @@ const BlocksCard = (props) => {
 	// Update toast based on status prop
 	useEffect(() => {
 		if (status === 'loading') {
-			setToast({ message: 'Loading...', type: 'loading' });
+			setToast({ message: __('Loading...'), type: 'loading' });
 			setIsSaving(true);
 		} else if (status === 'success') {
-			setToast({ message: 'Saved successfully!', type: 'success' });
+			setToast({ message: __('Saved successfully!'), type: 'success' });
 			setIsSaving(false);
 			setTimeout(() => setToast(null), 3000);
 		} else if (status === 'error') {
-			setToast({ message: 'Failed to save', type: 'error' });
+			setToast({ message: __('Failed to save'), type: 'error' });
 			setIsSaving(false);
 			setTimeout(() => setToast(null), 3000);
 		}
@@ -56,7 +57,7 @@ const BlocksCard = (props) => {
 
 		setDisableBlockName(updatedBlocksName);
 		onChange?.(updatedBlocksName);
-		setToast({ message: 'Saving changes...', type: 'loading' });
+		setToast({ message: __('Saving changes...'), type: 'loading' });
 		setIsSaving(true);
 	};
 
@@ -68,7 +69,7 @@ const BlocksCard = (props) => {
 		<div className='blocksCardHeader'>
 			<h3>{cardTitle}</h3>
 
-			<a href={seeAllLink}>View All</a>
+			<a href={seeAllLink}>{__('View All')}</a>
 		</div>
 
 		{publishedBlocks.length > 0 && (

@@ -1,10 +1,16 @@
 import { useState } from 'react';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
+import { createInterpolateElement } from '@wordpress/element';
 
 import './style.scss';
 
 import { circleCheckIcon, showLicenseIcon, hideLicenseIcon, keyIcon, copyIcon, infoIcon, shieldIcon, refreshIcon, externalIcon } from '../utils/icons';
 import useLicense from './useLicense';
+
+// Link used inside translated sentences, keeps the external icon out of the string
+const HelpLink = ({ href, children }) => <a href={href} target='_blank' rel='noopener noreferrer'>
+	{children}{externalIcon}
+</a>;
 
 /**
  * License activation / deactivation page.
@@ -90,10 +96,20 @@ const Activation = (props) => {
 					: (isChangeLicense ? __('Change your license key') : __('Activate your license'))}
 			</h1>
 			<p>
-				{showSuccessView
-					? <>{__("You're receiving security updates, new features and priority support for")}{' '}<strong>{name}</strong>{'.'}</>
-					: <>{__('Enter the license key you received with your purchase to unlock premium features and updates for')}{' '}<strong>{name}</strong>{'.'}</>
-				}
+				{createInterpolateElement(
+					showSuccessView
+						? sprintf(
+							/* translators: %s: Plugin name. */
+							__("You're receiving security updates, new features and priority support for <strong>%s</strong>."),
+							name
+						)
+						: sprintf(
+							/* translators: %s: Plugin name. */
+							__('Enter the license key you received with your purchase to unlock premium features and updates for <strong>%s</strong>.'),
+							name
+						),
+					{ strong: <strong /> }
+				)}
 			</p>
 		</header>
 
@@ -199,18 +215,21 @@ const Activation = (props) => {
 				</button>
 
 				{!isChangeLicense && <p className='actHelp'>
-					{__("Can't find your key?")}{' '}
-					<a href={`https://dashboard.freemius.com/license-recovery/${product_id}/${slug}/`} target='_blank' rel='noopener noreferrer'>
-						{__('Recover license')}{externalIcon}
-					</a>
-					{' '}{__('or')}{' '}
-					<a href='https://freemius.com/help/documentation/wordpress-sdk/license-activation-issues/' target='_blank' rel='noopener noreferrer'>
-						{__('activation help')}{externalIcon}
-					</a>
+					{createInterpolateElement(
+						__("Can't find your key? <recover>Recover license</recover> or <help>activation help</help>"),
+						{
+							recover: <HelpLink href={`https://dashboard.freemius.com/license-recovery/${product_id}/${slug}/`} />,
+							help: <HelpLink href='https://freemius.com/help/documentation/wordpress-sdk/license-activation-issues/' />
+						}
+					)}
 				</p>}
 
 				{!isChangeLicense && <div className='actPermsBlock'>
-					<h4>{name}{' '}{__('needs the following to deliver updates & security patches')}</h4>
+					<h4>{sprintf(
+						/* translators: %s: Plugin name. */
+						__('%s needs the following to deliver updates & security patches'),
+						name
+					)}</h4>
 					<ul className='actPerms'>
 						<li>
 							<span className='actPermIcon'>{shieldIcon}</span>

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { __ } from '@wordpress/i18n';
 
 import useLicenseStatus from './useLicenseStatus';
 import useActivateLicense from './useActivateLicense';
@@ -46,7 +47,7 @@ const useLicense = (params = {}) => {
 	useEffect(() => {
 		const rawError = statusError || activationError || deactivationError;
 		if (rawError) {
-			const normalizedError = rawError?.message || (typeof rawError === 'string' ? rawError : 'An error occurred');
+			const normalizedError = rawError?.message || (typeof rawError === 'string' ? rawError : __('An error occurred'));
 			setError(normalizedError);
 		} else {
 			setError('');

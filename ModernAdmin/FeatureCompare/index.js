@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { __ } from '@wordpress/i18n';
 
 import './style.scss';
 import '../lib/fs';
@@ -64,15 +65,15 @@ const FeatureCompare = ({ plans: dp = ['free', 'pro'], freemius }) => {
 				let c = []
 				// eslint-disable-next-line no-prototype-builtins
 				if (singlePrices.hasOwnProperty('monthly')) {
-					c.push({ name: 'monthly', label: 'Billed Monthly' });
+					c.push({ name: 'monthly', label: __('Billed Monthly') });
 				}
 				// eslint-disable-next-line no-prototype-builtins
 				if (singlePrices.hasOwnProperty('annual')) {
-					c.push({ name: 'annual', label: 'Billed Yearly', isDefault: true });
+					c.push({ name: 'annual', label: __('Billed Yearly'), isDefault: true });
 				}
 				// eslint-disable-next-line no-prototype-builtins
 				if (singlePrices.hasOwnProperty('lifetime')) {
-					c.push({ name: 'lifetime', label: 'Lifetime' });
+					c.push({ name: 'lifetime', label: __('Lifetime') });
 				}
 				setCycles(c);
 				setCycle(c?.find(cc => cc.isDefault)?.name || c[0]?.name)
@@ -85,7 +86,7 @@ const FeatureCompare = ({ plans: dp = ['free', 'pro'], freemius }) => {
 
 	if (isProductLoading) {
 		return <div className='bPlDashboardBox' style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-			<h2>Loading...</h2>
+			<h2>{__('Loading...')}</h2>
 		</div>;
 	}
 
@@ -122,7 +123,7 @@ const FeatureCompare = ({ plans: dp = ['free', 'pro'], freemius }) => {
 	return <div className='bPlDashboardFeatureCompare bPlDashboardCard'>
 		<div className='featureComparePricing'>
 			<div className='cyclesSelector'>
-				<h2>Billing Cycle</h2>
+				<h2>{__('Billing Cycle')}</h2>
 
 				{cycles?.length > 1 ? <div className='cycles'>
 					{cycles.map(c => {
@@ -131,19 +132,24 @@ const FeatureCompare = ({ plans: dp = ['free', 'pro'], freemius }) => {
 						</button>;
 					})}
 				</div> :
-					(cycles[0]?.name === 'lifetime' && <h2 className='pricingTitle'>Lifetime Access</h2>)
+					(cycles[0]?.name === 'lifetime' && <h2 className='pricingTitle'>{__('Lifetime Access')}</h2>)
 				}
 			</div>
 
 			{plans?.map(({ id, name, title, pricing }) => {
 				const price = Array.isArray(pricing) ? pricing?.find(p => parseInt(p?.licenses) === 1)?.[cycle] : '0.00';
+				const licenseNote = {
+					monthly: __('1 site license for 1 month'),
+					annual: __('1 site license for 1 year'),
+					lifetime: __('1 site license for lifetime')
+				}[cycle] || '';
 
 				return <div key={id} className={`plan ${'free' === name ? 'free' : 'premium'}`}>
 					<div className='price'><h3>{title}</h3> ${price}</div>
 
-					<p className='note'>{'free' === name ? 'Free forever' : `1 site license for ${'monthly' === cycle ? '1 month' : ('annual' === cycle ? '1 year' : cycle)}`}</p>
+					<p className='note'>{'free' === name ? __('Free forever') : licenseNote}</p>
 
-					{'free' === name ? <Button href='#pricing'>It&apos;s Free, See Pricing</Button> : <Button onClick={e => {
+					{'free' === name ? <Button href='#pricing'>{__("It's Free, See Pricing")}</Button> : <Button onClick={e => {
 						e.preventDefault();
 
 						// eslint-disable-next-line no-undef
@@ -155,7 +161,7 @@ const FeatureCompare = ({ plans: dp = ['free', 'pro'], freemius }) => {
 							licenses: 1,
 							billing_cycle: cycle
 						});
-					}}>Get Started</Button>}
+					}}>{__('Get Started')}</Button>}
 				</div>
 			})}
 		</div>
@@ -163,7 +169,7 @@ const FeatureCompare = ({ plans: dp = ['free', 'pro'], freemius }) => {
 		<table>
 			<thead>
 				<tr>
-					<th>Features</th>
+					<th>{__('Features')}</th>
 					{plans.map(plan => <th key={plan.id}>
 						{/* {plan.title} */}
 					</th>)}

@@ -8,6 +8,7 @@
  * @returns {JSX.Element} React component
  */
 
+import { __ } from '@wordpress/i18n';
 import { PanelBody, RangeControl, SelectControl, ToggleControl, __experimentalNumberControl as NumberControl } from '@wordpress/components';
 import { produce } from 'immer';
 
@@ -15,16 +16,16 @@ import BoxControl from '../BoxControl/BoxControl';
 import AdvBackground from '../AdvBackground/AdvBackground';
 
 const blendOptions = [
-	{ label: 'Normal', value: 'normal' },
-	{ label: 'Multiply', value: 'multiply' },
-	{ label: 'Screen', value: 'screen' },
-	{ label: 'Overlay', value: 'overlay' },
-	{ label: 'Darken', value: 'darken' },
-	{ label: 'Lighten', value: 'lighten' },
-	{ label: 'Color Dodge', value: 'color-dodge' },
-	{ label: 'Saturation', value: 'saturation' },
-	{ label: 'Color', value: 'color' },
-	{ label: 'Luminosity', value: 'luminosity' },
+	{ label: __('Normal'), value: 'normal' },
+	{ label: __('Multiply'), value: 'multiply' },
+	{ label: __('Screen'), value: 'screen' },
+	{ label: __('Overlay'), value: 'overlay' },
+	{ label: __('Darken'), value: 'darken' },
+	{ label: __('Lighten'), value: 'lighten' },
+	{ label: __('Color Dodge'), value: 'color-dodge' },
+	{ label: __('Saturation'), value: 'saturation' },
+	{ label: __('Color'), value: 'color' },
+	{ label: __('Luminosity'), value: 'luminosity' },
 ];
 
 const positionDef = { top: 0, right: 0, bottom: 0, left: 0 }
@@ -43,36 +44,36 @@ const OverlayControl = (props) => {
 		onChange(newBG);
 	};
 
-	return <PanelBody title='Overlay' className='bPlPanelBody bPlOverlay mt20'>
-		<ToggleControl label='Enable' checked={isEnabled} value={isEnabled} onChange={(val) => updateOverlay('isEnabled', val)} __nextHasNoMarginBottom />
+	return <PanelBody title={__('Overlay')} className='bPlPanelBody bPlOverlay mt20'>
+		<ToggleControl label={__('Enable')} checked={isEnabled} value={isEnabled} onChange={(val) => updateOverlay('isEnabled', val)} __nextHasNoMarginBottom />
 
 		{isEnabled && <>
-			<AdvBackground name='Overlay' value={colors} onChange={(val) => updateOverlay('colors', val)} />
+			<AdvBackground name={__('Overlay')} value={colors} onChange={(val) => updateOverlay('colors', val)} />
 
-			<BoxControl label='Overlay Position' values={position} resetValues={positionDef} onChange={(val) => updateOverlay('position', val)} />
+			<BoxControl label={__('Overlay Position')} values={position} resetValues={positionDef} onChange={(val) => updateOverlay('position', val)} />
 
-			<RangeControl className='mt20' label='Opacity' value={opacity} onChange={(val) => updateOverlay('opacity', val)} min={0} max={1} step={0.01} />
+			<RangeControl className='mt20' label={__('Opacity')} value={opacity} onChange={(val) => updateOverlay('opacity', val)} min={0} max={1} step={0.01} />
 
-			<SelectControl className='mt20' label='Blend Mode' labelPosition='left' value={blend} onChange={(val) => updateOverlay('blend', val)} options={blendOptions} />
+			<SelectControl className='mt20' label={__('Blend Mode')} labelPosition='left' value={blend} onChange={(val) => updateOverlay('blend', val)} options={blendOptions} />
 
-			<SelectControl className='mt20 mb5' label='CSS Filter' labelPosition='left' value={filter} onChange={(val) => updateOverlay('filter', val)} options={[
-				{ label: 'None', value: '' },
-				{ label: 'Filter', value: 'filter' },
-				{ label: 'Backdrop Filter', value: 'backdrop-filter' }
+			<SelectControl className='mt20 mb5' label={__('CSS Filter')} labelPosition='left' value={filter} onChange={(val) => updateOverlay('filter', val)} options={[
+				{ label: __('None'), value: '' },
+				{ label: __('Filter'), value: 'filter' },
+				{ label: __('Backdrop Filter'), value: 'backdrop-filter' }
 			]} />
 
 			{filter && <>
-				<RangeControl className='mt15' label='Blur' value={blur} onChange={(val) => updateOverlay('blur', val)} min={0} max={20} />
+				<RangeControl className='mt15' label={__('Blur')} value={blur} onChange={(val) => updateOverlay('blur', val)} min={0} max={20} />
 
-				<RangeControl className='mt15' label='Brightness' value={brightness} onChange={(val) => updateOverlay('brightness', val)} min={0} max={200} />
+				<RangeControl className='mt15' label={__('Brightness')} value={brightness} onChange={(val) => updateOverlay('brightness', val)} min={0} max={200} />
 
-				<RangeControl className='mt15' label='Contrast' value={contrast} onChange={(val) => updateOverlay('contrast', val)} min={0} max={200} />
+				<RangeControl className='mt15' label={__('Contrast')} value={contrast} onChange={(val) => updateOverlay('contrast', val)} min={0} max={200} />
 
-				<RangeControl className='mt15' label='Saturation' value={saturation} onChange={(val) => updateOverlay('saturation', val)} min={0} max={200} />
+				<RangeControl className='mt15' label={__('Saturation')} value={saturation} onChange={(val) => updateOverlay('saturation', val)} min={0} max={200} />
 
-				<RangeControl className='mt15' label='Hue' value={hue} onChange={(val) => updateOverlay('hue', val)} min={0} max={360} />
+				<RangeControl className='mt15' label={__('Hue')} value={hue} onChange={(val) => updateOverlay('hue', val)} min={0} max={360} />
 			</>}
-			<NumberControl label="Z Index" labelPosition='edge' value={zIndex} onChange={val => updateOverlay('zIndex', val)} />
+			<NumberControl label={__('Z Index')} labelPosition='edge' value={zIndex} onChange={val => updateOverlay('zIndex', val)} />
 		</>}
 	</PanelBody>
 };

@@ -5,6 +5,7 @@
 	*/
 
 import { useRef, useState, useEffect } from 'react';
+import { __ } from '@wordpress/i18n';
 
 import './style.scss';
 import { minusIcon, plusIcon } from '../../utils/icons';
@@ -48,7 +49,7 @@ const Changelog = (props) => {
 	return changelogs?.length && <div className='bPlDashboardChangelog bPlDashboardBox'>
 		<div className='toggleArea'>
 			<h2 className='headerArea' onClick={() => setIsChangelogs(!isChangelogs)}>
-				Release Notes(Changelog)...
+				{__('Release Notes(Changelog)...')}
 
 				{isChangelogs ? minusIcon : plusIcon}
 			</h2>

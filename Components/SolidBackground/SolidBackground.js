@@ -9,6 +9,7 @@
 	*/
 
 import { useState } from 'react';
+import { __ } from '@wordpress/i18n';
 import { withSelect } from '@wordpress/data';
 import { Button, Dropdown, GradientPicker } from '@wordpress/components';
 
@@ -19,7 +20,7 @@ import './style.css';
 import { gradient } from '../../utils/data';
 
 const SolidBackground = (props) => {
-	const { label = 'Color', value, onChange = () => { }, className = '', gradients } = props;
+	const { label = __('Color'), value, onChange = () => { }, className = '', gradients } = props;
 	const [tab, setTab] = useState('solid');
 	const id = Math.floor(Math.random() * 9999999);
 
@@ -49,12 +50,12 @@ const SolidBackground = (props) => {
 
 				renderContent={({ isOpen, onToggle, onClose }) => (
 					<div className='panel-custom-color-control-container'>
-						<BButtonGroup label='Type:' options={[{ label: 'Solid', value: 'solid' }, { label: 'Gradient', value: 'gradient' }]} value={tab} onChange={(val) => setTab(val)} />
+						<BButtonGroup label={__('Type:')} options={[{ label: __('Solid'), value: 'solid' }, { label: __('Gradient'), value: 'gradient' }]} value={tab} onChange={(val) => setTab(val)} />
 
 						{tab === 'solid' && <div style={{ marginTop: '20px' }}>
 							<ColorControl
 								value={value}
-								label='Color :'
+								label={__('Color:')}
 								onChange={(value) => onChange(value)}
 							/>
 						</div>}

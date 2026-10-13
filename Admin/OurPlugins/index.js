@@ -9,7 +9,8 @@
 import { useEffect, useMemo, useState } from 'react';
 import { withSelect } from '@wordpress/data';
 import apiFetch from '@wordpress/api-fetch';
-import { __ } from '@wordpress/i18n';
+import { __, _n, sprintf } from '@wordpress/i18n';
+import { createInterpolateElement } from '@wordpress/element';
 
 import { sanitizeHTML } from '../../utils/common';
 import Button from '../../Components/Button/Button';
@@ -49,13 +50,15 @@ const getDisplayName = (name) => {
 	return decoded.split(/\s*[–\-—]\s*/)[0].trim();
 };
 
-// A regex tag stripper is single-pass, so overlapping tags survive it
-// (`<<a>img src=x onerror=...>` leaves a live <img> behind). This markup
-// comes from wordpress.org, so it is parsed and filtered properly instead.
+const stripTags = (s) => (s || '').replace(/<[^>]+>/g, '');
 
 const StarRow = ({ rating = 0 }) => {
 	const stars = Math.round(rating / 20);
-	return <span className='ourPlugStars' aria-label={`${(rating / 20).toFixed(1)} out of 5`}>
+	return <span className='ourPlugStars' aria-label={sprintf(
+		/* translators: %s: Plugin rating, e.g. 4.5. */
+		__('%s out of 5'),
+		(rating / 20).toFixed(1)
+	)}>
 		{[1, 2, 3, 4, 5].map((i) => (
 			<svg key={i} viewBox='0 0 24 24' width={13} height={13} fill={i <= stars ? '#fbbf24' : '#e5e7eb'}>
 				<path d='M12 2l2.39 6.95L22 9.27l-5.45 4.73L18.18 22 12 17.77 5.82 22l1.63-7.99L2 9.27l7.61-.32L12 2z' />
@@ -257,9 +260,20 @@ const OurPlugins = ({ slug, slugs: allSlugs = DEFAULT_SLUGS, installedPlugins })
 		</div>
 
 		<p className='ourPlugCount'>
-			<strong>{filteredSorted.length}</strong>{' '}
-			{filteredSorted.length === 1 ? __('plugin') : __('plugins')}
-			{search && ` ${__('matching')} "${search}"`}
+			{createInterpolateElement(
+				search
+					? sprintf(
+						/* translators: %d: Number of plugins. <search /> is replaced with the search term. */
+						_n('<strong>%d</strong> plugin matching "<search />"', '<strong>%d</strong> plugins matching "<search />"', filteredSorted.length),
+						filteredSorted.length
+					)
+					: sprintf(
+						/* translators: %d: Number of plugins. */
+						_n('<strong>%d</strong> plugin', '<strong>%d</strong> plugins', filteredSorted.length),
+						filteredSorted.length
+					),
+				{ strong: <strong />, search: <>{search}</> }
+			)}
 		</p>
 
 		{filteredSorted.length === 0

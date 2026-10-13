@@ -6,7 +6,8 @@
 	* @props demoInfo (required): {demos, allInOneLabel?, allInOneLink?} demo data (Object)
 	*/
 
-import { __, sprintf } from '@wordpress/i18n';
+import { __, _n, sprintf } from '@wordpress/i18n';
+import { createInterpolateElement } from '@wordpress/element';
 import { useEffect, useMemo, useState } from 'react';
 
 import { searchIcon, closeIcon, externalIcon, arrowRightIcon, chevronLeftIcon, chevronRightIcon } from '../utils/icons';
@@ -78,6 +79,46 @@ const Demos = ({ name, isPremium, demoInfo }) => {
 
 	const active = openIndex !== null ? filtered[openIndex] : null;
 
+	// One whole sentence per filter combination. The search term is user input,
+	// so it goes in as an element rather than into the parsed string.
+	const countText = (() => {
+		const count = filtered.length;
+		const inCategory = activeCategory !== 'All';
+		const isSearching = !!search.trim();
+
+		if (inCategory && isSearching) {
+			return sprintf(
+				/* translators: 1: Number of demos, 2: Demo category name. <search /> is replaced with the search term. */
+				_n('<strong>%1$d</strong> demo in %2$s matching "<search />"', '<strong>%1$d</strong> demos in %2$s matching "<search />"', count),
+				count,
+				activeCategory
+			);
+		}
+
+		if (inCategory) {
+			return sprintf(
+				/* translators: 1: Number of demos, 2: Demo category name. */
+				_n('<strong>%1$d</strong> demo in %2$s', '<strong>%1$d</strong> demos in %2$s', count),
+				count,
+				activeCategory
+			);
+		}
+
+		if (isSearching) {
+			return sprintf(
+				/* translators: %d: Number of demos. <search /> is replaced with the search term. */
+				_n('<strong>%d</strong> demo matching "<search />"', '<strong>%d</strong> demos matching "<search />"', count),
+				count
+			);
+		}
+
+		return sprintf(
+			/* translators: %d: Number of demos. */
+			_n('<strong>%d</strong> demo', '<strong>%d</strong> demos', count),
+			count
+		);
+	})();
+
 	useEffect(() => {
 		if (active) setIframeLoading(true);
 	}, [active?.url]);
@@ -102,7 +143,11 @@ const Demos = ({ name, isPremium, demoInfo }) => {
 	return <div className='bPlDashboardDemos'>
 		<header className='hero'>
 			<span className='eyebrow'>{__('Live Demos')}</span>
-			<h1>{sprintf(__('See the %s in action'), name)}</h1>
+			<h1>{sprintf(
+				/* translators: %s: Plugin name. */
+				__('See the %s in action'),
+				name
+			)}</h1>
 			<p>{__('Browse ready-made demos - click any card to open a live, interactive preview.')}</p>
 		</header>
 
@@ -112,10 +157,10 @@ const Demos = ({ name, isPremium, demoInfo }) => {
 				<input
 					type='text'
 					value={search}
-					placeholder='Search demos…'
+					placeholder={__('Search demos…')}
 					onChange={e => setSearch(e.target.value)}
 				/>
-				{search && <button className='searchClear' onClick={() => setSearch('')} aria-label='Clear search'>×</button>}
+				{search && <button className='searchClear' onClick={() => setSearch('')} aria-label={__('Clear search')}>×</button>}
 			</div>
 
 			<div className='chips' role='tablist'>
@@ -129,22 +174,20 @@ const Demos = ({ name, isPremium, demoInfo }) => {
 					onClick={() => setActiveCategory(cat)}
 				>
 					<span className='chipDot' />
-					{cat}
+					{'All' === cat ? __('All') : cat}
 				</button>)}
 			</div>
 		</div>
 
 		<p className='count'>
-			<strong>{filtered.length}</strong> {filtered.length === 1 ? 'demo' : 'demos'}
-			{activeCategory !== 'All' && ` in ${activeCategory}`}
-			{search.trim() && ` matching "${search}"`}
+			{createInterpolateElement(countText, { strong: <strong />, search: <>{search}</> })}
 		</p>
 
 		{filtered.length === 0
 			? <div className='empty'>
 				{searchIcon}
-				<h3>No demos found</h3>
-				<p>Try a different search or category.</p>
+				<h3>{__('No demos found')}</h3>
+				<p>{__('Try a different search or category.')}</p>
 			</div>
 			: <div className='grid'>
 				{filtered.map((card, i) => <button
@@ -164,7 +207,7 @@ const Demos = ({ name, isPremium, demoInfo }) => {
 					<span className='cardCat'>{card.category}</span>
 					<h3 className='cardTitle'>{card.title}</h3>
 					<span className='cardAction'>
-						Preview
+						{__('Preview')}
 						{arrowRightIcon}
 					</span>
 				</button>)}
@@ -179,34 +222,43 @@ const Demos = ({ name, isPremium, demoInfo }) => {
 					<div className='modalTitleWrap'>
 						{active.accent && <span className='modalCat' style={{ background: active.accent }}>{active.category}</span>}
 						<h2>{active.title}</h2>
-						<span className='modalProgress'>{openIndex + 1} of {filtered.length}</span>
+						<span className='modalProgress'>{sprintf(
+							/* translators: 1: Current demo position, 2: Total number of demos. */
+							__('%1$d of %2$d'),
+							openIndex + 1,
+							filtered.length
+						)}</span>
 					</div>
 
 					<div className='modalActions'>
 						<a className='modalOpen' href={active.url} target='_blank' rel='noopener noreferrer'>
-							Open in new tab
+							{__('Open in new tab')}
 							{externalIcon}
 						</a>
-						<button className='modalClose' onClick={() => setOpenIndex(null)} aria-label='Close demo'>
+						<button className='modalClose' onClick={() => setOpenIndex(null)} aria-label={__('Close demo')}>
 							{closeIcon}
 						</button>
 					</div>
 				</header>
 
 				<div className='modalStage'>
-					{openIndex > 0 && <button className='modalNav modalNavPrev' onClick={() => setOpenIndex(openIndex - 1)} aria-label='Previous demo'>
+					{openIndex > 0 && <button className='modalNav modalNavPrev' onClick={() => setOpenIndex(openIndex - 1)} aria-label={__('Previous demo')}>
 						{chevronLeftIcon}
 					</button>}
 
 					{iframeLoading && <div className='iframeLoader'>
 						<div className='spinner' />
-						<span>Loading demo…</span>
+						<span>{__('Loading demo…')}</span>
 					</div>}
 
 					{active.type === 'iframe'
 						? <iframe
 							src={active.url}
-							title={`${active.title} demo`}
+							title={sprintf(
+								/* translators: %s: Demo title. */
+								__('%s demo'),
+								active.title
+							)}
 							sandbox='allow-scripts allow-same-origin allow-popups allow-forms'
 							onLoad={() => setIframeLoading(false)}
 						/>
@@ -215,7 +267,7 @@ const Demos = ({ name, isPremium, demoInfo }) => {
 						</div>
 					}
 
-					{openIndex < filtered.length - 1 && <button className='modalNav modalNavNext' onClick={() => setOpenIndex(openIndex + 1)} aria-label='Next demo'>
+					{openIndex < filtered.length - 1 && <button className='modalNav modalNavNext' onClick={() => setOpenIndex(openIndex + 1)} aria-label={__('Next demo')}>
 						{chevronRightIcon}
 					</button>}
 				</div>

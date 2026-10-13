@@ -6,6 +6,8 @@
 	* @props helpItems (optional): override default help cards; each {image?, titleIcon?, title, description, link, linkText} (Array)
 	*/
 
+import { __ } from '@wordpress/i18n';
+
 import Button from '../../../Components/Button/Button';
 import { facebookIcon } from '../../utils/icons';
 
@@ -13,29 +15,29 @@ import './style.scss';
 
 const defaultHelpItems = (slug, pages) => [
 	{
-		title: 'Need any Assistance?',
-		description: 'Our Expert Support Team is always ready to help you out promptly.',
+		title: __('Need any Assistance?'),
+		description: __('Our Expert Support Team is always ready to help you out promptly.'),
 		link: 'https://bplugins.com/support',
-		linkText: 'Contact Support'
+		linkText: __('Contact Support')
 	},
 	{
 		titleIcon: facebookIcon,
-		title: 'Join Our Community',
-		description: 'Get tutorials, plugin updates, feature announcements, and support from other WordPress users.',
+		title: __('Join Our Community'),
+		description: __('Get tutorials, plugin updates, feature announcements, and support from other WordPress users.'),
 		link: 'https://facebook.com/groups/1828495198556137',
-		linkText: 'Join Now →'
+		linkText: __('Join Now →')
 	},
 	{
-		title: 'Request a Feature',
-		description: 'Have an idea that would make this plugin even better? Let us know — we love hearing from you.',
+		title: __('Request a Feature'),
+		description: __('Have an idea that would make this plugin even better? Let us know — we love hearing from you.'),
 		link: 'https://bplugins.com/support/',
-		linkText: 'Submit Request →'
+		linkText: __('Submit Request →')
 	},
 	{
-		title: 'Loving This Plugin? ⭐',
-		description: "We're a small team pouring our heart into this plugin — your honest review keeps us going and helps others discover it. It only takes 30 seconds.",
+		title: __('Loving This Plugin? ⭐'),
+		description: __("We're a small team pouring our heart into this plugin — your honest review keeps us going and helps others discover it. It only takes 30 seconds."),
 		link: slug ? `https://wordpress.org/support/plugin/${slug}/reviews/#new-post` : '',
-		linkText: 'Leave a Review'
+		linkText: __('Leave a Review')
 	}
 ];
 
@@ -59,5 +61,4 @@ const Info = ({ slug, pages, helpItems }) => {
 		</div>)}
 	</div>;
 };
-
 export default Info;

@@ -6,6 +6,7 @@
 	*/
 
 import { useEffect, useState } from 'react';
+import { __, _n, sprintf } from '@wordpress/i18n';
 
 import Button from '../../Components/Button/Button';
 
@@ -77,15 +78,15 @@ const Pricing = ({ pricingInfo, options }) => {
 				let c = []
 				// eslint-disable-next-line no-prototype-builtins
 				if (singlePrices.hasOwnProperty('monthly')) {
-					c.push({ name: 'monthly', label: 'Billed Monthly' });
+					c.push({ name: 'monthly', label: __('Billed Monthly') });
 				}
 				// eslint-disable-next-line no-prototype-builtins
 				if (singlePrices.hasOwnProperty('annual')) {
-					c.push({ name: 'annual', label: 'Billed Yearly', isDefault: true });
+					c.push({ name: 'annual', label: __('Billed Yearly'), isDefault: true });
 				}
 				// eslint-disable-next-line no-prototype-builtins
 				if (singlePrices.hasOwnProperty('lifetime')) {
-					c.push({ name: 'lifetime', label: 'Lifetime' });
+					c.push({ name: 'lifetime', label: __('Lifetime') });
 				}
 				setCycles(c);
 				setCycle(c?.find(cc => cc.isDefault)?.name || c[0]?.name)
@@ -98,7 +99,7 @@ const Pricing = ({ pricingInfo, options }) => {
 
 	if (isProductLoading) {
 		return <div className='bPlDashboardPricing bPlDashboardBox'>
-			<h2>Loading...</h2>
+			<h2>{__('Loading...')}</h2>
 		</div>;
 	}
 
@@ -119,18 +120,38 @@ const Pricing = ({ pricingInfo, options }) => {
 			})}
 		</div>}
 
-		{cycles?.length === 1 && cycles[0]?.name === 'lifetime' && <h2 className='pricingTitle'>One-time payment, lifetime access</h2>}
+		{cycles?.length === 1 && cycles[0]?.name === 'lifetime' && <h2 className='pricingTitle'>{__('One-time payment, lifetime access')}</h2>}
 
 		<div className='plans'>
 			{pricing?.length ?
 				pricing?.map((price, index) => licenses.includes(price?.licenses) && <Plan key={index} {...{ pricingInfo, product, price, cycle, options }} />) :
 
-				<h3 style={{ gridColumn: `1 / -1`, textAlign: 'center' }}>Select a plan</h3>
+				<h3 style={{ gridColumn: `1 / -1`, textAlign: 'center' }}>{__('Select a plan')}</h3>
 			}
 		</div>
 	</div>
 };
 export default Pricing;
+
+// Whole sentence per license count and billing cycle, e.g. "3 sites license for 1 year"
+const getLicenseNote = (licenses, cycle) => {
+	if (!licenses) {
+		if ('monthly' === cycle) return __('Unlimited site license for 1 month');
+		if ('annual' === cycle) return __('Unlimited site license for 1 year');
+		return __('Unlimited site license for lifetime');
+	}
+
+	if ('monthly' === cycle) {
+		/* translators: %d: Number of sites. */
+		return sprintf(_n('%d site license for 1 month', '%d sites license for 1 month', licenses), licenses);
+	}
+	if ('annual' === cycle) {
+		/* translators: %d: Number of sites. */
+		return sprintf(_n('%d site license for 1 year', '%d sites license for 1 year', licenses), licenses);
+	}
+	/* translators: %d: Number of sites. */
+	return sprintf(_n('%d site license for lifetime', '%d sites license for lifetime', licenses), licenses);
+};
 
 const Plan = ({ pricingInfo, product, price, cycle, options }) => {
 	const { logo, planId, button, featured } = pricingInfo;
@@ -139,7 +160,11 @@ const Plan = ({ pricingInfo, product, price, cycle, options }) => {
 
 	const amount = price?.[cycle] + '';
 
-	const name = !licenses ? 'Unlimited Sites' : (licenses === 1 ? 'Single Site' : `${licenses} Sites`);
+	const name = !licenses ? __('Unlimited Sites') : (licenses === 1 ? __('Single Site') : sprintf(
+		/* translators: %d: Number of sites. */
+		_n('%d Site', '%d Sites', licenses),
+		licenses
+	));
 	const isFeatured = featured?.selected === (licenses || 'null');
 
 	return <div className={`plan ${isFeatured ? 'bestValue' : ''}`} data-best-text={featured?.text}>
@@ -149,7 +174,7 @@ const Plan = ({ pricingInfo, product, price, cycle, options }) => {
 			${amount}
 		</div>
 
-		<p className='note'>{!licenses ? 'Unlimited site' : (licenses === 1 ? '1 site' : `${licenses} sites`)} license for {'monthly' === cycle ? '1 month' : ('annual' === cycle ? '1 year' : cycle)}</p>
+		<p className='note'>{getLicenseNote(licenses, cycle)}</p>
 
 		<ul className={`wp-block-list features checkList ${isFeatured ? 'whiteCheck' : 'themeCheck'}`}>
 			{getFeatures(product.plans, planId).map((f, i) => <li key={i} dangerouslySetInnerHTML={{ __html: f }} />)}

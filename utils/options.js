@@ -6,14 +6,14 @@ export const normalHoverTabs = [
 ];
 
 export const borderStyles = [
-	{ label: 'Solid', value: 'solid' },
-	{ label: 'Dashed', value: 'dashed' },
-	{ label: 'Dotted', value: 'dotted' },
-	{ label: 'Double', value: 'double' },
-	{ label: 'Groove', value: 'groove' },
-	{ label: 'Inset', value: 'inset' },
-	{ label: 'Outset', value: 'outset' },
-	{ label: 'Ridge', value: 'ridge' }
+	{ label: __('Solid'), value: 'solid' },
+	{ label: __('Dashed'), value: 'dashed' },
+	{ label: __('Dotted'), value: 'dotted' },
+	{ label: __('Double'), value: 'double' },
+	{ label: __('Groove'), value: 'groove' },
+	{ label: __('Inset'), value: 'inset' },
+	{ label: __('Outset'), value: 'outset' },
+	{ label: __('Ridge'), value: 'ridge' }
 ];
 
 export const pxUnit = (def = 0) => ({ value: 'px', label: 'px', default: def });
@@ -24,58 +24,58 @@ export const vwUnit = (def = 0) => ({ value: 'vw', label: 'vw', default: def });
 export const vhUnit = (def = 0) => ({ value: 'vh', label: 'vh', default: def });
 
 export const sides = [
-	{ value: 'all', label: 'All Sides' },
-	{ value: 'top', label: 'Top' },
-	{ value: 'right', label: 'Right' },
-	{ value: 'bottom', label: 'Bottom' },
-	{ value: 'left', label: 'Left' },
-	{ value: 'topRight', label: 'Top Right' },
-	{ value: 'topBottom', label: 'Top Bottom' },
-	{ value: 'topLeft', label: 'Top Left' },
-	{ value: 'topRightBottom', label: 'Top Right Bottom' },
-	{ value: 'topRightLeft', label: 'Top Right Left' },
-	{ value: 'topBottomLeft', label: 'Top Bottom Left' },
-	{ value: 'rightBottom', label: 'Right Bottom' },
-	{ value: 'rightLeft', label: 'Right Left' },
-	{ value: 'rightBottomLeft', label: 'Right Bottom Left' },
-	{ value: 'bottomLeft', label: 'Bottom Left' }
+	{ value: 'all', label: __('All Sides') },
+	{ value: 'top', label: __('Top') },
+	{ value: 'right', label: __('Right') },
+	{ value: 'bottom', label: __('Bottom') },
+	{ value: 'left', label: __('Left') },
+	{ value: 'topRight', label: __('Top Right') },
+	{ value: 'topBottom', label: __('Top Bottom') },
+	{ value: 'topLeft', label: __('Top Left') },
+	{ value: 'topRightBottom', label: __('Top Right Bottom') },
+	{ value: 'topRightLeft', label: __('Top Right Left') },
+	{ value: 'topBottomLeft', label: __('Top Bottom Left') },
+	{ value: 'rightBottom', label: __('Right Bottom') },
+	{ value: 'rightLeft', label: __('Right Left') },
+	{ value: 'rightBottomLeft', label: __('Right Bottom Left') },
+	{ value: 'bottomLeft', label: __('Bottom Left') }
 ];
 
 export const gradients = [
 	{
-		name: 'Rose Pink',
+		name: __('Rose Pink'),
 		slug: 'rose-pink',
 		gradient: 'linear-gradient(135deg, #F64C7F, #FC8CAD)'
 	},
 	{
-		name: 'Sky Blue',
+		name: __('Sky Blue'),
 		slug: 'sky-blue',
 		gradient: 'linear-gradient(135deg, #0040E3, #18D4FD)'
 	},
 	{
-		name: 'Sunset Orange',
+		name: __('Sunset Orange'),
 		slug: 'sunset-orange',
 		gradient: 'linear-gradient(135deg, #E47B00, #FFB460)'
 	},
 	{
-		name: 'Emerald Green',
+		name: __('Emerald Green'),
 		slug: 'emerald-green',
 		gradient: 'linear-gradient(135deg, #0B8E41, #34E074)'
 	},
 	{
-		name: 'Lavender Red',
+		name: __('Lavender Red'),
 		slug: 'lavender-red',
 		gradient: 'linear-gradient(135deg, #8237FF, #EF6D7F)'
 	},
 	{
-		name: 'Violet Purple',
+		name: __('Violet Purple'),
 		slug: 'violet-purple',
 		gradient: 'linear-gradient(135deg, #856BFE, #A997F7)'
 	}
 ];
 export const bgTypes = [
-	{ label: 'Solid', value: 'solid' },
-	{ label: 'Gradient', value: 'gradient' }
+	{ label: __('Solid'), value: 'solid' },
+	{ label: __('Gradient'), value: 'gradient' }
 ];
 
 export const overflows = [

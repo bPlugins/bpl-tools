@@ -98,6 +98,35 @@ domReady(mountTemplateLibrary);
 - **nonce** (string): WordPress AJAX nonce for security
 - **isPremium** (boolean): Whether user has pro access (default: false)
 
+## Analytics
+
+The pattern library at templates.bplugins.com counts template imports and
+favourites, but only when your plugin tells it. It also counts catalog
+requests automatically, from the `plugin`, `type` and `category` parameters of
+every listing call that asks for template content.
+
+Your plugin's PHP handlers send the events. Each one is a non-blocking POST,
+so the user never waits for it:
+
+```
+POST https://templates.bplugins.com/wp-json/gutenberg-templates/v1/track
+event=download|favorite|unfavorite  id=<pattern ID>  plugin=<your plugin slug>
+```
+
+- **`{ajaxActionImport}`** now receives `id` (the pattern ID) and `type`
+  (`patterns` or `pages`) alongside `original_content`. After a successful
+  import, send `event=download` with that `id`.
+- **`{prefix}_template_favorites`** receives the full favourites list. Compare
+  it with the stored option before saving, then send `event=favorite` for each
+  ID that was added and `event=unfavorite` for each ID that was removed.
+
+Unpublished or unknown pattern IDs get a 404 and are not counted. The library
+throttles each IP to 120 events a minute.
+
+`advanced-post-block/includes/Templates/Templates.php` is the reference
+implementation: see `track_event()` and `api_base()`. `api_base()` reads a
+filter, so a local copy of the library can be used while developing.
+
 ## Theming
 
 All colors are exposed as `--bpl-template-*` CSS variables with built-in defaults. Override them from any stylesheet loaded in the editor — e.g. your plugin's template-library entry (`src/template-library/style.scss`):

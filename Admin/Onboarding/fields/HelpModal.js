@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 
 import useModalDismiss from '../useModalDismiss';
 import { infoIcon, closeIcon } from '../../utils/icons';
@@ -39,7 +39,11 @@ const HelpModal = ({ help, label = '' }) => {
 			ref={triggerRef}
 			className='fieldHelpTrigger'
 			onClick={() => setIsOpen(true)}
-			aria-label={label ? `${__('What is')} “${label}”?` : __('More information')}
+			aria-label={label ? sprintf(
+				/* translators: %s: Setting label. */
+				__('What is “%s”?'),
+				label
+			) : __('More information')}
 		>
 			{infoIcon}
 		</button>

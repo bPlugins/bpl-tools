@@ -60,7 +60,7 @@ const IconLibrary = ({ className = '', label = __('Icon Library'), value, onChan
 	const scrollRef = useRef(null);
 
 	const items = [
-		{ label: 'All Icons', value: 'all' },
+		{ label: __('All Icons'), value: 'all' },
 		{ label: 'Font Awesome', value: 'fontawesome' },
 		{ label: 'Bootstrap', value: 'bootstrap' },
 		{ label: 'Lucid Icons', value: 'lucid' },
@@ -109,12 +109,12 @@ const IconLibrary = ({ className = '', label = __('Icon Library'), value, onChan
 
 	const icons = useMemo(() => {
 		if (!iconSets) {
-			return { label: 'All Icons', icons: [] };
+			return { label: __('All Icons'), icons: [] };
 		}
 
 		return iconLibrary !== 'all'
 			? library[iconLibrary]
-			: { label: 'All Icons', icons: [...iconSets.fontawesome, ...iconSets.bootstrap, ...iconSets.lucid] };
+			: { label: __('All Icons'), icons: [...iconSets.fontawesome, ...iconSets.bootstrap, ...iconSets.lucid] };
 	}, [iconSets, iconLibrary, library]);
 
 	const handleSearch = useMemo(() => debounce((sq) => {
@@ -192,7 +192,7 @@ const IconLibrary = ({ className = '', label = __('Icon Library'), value, onChan
 					<div className={`${prefix}HeaderLogo`}>
 						<LogoSmall />
 
-						<h3>Icon Library</h3>
+						<h3>{__('Icon Library')}</h3>
 					</div>
 
 					<div className={`${prefix}HeaderClose`}>
@@ -211,7 +211,7 @@ const IconLibrary = ({ className = '', label = __('Icon Library'), value, onChan
 
 					<div className={`${prefix}Main`}>
 						<div className={`${prefix}Search`}>
-							<input value={searchQuery} onChange={handleInputChange} type='text' className={`${prefix}SearchInput`} placeholder='Filter by name...' disabled={!iconSets} />
+							<input value={searchQuery} onChange={handleInputChange} type='text' className={`${prefix}SearchInput`} placeholder={__('Filter by name...')} disabled={!iconSets} />
 
 							<MagnifyingGlass className={`${prefix}SearchIcon`} />
 						</div>
@@ -247,7 +247,7 @@ const IconLibrary = ({ className = '', label = __('Icon Library'), value, onChan
 					<button className={`${prefix}FooterInsert`} onClick={() => {
 						onChange(selectIcon);
 						setIsOpen(false);
-					}}>Insert</button>
+					}}>{__('Insert')}</button>
 				</div>
 			</div>
 		</div>}

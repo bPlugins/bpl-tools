@@ -6,6 +6,7 @@
 	* @props device (optional): The device type (e.g., 'desktop', 'tablet', 'mobile') (String)
 	*/
 
+import { __ } from '@wordpress/i18n';
 import { PanelRow, RangeControl, ToggleControl, __experimentalUnitControl as UnitControl } from '@wordpress/components';
 import { withSelect } from '@wordpress/data';
 
@@ -18,26 +19,26 @@ const AdvTransform = ({ value = {}, onChange = () => { }, device }) => {
 	const { rotate = {}, offset = {}, scale = {}, skew = {}, flipX = false, flipY = false } = value || {};
 
 	return <>
-		<CustomPopover value={rotate} onClick={(val) => onChange({ ...value, rotate: val })} icon='edit' label='Rotate' resetValues={rotateResetValue}>
+		<CustomPopover value={rotate} onClick={(val) => onChange({ ...value, rotate: val })} icon='edit' label={__('Rotate')} resetValues={rotateResetValue}>
 			<PanelRow>
-				<Label className='mt0'>Rotate (deg)</Label>
+				<Label className='mt0'>{__('Rotate (deg)')}</Label>
 				<Device />
 			</PanelRow>
 
 			<RangeControl className='bPlPanelBody' value={rotate?.[device]?.z} min={-360} max={360} onChange={(val) => onChange({ ...value, rotate: { ...value.rotate, [device]: { ...value.rotate[device], z: val } } })} />
 
-			<ToggleControl className='bPlPanelBody' label='3D Rotate' defaultChecked={false} defaultValue={false} checked={rotate?.threeDRotate} value={rotate?.threeDRotate} onChange={(val) => onChange({ ...value, rotate: { ...value.rotate, threeDRotate: val } })} __nextHasNoMarginBottom />
+			<ToggleControl className='bPlPanelBody' label={__('3D Rotate')} defaultChecked={false} defaultValue={false} checked={rotate?.threeDRotate} value={rotate?.threeDRotate} onChange={(val) => onChange({ ...value, rotate: { ...value.rotate, threeDRotate: val } })} __nextHasNoMarginBottom />
 
 			{rotate?.threeDRotate && <>
 				<PanelRow>
-					<Label className='mt0'>Rotate X (deg)</Label>
+					<Label className='mt0'>{__('Rotate X (deg)')}</Label>
 					<Device />
 				</PanelRow>
 
 				<RangeControl className='bPlPanelBody' value={rotate?.[device]?.x} min={-360} max={360} onChange={(val) => onChange({ ...value, rotate: { ...value.rotate, [device]: { ...value.rotate[device], x: val } } })} />
 
 				<PanelRow>
-					<Label className='mt0'>Rotate Y (deg)</Label>
+					<Label className='mt0'>{__('Rotate Y (deg)')}</Label>
 					<Device />
 				</PanelRow>
 
@@ -46,14 +47,14 @@ const AdvTransform = ({ value = {}, onChange = () => { }, device }) => {
 		</CustomPopover>
 
 
-		<CustomPopover value={offset} resetValues={offsetResetValue} onClick={(val) => onChange({ ...value, offset: val })} className='bPlPanelBody' icon='edit' label='Offset'>
-			<PanelRow> <Label className='mt0'>Offset X</Label> <Device />
+		<CustomPopover value={offset} resetValues={offsetResetValue} onClick={(val) => onChange({ ...value, offset: val })} className='bPlPanelBody' icon='edit' label={__('Offset')}>
+			<PanelRow> <Label className='mt0'>{__('Offset X')}</Label> <Device />
 			</PanelRow>
 
 			<UnitControl value={offset?.[device]?.x} min={-1000} max={1000} onChange={(val) => onChange({ ...value, offset: { ...value.offset, [device]: { ...value.offset[device], x: val } } })} />
 
 			<PanelRow>
-				<Label className='mt0'>Offset Y</Label>
+				<Label className='mt0'>{__('Offset Y')}</Label>
 				<Device />
 			</PanelRow>
 
@@ -61,12 +62,12 @@ const AdvTransform = ({ value = {}, onChange = () => { }, device }) => {
 		</CustomPopover>
 
 
-		<CustomPopover value={scale} resetValues={scaleResetValue} onClick={(val) => onChange({ ...value, scale: val })} icon='edit' label='Scale'>
-			<ToggleControl className='bPlPanelBody' label='Keep Proportions' defaultChecked={false} defaultValue={false} checked={scale?.isProportion} value={scale?.isProportion} onChange={(val) => onChange({ ...value, scale: { ...value.scale, isProportion: val } })} __nextHasNoMarginBottom />
+		<CustomPopover value={scale} resetValues={scaleResetValue} onClick={(val) => onChange({ ...value, scale: val })} icon='edit' label={__('Scale')}>
+			<ToggleControl className='bPlPanelBody' label={__('Keep Proportions')} defaultChecked={false} defaultValue={false} checked={scale?.isProportion} value={scale?.isProportion} onChange={(val) => onChange({ ...value, scale: { ...value.scale, isProportion: val } })} __nextHasNoMarginBottom />
 
 			{scale?.isProportion ? <>
 				<PanelRow>
-					<Label className='mt0'>Scale</Label>
+					<Label className='mt0'>{__('Scale')}</Label>
 					<Device />
 				</PanelRow>
 
@@ -74,14 +75,14 @@ const AdvTransform = ({ value = {}, onChange = () => { }, device }) => {
 			</> :
 				<>
 					<PanelRow>
-						<Label className='mt0'>Scale X</Label>
+						<Label className='mt0'>{__('Scale X')}</Label>
 						<Device />
 					</PanelRow>
 
 					<RangeControl className='bPlPanelBody' value={scale?.[device]?.x} step={0.1} min={0} max={5} onChange={(val) => onChange({ ...value, scale: { ...value.scale, [device]: { ...value.scale[device], x: val } } })} />
 
 					<PanelRow>
-						<Label className='mt0'>Scale Y</Label>
+						<Label className='mt0'>{__('Scale Y')}</Label>
 						<Device />
 					</PanelRow>
 
@@ -90,16 +91,16 @@ const AdvTransform = ({ value = {}, onChange = () => { }, device }) => {
 		</CustomPopover>
 
 
-		<CustomPopover value={skew} resetValues={skewResetValue} onClick={(val) => onChange({ ...value, skew: val })} icon='edit' label='Skew'>
+		<CustomPopover value={skew} resetValues={skewResetValue} onClick={(val) => onChange({ ...value, skew: val })} icon='edit' label={__('Skew')}>
 			<PanelRow>
-				<Label className='mt0'>Skew X (deg)</Label>
+				<Label className='mt0'>{__('Skew X (deg)')}</Label>
 				<Device />
 			</PanelRow>
 
 			<RangeControl className='bPlPanelBody' defaultValue={0} min={-360} max={360} value={skew?.[device]?.x} onChange={(val) => onChange({ ...value, skew: { ...value.skew, [device]: { ...value.skew[device], x: val } } })} />
 
 			<PanelRow>
-				<Label className='mt0'>Skew Y (deg)</Label>
+				<Label className='mt0'>{__('Skew Y (deg)')}</Label>
 				<Device />
 			</PanelRow>
 
@@ -107,9 +108,9 @@ const AdvTransform = ({ value = {}, onChange = () => { }, device }) => {
 		</CustomPopover>
 
 
-		<ToggleControl className='bPlPanelBody' label='Flip Horizontal' checked={flipX} value={flipX} onChange={(val) => onChange({ ...value, flipX: val })} __nextHasNoMarginBottom />
+		<ToggleControl className='bPlPanelBody' label={__('Flip Horizontal')} checked={flipX} value={flipX} onChange={(val) => onChange({ ...value, flipX: val })} __nextHasNoMarginBottom />
 
-		<ToggleControl className='bPlPanelBody' label='Flip Vertical' checked={flipY} value={flipY} onChange={(val) => onChange({ ...value, flipY: val })} __nextHasNoMarginBottom />
+		<ToggleControl className='bPlPanelBody' label={__('Flip Vertical')} checked={flipY} value={flipY} onChange={(val) => onChange({ ...value, flipY: val })} __nextHasNoMarginBottom />
 	</>
 }
 export default withSelect((select) => {
@@ -119,4 +120,3 @@ export default withSelect((select) => {
 		device: getDeviceType()?.toLowerCase(),
 	}
 })(AdvTransform);
-

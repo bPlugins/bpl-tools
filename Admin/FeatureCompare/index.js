@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { __ } from '@wordpress/i18n';
+import { __, _n, sprintf } from '@wordpress/i18n';
+import { createInterpolateElement } from '@wordpress/element';
 
 import Button from '../../Components/Button/Button';
 import '../lib/fs';
@@ -46,8 +47,8 @@ const FeatureCompare = ({ plans: planNames = ['free', 'pro'], freemius, hero: he
 
 		if (singlePrices && typeof singlePrices === 'object') {
 			const c = [];
-			if (singlePrices.monthly !== undefined) c.push({ name: 'monthly', label: __('Monthly'), short: '/mo' });
-			if (singlePrices.annual !== undefined) c.push({ name: 'annual', label: __('Yearly'), short: '/yr', isDefault: true });
+			if (singlePrices.monthly !== undefined) c.push({ name: 'monthly', label: __('Monthly'), short: __('/mo · billed monthly') });
+			if (singlePrices.annual !== undefined) c.push({ name: 'annual', label: __('Yearly'), short: __('/yr · billed yearly'), isDefault: true });
 			if (singlePrices.lifetime !== undefined) c.push({ name: 'lifetime', label: __('Lifetime'), short: __('one-time') });
 			setCycles(c);
 			setCycle(c.find(cc => cc.isDefault)?.name || c[0]?.name || '');
@@ -125,7 +126,14 @@ const FeatureCompare = ({ plans: planNames = ['free', 'pro'], freemius, hero: he
 			<p>
 				{heroProp?.description
 					? heroProp.description
-					: <>{__('See exactly what unlocks when you upgrade.')}{' '}<strong>{proOnlyCount}</strong>{' '}{proOnlyCount === 1 ? __('feature is') : __('features are')}{' '}{__('exclusive to Pro.')}</>
+					: <>{__('See exactly what unlocks when you upgrade.')}{' '}{createInterpolateElement(
+						sprintf(
+							/* translators: %d: Number of Pro-only features. */
+							_n('<strong>%d</strong> feature is exclusive to Pro.', '<strong>%d</strong> features are exclusive to Pro.', proOnlyCount),
+							proOnlyCount
+						),
+						{ strong: <strong /> }
+					)}</>
 				}
 			</p>
 		</header>
@@ -142,7 +150,11 @@ const FeatureCompare = ({ plans: planNames = ['free', 'pro'], freemius, hero: he
 						onClick={() => setCycle(c.name)}
 					>
 						{c.label}
-						{c.name === 'annual' && annualSavingsPct > 0 && <span className='fcSave'>{`Save ${annualSavingsPct}%`}</span>}
+						{c.name === 'annual' && annualSavingsPct > 0 && <span className='fcSave'>{sprintf(
+							/* translators: %d: Annual savings percentage. */
+							__('Save %d%%'),
+							annualSavingsPct
+						)}</span>}
 					</button>
 				))}
 			</div>
@@ -152,8 +164,7 @@ const FeatureCompare = ({ plans: planNames = ['free', 'pro'], freemius, hero: he
 			{visiblePlans.map(plan => {
 				const isFree = plan.name === 'free';
 				const price = Array.isArray(plan.pricing) ? plan.pricing.find(p => parseInt(p.licenses) === 1)?.[cycle] : '0';
-				const suffix = currentCycle?.short || '';
-				const cycleText = currentCycle?.label || '';
+				const cycleText = currentCycle?.short || '';
 				const freeDesc = planDescriptions?.free ?? __('Free forever — all the essentials to get started.');
 				const proDesc = planDescriptions?.pro ?? __('Everything in Free, plus advanced features and priority support.');
 
@@ -170,7 +181,7 @@ const FeatureCompare = ({ plans: planNames = ['free', 'pro'], freemius, hero: he
 						<span className='fcCyc'>
 							{isFree
 								? __('forever')
-								: (suffix === __('one-time') ? __('one-time') : `${suffix} · ${__('billed')} ${cycleText.toLowerCase()}`)
+								: cycleText
 							}
 						</span>
 					</div>
@@ -241,7 +252,7 @@ const FeatureCompare = ({ plans: planNames = ['free', 'pro'], freemius, hero: he
 								const isProOnly = proPlan && feature.plans.length === 1 && feature.plans[0] === proPlan.id;
 								return <tr key={i} className={isProOnly ? 'isProOnly' : ''}>
 									<td>
-										<span>{feature.title}</span>
+										<span dangerouslySetInnerHTML={{ __html: feature.title }} />
 										{isProOnly && <span className='fcRowTag'>{__('Pro only')}</span>}
 									</td>
 									{visiblePlans.map(plan => {

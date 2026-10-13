@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { withSelect } from '@wordpress/data';
+import { __, sprintf } from '@wordpress/i18n';
 
 import Button from '../../Components/Button/Button';
 import { closeIcon, playIcon } from '../../utils/icons';
@@ -27,32 +28,32 @@ const Overview = (props) => {
 
 	const helpInfo = [
 		{
-			title: 'Looking for Documentation?',
-			description: 'We have detailed documentation on every aspects of the plugin.',
+			title: __('Looking for Documentation?'),
+			description: __('We have detailed documentation on every aspects of the plugin.'),
 			link: pages?.docs,
-			linkText: 'Documentation'
+			linkText: __('Documentation')
 		},
 		{
-			title: 'Liked This Plugin?',
-			description: 'Glad to know that, you can support us by leaving a feedback.',
+			title: __('Liked This Plugin?'),
+			description: __('Glad to know that, you can support us by leaving a feedback.'),
 			link: `https://wordpress.org/support/plugin/${slug}/reviews#new-post`,
-			linkText: 'Rate the Plugin'
+			linkText: __('Rate the Plugin')
 		},
 		{
 			image: supportThumbnail,
-			title: 'Need any Assistance?',
-			description: 'Our Expert Support Team is always ready to help you out promptly.',
+			title: __('Need any Assistance?'),
+			description: __('Our Expert Support Team is always ready to help you out promptly.'),
 			link: 'https://bplugins.com/support',
-			linkText: 'Contact Support'
+			linkText: __('Contact Support')
 		},
 		{
 			titleIcon: <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 292 512' fill='#1877F2'>
 				<path d='m66 299.3v212.7h116v-212.7h86.5l18-97.8h-104.5v-34.6c0-51.7 20.3-71.5 72.7-71.5 16.3 0 29.4 0.4 37 1.2v-88.7c-14.3-3.9-49.3-7.9-69.5-7.9-106.9 0-156.2 50.5-156.2 159.4v42.1h-66v97.8z' />
 			</svg>,
-			title: 'Join Our Community',
-			description: 'Get tutorials, plugin updates, feature announcements, and support from other WordPress users.',
+			title: __('Join Our Community'),
+			description: __('Get tutorials, plugin updates, feature announcements, and support from other WordPress users.'),
 			link: 'https://facebook.com/groups/1828495198556137',
-			linkText: 'Join Now →'
+			linkText: __('Join Now →')
 		}
 	];
 
@@ -60,16 +61,20 @@ const Overview = (props) => {
 		<div className='overviewLeft'>
 			<div className='overviewLeftTop bPlDashboardCard'>
 				<div>
-					{name && <h2>Welcome to {name}</h2>}
+					{name && <h2>{sprintf(
+						/* translators: %s: Plugin name. */
+						__('Welcome to %s'),
+						name
+					)}</h2>}
 
 					{description && <p>{description}</p>}
 
 					<div className='buttons'>
-						{!isPremium && <Button href='#pricing'>Buy Now</Button>}
+						{!isPremium && <Button href='#pricing'>{__('Buy Now')}</Button>}
 
 						{startButton?.url && startButton?.label && <Button href={`${site?.url}/${startButton.url}`} target='_blank' rel='noopener noreferrer'>{startButton.label}</Button>}
 
-						{pages?.landing && <Button href={pages.landing} target='_blank' rel='noopener noreferrer'>Learn More</Button>}
+						{pages?.landing && <Button href={pages.landing} target='_blank' rel='noopener noreferrer'>{__('Learn More')}</Button>}
 					</div>
 				</div>
 
@@ -107,7 +112,7 @@ const Overview = (props) => {
 
 				return link && <div key={index} className='helpInfoItem bPlDashboardCard'>
 					{image && <figure>
-						<img src={image} alt='Support Thumb' />
+						<img src={image} alt={__('Support Thumb')} />
 					</figure>}
 
 					<h4>{title} {titleIcon}</h4>

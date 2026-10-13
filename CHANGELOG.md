@@ -8,6 +8,17 @@ Dates are the dates the change was committed. Entries before 2025 are grouped by
 
 ---
 
+## 2026-09-30
+
+- bpl-tools strings can now be translated in the plugin that uses them. Add `i18n/babel-plugin-text-domain` to the plugin's `babel.config.js`: while the plugin builds, it gives every `__()` call under bpl-tools the plugin's text domain. Until now these calls had no domain, so only WordPress core's translations applied to them. See `i18n/readme.md` for the setup.
+- Added `i18n/normalize-js-pot.js`, a shared replacement for the `bin/normalize-js-pot.js` copy each plugin had. It now keeps bpl-tools strings in the plugin's JS POT instead of dropping them, and it takes the editor bundle path, so plugins whose editor script isn't `build/index.js` can use it.
+- `Admin/Settings`, `Components/MediaControl`, `Components/ItemsPanel` and the `ProControls/ProModal` default description no longer pass template literals to `__()`. The POT extractor skipped those strings; they now use `sprintf()`. `ItemsPanel`'s default `itemLabel` ("Item") is translatable too.
+
+## 2026-09-29
+
+- `TemplateLibrary` imports now send the pattern `id` and `type` along with `original_content`, so the plugin's import handler can report the import to the pattern library as a download. See the new **Analytics** section in `TemplateLibrary/README.md` for the server-side ping.
+- `TemplateLibrary` no longer fetches templates when the editor loads. Templates load when the modal opens, and every filter change while it is open fetches as before. This stops two catalog requests per editor load, which the pattern library now counts as someone browsing templates. `useTemplates` takes a new trailing `enabled` argument (default `true`).
+
 ## 2026-08-15
 
 - `Admin/Welcome/GettingStarted` accepts a `docs` URL per tab. When the active tab defines one, the bottom documentation link points at it and the heading becomes "Read the *{tab label}* Documentation" (the generic blurb is hidden); tabs without `docs` fall back to `pages.docs` and the original heading.

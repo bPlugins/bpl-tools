@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
+import { __ } from '@wordpress/i18n';
+
 import './style.scss';
 
 /**
@@ -56,7 +58,7 @@ const SelectTokenField = ({ multiple = true, defaultValue, value, onChange = () 
 					{activeItem ? (
 						<span className='bPl-token-field-value'>{activeItem.label}</span>
 					) : (
-						<span className='bPl-token-field-value'>Select an option</span>
+						<span className='bPl-token-field-value'>{__('Select an option')}</span>
 					)}
 					<span onClick={() => onChange('')} className='bPl-xMark-icon'>
 						<svg
@@ -93,7 +95,7 @@ const SelectTokenField = ({ multiple = true, defaultValue, value, onChange = () 
 							>
 								{!toggle && !selectedValues.length && (
 									<div className='bPl-empty-token-field'>
-										<span>Select an option</span>
+										<span>{__('Select an option')}</span>
 									</div>
 								)}
 								{activeMultipleItem?.map((item, i) => (

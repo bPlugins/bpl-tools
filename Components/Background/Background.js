@@ -75,7 +75,7 @@ const Background = props => {
 
 				{'solid' === getValue('type') && isSolid && <>
 					<ColorControl className='mt20' label={__('Color:')} value={getValue('color')} onChange={val => setValue('color', val)} defaultColor={getDefault('color')} />
-					<Flex justify='flex-end' className='mt10'><Button variant='tertiary' onClick={() => setDefault('color')}>Clear</Button></Flex>
+					<Flex justify='flex-end' className='mt10'><Button variant='tertiary' onClick={() => setDefault('color')}>{__('Clear')}</Button></Flex>
 				</>}
 
 				{'gradient' === getValue('type') && isGradient && <Gradient className='mt20' value={getValue('gradient')} onChange={val => setValue('gradient', val)} gradients={gradients} />}
@@ -110,7 +110,7 @@ const Background = props => {
 
 					<ColorControl className='mt20' label={__('Overlay Color:')} value={getValue('overlayColor')} onChange={val => setValue('overlayColor', val)} defaultColor={getDefault('overlayColor')} />
 
-					<Flex justify='flex-end' className='mt10'><Button variant='tertiary' onClick={clearImageSettings}>Clear</Button></Flex>
+					<Flex justify='flex-end' className='mt10'><Button variant='tertiary' onClick={clearImageSettings}>{__('Clear')}</Button></Flex>
 				</>}
 			</>}
 		/>

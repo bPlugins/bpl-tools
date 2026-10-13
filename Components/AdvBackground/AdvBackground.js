@@ -1,3 +1,4 @@
+import { __, sprintf } from '@wordpress/i18n';
 import { withSelect } from '@wordpress/data';
 import { TabPanel, PanelRow, __experimentalInputControl as InputControl, SelectControl, ToggleControl, __experimentalUnitControl as UnitControl } from '@wordpress/components';
 
@@ -20,38 +21,38 @@ import { bgTabs, imgAttachmentOptions, imgPositionOptions, imgRepeatOptions, img
  * @param {string} [props.device] The device type.
  * @returns {ReactElement} A React element.
  */
-const AdvBackground = ({ name = 'Background', value, onChange, isVideo = false, device }) => {
+const AdvBackground = ({ name = __('Background'), value, onChange, isVideo = false, device }) => {
 	const { type = 'color', color = '', gradient = {}, img = {}, video = {} } = value || {};
 	const { position = 'center center', xPosition, yPosition, attachment, repeat = 'no-repeat', size = 'cover', customSize, } = img?.[device] || {};
 
 	return <>
 		<Label className='mt10 mb10'>{name}</Label>
 		<TabPanel className='bPlTabPanel mini' activeClass='activeTab' tabs={isVideo ? bgTabs : bgTabs.filter(t => t.name !== 'video')} initialTabName={type} onSelect={tab => onChange({ ...value, type: tab })}>{tab => <>
-			{'color' === tab.name && <SolidBackground className='mt20' label={`${name} Color`} value={color} onChange={(val) => onChange({ ...value, color: val })} />}
+			{'color' === tab.name && <SolidBackground className='mt20' label={sprintf(/* translators: %s: Background control name, e.g. Background. */ __('%s Color'), name)} value={color} onChange={(val) => onChange({ ...value, color: val })} />}
 
 			{'gradient' === tab.name && <Gradient value={gradient} onChange={(val) => onChange({ ...value, gradient: val })} />}
 
 			{'image' === tab.name && <>
-				<Label className='mt10 mb10'>{name} Image</Label>
+				<Label className='mt10 mb10'>{sprintf(/* translators: %s: Background control name, e.g. Background. */ __('%s Image'), name)}</Label>
 
-				<MediaArea label='Upload Image' value={value?.img} onChange={(val) => onChange({ ...value, img: { ...img, url: val.url } })} width='100%' height='100%' />
+				<MediaArea label={__('Upload Image')} value={value?.img} onChange={(val) => onChange({ ...value, img: { ...img, url: val.url } })} width='100%' height='100%' />
 
 				{img?.url && <>
 					<PanelRow className='mt20'>
-						<Label className=''>Position</Label>
+						<Label className=''>{__('Position')}</Label>
 						<Device />
 					</PanelRow>
 					<SelectControl value={position} options={imgPositionOptions} onChange={val => onChange({ ...value, img: { ...img, [device]: { ...img[device], position: val } } })} />
 
 					{position === 'custom' && <>
 						<PanelRow className='mt15'>
-							<Label className=''>X Position</Label>
+							<Label className=''>{__('X Position')}</Label>
 							<Device />
 						</PanelRow>
 						<UnitControl units={unitOptions} value={xPosition} min={-2000} max={2000} onChange={val => onChange({ ...value, img: { ...img, [device]: { ...img[device], xPosition: val } } })} />
 
 						<PanelRow className='mt15'>
-							<Label className=''>Y Position</Label>
+							<Label className=''>{__('Y Position')}</Label>
 							<Device />
 						</PanelRow>
 						<UnitControl
@@ -64,7 +65,7 @@ const AdvBackground = ({ name = 'Background', value, onChange, isVideo = false, 
 					</>}
 
 					<PanelRow className='mt20'>
-						<Label className=''>Attachment</Label>
+						<Label className=''>{__('Attachment')}</Label>
 						<Device />
 					</PanelRow>
 					<SelectControl
@@ -74,7 +75,7 @@ const AdvBackground = ({ name = 'Background', value, onChange, isVideo = false, 
 					/>
 
 					<PanelRow className='mt20'>
-						<Label className=''>Repeat</Label>
+						<Label className=''>{__('Repeat')}</Label>
 						<Device />
 					</PanelRow>
 					<SelectControl
@@ -84,7 +85,7 @@ const AdvBackground = ({ name = 'Background', value, onChange, isVideo = false, 
 					/>
 
 					<PanelRow className='mt20'>
-						<Label className=''>Size</Label>
+						<Label className=''>{__('Size')}</Label>
 						<Device />
 					</PanelRow>
 					<SelectControl
@@ -95,7 +96,7 @@ const AdvBackground = ({ name = 'Background', value, onChange, isVideo = false, 
 
 					{size === 'custom' && <>
 						<PanelRow className='mt15'>
-							<Label className=''>Width</Label>
+							<Label className=''>{__('Width')}</Label>
 							<Device />
 						</PanelRow>
 						<UnitControl
@@ -111,13 +112,13 @@ const AdvBackground = ({ name = 'Background', value, onChange, isVideo = false, 
 
 
 			{'video' === tab.name && <>
-				<Label className='mt10 mb10'>{name} Video</Label>
+				<Label className='mt10 mb10'>{sprintf(/* translators: %s: Background control name, e.g. Background. */ __('%s Video'), name)}</Label>
 
-				<MediaArea loop={video?.loop} types={['video/mp4', 'video/3gpp', 'video/x-ms-wmv']} isVideo={true} value={video} onChange={(val) => onChange({ ...value, video: { ...video, url: val.url } })} label='Upload Video' />
+				<MediaArea loop={video?.loop} types={['video/mp4', 'video/3gpp', 'video/x-ms-wmv']} isVideo={true} value={video} onChange={(val) => onChange({ ...value, video: { ...video, url: val.url } })} label={__('Upload Video')} />
 
-				<InputControl style={{ marginTop: '10px' }} label='Inline Upload' labelPosition='top' type='text' value={video?.url} onChange={val => onChange({ ...value, video: { ...video, url: val } })} placeholder='Insert your video link..' />
+				<InputControl style={{ marginTop: '10px' }} label={__('Inline Upload')} labelPosition='top' type='text' value={video?.url} onChange={val => onChange({ ...value, video: { ...video, url: val } })} placeholder={__('Insert your video link..')} />
 
-				{video?.url && <ToggleControl className='mt10' label='Loop' checked={video?.loop} value={video?.loop} onChange={val => onChange({ ...value, video: { ...video, loop: val } })} __nextHasNoMarginBottom />}
+				{video?.url && <ToggleControl className='mt10' label={__('Loop')} checked={video?.loop} value={video?.loop} onChange={val => onChange({ ...value, video: { ...video, loop: val } })} __nextHasNoMarginBottom />}
 			</>}
 		</>}
 		</TabPanel>

@@ -14,7 +14,8 @@
 	*/
 
 import { useState } from 'react';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
+import { createInterpolateElement } from '@wordpress/element';
 import { withSelect } from '@wordpress/data';
 
 import Button from '../../../Components/Button/Button';
@@ -35,31 +36,42 @@ const Overview = (props) => {
 		<div className='statusRow'>
 			<span className='activeStatus'>
 				<span className='statusDot' aria-hidden='true' />
-				Plugin active
+				{__('Plugin active')}
 			</span>
 
 			<span className={`planBadge ${isPremium ? 'isPro' : 'isFree'}`}>
 				{isPremium && crownIcon}
-				{isPremium ? 'Pro Plan' : 'Free Plan'}
+				{isPremium ? __('Pro Plan') : __('Free Plan')}
 			</span>
 
 			{version && <span className='versionBadge'>v{version}</span>}
 		</div>
 
-		{name && <h2>Welcome to {name}</h2>}
+		{name && <h2>{sprintf(
+			/* translators: %s: Plugin name. */
+			__('Welcome to %s'),
+			name
+		)}</h2>}
 
 		{description && <p className='tagline'>
-			{firstName ? <>Hi <strong>{firstName}</strong>, {description}</> : description}
+			{firstName ? <>{createInterpolateElement(
+				sprintf(
+					/* translators: %s: Current user's first name. */
+					__('Hi <strong>%s</strong>,'),
+					firstName
+				),
+				{ strong: <strong /> }
+			)} {description}</> : description}
 		</p>}
 
 		{thumbnail && <div className='banner'>
 			<img src={thumbnail} alt={name} />
 
-			{video && <button className='playBtn' onClick={() => setShowVideo(true)} aria-label='Play product walkthrough'>
+			{video && <button className='playBtn' onClick={() => setShowVideo(true)} aria-label={__('Play product walkthrough')}>
 				{playIcon}
 			</button>}
 
-			{video && <span className='bannerCaption'>Watch quick start · 2 min</span>}
+			{video && <span className='bannerCaption'>{__('Watch quick start · 2 min')}</span>}
 		</div>}
 
 		{keywords?.length > 0 && <div className='keywords'>
@@ -95,19 +107,19 @@ const Overview = (props) => {
 				rel='noopener noreferrer'
 			>
 				{gridIcon}
-				View Demos
+				{__('View Demos')}
 			</Button>}
 
 			{!isPremium && <a className='ghostBtn' href='#pricing'>
 				{crownIcon}
-				Upgrade to Pro
+				{__('Upgrade to Pro')}
 				{arrowRightIcon}
 			</a>}
 		</div>
 
 		{showVideo && video && <div className='bPlVideoModal'>
 			<div className='bPlVideoModalContent'>
-				<button className='closeModal' onClick={() => setShowVideo(false)} aria-label='Close video'>
+				<button className='closeModal' onClick={() => setShowVideo(false)} aria-label={__('Close video')}>
 					{closeIcon}
 				</button>
 
@@ -116,7 +128,11 @@ const Overview = (props) => {
 					src={video}
 					isYoutube={isYoutube}
 					autoPlay={true}
-					title={`${name} walkthrough`}
+					title={sprintf(
+						/* translators: %s: Plugin name. */
+						__('%s walkthrough'),
+						name
+					)}
 				/>
 			</div>
 
@@ -124,7 +140,6 @@ const Overview = (props) => {
 		</div>}
 	</div>;
 };
-
 export default withSelect(select => ({
 	currentUser: select('core').getCurrentUser?.()
 }))(Overview);

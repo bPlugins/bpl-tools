@@ -46,26 +46,31 @@ export const escapeHTML = (input = '') => {
 	});
 }
 
-export const sanitizeURL = (inputUrl) => {
+/**
+ * Returns a URL that is safe for href, src or CSS url(), or null.
+ * Absolute URLs must use an allowed protocol; relative URLs (#section, ?query, /path, page.html) are kept as written.
+ */
+export const sanitizeURL = (inputUrl, allowedProtocols = ['http:', 'https:', 'mailto:', 'tel:']) => {
+	if (typeof inputUrl !== 'string') {
+		return null;
+	}
+
+	// Browsers ignore tabs/newlines inside URLs (java\nscript:), so drop control characters before checking
+	// eslint-disable-next-line no-control-regex
+	const value = inputUrl.replace(/[\u0000-\u001F\u007F]/g, '').trim();
+
+	if (!value) {
+		return null;
+	}
+
 	try {
-		const url = new URL(inputUrl);
+		// Absolute URL (https://…, javascript:…, mailto:…)
+		const url = new URL(value);
 
-		// 1. Check for safe protocols
-		if (!['http:', 'https:'].includes(url.protocol)) {
-			return null;
-		} else {
-			// 2. Strip query and fragment for safety
-			// url.search = '';
-			// url.hash = '';
-
-			return url.toString();
-		}
+		return allowedProtocols.includes(url.protocol) ? url.toString() : null;
 	} catch (err) {
-		if (typeof inputUrl === 'string' && inputUrl.startsWith('/') && !inputUrl.startsWith('//')) {
-			return inputUrl;
-		} else {
-			return null;
-		}
+		// No scheme, so it resolves against the current page and can't be javascript:, data:, etc.
+		return value;
 	}
 }
 

@@ -8,6 +8,7 @@
 	*/
 
 import { useEffect, useState } from 'react';
+import { __ } from '@wordpress/i18n';
 
 import { closeIcon, nextIcon, prevIcon } from '../../utils/icons';
 
@@ -45,16 +46,16 @@ const ImageModal = ({ filteredItems, activeIdx, handleModalClose, children }) =>
 			</div>
 
 			{filteredItems.length > 1 && <>
-				<button className='modalNav navPrev' onClick={goToPrevious} aria-label='Previous image'>
+				<button className='modalNav navPrev' onClick={goToPrevious} aria-label={__('Previous image')}>
 					{prevIcon}
 				</button>
 
-				<button className='modalNav navNext' onClick={goToNext} aria-label='Next image'>
+				<button className='modalNav navNext' onClick={goToNext} aria-label={__('Next image')}>
 					{nextIcon}
 				</button>
 			</>}
 
-			<img src={currentItem?.url} alt={currentItem?.title || 'Gallery image'} />
+			<img src={currentItem?.url} alt={currentItem?.title || __('Gallery image')} />
 
 			{currentItem?.title && <div className='modalFooter'>
 				<p>{currentItem.title}</p>

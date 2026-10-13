@@ -1,6 +1,6 @@
 import { MediaUpload, MediaUploadCheck } from '@wordpress/block-editor';
 import { Button, PanelRow, Placeholder, TextControl, ToolbarButton, ToolbarGroup } from '@wordpress/components';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import { useState } from 'react';
 
 import './MediaControl.scss';
@@ -109,7 +109,7 @@ export const InlineDetailMediaUpload = props => {
 	* @returns {JSX.Element} - The clickable media area component
 	*/
 export const MediaArea = (props) => {
-	const { className = '', label = 'Choose', value, types = ['image/*'], onChange = () => { }, default: defaults = '', height = '50px', width = '50px', style, onClick = () => { }, isSvgEnabled = false } = props;
+	const { className = '', label = __('Choose'), value, types = ['image/*'], onChange = () => { }, default: defaults = '', height = '50px', width = '50px', style, onClick = () => { }, isSvgEnabled = false } = props;
 	// const [validationError, setValidationError] = useState([])
 	// const { validateFile } = MimeTypeChecker.helpers;
 
@@ -201,8 +201,8 @@ export const MediaPlaceholder = props => {
 
 	const [mediaSource, setMediaSource] = useState();
 
-	return <Placeholder className={`bPlMediaPlaceholder ${className}`} label={__(`Upload ${typeName || type}`)}
-		instructions={__(`Upload a ${typeName || type} or paste/write ${typeName || type} url to get started.`)}
+	return <Placeholder className={`bPlMediaPlaceholder ${className}`} label={sprintf(/* translators: %s: Media type name, e.g. image. */ __('Upload %s'), typeName || type)}
+		instructions={sprintf(/* translators: 1: Media type name, e.g. image. */ __('Upload a %1$s or paste/write %1$s url to get started.'), typeName || type)}
 		icon={icon}>
 		<MediaUploadCheck>
 			<MediaUpload

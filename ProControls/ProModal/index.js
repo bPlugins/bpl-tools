@@ -20,7 +20,7 @@ const ProModal = ({
 	setIsProModalOpen,
 	link = '',
 	title = __('Unlock More with Plugin Pro!'),
-	description = __(`The free features of Plugin do a lot-still, without PRO, you're holding yourself back from getting more.`),
+	description = __('The free features of Plugin do a lot-still, without PRO, you\'re holding yourself back from getting more.'),
 	features = [
 		__('Gain full access to all pro campaigns'),
 		__('Create unlimited discount offers'),

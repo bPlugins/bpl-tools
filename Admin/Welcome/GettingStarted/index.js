@@ -81,7 +81,11 @@ const GettingStarted = ({ tabs = [], pages }) => {
 
 		<div className='docs'>
 			<div>
-				<h3>{tabDocs ? sprintf(__('Read the %s Documentation'), label) : __('Read the Full Documentation')}</h3>
+				<h3>{tabDocs ? sprintf(
+					/* translators: %s: Getting started tab label. */
+					__('Read the %s Documentation'),
+					label
+				) : __('Read the Full Documentation')}</h3>
 				{!tabDocs && <p>{__('Browse guides, settings reference, and examples for every feature.')}</p>}
 			</div>
 

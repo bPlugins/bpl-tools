@@ -50,7 +50,7 @@ const IconControl = props => {
 		</PanelRow>
 
 		<div className='bPlIconSelect'>
-			<input type='search' value={query} onClick={() => setIsSearching(!isSearching)} placeholder={generateTitle(getValue('class')) || 'Search & Select Icon'} onChange={e => setQuery(e.target.value)} />
+			<input type='search' value={query} onClick={() => setIsSearching(!isSearching)} placeholder={generateTitle(getValue('class')) || __('Search & Select Icon')} onChange={e => setQuery(e.target.value)} />
 
 			<span className={`dashicon dashicons dashicons-${isSearching ? 'arrow-up' : 'arrow-down'}`} onClick={() => setIsSearching(!isSearching)}></span>
 

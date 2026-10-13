@@ -6,6 +6,7 @@
 	*/
 
 import { useEffect, useState } from 'react';
+import { __, _n, sprintf } from '@wordpress/i18n';
 
 import Button from '../../Components/Button/Button';
 import '../lib/fs';
@@ -76,15 +77,15 @@ const DynamicPricing = ({ pricingInfo, options }) => {
 				let c = []
 				// eslint-disable-next-line no-prototype-builtins
 				if (singlePrices.hasOwnProperty('monthly')) {
-					c.push({ name: 'monthly', label: 'Monthly' });
+					c.push({ name: 'monthly', label: __('Monthly') });
 				}
 				// eslint-disable-next-line no-prototype-builtins
 				if (singlePrices.hasOwnProperty('annual')) {
-					c.push({ name: 'annual', label: 'Yearly', isDefault: true });
+					c.push({ name: 'annual', label: __('Yearly'), isDefault: true });
 				}
 				// eslint-disable-next-line no-prototype-builtins
 				if (singlePrices.hasOwnProperty('lifetime')) {
-					c.push({ name: 'lifetime', label: 'Lifetime' });
+					c.push({ name: 'lifetime', label: __('Lifetime') });
 				}
 				setCycles(c);
 				setCycle(c?.find(cc => cc.isDefault)?.name || c[0]?.name)
@@ -97,7 +98,7 @@ const DynamicPricing = ({ pricingInfo, options }) => {
 
 	if (isProductLoading) {
 		return <div className='bPlDashboardPricing bPlDashboardBox'>
-			<h2>Loading...</h2>
+			<h2>{__('Loading...')}</h2>
 		</div>;
 	}
 
@@ -122,18 +123,22 @@ const DynamicPricing = ({ pricingInfo, options }) => {
 		{cycles?.length > 1 && <div className='cycles'>
 			{cycles.map(c => {
 				return <button key={c.name} className={c.name === cycle ? 'active' : ''} onClick={() => setCycle(c.name)}>
-					{c.label} {'annual' === c.name && <span>{`upto ${calculateMaxAnnualDiscount()}% off`}</span>}
+					{c.label} {'annual' === c.name && <span>{sprintf(
+						/* translators: %s: Maximum annual discount percentage. */
+						__('upto %s%% off'),
+						calculateMaxAnnualDiscount()
+					)}</span>}
 				</button>;
 			})}
 		</div>}
 
-		{cycles?.length === 1 && cycles[0]?.name === 'lifetime' && <h2 className='pricingTitle'>One-time payment, lifetime access</h2>}
+		{cycles?.length === 1 && cycles[0]?.name === 'lifetime' && <h2 className='pricingTitle'>{__('One-time payment, lifetime access')}</h2>}
 
 		<div className='plans'>
 			{pricing?.length ?
 				pricing?.map((price, index) => licenses.includes(price?.licenses) && <Plan key={index} {...{ pricingInfo, product, price, cycle, options }} />) :
 
-				<h3 style={{ gridColumn: `1 / -1`, textAlign: 'center' }}>Select a plan</h3>
+				<h3 style={{ gridColumn: `1 / -1`, textAlign: 'center' }}>{__('Select a plan')}</h3>
 			}
 		</div>
 	</div>
@@ -149,7 +154,11 @@ const Plan = ({ pricingInfo, product, price, cycle, options }) => {
 
 	const [solidPrice, cents] = amount?.split('.') || [];
 
-	const name = !licenses ? 'Unlimited Sites' : (licenses === 1 ? 'Single Site' : `${licenses} Sites`);
+	const name = !licenses ? __('Unlimited Sites') : (licenses === 1 ? __('Single Site') : sprintf(
+		/* translators: %d: Number of sites. */
+		_n('%d Site', '%d Sites', licenses),
+		licenses
+	));
 	const isFeatured = featured?.selected === (licenses || 'null');
 
 	return <div className={`plan ${isFeatured ? 'bestValue' : ''}`} data-best-text={featured?.text}>

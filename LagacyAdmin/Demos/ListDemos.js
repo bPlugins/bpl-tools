@@ -6,6 +6,8 @@
 	*/
 
 import { useEffect, useRef, useState } from 'react';
+import { __, sprintf } from '@wordpress/i18n';
+import { createInterpolateElement } from '@wordpress/element';
 
 import Button from '../../Components/Button/Button';
 import Loading from '../../Components/Loading/Loading';
@@ -112,25 +114,37 @@ const Demos = (props) => {
 
 			{/* Demo Preview */}
 			<div className='canvas'>
-				{isLoading && <Loading text='Demo Loading...' orientation='vertical' />}
+				{isLoading && <Loading text={__('Demo Loading...')} orientation='vertical' />}
 
 				{activeDemo.type === 'iframe' ?
 					<iframe
 						src={activeDemo.url}
-						title={`${activeDemo.title} Demo`}
+						title={sprintf(
+							/* translators: %s: Demo title. */
+							__('%s Demo'),
+							activeDemo.title
+						)}
 						loading={isLoading ? 'lazy' : undefined}
 						onLoad={() => setIsLoading(false)}
 						sandbox='allow-scripts allow-same-origin allow-popups allow-forms'
 					/> :
 					<div className='canvasImg' ref={imgWrapRef}>
-						<img src={activeDemo.url} alt={`${activeDemo.title} Demo`} onLoad={() => setIsLoading(false)} ref={imgRef} />
+						<img src={activeDemo.url} alt={sprintf(
+							/* translators: %s: Demo title. */
+							__('%s Demo'),
+							activeDemo.title
+						)} onLoad={() => setIsLoading(false)} ref={imgRef} />
 					</div>
 				}
 			</div>
 
 			{/* Demo Footer */}
 			<div className='mainFooter'>
-				<span>Preview of <strong>{activeDemo.title}</strong></span>
+				<span>{createInterpolateElement(
+					/* translators: <title /> is replaced with the demo title. */
+					__('Preview of <strong><title /></strong>'),
+					{ strong: <strong />, title: <>{activeDemo.title}</> }
+				)}</span>
 			</div>
 		</div>
 	</div>

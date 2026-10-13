@@ -1,3 +1,5 @@
+import { __ } from '@wordpress/i18n';
+
 import Button from '../../Components/Button/Button';
 import './style.scss';
 
@@ -13,7 +15,7 @@ const Changelog = (props) => {
 	const { slug, changelogs, limit = 5, loadMoreLabel } = props;
 
 	return changelogs?.length && <div className='bPlDashboardChangelog bPlDashboardCard'>
-		<h3>Release Notes(Changelog)...</h3>
+		<h3>{__('Release Notes(Changelog)...')}</h3>
 
 		{changelogs?.slice(0, limit)?.map((changelog, index) => {
 			const { type, version, list } = changelog;

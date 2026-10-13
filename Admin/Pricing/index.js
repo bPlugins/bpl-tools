@@ -6,7 +6,7 @@
 	*/
 
 import { useEffect, useState } from 'react';
-import { __ } from '@wordpress/i18n';
+import { __, _n, sprintf } from '@wordpress/i18n';
 
 import Button from '../../Components/Button/Button';
 import FS from '../lib/fs';
@@ -29,11 +29,11 @@ export const getFeatures = (plans, planId) => {
 	return planFeatures || [];
 };
 
-const cycleMeta = {
-	monthly: { suffix: '/mo' },
-	annual: { suffix: '/yr' },
+const getCycleMeta = () => ({
+	monthly: { suffix: __('/mo') },
+	annual: { suffix: __('/yr') },
 	lifetime: { suffix: '' }
-};
+});
 
 const formatPrice = (amount) => {
 	const num = typeof amount === 'string' ? parseFloat(amount) : amount;
@@ -113,7 +113,11 @@ const Pricing = ({ pricingInfo, options }) => {
 	}
 
 	const sharedFeatures = getFeatures(plans, planId);
-	const annualSavingsLabel = annualSavingsPct > 0 ? `Save ${annualSavingsPct}%` : '';
+	const annualSavingsLabel = annualSavingsPct > 0 ? sprintf(
+		/* translators: %d: Annual savings percentage. */
+		__('Save %d%%'),
+		annualSavingsPct
+	) : '';
 
 	const isLifetimeOnly = cycles.length === 1 && cycles[0]?.name === 'lifetime';
 
@@ -184,14 +188,18 @@ const Pricing = ({ pricingInfo, options }) => {
 				const licensesCount = price?.licenses;
 				const isFeatured = featured?.selected === (licensesCount || 'null');
 				const amount = price?.[cycle];
-				const cycleInfo = cycleMeta[cycle] || { suffix: '' };
+				const cycleInfo = getCycleMeta()[cycle] || { suffix: '' };
 				const numericAmount = parseFloat(amount);
 				const monthlyEquivalent = cycle === 'annual' && price?.annual ? (parseFloat(price.annual) / 12) : null;
 				const perSite = licensesCount && !isNaN(numericAmount) ? (numericAmount / licensesCount) : null;
 
 				const planLabel = !licensesCount
 					? __('Unlimited Sites')
-					: (licensesCount === 1 ? __('Single Site') : `${licensesCount} ${__('Sites')}`);
+					: (licensesCount === 1 ? __('Single Site') : sprintf(
+						/* translators: %d: Number of sites. */
+						_n('%d Site', '%d Sites', licensesCount),
+						licensesCount
+					));
 				const planTagline = !licensesCount
 					? __('For agencies & enterprise')
 					: (licensesCount === 1 ? __('For solo creators') : __('For freelancers'));
@@ -211,10 +219,18 @@ const Pricing = ({ pricingInfo, options }) => {
 							{cycleInfo.suffix && <span className='pricingSuffix'>{cycleInfo.suffix}</span>}
 						</div>
 
-						{perSite !== null && <p className='pricingEquiv'>≈ ${formatPrice(perSite)} {__('per site')}</p>}
+						{perSite !== null && <p className='pricingEquiv'>{sprintf(
+							/* translators: %s: Price per site. */
+							__('≈ $%s per site'),
+							formatPrice(perSite)
+						)}</p>}
 						{!licensesCount && <p className='pricingEquiv'>{__('Use on every site you build.')}</p>}
 						{monthlyEquivalent !== null && cycle === 'annual' && <p className='pricingEquiv'>
-							{__('Billed yearly')} · ${formatPrice(monthlyEquivalent)}/mo
+							{sprintf(
+								/* translators: %s: Monthly equivalent price. */
+								__('Billed yearly · $%s/mo'),
+								formatPrice(monthlyEquivalent)
+							)}
 						</p>}
 						{cycle === 'lifetime' && <p className='pricingEquiv'>{__('One-time payment, pay once forever.')}</p>}
 						{cycle === 'monthly' && <p className='pricingEquiv'>{__('Billed monthly, cancel anytime.')}</p>}
@@ -254,7 +270,7 @@ const Pricing = ({ pricingInfo, options }) => {
 				{sharedFeatures.map((f, i) => (
 					<li key={i}>
 						<span className='pricingIncludedCheck'>{checkCircleIcon}</span>
-						<span>{f}</span>
+						<span dangerouslySetInnerHTML={{ __html: f }} />
 					</li>
 				))}
 			</ul>
@@ -293,5 +309,4 @@ const Pricing = ({ pricingInfo, options }) => {
 		</section>
 	</div>;
 };
-
 export default Pricing;

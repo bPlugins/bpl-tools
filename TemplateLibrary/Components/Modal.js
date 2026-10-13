@@ -40,7 +40,7 @@ const Modal = (props) => {
 		access,
 		pageNumber,
 		setPageNumber,
-		modalTitle = 'Templates Library',
+		modalTitle = __('Templates Library'),
 		perPage = 9,
 		accessCounts
 	} = props;
@@ -64,13 +64,16 @@ const Modal = (props) => {
 		return 'pro' === access ? accessCounts.pro : 'free' === access ? accessCounts.free : accessCounts.all;
 	};
 
+	// Known tab names get a translated title; any other type falls back to its capitalized name
+	const typeTitles = { patterns: __('Patterns'), pages: __('Pages') };
+
 	// Favorites tab always renders alongside the configured type tabs
 	const tabs = [
 		...types.map(tabName => ({
 			name: tabName,
-			title: (tabName || '').charAt(0).toUpperCase() + (tabName || '').slice(1)
+			title: typeTitles[tabName] || (tabName || '').charAt(0).toUpperCase() + (tabName || '').slice(1)
 		})),
-		{ name: 'favorites', title: 'Favorites' }
+		{ name: 'favorites', title: __('Favorites') }
 	];
 
 	const initialTabName = types[0] || 'patterns';

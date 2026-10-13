@@ -13,13 +13,14 @@ import Label from '../Components/Label/Label';
 import ShadowControl from '../Components/ShadowControl/ShadowControl';
 import BoxControl from '../Components/BoxControl/BoxControl';
 import { updateData } from '../utils/functions';
+import { normalHoverTabs } from '../utils/options';
 
 const BorderShadow = ({ borderShadow, onChange, enabled }) => {
-	const tabs = enabled?.filter(e => !['border', 'shadow'].includes(e))?.map(e => ({ title: e, name: e }));
+	const tabs = enabled?.filter(e => !['border', 'shadow'].includes(e))?.map(e => ({ title: normalHoverTabs.find(t => t.name === e)?.title || e, name: e }));
 
 	const isEnabled = (which) => enabled.includes(which);
 
-	return <PanelBody className='bPlPanelBody' title='Border & Shadow' initialOpen={false}>
+	return <PanelBody className='bPlPanelBody' title={__('Border & Shadow')} initialOpen={false}>
 		<TabPanel className='bPlTabPanel small' activeClass='activeTab' tabs={tabs}>{tab => <>
 			{'normal' === tab.name && <>
 				{isEnabled('border') && <>
@@ -35,7 +36,7 @@ const BorderShadow = ({ borderShadow, onChange, enabled }) => {
 			</>}
 
 			{'hover' === tab.name && <>
-				<RangeControl className='mt10 mb10' label='Hover Transition' value={borderShadow?.transition || 0.4} onChange={val => onChange(updateData(borderShadow, val, 'transition'))} min={0} max={10} step={0.05} />
+				<RangeControl className='mt10 mb10' label={__('Hover Transition')} value={borderShadow?.transition || 0.4} onChange={val => onChange(updateData(borderShadow, val, 'transition'))} min={0} max={10} step={0.05} />
 
 				{isEnabled('border') && <>
 					<BorderBoxControl className='mt20' label={__('Borders')} value={borderShadow?.[tab.name]?.border} onChange={val => onChange(updateData(borderShadow, val, tab.name, 'border'))} />

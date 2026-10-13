@@ -70,7 +70,7 @@ const Typography = props => {
 					</PanelRow>
 					<PanelRow className='bPlTypoFont'>
 						<div className='bPlTypoFontSelect'>
-							<input type='search' value={query} onClick={() => setIsSearching(!isSearching)} placeholder={getValue('fontFamily') || 'Search Font'} onChange={e => setQuery(e.target.value)} />
+							<input type='search' value={query} onClick={() => setIsSearching(!isSearching)} placeholder={getValue('fontFamily') || __('Search Font')} onChange={e => setQuery(e.target.value)} />
 
 							<span className={`dashicon dashicons dashicons-${isSearching ? 'arrow-up' : 'arrow-down'} `} onClick={() => setIsSearching(!isSearching)}></span>
 

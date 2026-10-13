@@ -1,3 +1,5 @@
+import { __ } from '@wordpress/i18n';
+
 import './style.scss';
 
 /**
@@ -17,7 +19,7 @@ const Header = (props) => {
 		<div className='bPlDashboardContainer'>
 			<div className='pluginInfo'>
 				<div>
-					{logo && <img className='pluginLogo' src={logo} alt={name || 'Plugin from bPlugins'} />}
+					{logo && <img className='pluginLogo' src={logo} alt={name || __('Plugin from bPlugins')} />}
 
 					{name && <h1 className='pluginName'>{name}</h1>}
 				</div>

@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { __, sprintf } from '@wordpress/i18n';
+import { createInterpolateElement } from '@wordpress/element';
 import { Spinner, Tooltip } from '@wordpress/components';
 
 import './style.scss';
@@ -50,7 +52,7 @@ const Activation = (props) => {
 
 	// Handle deactivate license
 	const handleDeactivateLicense = async () => {
-		if (!window.confirm('Are you sure you want to deactivate this license?')) {
+		if (!window.confirm(__('Are you sure you want to deactivate this license?'))) {
 			return;
 		}
 
@@ -77,31 +79,35 @@ const Activation = (props) => {
 	return <div className='bPlDashboardActivation bPlDashboardCard'>
 		<div className='activationHeader'>
 			<div className='pluginInfo'>
-				{logo && <img src={logo} alt={name || 'Plugin'} />}
+				{logo && <img src={logo} alt={name || __('Plugin')} />}
 				<div className='pluginDetails'>
-					<h1>{name || 'Plugin'}</h1>
-					{version && <p className='version'>Current Version: {version}</p>}
+					<h1>{name || __('Plugin')}</h1>
+					{version && <p className='version'>{sprintf(
+						/* translators: %s: Plugin version number. */
+						__('Current Version: %s'),
+						version
+					)}</p>}
 				</div>
 			</div>
 
 			<div className={`statusBadge ${isActivated ? 'active' : 'inactive'}`}>
-				{isActivated ? 'Actived' : 'Not Active'}
+				{isActivated ? __('Activated') : __('Not Active')}
 			</div>
 		</div>
 
 		<div className='activationContent'>
 			{isLoading ? <div className='activationLoading'>
 				<Spinner />
-				<p>Loading...</p>
+				<p>{__('Loading...')}</p>
 			</div> :
 				(activatedLicense && !showActivationForm) ? <div className='activationSuccess'>
 					<div className='successIcon'>
 						{circleCheckIcon}
 					</div>
 
-					<h2>License Activated</h2>
+					<h2>{__('License Activated')}</h2>
 
-					<p className='successMessage'>Your license has been activated and is ready to use.</p>
+					<p className='successMessage'>{__('Your license has been activated and is ready to use.')}</p>
 
 					<div className='licenseDisplay'>
 						<input
@@ -113,7 +119,7 @@ const Activation = (props) => {
 						<button
 							className='toggleVisibility'
 							onClick={() => setShowLicense(prev => !prev)}
-							aria-label={showLicense ? 'Hide license' : 'Show license'}
+							aria-label={showLicense ? __('Hide license') : __('Show license')}
 						>
 							<svg width='24' height='24' viewBox='0 0 24 24' fill='none'>
 								{showLicense ? <>
@@ -130,33 +136,46 @@ const Activation = (props) => {
 
 					<div className='licenseActions'>
 						<button className='linkButton' onClick={() => setShowActivationForm(true)}>
-							Change License
+							{__('Change License')}
 						</button>
 						<button className='linkButton danger' onClick={handleDeactivateLicense}>
-							Deactivate License
+							{__('Deactivate License')}
 						</button>
 					</div>
 				</div> :
 					<div className='activationForm'>
-						<h2>{isChangeLicense ? 'Change License' : 'Activate License'}</h2>
+						<h2>{isChangeLicense ? __('Change License') : __('Activate License')}</h2>
 
 						<p className='formDescription'>
-							Enter Your license key below. {!isChangeLicense && <><a href={`https://dashboard.freemius.com/license-recovery/${product_id}/${slug}/`} target='_blank' rel='noopener noreferrer'>Can&apos;t find license key?</a> or <a href={`https://freemius.com/help/documentation/wordpress-sdk/license-activation-issues/`} target='_blank' rel='noopener noreferrer'>License issues?</a></>}
+							{__('Enter Your license key below.')} {!isChangeLicense && createInterpolateElement(
+								__("<recover>Can't find license key?</recover> or <issues>License issues?</issues>"),
+								{
+									recover: <a href={`https://dashboard.freemius.com/license-recovery/${product_id}/${slug}/`} target='_blank' rel='noopener noreferrer' />,
+									issues: <a href={`https://freemius.com/help/documentation/wordpress-sdk/license-activation-issues/`} target='_blank' rel='noopener noreferrer' />
+								}
+							)}
 						</p>
 
 						<div className='formGroup'>
-							<input type='text' className='licenseInput' placeholder='Enter your purchase code here.' value={licenseKey} onChange={(e) => setLicenseKey(e.target.value)} disabled={isLoading} />
+							<input type='text' className='licenseInput' placeholder={__('Enter your purchase code here.')} value={licenseKey} onChange={(e) => setLicenseKey(e.target.value)} disabled={isLoading} />
 						</div>
 
 						{error && <div className='errorMessage'>{error}</div>}
 
 						<Button variant='primary' onClick={handleActivation} disabled={isLoading} className='activateButton'>
-							{isLoading ? 'Activating...' : 'Activate your License'}
+							{isLoading ? __('Activating...') : __('Activate your License')}
 						</Button>
 
 						{!isChangeLicense && <>
 							<p className='formDescription'>
-								For delivery of security &amp; feature updates, and license management, <strong>{name}</strong> needs to ↓
+								{createInterpolateElement(
+									sprintf(
+										/* translators: %s: Plugin name. */
+										__('For delivery of security & feature updates, and license management, <strong>%s</strong> needs to ↓'),
+										name
+									),
+									{ strong: <strong /> }
+								)}
 							</p>
 
 							<ul className='formPermissions'>
@@ -164,11 +183,11 @@ const Activation = (props) => {
 									{linkIcon}
 
 									<div>
-										<h4>View License Essentials <Tooltip text='To let you manage &amp; control where the license is activated and ensure plugin security &amp; feature updates are only delivered to websites you authorize.' placement='top' delay={300}>
+										<h4>{__('View License Essentials')} <Tooltip text={__('To let you manage & control where the license is activated and ensure plugin security & feature updates are only delivered to websites you authorize.')} placement='top' delay={300}>
 											{questionIcon}
 										</Tooltip></h4>
 
-										<p>Homepage URL, Plugin version, SDK version</p>
+										<p>{__('Homepage URL, Plugin version, SDK version')}</p>
 									</div>
 								</li>
 
@@ -176,21 +195,21 @@ const Activation = (props) => {
 									{pluginIcon}
 
 									<div>
-										<h4>View Plugin State <Tooltip text='So you can reuse the license when the plugin is no longer active.' placement='top' delay={300}>
+										<h4>{__('View Plugin State')} <Tooltip text={__('So you can reuse the license when the plugin is no longer active.')} placement='top' delay={300}>
 											{questionIcon}
 										</Tooltip></h4>
 
-										<p>Is active, deactivated, or uninstalled</p>
+										<p>{__('Is active, deactivated, or uninstalled')}</p>
 									</div>
 								</li>
 							</ul>
 
 							<div className='links'>
-								<a href={`https://freemius.com/product/license-activation/${product_id}/${slug}/`} target='_blank' rel='noopener noreferrer'>Powered by Freemius</a>
+								<a href={`https://freemius.com/product/license-activation/${product_id}/${slug}/`} target='_blank' rel='noopener noreferrer'>{__('Powered by Freemius')}</a>
 
-								<a href={`https://freemius.com/privacy/`} target='_blank' rel='noopener noreferrer'>Privacy Policy</a>
+								<a href={`https://freemius.com/privacy/`} target='_blank' rel='noopener noreferrer'>{__('Privacy Policy')}</a>
 
-								<a href={`https://freemius.com/product/${product_id}/${slug}/legal/eula/`} target='_blank' rel='noopener noreferrer'>License Agreement</a>
+								<a href={`https://freemius.com/product/${product_id}/${slug}/legal/eula/`} target='_blank' rel='noopener noreferrer'>{__('License Agreement')}</a>
 							</div>
 						</>}
 
@@ -199,7 +218,7 @@ const Activation = (props) => {
 							onClick={() => setShowActivationForm(false)}
 							className='cancelButton'
 						>
-							Cancel
+							{__('Cancel')}
 						</Button>}
 					</div>
 			}

@@ -11,6 +11,7 @@
 	*/
 
 import { useEffect, useRef, useState } from 'react';
+import { __ } from '@wordpress/i18n';
 import { Button, Flex, Popover, Tooltip } from '@wordpress/components';
 
 import Label from '../Label/Label';
@@ -45,7 +46,7 @@ const CustomPopover = ({ icon, btnText, children, value, label, resetValues = {}
 		<div>
 			<Flex>
 				{isShowResetBtn ?
-					<Tooltip text='Back to default' delay={100} position='top center' placement='top'>
+					<Tooltip text={__('Back to default')} delay={100} position='top center' placement='top'>
 						<Button icon='image-rotate' onClick={() => onClick(resetValues)} />
 					</Tooltip> :
 					''}

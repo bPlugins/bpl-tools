@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { __, sprintf } from '@wordpress/i18n';
 
 const HEX = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i;
 
@@ -37,7 +38,11 @@ const ColorField = ({ id, value, default: fallback = '#000000', onChange }) => {
 			className='colorHex'
 			value={draft}
 			spellCheck='false'
-			aria-label={`${id} hex value`}
+			aria-label={sprintf(
+				/* translators: %s: Setting ID. */
+				__('%s hex value'),
+				id
+			)}
 			onChange={e => {
 				const next = e.target.value;
 				setDraft(next);

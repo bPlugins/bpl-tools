@@ -21,10 +21,10 @@ const Visibility = ({ visibility, onChange, enabled, device }) => {
 
 	const isEnabled = (which) => enabled.includes(which);
 
-	return <PanelBody className='bPlPanelBody' title='Visibility' initialOpen={false}>
+	return <PanelBody className='bPlPanelBody' title={__('Visibility')} initialOpen={false}>
 		{isEnabled('zIndex') && <>
 			<PanelRow className='mb5'>
-				<Label className=''>Z Index</Label>
+				<Label className=''>{__('Z Index')}</Label>
 				<Device />
 			</PanelRow>
 			<NumberControl value={zIndex[device]} onChange={val => onChange(updateData(visibility, val, 'zIndex', device))} />

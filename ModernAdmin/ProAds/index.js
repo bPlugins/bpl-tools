@@ -1,3 +1,5 @@
+import { __, sprintf } from '@wordpress/i18n';
+
 import Button from '../../Components/Button/Button';
 
 import { checkIcon } from '../../utils/icons';
@@ -20,7 +22,11 @@ const ProAds = (props) => {
 
 	return <div className='bPlDashboardProAds bPlDashboardCard'>
 		<div className=''>
-			<h3>Go {name} Pro & Unlock More!</h3>
+			<h3>{sprintf(
+				/* translators: %s: Plugin name. */
+				__('Go %s Pro & Unlock More!'),
+				name
+			)}</h3>
 
 			{proFeatures?.length && <ul>
 				{proFeatures?.map((f, i) => <li key={i}>
@@ -29,11 +35,15 @@ const ProAds = (props) => {
 				</li>)}
 			</ul>}
 
-			<Button href='#pricing'>View Pricing Plan</Button>
+			<Button href='#pricing'>{__('View Pricing Plan')}</Button>
 		</div>
 
 		{proThumbnail && <figure>
-			<img src={proThumbnail} alt={`${name} Pro features`} />
+			<img src={proThumbnail} alt={sprintf(
+				/* translators: %s: Plugin name. */
+				__('%s Pro features'),
+				name
+			)} />
 		</figure>}
 	</div>
 }

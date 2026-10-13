@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { __ } from '@wordpress/i18n';
 
 /**
  * Hook to manage license activation.
@@ -14,7 +15,7 @@ const useActivateLicense = ({ product_id, public_key, licenseActiveNonce } = {})
 
 	const activateLicense = (licenseKey) => {
 		if (!licenseKey.trim()) {
-			return Promise.reject(new Error('Please enter a license key'));
+			return Promise.reject(new Error(__('Please enter a license key')));
 		}
 
 		setIsLoading(true);
@@ -33,7 +34,7 @@ const useActivateLicense = ({ product_id, public_key, licenseActiveNonce } = {})
 				})
 				.fail((err) => {
 					setIsLoading(false);
-					const message = err?.message || 'Activation failed';
+					const message = err?.message || __('Activation failed');
 					setError(message);
 					reject(err);
 				});

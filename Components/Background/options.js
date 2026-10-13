@@ -1,28 +1,30 @@
+import { __ } from '@wordpress/i18n';
+
 export const bgTypes = [
-	{ label: 'Solid', value: 'solid' },
-	{ label: 'Gradient', value: 'gradient' },
-	{ label: 'Image', value: 'image' },
+	{ label: __('Solid'), value: 'solid' },
+	{ label: __('Gradient'), value: 'gradient' },
+	{ label: __('Image'), value: 'image' },
 ];
 
 export const attachments = [
-	{ label: 'Default', value: '' },
-	{ label: 'Initial', value: 'initial' },
-	{ label: 'Scroll', value: 'scroll' },
-	{ label: 'Fixed', value: 'fixed' },
-	{ label: 'Local', value: 'local' },
+	{ label: __('Default'), value: '' },
+	{ label: __('Initial'), value: 'initial' },
+	{ label: __('Scroll'), value: 'scroll' },
+	{ label: __('Fixed'), value: 'fixed' },
+	{ label: __('Local'), value: 'local' },
 ];
 
 export const repeats = [
-	{ label: 'Default', value: '' },
-	{ label: 'No Repeat', value: 'no-repeat' },
-	{ label: 'Repeat', value: 'repeat' },
-	{ label: 'Repeat X', value: 'repeat-x' },
-	{ label: 'Repeat Y', value: 'repeat-y' },
+	{ label: __('Default'), value: '' },
+	{ label: __('No Repeat'), value: 'no-repeat' },
+	{ label: __('Repeat'), value: 'repeat' },
+	{ label: __('Repeat X'), value: 'repeat-x' },
+	{ label: __('Repeat Y'), value: 'repeat-y' },
 ];
 
 export const sizes = [
-	{ label: 'Default', value: '' },
-	{ label: 'Cover', value: 'cover' },
-	{ label: 'Auto', value: 'auto' },
-	{ label: 'Contain', value: 'contain' },
+	{ label: __('Default'), value: '' },
+	{ label: __('Cover'), value: 'cover' },
+	{ label: __('Auto'), value: 'auto' },
+	{ label: __('Contain'), value: 'contain' },
 ];

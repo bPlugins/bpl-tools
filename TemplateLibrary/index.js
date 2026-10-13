@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
+import { __ } from '@wordpress/i18n';
 
 import './style.scss';
 import Modal from './Components/Modal';
@@ -35,7 +36,7 @@ const TemplateLibrary = ({
 	prefix = 'prefix',
 	logo,
 	buttonLabel,
-	modalTitle = 'Templates Library',
+	modalTitle = __('Templates Library'),
 	nonce,
 	isPremium = false,
 	ajaxActionMain = 'prefix_templates_main',
@@ -59,7 +60,7 @@ const TemplateLibrary = ({
 	const effectiveCategory = 'all' !== category ? category : ('pro' === access ? 'pro' : 'all');
 
 	const { main, isLoading: mainLoading } = useTemplatesMain(nonce, type, ajaxActionMain);
-	const { templates: fTemplates, totalCount, refetchTemplates, isLoading: templatesLoading } = useTemplates(nonce, type, effectiveCategory, pageNumber, search, ajaxActionTemplates, perPage);
+	const { templates: fTemplates, totalCount, refetchTemplates, isLoading: templatesLoading } = useTemplates(nonce, type, effectiveCategory, pageNumber, search, ajaxActionTemplates, perPage, show && !isFavorites);
 
 	const accessCounts = useAccessCounts(nonce, type, show && !isFavorites, ajaxActionCounts);
 
@@ -122,10 +123,9 @@ const TemplateLibrary = ({
 		};
 	}, [favCounts, main]);
 
+	// useTemplates fetches on open by itself; closing resets the filters.
 	useEffect(() => {
-		if (show && nonce && !isFavorites) {
-			refetchTemplates({ type, category: effectiveCategory, pageNumber: 1, search: '' });
-		} else if (!show) {
+		if (!show) {
 			// Reset all filter state when the modal closes so the next open is clean
 			setTemplates([]);
 			setPageNumber(1);
