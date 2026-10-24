@@ -105,6 +105,8 @@ import { CSS } from '@dnd-kit/utilities';
 
 import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
 
+import { __ } from '@wordpress/i18n';
+
 import { closeIcon, copyIcon, gripIcon } from '../../utils/icons';
 import './Sortable.scss';
 
@@ -158,9 +160,9 @@ const SortableItem = ({
 						{title ? itemTitle : `${itemLabel} ${index + 1}`}
 					</div>
 					<div className="itemAction">
-						<div onClick={(e) => duplicateItem(e, index)}>{copyIcon}</div>
+						<button type="button" aria-label={__('Duplicate')} title={__('Duplicate')} onClick={(e) => duplicateItem(e, index)}>{copyIcon}</button>
 						{items.length > Number(minItem) && (
-							<div onClick={(e) => removeItem(e, index)}>{closeIcon}</div>
+							<button type="button" aria-label={__('Remove')} title={__('Remove')} onClick={(e) => removeItem(e, index)}>{closeIcon}</button>
 						)}
 					</div>
 				</div>

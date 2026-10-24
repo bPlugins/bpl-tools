@@ -52,7 +52,11 @@ $primaryColor: #146EF5;
 				display: flex;
 				height: 100%;
 
-				>div {
+				>button {
+					background: none;
+					border: 0;
+					padding: 0;
+					color: inherit;
 					border-left: 1px solid #ccc;
 					height: 100%;
 					display: flex;
@@ -67,7 +71,8 @@ $primaryColor: #146EF5;
 						height: 18px;
 					}
 
-					&:hover {
+					&:hover,
+					&:focus-visible {
 						background-color: #ccc;
 					}
 				}

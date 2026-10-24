@@ -4,6 +4,7 @@ export { default as AdvBackground } from './AdvBackground/AdvBackground';
 export { default as Background } from './Background/Background';
 export { default as Badge } from './Badge';
 export { default as BButtonGroup } from './BButtonGroup/BButtonGroup';
+export { default as BlockContentEditor, BlockContentModal } from './BlockContentEditor/BlockContentEditor';
 export { default as BoxControl } from './BoxControl/BoxControl';
 export { default as BplBlockPreview } from './BplBlockPreview/BplBlockPreview';
 export { default as BtnGroup } from './BtnGroup/BtnGroup';

@@ -1,0 +1,52 @@
+.bPlBlockContentModal {
+	// The Modal className lands on the frame. Size it explicitly so the editor can fill it exactly:
+	// an editor taller than the content box lets focus() scroll that hidden overflow and cuts off the bottom
+	&.components-modal__frame {
+		width: calc(100vw - 60px);
+		max-width: none;
+		height: calc(100vh - 100px);
+		max-height: none;
+	}
+
+	.components-modal__content,
+	.components-modal__children-container {
+		flex: 1 1 auto;
+		min-height: 0;
+		display: flex;
+		flex-direction: column;
+		padding: 0;
+		overflow: hidden;
+	}
+
+	.bPlBlockContentEditor {
+		flex: 1 1 auto;
+		min-height: 0;
+		width: 100%;
+		display: flex;
+		overflow: hidden;
+
+		// The canvas iframe fills this box (BlockCanvas height 100%), so scrolling happens inside the iframe document.
+		// Padding, the slide area and its background live in the iframe's editor styles (the styles memo in the JS), not here
+		.bPlBlockContentCanvas {
+			flex: 1;
+			position: relative;
+			padding: 0;
+			overflow: hidden;
+
+			.bPlBlockContentPopovers {
+				.popover-slot {
+					.components-popover {
+						position: absolute;
+					}
+				}
+			}
+		}
+
+		.bPlBlockContentSidebar {
+			width: 280px;
+			border-left: 1px solid #e0e0e0;
+			overflow-x: hidden;
+			overflow-y: auto;
+		}
+	}
+}
