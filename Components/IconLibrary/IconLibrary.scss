@@ -181,6 +181,14 @@ $primaryColor: #146EF5;
 						flex-direction: column;
 						overflow: hidden;
 
+						.bPlIconLibrary-loadingWrapper {
+							display: flex;
+							width: -webkit-fill-available;
+							height: -webkit-fill-available;
+							justify-content: center;
+							align-items: center;
+						}
+
 						.bPl-icon-library-iconCategory {
 							margin-top: 15px;
 							display: flex;
@@ -210,12 +218,32 @@ $primaryColor: #146EF5;
 
 						.bPlIconLibraryIcons {
 							display: flex;
-							/* flex: 1; */
+							flex: 1;
+							min-height: 0;
 							flex-wrap: wrap;
+							align-content: flex-start;
 							gap: 10px;
-							overflow: hidden auto;
-							/* height: calc(100% - 76px); */
+							overflow-y: auto;
+							overflow-x: hidden;
 							margin-top: 15px;
+							padding-bottom: 20px;
+
+							.bPlIconLibrarySentinel {
+								width: 100%;
+								height: 20px;
+								min-height: 20px;
+								flex-basis: 100%;
+								pointer-events: none;
+								opacity: 0;
+							}
+
+							.bPlIconLibraryNoResults {
+								width: 100%;
+								text-align: center;
+								color: #888;
+								padding: 40px 0;
+								font-size: 14px;
+							}
 
 							.bPlIconLibraryIcon {
 								height: 80px;

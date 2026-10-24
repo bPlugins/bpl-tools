@@ -57,7 +57,8 @@ const IconLibrary = ({ className = '', label = __('Icon Library'), value, onChan
 	const [loadError, setLoadError] = useState(false);
 
 	const iconRef = useRef(null);
-	const scrollRef = useRef(null);
+	const containerRef = useRef(null);
+	const sentinelRef = useRef(null);
 
 	const items = [
 		{ label: __('All Icons'), value: 'all' },
@@ -117,30 +118,51 @@ const IconLibrary = ({ className = '', label = __('Icon Library'), value, onChan
 			: { label: __('All Icons'), icons: [...iconSets.fontawesome, ...iconSets.bootstrap, ...iconSets.lucid] };
 	}, [iconSets, iconLibrary, library]);
 
-	const handleSearch = useMemo(() => debounce((sq) => {
-		const filteredIcons = searchQuery
-			? icons.icons.filter((icon) => {
-				const label = icon.label.toLowerCase();
-				const terms = icon.terms
-					? icon.terms.map((term) => term.toLowerCase())
-					: [];
-				return (
-					terms.some((term) => term.includes(sq.toLowerCase())) ||
-					label.includes(sq.toLowerCase())
-				);
-			})
-			: icons.icons;
+	const handleSearch = useMemo(() => debounce((sq, allIcons) => {
+		const query = (sq || '').trim().toLowerCase();
+		if (!query) {
+			setSearchedIcons({ icons: allIcons });
+			return;
+		}
+
+		const filteredIcons = allIcons.filter((icon) => {
+			const iconLabel = icon.label ? icon.label.toLowerCase() : '';
+			const terms = icon.terms
+				? icon.terms.map((term) => term.toLowerCase())
+				: [];
+			return (
+				terms.some((term) => term.includes(query)) ||
+				iconLabel.includes(query)
+			);
+		});
 		setSearchedIcons({ icons: filteredIcons });
-	}, 600), [searchQuery, currentPage, icons]);
+	}, 300), []);
 
 	const handleInputChange = (e) => {
 		const sq = e.target.value;
 		setSearchQuery(sq);
-		handleSearch(sq);
+		setCurrentPage(1);
+		if (containerRef.current) {
+			containerRef.current.scrollTop = 0;
+		}
+		handleSearch(sq, icons.icons || []);
+	};
+
+	const handleCategoryChange = (val) => {
+		setIconLibrary(val);
+		setSearchQuery('');
+		setCurrentPage(1);
+		if (containerRef.current) {
+			containerRef.current.scrollTop = 0;
+		}
 	};
 
 	useEffect(() => {
 		setSearchedIcons({ icons: icons.icons });
+		setCurrentPage(1);
+		if (containerRef.current) {
+			containerRef.current.scrollTop = 0;
+		}
 	}, [iconLibrary, iconSets]);
 
 	useEffect(() => {
@@ -159,20 +181,35 @@ const IconLibrary = ({ className = '', label = __('Icon Library'), value, onChan
 		};
 	}, [isOpen, iconRef?.current]);
 
-	const observer = new IntersectionObserver(
-		(entries) => {
-			if (entries.some((entry) => entry.isIntersecting)) {
-				setCurrentPage((prev) => prev + 1);
-			}
-		},
-		{ threshold: 0.3 }
-	);
+	const totalIcons = searchedIcons?.icons?.length || 0;
+	const hasMore = currentPage * 100 < totalIcons;
 
 	useEffect(() => {
-		if (scrollRef?.current) {
-			observer.observe(scrollRef?.current);
+		const sentinel = sentinelRef.current;
+		const container = containerRef.current;
+		if (!sentinel || !container || !isOpen || !hasMore) {
+			return undefined;
 		}
-	}, [scrollRef, isOpen, currentPage, iconSets]);
+
+		const observer = new IntersectionObserver(
+			(entries) => {
+				if (entries[0]?.isIntersecting) {
+					setCurrentPage((prev) => prev + 1);
+				}
+			},
+			{
+				root: container,
+				rootMargin: '150px',
+				threshold: 0,
+			}
+		);
+
+		observer.observe(sentinel);
+
+		return () => {
+			observer.disconnect();
+		};
+	}, [isOpen, hasMore, currentPage, searchedIcons]);
 
 	return <div className={prefix}>
 		<PanelRow className={className}>
@@ -203,7 +240,7 @@ const IconLibrary = ({ className = '', label = __('Icon Library'), value, onChan
 				<div className={`${prefix}Body`}>
 					<div className={`${prefix}Sidebar`}>
 						<ul className={`${prefix}SidebarMenu`}>
-							{items.map((item, i) => <li key={i} className={`${item.value === iconLibrary ? 'active' : ''}`} onClick={() => setIconLibrary(item.value)}>
+							{items.map((item, i) => <li key={i} className={`${item.value === iconLibrary ? 'active' : ''}`} onClick={() => handleCategoryChange(item.value)}>
 								{item.label}
 							</li>)}
 						</ul>
@@ -219,25 +256,44 @@ const IconLibrary = ({ className = '', label = __('Icon Library'), value, onChan
 						<div className={`${prefix}IconsWrapper`}>
 							{loadError && <p className={`${prefix}LoadError`}>{__('Could not load the icons. Please close and reopen the library to try again.')}</p>}
 
-							{!iconSets && !loadError && <Loading text={__('Loading icons...')} orientation='vertical' />}
+							{!iconSets && !loadError &&
+								<div className={`${prefix}-loadingWrapper`}>
+									<Loading text={__('Loading icons...')} orientation='vertical' />
+								</div>
+							}
 
-							{iconSets && <div className={`${prefix}Icons`}>
-								{searchedIcons?.icons?.filter((_, i) => i < currentPage * 100).map(icon => {
-									const svgIcons = icon.svg;
+							{iconSets && <div ref={containerRef} className={`${prefix}Icons`}>
+								{searchedIcons?.icons?.length === 0 && searchQuery && (
+									<p className={`${prefix}NoResults`}>{__('No icons found matching your search.')}</p>
+								)}
 
-									return Object.keys(svgIcons).map((key, idx) => <div
-										key={idx}
-										ref={scrollRef}
-										onClick={() => setSelectIcon(svgIcons[key])}
-										className={`${prefix}Icon ${JSON.stringify(selectIcon) === JSON.stringify(svgIcons[key]) ? 'isActive' : ''} `}
-									>
-										<span dangerouslySetInnerHTML={{ __html: svgIcons[key] }} />
+								{searchedIcons?.icons?.slice(0, currentPage * 100).map((icon, iconIdx) => {
+									const svgIcons = icon.svg || {};
 
-										<div className={`${prefix}IconLabel`} title={icon.label}>
-											{icon.label}
-										</div>
-									</div>);
+									return Object.keys(svgIcons).map((key) => {
+										const svgContent = svgIcons[key];
+										const isSelected = selectIcon === svgContent;
+
+										return <div
+											key={`${icon.label}-${key}-${iconIdx}`}
+											onClick={() => setSelectIcon(svgContent)}
+											className={`${prefix}Icon ${isSelected ? 'isActive' : ''} `}
+										>
+											<span dangerouslySetInnerHTML={{ __html: svgContent }} />
+
+											<div className={`${prefix}IconLabel`} title={icon.label}>
+												{icon.label}
+											</div>
+										</div>;
+									});
 								})}
+
+								{hasMore && (
+									<div
+										ref={sentinelRef}
+										className={`${prefix}Sentinel`}
+									/>
+								)}
 							</div>}
 						</div>
 					</div>
